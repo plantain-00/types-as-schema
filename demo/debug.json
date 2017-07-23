@@ -1,0 +1,136 @@
+[
+  {
+    "kind": "object",
+    "name": "RequestProtocol",
+    "members": [
+      {
+        "name": "requestId",
+        "optional": true,
+        "type": "uint32",
+        "tag": 2
+      },
+      {
+        "name": "error",
+        "optional": true,
+        "type": "string",
+        "tag": 3
+      }
+    ],
+    "isEntry": true
+  },
+  {
+    "kind": "object",
+    "name": "SearchLogsResult",
+    "members": [
+      {
+        "name": "total",
+        "type": "uint32",
+        "tag": 1
+      },
+      {
+        "name": "logs",
+        "type": {
+          "kind": "array",
+          "element": "Log"
+        },
+        "tag": 2
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "SampleFrame",
+    "members": [
+      {
+        "name": "time",
+        "type": "string",
+        "tag": 1
+      },
+      {
+        "name": "samples",
+        "optional": true,
+        "type": {
+          "kind": "array",
+          "element": "Sample"
+        },
+        "tag": 2
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "Flow",
+    "members": [
+      {
+        "name": "kind"
+      },
+      {
+        "name": "log",
+        "type": "Log",
+        "optional": true
+      },
+      {
+        "name": "sample",
+        "type": "Sample",
+        "optional": true
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "Log",
+    "members": [
+      {
+        "name": "time",
+        "type": "string",
+        "tag": 1
+      },
+      {
+        "name": "content",
+        "type": "string",
+        "tag": 2
+      },
+      {
+        "name": "filepath",
+        "type": "string",
+        "tag": 3
+      },
+      {
+        "name": "hostname",
+        "type": "string",
+        "tag": 4
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "Sample",
+    "members": [
+      {
+        "name": "hostname",
+        "type": "string",
+        "tag": 1
+      },
+      {
+        "name": "port",
+        "optional": true,
+        "type": "uint32",
+        "tag": 2
+      },
+      {
+        "name": "values",
+        "type": {
+          "kind": "map",
+          "key": "string",
+          "value": "uint32"
+        },
+        "tag": 3
+      }
+    ],
+    "isEntry": false
+  }
+]

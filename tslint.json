@@ -1,0 +1,22 @@
+{
+    "extends": "tslint:latest",
+    "rules": {
+        "max-line-length": [
+            false
+        ],
+        "ordered-imports": [
+            false
+        ],
+        "object-literal-sort-keys": false,
+        "member-access": false,
+        "arrow-parens": false,
+        "array-type": [
+            true,
+            "array"
+        ],
+        "max-classes-per-file": [
+            false
+        ],
+        "interface-over-type-literal": false
+    }
+}

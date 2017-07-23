@@ -1,0 +1,119 @@
+{
+  "definitions": {
+    "RequestProtocol": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "SearchLogsResult": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Log"
+          }
+        }
+      },
+      "required": [
+        "total",
+        "logs"
+      ]
+    },
+    "SampleFrame": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "samples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sample"
+          }
+        }
+      },
+      "required": [
+        "time"
+      ]
+    },
+    "Flow": {
+      "type": "object",
+      "properties": {
+        "kind": {},
+        "log": {
+          "type": "Log"
+        },
+        "sample": {
+          "type": "Sample"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "Log": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "filepath": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "content",
+        "filepath",
+        "hostname"
+      ]
+    },
+    "Sample": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        }
+      },
+      "required": [
+        "hostname",
+        "values"
+      ]
+    }
+  },
+  "$ref": "#/definitions/RequestProtocol"
+}

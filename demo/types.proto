@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message RequestProtocol {
+    optional uint32 requestId = 2;
+    optional string error = 3;
+}
+
+message SearchLogsResult {
+    required uint32 total = 1;
+    repeated Log logs = 2;
+}
+
+message SampleFrame {
+    required string time = 1;
+    repeated Sample samples = 2;
+}
+
+message Flow {
+    required undefined kind = undefined;
+    optional Log log = undefined;
+    optional Sample sample = undefined;
+}
+
+message Log {
+    required string time = 1;
+    required string content = 2;
+    required string filepath = 3;
+    required string hostname = 4;
+}
+
+message Sample {
+    required string hostname = 1;
+    optional uint32 port = 2;
+    map<string, uint32> values = 3;
+}
