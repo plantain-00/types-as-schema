@@ -41,7 +41,7 @@
         "name": "tops",
         "type": {
           "kind": "array",
-          "type": "number",
+          "type": "integer",
           "uniqueItems": true,
           "minItems": 1
         },

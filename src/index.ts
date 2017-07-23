@@ -78,10 +78,11 @@ async function executeCommandLine() {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
                 const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
                 const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
+                const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
                 models.push({
                     kind: "array",
                     name: declaration.name.text,
-                    type: getType(arrayType.elementType, models),
+                    type: (itemType && itemType.comment) ? itemType.comment : getType(arrayType.elementType, models),
                     entry: entry ? entry.comment : undefined,
                     uniqueItems: uniqueItems ? true : undefined,
                     minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
@@ -167,6 +168,11 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                         const arrayType = member.type as ArrayType;
                         if (arrayType && propertyJsDoc.comment) {
                             arrayType.minItems = +propertyJsDoc.comment;
+                        }
+                    } else if (propertyJsDoc.name === "itemType") {
+                        const arrayType = member.type as ArrayType;
+                        if (arrayType && propertyJsDoc.comment) {
+                            arrayType.type = propertyJsDoc.comment;
                         }
                     }
                 }
