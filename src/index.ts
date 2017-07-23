@@ -202,19 +202,16 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
         const literal = type as ts.TypeLiteralNode;
         if (literal.members.length === 1 && literal.members[0].kind === ts.SyntaxKind.IndexSignature) {
             const indexSignature = literal.members[0] as ts.IndexSignatureDeclaration;
-            const mapType: MapType = {
-                kind: "map",
-            };
             if (indexSignature.parameters.length === 1) {
                 const parameterType = indexSignature.parameters[0].type;
-                if (parameterType) {
-                    mapType.key = getType(parameterType, models);
+                if (parameterType && indexSignature.type) {
+                    return {
+                        kind: "map",
+                        key: getType(parameterType, models),
+                        value: getType(indexSignature.type, models),
+                    };
                 }
             }
-            if (!mapType.value && indexSignature.type) {
-                mapType.value = getType(indexSignature.type, models);
-            }
-            return mapType;
         }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
         const array = type as ts.ArrayTypeNode;
@@ -227,11 +224,13 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
         const reference = type as ts.TypeReferenceNode;
         if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
             const typeName = reference.typeName as ts.Identifier;
-            return typeName.text;
+            return {
+                kind: "reference",
+                name: typeName.text,
+            };
         } else if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
             const qualified = reference.typeName as ts.QualifiedName;
             const enumName = (qualified.left as ts.Identifier).text;
-            // const enumValue = (qualified.right as ts.Identifier).text;
             const enumModel = models.find(m => m.kind === "enum" && m.name === enumName) as EnumModel | undefined;
             if (enumModel) {
                 return {
@@ -256,8 +255,8 @@ function showToolVersion() {
 
 type MapType = {
     kind: "map";
-    key?: Type;
-    value?: Type;
+    key: Type;
+    value: Type;
 };
 
 type ArrayType = {
@@ -271,7 +270,12 @@ type EnumType = {
     enums: any[];
 };
 
-type Type = string | MapType | ArrayType | EnumType;
+type ReferenceType = {
+    kind: "reference";
+    name: string;
+};
+
+type Type = string | MapType | ArrayType | EnumType | ReferenceType;
 
 type Member = {
     name: string;
@@ -320,27 +324,35 @@ function getJsDocs(node: ts.Node) {
     return result;
 }
 
+function getProtobufProperty(memberType: Type): { modifier: string, propertyType: Type } {
+    let modifier = "";
+    let propertyType: Type = "";
+    if (typeof memberType !== "string") {
+        if (memberType.kind === "map") {
+            const valueType = memberType.value === "number" ? "uint32" : memberType.value;
+            propertyType = `map<${memberType.key}, ${valueType}>`;
+        } else if (memberType.kind === "array") {
+            modifier = "repeated ";
+            const { propertyType: elementPropertyType } = getProtobufProperty(memberType.element);
+            propertyType = elementPropertyType;
+        } else if (memberType.kind === "enum") {
+            propertyType = memberType.type;
+        } else if (memberType.kind === "reference") {
+            propertyType = memberType.name;
+        }
+    } else {
+        propertyType = memberType === "number" ? "uint32" : memberType;
+    }
+    return { modifier, propertyType };
+}
+
 function generateProtobuf(models: Model[]) {
     const messages: string[] = [];
     for (const model of models) {
         if (model.kind === "object") {
             const members: string[] = [];
             for (const member of model.members) {
-                let modifier = "";
-                let propertyType: Type = "";
-                if (typeof member.type !== "string") {
-                    if (member.type.kind === "map") {
-                        const valueType = member.type.value === "number" ? "uint32" : member.type.value;
-                        propertyType = `map<${member.type.key}, ${valueType}>`;
-                    } else if (member.type.kind === "array") {
-                        modifier = "repeated ";
-                        propertyType = member.type.element;
-                    } else if (member.type.kind === "enum") {
-                        propertyType = member.type.type;
-                    }
-                } else {
-                    propertyType = member.type === "number" ? "uint32" : member.type!;
-                }
+                const { modifier, propertyType } = getProtobufProperty(member.type);
                 members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag};`);
             }
             messages.push(`message ${model.name} {
@@ -354,13 +366,14 @@ ${messages.join("\n\n")}
 `;
 }
 
-function getJsonSchemaProperty(memberType?: Type) {
-    let propertyType: string;
+function getJsonSchemaProperty(memberType: Type) {
+    let propertyType: string | undefined;
     let minimum: number | undefined;
     let maximum: number | undefined;
     let additionalProperties: any;
     let items: any;
     let enums: any[] | undefined;
+    let $ref: string | undefined;
     if (memberType === "double" || memberType === "float") {
         propertyType = "number";
     } else if (memberType === "uint32" || memberType === "fixed32") {
@@ -387,14 +400,12 @@ function getJsonSchemaProperty(memberType?: Type) {
             additionalProperties = getJsonSchemaProperty(memberType.value);
         } else if (memberType.kind === "array") {
             propertyType = "array";
-            items = {
-                $ref: `#/definitions/${memberType.element}`,
-            };
+            items = getJsonSchemaProperty(memberType.element);
         } else if (memberType.kind === "enum") {
             propertyType = typeof memberType.type === "string" ? memberType.type : "";
             enums = memberType.enums;
-        } else {
-            propertyType = "";
+        } else if (memberType.kind === "reference") {
+            $ref = `#/definitions/${memberType.name}`;
         }
     } else {
         propertyType = memberType as string;
@@ -406,6 +417,7 @@ function getJsonSchemaProperty(memberType?: Type) {
         additionalProperties,
         items,
         enum: enums,
+        $ref,
     };
 }
 

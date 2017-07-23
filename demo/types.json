@@ -15,10 +15,10 @@
           ]
         },
         "searchLogs": {
-          "type": "SearchLogs"
+          "$ref": "#/definitions/SearchLogs"
         },
         "searchSamples": {
-          "type": "SearchSamples"
+          "$ref": "#/definitions/SearchSamples"
         }
       },
       "required": [
@@ -82,7 +82,7 @@
           ]
         },
         "flows": {
-          "type": "Flows"
+          "$ref": "#/definitions/Flows"
         },
         "historySamples": {
           "type": "array",
@@ -91,13 +91,13 @@
           }
         },
         "searchLogsResult": {
-          "type": "SearchLogsResult"
+          "$ref": "#/definitions/SearchLogsResult"
         },
         "searchSamplesResult": {
-          "type": "SearchSamplesResult"
+          "$ref": "#/definitions/SearchSamplesResult"
         },
         "resaveFailedLogsResult": {
-          "type": "ResaveFailedLogsResult"
+          "$ref": "#/definitions/ResaveFailedLogsResult"
         }
       },
       "required": [
@@ -251,10 +251,10 @@
           ]
         },
         "log": {
-          "type": "Log"
+          "$ref": "#/definitions/Log"
         },
         "sample": {
-          "type": "Sample"
+          "$ref": "#/definitions/Sample"
         }
       },
       "required": [
