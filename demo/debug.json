@@ -42,8 +42,41 @@
   {
     "kind": "object",
     "name": "RequestProtocol",
-    "members": [],
-    "isEntry": true
+    "members": [
+      {
+        "name": "requestId",
+        "type": "number",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "search logs",
+            "search samples",
+            "resave failed logs"
+          ]
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "searchLogs",
+        "type": "SearchLogs",
+        "optional": true,
+        "tag": 3
+      },
+      {
+        "name": "searchSamples",
+        "type": "SearchSamples",
+        "optional": true,
+        "tag": 4
+      }
+    ],
+    "entry": "request-protocol"
   },
   {
     "kind": "object",
@@ -79,8 +112,7 @@
         "optional": false,
         "tag": 5
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -98,8 +130,7 @@
         "optional": false,
         "tag": 2
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -154,8 +185,7 @@
         "optional": true,
         "tag": 6
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -173,29 +203,139 @@
           "kind": "array",
           "element": "Flow"
         },
-        "optional": true,
+        "optional": false,
         "tag": 2
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
     "name": "SearchLogsResult",
-    "members": [],
-    "isEntry": false
+    "members": [
+      {
+        "name": "requestId",
+        "type": "number",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "total",
+        "type": "number",
+        "optional": true,
+        "tag": 3
+      },
+      {
+        "name": "logs",
+        "type": {
+          "kind": "array",
+          "element": "Log"
+        },
+        "optional": true,
+        "tag": 4
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "optional": true,
+        "tag": 5
+      }
+    ]
   },
   {
     "kind": "object",
     "name": "SearchSamplesResult",
-    "members": [],
-    "isEntry": false
+    "members": [
+      {
+        "name": "requestId",
+        "type": "number",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "searchSampleResult",
+        "type": {
+          "kind": "array",
+          "element": "SampleFrame"
+        },
+        "optional": true,
+        "tag": 3
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "optional": true,
+        "tag": 4
+      }
+    ]
   },
   {
     "kind": "object",
     "name": "ResaveFailedLogsResult",
-    "members": [],
-    "isEntry": false
+    "members": [
+      {
+        "name": "requestId",
+        "type": "number",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "savedCount",
+        "type": "number",
+        "optional": true,
+        "tag": 3
+      },
+      {
+        "name": "totalCount",
+        "type": "number",
+        "optional": true,
+        "tag": 4
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "optional": true,
+        "tag": 5
+      }
+    ]
   },
   {
     "kind": "object",
@@ -216,8 +356,7 @@
         "optional": true,
         "tag": 2
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -229,11 +368,10 @@
           "kind": "array",
           "element": "Flow"
         },
-        "optional": true,
+        "optional": false,
         "tag": 1
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -264,8 +402,7 @@
         "optional": true,
         "tag": 3
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -295,8 +432,7 @@
         "optional": false,
         "tag": 4
       }
-    ],
-    "isEntry": false
+    ]
   },
   {
     "kind": "object",
@@ -324,7 +460,6 @@
         "optional": false,
         "tag": 3
       }
-    ],
-    "isEntry": false
+    ]
   }
 ]

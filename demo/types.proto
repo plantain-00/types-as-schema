@@ -1,7 +1,10 @@
 syntax = "proto3";
 
 message RequestProtocol {
-
+    uint32 requestId = 1;
+    string kind = 2;
+    SearchLogs searchLogs = 3;
+    SearchSamples searchSamples = 4;
 }
 
 message SearchLogs {
@@ -32,15 +35,26 @@ message Flows {
 }
 
 message SearchLogsResult {
-
+    uint32 requestId = 1;
+    string kind = 2;
+    uint32 total = 3;
+    repeated Log logs = 4;
+    string error = 5;
 }
 
 message SearchSamplesResult {
-
+    uint32 requestId = 1;
+    string kind = 2;
+    repeated SampleFrame searchSampleResult = 3;
+    string error = 4;
 }
 
 message ResaveFailedLogsResult {
-
+    uint32 requestId = 1;
+    string kind = 2;
+    uint32 savedCount = 3;
+    uint32 totalCount = 4;
+    string error = 5;
 }
 
 message SampleFrame {

@@ -2,8 +2,29 @@
   "definitions": {
     "RequestProtocol": {
       "type": "object",
-      "properties": {},
-      "required": []
+      "properties": {
+        "requestId": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "search logs",
+            "search samples",
+            "resave failed logs"
+          ]
+        },
+        "searchLogs": {
+          "type": "SearchLogs"
+        },
+        "searchSamples": {
+          "type": "SearchSamples"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind"
+      ]
     },
     "SearchLogs": {
       "type": "object",
@@ -97,23 +118,96 @@
         }
       },
       "required": [
-        "serverTime"
+        "serverTime",
+        "flows"
       ]
     },
     "SearchLogsResult": {
       "type": "object",
-      "properties": {},
-      "required": []
+      "properties": {
+        "requestId": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "success",
+            "fail"
+          ]
+        },
+        "total": {
+          "type": "number"
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Log"
+          }
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind"
+      ]
     },
     "SearchSamplesResult": {
       "type": "object",
-      "properties": {},
-      "required": []
+      "properties": {
+        "requestId": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "success",
+            "fail"
+          ]
+        },
+        "searchSampleResult": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SampleFrame"
+          }
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind"
+      ]
     },
     "ResaveFailedLogsResult": {
       "type": "object",
-      "properties": {},
-      "required": []
+      "properties": {
+        "requestId": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "success",
+            "fail"
+          ]
+        },
+        "savedCount": {
+          "type": "number"
+        },
+        "totalCount": {
+          "type": "number"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind"
+      ]
     },
     "SampleFrame": {
       "type": "object",
@@ -142,7 +236,9 @@
           }
         }
       },
-      "required": []
+      "required": [
+        "flows"
+      ]
     },
     "Flow": {
       "type": "object",

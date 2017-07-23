@@ -62,7 +62,7 @@ export const enum ProtocolKind {
 
 type Flows = {
     serverTime: string;
-    flows?: Flow[];
+    flows: Flow[];
 };
 
 export type SearchLogsResult = {
@@ -114,7 +114,7 @@ export type SampleFrame = {
 };
 
 export type FlowProtocol = {
-    flows?: Flow[];
+    flows: Flow[];
 };
 
 export type Flow =

@@ -73,19 +73,13 @@ async function executeCommandLine() {
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
-            const model: Model = {
+            const model: ObjectModel = {
                 kind: "object",
                 name: declaration.name.text,
-                members: [],
-                isEntry: !!entry,
+                members: getMembers(declaration.type, models),
+                entry: entry ? entry.comment : undefined,
             };
             models.push(model);
-            if (declaration.type.kind === ts.SyntaxKind.TypeLiteral) {
-                model.members = getTypeLiteralMembers(declaration.type as ts.TypeLiteralNode, models);
-
-            } else if (declaration.type.kind === ts.SyntaxKind.UnionType) {
-                model.members = getUnionTypeMembers(declaration.type as ts.UnionTypeNode, models);
-            }
         }
     });
 
@@ -102,48 +96,94 @@ async function executeCommandLine() {
     }
 }
 
-function getTypeLiteralMembers(typeLiteral: ts.TypeLiteralNode, models: Model[]) {
-    const results: Member[] = [];
+function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
+    const members: Member[] = [];
     let lastTag = 0;
-    for (const element of typeLiteral.members) {
-        if (element.kind === ts.SyntaxKind.PropertySignature) {
-            const property = element as ts.PropertySignature;
-            const name = property.name as ts.Identifier;
-            const member: Member = {
-                name: name.text,
-                type: "",
-                optional: false,
-                tag: 0,
-            };
-            results.push(member);
+    if (node.kind === ts.SyntaxKind.TypeLiteral) {
+        const typeLiteral = node as ts.TypeLiteralNode;
+        for (const element of typeLiteral.members) {
+            if (element.kind === ts.SyntaxKind.PropertySignature) {
+                const property = element as ts.PropertySignature;
+                const name = property.name as ts.Identifier;
+                const member: Member = {
+                    name: name.text,
+                    type: "",
+                    optional: false,
+                    tag: 0,
+                };
+                members.push(member);
 
-            if (property.questionToken) {
-                member.optional = true;
-            }
+                if (property.questionToken) {
+                    member.optional = true;
+                }
 
-            if (property.type) {
-                member.type = getType(property.type, models);
-            }
+                if (property.type) {
+                    member.type = getType(property.type, models);
+                }
 
-            const propertyJsDocs = getJsDocs(property);
-            for (const propertyJsDoc of propertyJsDocs) {
-                if (propertyJsDoc.name === "tag" && propertyJsDoc.comment) {
-                    member.tag = +propertyJsDoc.comment;
+                const propertyJsDocs = getJsDocs(property);
+                for (const propertyJsDoc of propertyJsDocs) {
+                    if (propertyJsDoc.name === "tag" && propertyJsDoc.comment) {
+                        member.tag = +propertyJsDoc.comment;
+                        lastTag = member.tag;
+                    } else if (propertyJsDoc.name === "mapValueType" && propertyJsDoc.comment) {
+                        (member.type as MapType).value = propertyJsDoc.comment;
+                    } else if (propertyJsDoc.name === "type" && propertyJsDoc.comment) {
+                        member.type = propertyJsDoc.comment;
+                    }
+                }
+
+                if (!member.tag) {
+                    member.tag = lastTag + 1;
                     lastTag = member.tag;
-                } else if (propertyJsDoc.name === "mapValueType" && propertyJsDoc.comment) {
-                    (member.type as MapType).value = propertyJsDoc.comment;
-                } else if (propertyJsDoc.name === "type" && propertyJsDoc.comment) {
-                    member.type = propertyJsDoc.comment;
                 }
             }
-
-            if (!member.tag) {
-                member.tag = lastTag + 1;
-                lastTag = member.tag;
+        }
+    } else if (node.kind === ts.SyntaxKind.UnionType) {
+        const unionType = node as ts.UnionTypeNode;
+        for (const type of unionType.types) {
+            const childMembers = getMembers(type, models);
+            if (members.length === 0) {
+                members.push(...childMembers);
+                lastTag = childMembers[childMembers.length - 1].tag;
+            } else {
+                for (const member of members) {
+                    if (childMembers.every(m => m.name !== member.name)) {
+                        member.optional = true;
+                    }
+                }
+                for (const member of childMembers) {
+                    if (members.every(m => m.name !== member.name)) {
+                        member.optional = true;
+                        members.push(member);
+                        member.tag = lastTag + 1;
+                        lastTag = member.tag;
+                    }
+                }
             }
         }
+    } else if (node.kind === ts.SyntaxKind.IntersectionType) {
+        const intersectionType = node as ts.IntersectionTypeNode;
+        for (const type of intersectionType.types) {
+            const childMembers = getMembers(type, models);
+            for (const member of childMembers) {
+                if (members.every(m => m.name !== member.name)) {
+                    members.push(member);
+                    member.tag = lastTag + 1;
+                    lastTag = member.tag;
+                }
+            }
+        }
+    } else if (node.kind === ts.SyntaxKind.ParenthesizedType) {
+        const parenthesizedType = node as ts.ParenthesizedTypeNode;
+        const childMembers = getMembers(parenthesizedType.type, models);
+        for (const member of childMembers) {
+            members.push(member);
+            member.tag = lastTag + 1;
+            lastTag = member.tag;
+        }
     }
-    return results;
+    return members;
 }
 
 function getExpressType(type: ts.Expression): Type {
@@ -205,35 +245,6 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
     return "";
 }
 
-function getUnionTypeMembers(unionType: ts.UnionTypeNode, models: Model[]) {
-    const members: Member[] = [];
-    let lastTag = 0;
-    for (const type of unionType.types) {
-        if (type.kind === ts.SyntaxKind.TypeLiteral) {
-            const childMembers = getTypeLiteralMembers(type as ts.TypeLiteralNode, models);
-            if (members.length === 0) {
-                members.push(...childMembers);
-                lastTag = childMembers[childMembers.length - 1].tag;
-            } else {
-                for (const member of members) {
-                    if (childMembers.every(m => m.name !== member.name)) {
-                        member.optional = true;
-                    }
-                }
-                for (const member of childMembers) {
-                    if (members.every(m => m.name !== member.name)) {
-                        member.optional = true;
-                        members.push(member);
-                        member.tag = lastTag + 1;
-                        lastTag = childMembers[childMembers.length - 1].tag;
-                    }
-                }
-            }
-        }
-    }
-    return members;
-}
-
 function printInConsole(message: any) {
     // tslint:disable-next-line:no-console
     console.log(message);
@@ -283,7 +294,7 @@ type ObjectModel = {
     kind: "object";
     name: string;
     members: Member[];
-    isEntry: boolean;
+    entry: string | undefined;
 };
 
 type JsDoc = {
@@ -418,7 +429,7 @@ function generateJsonSchema(models: Model[]) {
                 properties,
                 required,
             };
-            if (model.isEntry) {
+            if (model.entry) {
                 result.$ref = `#/definitions/${model.name}`;
             }
         }
