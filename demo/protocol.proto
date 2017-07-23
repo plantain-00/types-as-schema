@@ -1,86 +1,86 @@
 syntax = "proto3";
 
 message RequestProtocol {
-    required uint32 requestId = 1;
-    required string kind = 2;
-    optional SearchLogs searchLogs = 3;
-    optional SearchSamples searchSamples = 4;
+    uint32 requestId = 1;
+    string kind = 2;
+    SearchLogs searchLogs = 3;
+    SearchSamples searchSamples = 4;
 }
 
 message SearchLogs {
-    required string content = 1;
-    required string time = 2;
-    required string hostname = 3;
-    required uint32 from = 4;
-    required uint32 size = 5;
+    string content = 1;
+    string time = 2;
+    string hostname = 3;
+    uint32 from = 4;
+    uint32 size = 5;
 }
 
 message SearchSamples {
-    required string from = 1;
-    required string to = 2;
+    string from = 1;
+    string to = 2;
 }
 
 message ResponseProtocol {
-    required string kind = 1;
-    optional Flows flows = 2;
+    string kind = 1;
+    Flows flows = 2;
     repeated SampleFrame historySamples = 3;
-    optional SearchLogsResult searchLogsResult = 4;
+    SearchLogsResult searchLogsResult = 4;
     repeated SearchSamplesResult searchSamplesResult = 5;
-    optional ResaveFailedLogsResult resaveFailedLogsResult = 6;
+    ResaveFailedLogsResult resaveFailedLogsResult = 6;
 }
 
 message Flows {
-    required string serverTime = 1;
+    string serverTime = 1;
     repeated Flow flows = 2;
 }
 
 message SearchLogsResult {
-    required string kind = 1;
-    required uint32 requestId = 2;
-    optional string error = 3;
-    optional uint32 total = 4;
+    string kind = 1;
+    uint32 requestId = 2;
+    string error = 3;
+    uint32 total = 4;
     repeated Log logs = 5;
 }
 
 message SearchSamplesResult {
-    required string kind = 1;
-    required uint32 requestId = 2;
-    optional string error = 3;
+    string kind = 1;
+    uint32 requestId = 2;
+    string error = 3;
     repeated SampleFrame searchSampleResult = 4;
 }
 
 message ResaveFailedLogsResult {
-    required string kind = 1;
-    required uint32 requestId = 2;
-    optional string error = 3;
-    optional uint32 savedCount = 4;
-    optional uint32 totalCount = 5;
+    string kind = 1;
+    uint32 requestId = 2;
+    string error = 3;
+    uint32 savedCount = 4;
+    uint32 totalCount = 5;
 }
 
 message SampleFrame {
-    required string time = 1;
+    string time = 1;
     repeated Sample samples = 2;
 }
 
 message FlowProtocol {
-    optional Flows flows = 1;
+    Flows flows = 1;
 }
 
 message Flow {
-    required string kind = 1;
-    optional Log log = 2;
-    optional Sample sample = 3;
+    string kind = 1;
+    Log log = 2;
+    Sample sample = 3;
 }
 
 message Log {
-    required string time = 1;
-    required string content = 2;
-    required string filepath = 3;
-    required string hostname = 4;
+    string time = 1;
+    string content = 2;
+    string filepath = 3;
+    string hostname = 4;
 }
 
 message Sample {
-    required string hostname = 1;
-    optional uint32 port = 2;
+    string hostname = 1;
+    uint32 port = 2;
     map<string, uint32> values = 3;
 }

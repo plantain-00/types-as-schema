@@ -41,6 +41,33 @@ async function executeCommandLine() {
     const models: Model[] = [];
 
     const sourceFile = program.getSourceFile(filePath);
+
+    ts.forEachChild(sourceFile, node => {
+        if (node.kind === ts.SyntaxKind.EnumDeclaration) {
+            const declaration = node as ts.EnumDeclaration;
+            const members = declaration.members;
+            if (members.length > 0) {
+                const firstMember = members[0];
+                if (firstMember.initializer) {
+                    const enumType: EnumModel = {
+                        kind: "enum",
+                        name: declaration.name.text,
+                        type: getExpressType(firstMember.initializer),
+                        members: {},
+                    };
+                    for (const member of members) {
+                        if (member.initializer && member.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                            const name = member.name as ts.Identifier;
+                            const initializer = member.initializer as ts.StringLiteral;
+                            enumType.members[name.text] = initializer.text;
+                        }
+                    }
+                    models.push(enumType);
+                }
+            }
+        }
+    });
+
     ts.forEachChild(sourceFile, node => {
         const jsDocs = getJsDocs(node);
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
@@ -54,10 +81,10 @@ async function executeCommandLine() {
             };
             models.push(model);
             if (declaration.type.kind === ts.SyntaxKind.TypeLiteral) {
-                model.members = getTypeLiteralMembers(declaration.type as ts.TypeLiteralNode);
+                model.members = getTypeLiteralMembers(declaration.type as ts.TypeLiteralNode, models);
 
             } else if (declaration.type.kind === ts.SyntaxKind.UnionType) {
-                model.members = getUnionTypeMembers(declaration.type as ts.UnionTypeNode);
+                model.members = getUnionTypeMembers(declaration.type as ts.UnionTypeNode, models);
             }
         }
     });
@@ -75,14 +102,18 @@ async function executeCommandLine() {
     }
 }
 
-function getTypeLiteralMembers(typeLiteral: ts.TypeLiteralNode) {
+function getTypeLiteralMembers(typeLiteral: ts.TypeLiteralNode, models: Model[]) {
     const results: Member[] = [];
+    let lastTag = 0;
     for (const element of typeLiteral.members) {
         if (element.kind === ts.SyntaxKind.PropertySignature) {
             const property = element as ts.PropertySignature;
             const name = property.name as ts.Identifier;
             const member: Member = {
                 name: name.text,
+                type: "",
+                optional: false,
+                tag: 0,
             };
             results.push(member);
 
@@ -91,27 +122,38 @@ function getTypeLiteralMembers(typeLiteral: ts.TypeLiteralNode) {
             }
 
             if (property.type) {
-                member.type = getType(property.type);
+                member.type = getType(property.type, models);
             }
 
             const propertyJsDocs = getJsDocs(property);
             for (const propertyJsDoc of propertyJsDocs) {
                 if (propertyJsDoc.name === "tag" && propertyJsDoc.comment) {
                     member.tag = +propertyJsDoc.comment;
+                    lastTag = member.tag;
                 } else if (propertyJsDoc.name === "mapValueType" && propertyJsDoc.comment) {
-                    if (member.type) {
-                        (member.type as MapType).value = propertyJsDoc.comment;
-                    }
+                    (member.type as MapType).value = propertyJsDoc.comment;
                 } else if (propertyJsDoc.name === "type" && propertyJsDoc.comment) {
                     member.type = propertyJsDoc.comment;
                 }
+            }
+
+            if (!member.tag) {
+                member.tag = lastTag + 1;
+                lastTag = member.tag;
             }
         }
     }
     return results;
 }
 
-function getType(type: ts.TypeNode): Type {
+function getExpressType(type: ts.Expression): Type {
+    if (type.kind === ts.SyntaxKind.StringLiteral) {
+        return ts.ClassificationTypeNames.stringLiteral;
+    }
+    return "";
+}
+
+function getType(type: ts.TypeNode, models: Model[]): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
         return ts.ClassificationTypeNames.stringLiteral;
     } else if (type.kind === ts.SyntaxKind.NumberKeyword) {
@@ -121,41 +163,57 @@ function getType(type: ts.TypeNode): Type {
         if (literal.members.length === 1 && literal.members[0].kind === ts.SyntaxKind.IndexSignature) {
             const indexSignature = literal.members[0] as ts.IndexSignatureDeclaration;
             const mapType: MapType = {
-                kind: TypeKind.map,
+                kind: "map",
             };
             if (indexSignature.parameters.length === 1) {
                 const parameterType = indexSignature.parameters[0].type;
                 if (parameterType) {
-                    mapType.key = getType(parameterType);
+                    mapType.key = getType(parameterType, models);
                 }
             }
             if (!mapType.value && indexSignature.type) {
-                mapType.value = getType(indexSignature.type);
+                mapType.value = getType(indexSignature.type, models);
             }
             return mapType;
         }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
         const array = type as ts.ArrayTypeNode;
-        const elementType = getType(array.elementType);
+        const elementType = getType(array.elementType, models);
         return {
-            kind: TypeKind.array,
+            kind: "array",
             element: elementType,
         };
     } else if (type.kind === ts.SyntaxKind.TypeReference) {
         const reference = type as ts.TypeReferenceNode;
-        const typeName = reference.typeName as ts.Identifier;
-        return typeName.text;
+        if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
+            const typeName = reference.typeName as ts.Identifier;
+            return typeName.text;
+        } else if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
+            const qualified = reference.typeName as ts.QualifiedName;
+            const enumName = (qualified.left as ts.Identifier).text;
+            // const enumValue = (qualified.right as ts.Identifier).text;
+            const enumModel = models.find(m => m.kind === "enum" && m.name === enumName) as EnumModel | undefined;
+            if (enumModel) {
+                return {
+                    kind: "enum",
+                    type: enumModel.type,
+                    enums: Object.values(enumModel.members),
+                };
+            }
+        }
     }
     return "";
 }
 
-function getUnionTypeMembers(unionType: ts.UnionTypeNode) {
+function getUnionTypeMembers(unionType: ts.UnionTypeNode, models: Model[]) {
     const members: Member[] = [];
+    let lastTag = 0;
     for (const type of unionType.types) {
         if (type.kind === ts.SyntaxKind.TypeLiteral) {
-            const childMembers = getTypeLiteralMembers(type as ts.TypeLiteralNode);
+            const childMembers = getTypeLiteralMembers(type as ts.TypeLiteralNode, models);
             if (members.length === 0) {
                 members.push(...childMembers);
+                lastTag = childMembers[childMembers.length - 1].tag;
             } else {
                 for (const member of members) {
                     if (childMembers.every(m => m.name !== member.name)) {
@@ -166,6 +224,8 @@ function getUnionTypeMembers(unionType: ts.UnionTypeNode) {
                     if (members.every(m => m.name !== member.name)) {
                         member.optional = true;
                         members.push(member);
+                        member.tag = lastTag + 1;
+                        lastTag = childMembers[childMembers.length - 1].tag;
                     }
                 }
             }
@@ -183,39 +243,47 @@ function showToolVersion() {
     printInConsole(`Version: ${packageJson.version}`);
 }
 
-const enum TypeKind {
-    map = "map",
-    array = "array",
-}
-
 type MapType = {
-    kind: TypeKind.map,
+    kind: "map";
     key?: Type;
     value?: Type;
 };
 
 type ArrayType = {
-    kind: TypeKind.array,
-    element: Type,
+    kind: "array";
+    element: Type;
 };
 
-type Type = string | MapType | ArrayType;
+type EnumType = {
+    kind: "enum";
+    type: Type;
+    enums: any[];
+};
+
+type Type = string | MapType | ArrayType | EnumType;
 
 type Member = {
     name: string;
-    type?: Type;
-    optional?: boolean;
-    tag?: number;
+    type: Type;
+    optional: boolean;
+    tag: number;
+    enum?: any[];
 };
 
-type Model = {
-    isEntry: boolean;
-} & ObjectModel;
+type Model = EnumModel | ObjectModel;
+
+type EnumModel = {
+    kind: "enum";
+    name: string;
+    type: Type;
+    members: { [key: string]: any };
+};
 
 type ObjectModel = {
     kind: "object";
     name: string;
     members: Member[];
+    isEntry: boolean;
 };
 
 type JsDoc = {
@@ -244,30 +312,35 @@ function getJsDocs(node: ts.Node) {
 function generateProtobuf(models: Model[]) {
     const messages: string[] = [];
     for (const model of models) {
-        const members: string[] = [];
-        for (const member of model.members) {
-            let modifier: string;
-            let propertyType: Type;
-            if (member.type && typeof member.type !== "string") {
-                if (member.type.kind === TypeKind.map) {
-                    modifier = "";
-                    propertyType = `map<${member.type.key}, ${member.type.value}>`;
-                } else if (member.type.kind === TypeKind.array) {
-                    modifier = "repeated ";
-                    propertyType = member.type.element;
+        if (model.kind === "object") {
+            const members: string[] = [];
+            for (const member of model.members) {
+                let modifier: string;
+                let propertyType: Type;
+                if (typeof member.type !== "string") {
+                    if (member.type.kind === "map") {
+                        modifier = "";
+                        propertyType = `map<${member.type.key}, ${member.type.value}>`;
+                    } else if (member.type.kind === "array") {
+                        modifier = "repeated ";
+                        propertyType = member.type.element;
+                    } else if (member.type.kind === "enum") {
+                        modifier = "";
+                        propertyType = member.type.type;
+                    } else {
+                        modifier = "";
+                        propertyType = "";
+                    }
                 } else {
                     modifier = "";
-                    propertyType = "";
+                    propertyType = member.type!;
                 }
-            } else {
-                modifier = member.optional ? "optional " : "required ";
-                propertyType = member.type!;
+                members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag};`);
             }
-            members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag};`);
-        }
-        messages.push(`message ${model.name} {
+            messages.push(`message ${model.name} {
 ${members.join("\n")}
 }`);
+        }
     }
     return `syntax = "proto3";
 
@@ -281,6 +354,7 @@ function getJsonSchemaProperty(memberType?: Type) {
     let maximum: number | undefined;
     let additionalProperties: any;
     let items: any;
+    let enums: any[] | undefined;
     if (memberType === "double" || memberType === "float") {
         propertyType = "number";
     } else if (memberType === "uint32" || memberType === "fixed32") {
@@ -302,14 +376,17 @@ function getJsonSchemaProperty(memberType?: Type) {
     } else if (memberType === "bool") {
         propertyType = "boolean";
     } else if (memberType && typeof memberType !== "string") {
-        if (memberType.kind === TypeKind.map) {
+        if (memberType.kind === "map") {
             propertyType = "object";
             additionalProperties = getJsonSchemaProperty(memberType.value);
-        } else if (memberType.kind === TypeKind.array) {
+        } else if (memberType.kind === "array") {
             propertyType = "array";
             items = {
                 $ref: `#/definitions/${memberType.element}`,
             };
+        } else if (memberType.kind === "enum") {
+            propertyType = typeof memberType.type === "string" ? memberType.type : "";
+            enums = memberType.enums;
         } else {
             propertyType = "";
         }
@@ -322,6 +399,7 @@ function getJsonSchemaProperty(memberType?: Type) {
         maximum,
         additionalProperties,
         items,
+        enum: enums,
     };
 }
 
@@ -331,21 +409,23 @@ function generateJsonSchema(models: Model[]) {
         $ref?: string;
     } = { definitions: {} };
     for (const model of models) {
-        const properties: { [name: string]: any } = {};
-        const required: string[] = [];
-        for (const member of model.members) {
-            if (!member.optional) {
-                required.push(member.name);
+        if (model.kind === "object") {
+            const properties: { [name: string]: any } = {};
+            const required: string[] = [];
+            for (const member of model.members) {
+                if (!member.optional) {
+                    required.push(member.name);
+                }
+                properties[member.name] = getJsonSchemaProperty(member.type);
             }
-            properties[member.name] = getJsonSchemaProperty(member.type);
-        }
-        result.definitions[model.name] = {
-            type: model.kind,
-            properties,
-            required,
-        };
-        if (model.isEntry) {
-            result.$ref = `#/definitions/${model.name}`;
+            result.definitions[model.name] = {
+                type: model.kind,
+                properties,
+                required,
+            };
+            if (model.isEntry) {
+                result.$ref = `#/definitions/${model.name}`;
+            }
         }
     }
     return result;

@@ -14,6 +14,52 @@
       },
       "required": []
     },
+    "SearchLogs": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "content",
+        "time",
+        "hostname",
+        "from",
+        "size"
+      ]
+    },
+    "SearchSamples": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ]
+    },
     "SearchLogsResult": {
       "type": "object",
       "properties": {
@@ -54,7 +100,13 @@
     "Flow": {
       "type": "object",
       "properties": {
-        "kind": {},
+        "kind": {
+          "type": "string",
+          "enum": [
+            "log",
+            "sample"
+          ]
+        },
         "log": {
           "type": "Log"
         },

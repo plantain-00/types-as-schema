@@ -1,22 +1,97 @@
 [
   {
+    "kind": "enum",
+    "name": "RequestProtocolKind",
+    "type": "string",
+    "members": {
+      "searchLogs": "search logs",
+      "searchSamples": "search samples",
+      "resaveFailedLogs": "resave failed logs"
+    }
+  },
+  {
+    "kind": "enum",
+    "name": "FlowKind",
+    "type": "string",
+    "members": {
+      "log": "log",
+      "sample": "sample"
+    }
+  },
+  {
     "kind": "object",
     "name": "RequestProtocol",
     "members": [
       {
         "name": "requestId",
-        "optional": true,
         "type": "uint32",
-        "tag": 2
+        "optional": true,
+        "tag": 1
       },
       {
         "name": "error",
-        "optional": true,
         "type": "string",
-        "tag": 3
+        "optional": true,
+        "tag": 2
       }
     ],
     "isEntry": true
+  },
+  {
+    "kind": "object",
+    "name": "SearchLogs",
+    "members": [
+      {
+        "name": "content",
+        "type": "string",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "time",
+        "type": "string",
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "hostname",
+        "type": "string",
+        "optional": false,
+        "tag": 3
+      },
+      {
+        "name": "from",
+        "type": "uint32",
+        "optional": false,
+        "tag": 4
+      },
+      {
+        "name": "size",
+        "type": "uint32",
+        "optional": false,
+        "tag": 5
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "SearchSamples",
+    "members": [
+      {
+        "name": "from",
+        "type": "string",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "optional": false,
+        "tag": 2
+      }
+    ],
+    "isEntry": false
   },
   {
     "kind": "object",
@@ -25,6 +100,7 @@
       {
         "name": "total",
         "type": "uint32",
+        "optional": false,
         "tag": 1
       },
       {
@@ -33,6 +109,7 @@
           "kind": "array",
           "element": "Log"
         },
+        "optional": false,
         "tag": 2
       }
     ],
@@ -45,15 +122,16 @@
       {
         "name": "time",
         "type": "string",
+        "optional": false,
         "tag": 1
       },
       {
         "name": "samples",
-        "optional": true,
         "type": {
           "kind": "array",
           "element": "Sample"
         },
+        "optional": true,
         "tag": 2
       }
     ],
@@ -64,17 +142,29 @@
     "name": "Flow",
     "members": [
       {
-        "name": "kind"
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "log",
+            "sample"
+          ]
+        },
+        "optional": false,
+        "tag": 1
       },
       {
         "name": "log",
         "type": "Log",
-        "optional": true
+        "optional": true,
+        "tag": 2
       },
       {
         "name": "sample",
         "type": "Sample",
-        "optional": true
+        "optional": true,
+        "tag": 3
       }
     ],
     "isEntry": false
@@ -86,21 +176,25 @@
       {
         "name": "time",
         "type": "string",
+        "optional": false,
         "tag": 1
       },
       {
         "name": "content",
         "type": "string",
+        "optional": false,
         "tag": 2
       },
       {
         "name": "filepath",
         "type": "string",
+        "optional": false,
         "tag": 3
       },
       {
         "name": "hostname",
         "type": "string",
+        "optional": false,
         "tag": 4
       }
     ],
@@ -113,12 +207,13 @@
       {
         "name": "hostname",
         "type": "string",
+        "optional": false,
         "tag": 1
       },
       {
         "name": "port",
-        "optional": true,
         "type": "uint32",
+        "optional": true,
         "tag": 2
       },
       {
@@ -128,6 +223,7 @@
           "key": "string",
           "value": "uint32"
         },
+        "optional": false,
         "tag": 3
       }
     ],
