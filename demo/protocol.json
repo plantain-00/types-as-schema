@@ -28,8 +28,7 @@
         "requestId",
         "kind"
       ],
-      "maxProperties": 3,
-      "minProperties": 2
+      "maxProperties": 3
     },
     "SearchLogs": {
       "type": "object",
@@ -60,9 +59,7 @@
         "hostname",
         "from",
         "size"
-      ],
-      "maxProperties": 5,
-      "minProperties": 5
+      ]
     },
     "SearchSamples": {
       "type": "object",
@@ -77,9 +74,7 @@
       "required": [
         "from",
         "to"
-      ],
-      "maxProperties": 2,
-      "minProperties": 2
+      ]
     },
     "ResponseProtocol": {
       "type": "object",
@@ -116,8 +111,7 @@
       "required": [
         "kind"
       ],
-      "maxProperties": 2,
-      "minProperties": 1
+      "maxProperties": 2
     },
     "Flows": {
       "type": "object",
@@ -134,9 +128,7 @@
       },
       "required": [
         "serverTime"
-      ],
-      "maxProperties": 2,
-      "minProperties": 1
+      ]
     },
     "SearchLogsResult": {
       "type": "object",
@@ -204,8 +196,7 @@
         "requestId",
         "kind"
       ],
-      "maxProperties": 3,
-      "minProperties": 2
+      "maxProperties": 3
     },
     "ResaveFailedLogsResult": {
       "type": "object",
@@ -258,9 +249,7 @@
       },
       "required": [
         "time"
-      ],
-      "maxProperties": 2,
-      "minProperties": 1
+      ]
     },
     "FlowProtocol": {
       "type": "object",
@@ -271,9 +260,7 @@
             "$ref": "#/definitions/Flow"
           }
         }
-      },
-      "maxProperties": 1,
-      "minProperties": 0
+      }
     },
     "Flow": {
       "type": "object",
@@ -319,9 +306,7 @@
         "content",
         "filepath",
         "hostname"
-      ],
-      "maxProperties": 4,
-      "minProperties": 4
+      ]
     },
     "Sample": {
       "type": "object",
@@ -346,9 +331,7 @@
       "required": [
         "hostname",
         "values"
-      ],
-      "maxProperties": 3,
-      "minProperties": 2
+      ]
     }
   }
 }

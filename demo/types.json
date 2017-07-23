@@ -24,7 +24,8 @@
       "required": [
         "requestId",
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "SearchLogs": {
       "type": "object",
@@ -51,7 +52,8 @@
         "hostname",
         "from",
         "size"
-      ]
+      ],
+      "additionalProperties": false
     },
     "SearchSamples": {
       "type": "object",
@@ -66,7 +68,8 @@
       "required": [
         "from",
         "to"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ResponseProtocol": {
       "type": "object",
@@ -102,7 +105,8 @@
       },
       "required": [
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Flows": {
       "type": "object",
@@ -120,7 +124,8 @@
       "required": [
         "serverTime",
         "flows"
-      ]
+      ],
+      "additionalProperties": false
     },
     "SearchLogsResult": {
       "type": "object",
@@ -151,7 +156,8 @@
       "required": [
         "requestId",
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "SearchSamplesResult": {
       "type": "object",
@@ -179,7 +185,8 @@
       "required": [
         "requestId",
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ResaveFailedLogsResult": {
       "type": "object",
@@ -207,7 +214,8 @@
       "required": [
         "requestId",
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "SampleFrame": {
       "type": "object",
@@ -224,7 +232,8 @@
       },
       "required": [
         "time"
-      ]
+      ],
+      "additionalProperties": false
     },
     "FlowProtocol": {
       "type": "object",
@@ -238,7 +247,8 @@
       },
       "required": [
         "flows"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Flow": {
       "type": "object",
@@ -259,7 +269,8 @@
       },
       "required": [
         "kind"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Log": {
       "type": "object",
@@ -282,7 +293,8 @@
         "content",
         "filepath",
         "hostname"
-      ]
+      ],
+      "additionalProperties": false
     },
     "Sample": {
       "type": "object",
@@ -303,7 +315,8 @@
       "required": [
         "hostname",
         "values"
-      ]
+      ],
+      "additionalProperties": false
     }
   },
   "$ref": "#/definitions/RequestProtocol"

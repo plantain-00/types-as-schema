@@ -440,6 +440,7 @@ function generateJsonSchema(models: Model[]) {
                 type: model.kind,
                 properties,
                 required,
+                additionalProperties: false,
             };
             if (model.entry) {
                 result.$ref = `#/definitions/${model.name}`;
