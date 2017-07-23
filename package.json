@@ -8,6 +8,7 @@
     "tsc": "tsc -p src/",
     "tslint": "tslint \"src/**/*.ts\"",
     "demoTest": "./bin/types-as-schema demo/types.ts --json demo/ --debug demo/debug.json --protobuf demo/types.proto",
+    "demoMatch": "./bin/types-as-schema demo/match.ts --json demo/ --debug demo/match-debug.json",
     "test": "tsc -p spec && jasmine",
     "standard": "standard \"**/*.config.js\"",
     "fix": "standard --fix \"**/*.config.js\"",
@@ -33,11 +34,13 @@
     "jasmine": "2.6.0",
     "rimraf": "2.6.1",
     "standard": "10.0.2",
-    "tslint": "5.5.0",
-    "typescript": "2.4.0"
+    "tslint": "5.5.0"
   },
   "dependencies": {
-    "minimist": "1.2.0"
+    "minimist": "1"
+  },
+  "peerDependencies": {
+    "typescript": "2"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"

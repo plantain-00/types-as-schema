@@ -1,0 +1,82 @@
+{
+  "definitions": {
+    "Groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Group"
+      }
+    },
+    "Group": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Match"
+          }
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tops": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "matches",
+        "teams",
+        "tops"
+      ],
+      "additionalProperties": false
+    },
+    "Match": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        },
+        "possibilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "number"
+              },
+              "b": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "possibilities"
+      ],
+      "additionalProperties": false
+    },
+    "Teams": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$ref": "#/definitions/Groups"
+}

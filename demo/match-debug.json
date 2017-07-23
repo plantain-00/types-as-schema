@@ -1,0 +1,101 @@
+[
+  {
+    "kind": "array",
+    "name": "Groups",
+    "type": {
+      "kind": "reference",
+      "name": "Group"
+    },
+    "entry": "match-schema.json"
+  },
+  {
+    "kind": "object",
+    "name": "Group",
+    "members": [
+      {
+        "name": "matches",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Match"
+          }
+        },
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "teams",
+        "type": {
+          "kind": "array",
+          "type": "string"
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "tops",
+        "type": {
+          "kind": "array",
+          "type": "number"
+        },
+        "optional": false,
+        "tag": 3
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "Match",
+    "members": [
+      {
+        "name": "a",
+        "type": "string",
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "b",
+        "type": "string",
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "possibilities",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "a",
+                "type": "number",
+                "optional": false,
+                "tag": 1
+              },
+              {
+                "name": "b",
+                "type": "number",
+                "optional": false,
+                "tag": 2
+              }
+            ],
+            "minProperties": 2,
+            "maxProperties": 2
+          }
+        },
+        "optional": false,
+        "tag": 3
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "array",
+    "name": "Teams",
+    "type": "string"
+  }
+]

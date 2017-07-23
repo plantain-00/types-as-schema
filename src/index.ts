@@ -74,16 +74,26 @@ async function executeCommandLine() {
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
-            const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
-            const model: ObjectModel = {
-                kind: "object",
-                name: declaration.name.text,
-                members,
-                minProperties,
-                maxProperties,
-                entry: entry ? entry.comment : undefined,
-            };
-            models.push(model);
+            if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
+                const arrayType = declaration.type as ts.ArrayTypeNode;
+                models.push({
+                    kind: "array",
+                    name: declaration.name.text,
+                    type: getType(arrayType.elementType, models),
+                    entry: entry ? entry.comment : undefined,
+                });
+            } else {
+                const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
+                models.push({
+                    kind: "object",
+                    name: declaration.name.text,
+                    members,
+                    minProperties,
+                    maxProperties,
+                    entry: entry ? entry.comment : undefined,
+                });
+            }
+
         }
     });
 
@@ -241,13 +251,21 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
                     };
                 }
             }
+        } else {
+            const { members, minProperties, maxProperties } = getMembersInfo(literal, models);
+            return {
+                kind: "object",
+                members,
+                minProperties,
+                maxProperties,
+            };
         }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
         const array = type as ts.ArrayTypeNode;
         const elementType = getType(array.elementType, models);
         return {
             kind: "array",
-            element: elementType,
+            type: elementType,
         };
     } else if (type.kind === ts.SyntaxKind.TypeReference) {
         const reference = type as ts.TypeReferenceNode;
@@ -290,7 +308,7 @@ type MapType = {
 
 type ArrayType = {
     kind: "array";
-    element: Type;
+    type: Type;
 };
 
 type EnumType = {
@@ -304,7 +322,14 @@ type ReferenceType = {
     name: string;
 };
 
-type Type = string | MapType | ArrayType | EnumType | ReferenceType;
+type ObjectType = {
+    kind: "object";
+    members: Member[];
+    minProperties: number;
+    maxProperties: number;
+};
+
+type Type = string | MapType | ArrayType | EnumType | ReferenceType | ObjectType;
 
 type Member = {
     name: string;
@@ -314,7 +339,7 @@ type Member = {
     enum?: any[];
 };
 
-type Model = EnumModel | ObjectModel;
+type Model = EnumModel | ObjectModel | ArrayModel;
 
 type EnumModel = {
     kind: "enum";
@@ -329,6 +354,13 @@ type ObjectModel = {
     members: Member[];
     minProperties: number;
     maxProperties: number;
+    entry: string | undefined;
+};
+
+type ArrayModel = {
+    kind: "array";
+    name: string;
+    type: Type;
     entry: string | undefined;
 };
 
@@ -364,7 +396,7 @@ function getProtobufProperty(memberType: Type): { modifier: string, propertyType
             propertyType = `map<${memberType.key}, ${valueType}>`;
         } else if (memberType.kind === "array") {
             modifier = "repeated ";
-            const { propertyType: elementPropertyType } = getProtobufProperty(memberType.element);
+            const { propertyType: elementPropertyType } = getProtobufProperty(memberType.type);
             propertyType = elementPropertyType;
         } else if (memberType.kind === "enum") {
             propertyType = memberType.type;
@@ -397,59 +429,82 @@ ${messages.join("\n\n")}
 `;
 }
 
-function getJsonSchemaProperty(memberType: Type) {
-    let propertyType: string | undefined;
-    let minimum: number | undefined;
-    let maximum: number | undefined;
-    let additionalProperties: any;
-    let items: any;
-    let enums: any[] | undefined;
-    let $ref: string | undefined;
+function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any {
     if (memberType === "double" || memberType === "float") {
-        propertyType = "number";
+        return {
+            type: "number",
+        };
     } else if (memberType === "uint32" || memberType === "fixed32") {
-        propertyType = "integer";
-        minimum = 0;
-        maximum = 4294967295;
+        return {
+            type: "integer",
+            minimum: 0,
+            maximum: 4294967295,
+        };
     } else if (memberType === "int32" || memberType === "sint32" || memberType === "sfixed32") {
-        propertyType = "integer";
-        minimum = -2147483648;
-        maximum = 2147483647;
+        return {
+            type: "integer",
+            minimum: -2147483648,
+            maximum: 2147483647,
+        };
     } else if (memberType === "uint64" || memberType === "fixed64") {
-        propertyType = "integer";
-        minimum = 0;
-        maximum = 18446744073709551615;
+        return {
+            type: "integer",
+            minimum: 0,
+            maximum: 18446744073709551615,
+        };
     } else if (memberType === "int64" || memberType === "sint64" || memberType === "sfixed64") {
-        propertyType = "integer";
-        minimum = -9223372036854775808;
-        maximum = 9223372036854775807;
+        return {
+            type: "integer",
+            minimum: -9223372036854775808,
+            maximum: 9223372036854775807,
+        };
     } else if (memberType === "bool") {
-        propertyType = "boolean";
+        return {
+            type: "boolean",
+        };
     } else if (memberType && typeof memberType !== "string") {
         if (memberType.kind === "map") {
-            propertyType = "object";
-            additionalProperties = getJsonSchemaProperty(memberType.value);
+            return {
+                type: "object",
+                additionalProperties: getJsonSchemaProperty(memberType.value),
+            };
         } else if (memberType.kind === "array") {
-            propertyType = "array";
-            items = getJsonSchemaProperty(memberType.element);
+            return {
+                type: "array",
+                items: getJsonSchemaProperty(memberType.type),
+            };
         } else if (memberType.kind === "enum") {
-            propertyType = typeof memberType.type === "string" ? memberType.type : "";
-            enums = memberType.enums;
+            return {
+                type: typeof memberType.type === "string" ? memberType.type : "",
+                enum: memberType.enums,
+            };
         } else if (memberType.kind === "reference") {
-            $ref = `#/definitions/${memberType.name}`;
+            return {
+                $ref: `#/definitions/${memberType.name}`,
+            };
+        } else if (memberType.kind === "object") {
+            const properties: { [name: string]: any } = {};
+            const required: string[] = [];
+            for (const member of memberType.members) {
+                if (!member.optional) {
+                    required.push(member.name);
+                }
+                properties[member.name] = getJsonSchemaProperty(member.type);
+            }
+            return {
+                type: "object",
+                properties,
+                required,
+                additionalProperties: false,
+                minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
+                maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
+            };
         }
     } else {
-        propertyType = memberType as string;
+        return {
+            type: memberType,
+        };
     }
-    return {
-        type: propertyType,
-        minimum,
-        maximum,
-        additionalProperties,
-        items,
-        enum: enums,
-        $ref,
-    };
 }
 
 function generateJsonSchema(outDir: string, models: Model[]) {
@@ -457,25 +512,10 @@ function generateJsonSchema(outDir: string, models: Model[]) {
         definitions: { [name: string]: any };
         $ref?: string;
     } = { definitions: {} };
-    const entryModels: ObjectModel[] = [];
+    const entryModels: (ObjectModel | ArrayModel)[] = [];
     for (const model of models) {
-        if (model.kind === "object") {
-            const properties: { [name: string]: any } = {};
-            const required: string[] = [];
-            for (const member of model.members) {
-                if (!member.optional) {
-                    required.push(member.name);
-                }
-                properties[member.name] = getJsonSchemaProperty(member.type);
-            }
-            result.definitions[model.name] = {
-                type: model.kind,
-                properties,
-                required,
-                additionalProperties: false,
-                minProperties: model.minProperties > model.members.filter(m => !m.optional).length ? model.minProperties : undefined,
-                maxProperties: model.maxProperties < model.members.length ? model.maxProperties : undefined,
-            };
+        if ((model.kind === "object" || model.kind === "array")) {
+            result.definitions[model.name] = getJsonSchemaProperty(model);
             if (model.entry) {
                 entryModels.push(model);
             }
