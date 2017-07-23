@@ -7,7 +7,8 @@
       "name": "Group"
     },
     "entry": "match-schema.json",
-    "uniqueItems": true
+    "uniqueItems": true,
+    "minItems": 1
   },
   {
     "kind": "object",
@@ -21,7 +22,8 @@
             "kind": "reference",
             "name": "Match"
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "optional": false,
         "tag": 1
@@ -40,7 +42,8 @@
         "type": {
           "kind": "array",
           "type": "number",
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "optional": false,
         "tag": 3
@@ -88,7 +91,8 @@
             "minProperties": 2,
             "maxProperties": 2
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "optional": false,
         "tag": 3
@@ -101,6 +105,7 @@
     "kind": "array",
     "name": "Teams",
     "type": "string",
-    "uniqueItems": true
+    "uniqueItems": true,
+    "minItems": 1
   }
 ]

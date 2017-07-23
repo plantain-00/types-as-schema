@@ -77,12 +77,14 @@ async function executeCommandLine() {
             if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
                 const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
+                const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
                 models.push({
                     kind: "array",
                     name: declaration.name.text,
                     type: getType(arrayType.elementType, models),
                     entry: entry ? entry.comment : undefined,
                     uniqueItems: uniqueItems ? true : undefined,
+                    minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
                 });
             } else {
                 const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
@@ -160,6 +162,11 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                         const arrayType = member.type as ArrayType;
                         if (arrayType) {
                             arrayType.uniqueItems = true;
+                        }
+                    } else if (propertyJsDoc.name === "minItems") {
+                        const arrayType = member.type as ArrayType;
+                        if (arrayType && propertyJsDoc.comment) {
+                            arrayType.minItems = +propertyJsDoc.comment;
                         }
                     }
                 }
@@ -316,6 +323,7 @@ type ArrayType = {
     kind: "array";
     type: Type;
     uniqueItems?: boolean;
+    minItems?: number;
 };
 
 type EnumType = {
@@ -370,6 +378,7 @@ type ArrayModel = {
     type: Type;
     entry: string | undefined;
     uniqueItems?: boolean;
+    minItems?: number;
 };
 
 type JsDoc = {
@@ -481,6 +490,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any
                 type: "array",
                 items: getJsonSchemaProperty(memberType.type),
                 uniqueItems: memberType.uniqueItems,
+                minItems: memberType.minItems,
             };
         } else if (memberType.kind === "enum") {
             return {

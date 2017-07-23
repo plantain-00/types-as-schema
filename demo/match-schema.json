@@ -5,7 +5,8 @@
       "items": {
         "$ref": "#/definitions/Group"
       },
-      "uniqueItems": true
+      "uniqueItems": true,
+      "minItems": 1
     },
     "Group": {
       "type": "object",
@@ -15,7 +16,8 @@
           "items": {
             "$ref": "#/definitions/Match"
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "teams": {
           "$ref": "#/definitions/Teams"
@@ -25,7 +27,8 @@
           "items": {
             "type": "number"
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         }
       },
       "required": [
@@ -62,7 +65,8 @@
             ],
             "additionalProperties": false
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         }
       },
       "required": [
@@ -77,7 +81,8 @@
       "items": {
         "type": "string"
       },
-      "uniqueItems": true
+      "uniqueItems": true,
+      "minItems": 1
     }
   },
   "$ref": "#/definitions/Groups"

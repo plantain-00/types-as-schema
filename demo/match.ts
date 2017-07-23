@@ -1,20 +1,22 @@
 /**
  * @entry match-schema.json
  * @uniqueItems
+ * @minItems 1
  */
 export type Groups = Group[];
 
 export type Group = {
     /**
      * @uniqueItems
+     * @minItems 1
      */
     matches: Match[];
     teams: Teams;
     /**
      * @itemType integer
      * @itemMinimum 1
-     * @minItems 1
      * @uniqueItems
+     * @minItems 1
      */
     tops: number[];
 };
@@ -23,8 +25,8 @@ export type Match = {
     a: string;
     b: string;
     /**
-     * @minItems 1
      * @uniqueItems
+     * @minItems 1
      */
     possibilities: {
         /**
@@ -40,5 +42,6 @@ export type Match = {
 
 /**
  * @uniqueItems
+ * @minItems 1
  */
 export type Teams = string[];
