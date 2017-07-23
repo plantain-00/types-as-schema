@@ -25,7 +25,8 @@
         "requestId",
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "maxProperties": 3
     },
     "SearchLogs": {
       "type": "object",
@@ -106,7 +107,8 @@
       "required": [
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "maxProperties": 2
     },
     "Flows": {
       "type": "object",
@@ -157,7 +159,9 @@
         "requestId",
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 4
     },
     "SearchSamplesResult": {
       "type": "object",
@@ -186,7 +190,8 @@
         "requestId",
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "maxProperties": 3
     },
     "ResaveFailedLogsResult": {
       "type": "object",
@@ -215,7 +220,9 @@
         "requestId",
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 4
     },
     "SampleFrame": {
       "type": "object",
@@ -270,7 +277,9 @@
       "required": [
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
     },
     "Log": {
       "type": "object",
@@ -319,5 +328,5 @@
       "additionalProperties": false
     }
   },
-  "$ref": "#/definitions/RequestProtocol"
+  "$ref": "#/definitions/FlowProtocol"
 }

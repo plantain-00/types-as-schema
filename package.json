@@ -7,7 +7,7 @@
     "clean": "rimraf dist/",
     "tsc": "tsc -p src/",
     "tslint": "tslint \"src/**/*.ts\"",
-    "demoTest": "./bin/types-as-schema demo/types.ts --json demo/types.json --debug demo/debug.json --protobuf demo/types.proto",
+    "demoTest": "./bin/types-as-schema demo/types.ts --json demo/ --debug demo/debug.json --protobuf demo/types.proto",
     "test": "tsc -p spec && jasmine",
     "standard": "standard \"**/*.config.js\"",
     "fix": "standard --fix \"**/*.config.js\"",

@@ -18,9 +18,7 @@ Genetate json scheme or protobuf file from types.
 
 #### usage
 
-run `types-as-schema`
-
-or `types-as-schema demo/types.ts --json demo/types.json --protobuf demo/types.proto --debug demo/debug.json`
+`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json`
 
 #### jsDoc
 
@@ -29,4 +27,4 @@ code | description
 `@tag 1` | protobuf tag
 `@type uint32` | more detailed type
 `@mapValueType uint32` | more detailed type of a map type value
-`@entry` | the entry type, used for json schema
+`@entry request-protocol.json` | the entry type, used for json schema

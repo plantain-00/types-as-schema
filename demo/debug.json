@@ -82,7 +82,9 @@
         "tag": 4
       }
     ],
-    "entry": "request-protocol"
+    "minProperties": 2,
+    "maxProperties": 3,
+    "entry": "request-protocol.json"
   },
   {
     "kind": "object",
@@ -118,7 +120,9 @@
         "optional": false,
         "tag": 5
       }
-    ]
+    ],
+    "minProperties": 5,
+    "maxProperties": 5
   },
   {
     "kind": "object",
@@ -136,7 +140,9 @@
         "optional": false,
         "tag": 2
       }
-    ]
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
   },
   {
     "kind": "object",
@@ -206,7 +212,10 @@
         "optional": true,
         "tag": 6
       }
-    ]
+    ],
+    "minProperties": 1,
+    "maxProperties": 2,
+    "entry": "response-protocol.json"
   },
   {
     "kind": "object",
@@ -230,7 +239,9 @@
         "optional": false,
         "tag": 2
       }
-    ]
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
   },
   {
     "kind": "object",
@@ -279,7 +290,9 @@
         "optional": true,
         "tag": 5
       }
-    ]
+    ],
+    "minProperties": 3,
+    "maxProperties": 4
   },
   {
     "kind": "object",
@@ -322,7 +335,9 @@
         "optional": true,
         "tag": 4
       }
-    ]
+    ],
+    "minProperties": 2,
+    "maxProperties": 3
   },
   {
     "kind": "object",
@@ -365,7 +380,9 @@
         "optional": true,
         "tag": 5
       }
-    ]
+    ],
+    "minProperties": 3,
+    "maxProperties": 4
   },
   {
     "kind": "object",
@@ -389,7 +406,9 @@
         "optional": true,
         "tag": 2
       }
-    ]
+    ],
+    "minProperties": 1,
+    "maxProperties": 2
   },
   {
     "kind": "object",
@@ -407,7 +426,10 @@
         "optional": false,
         "tag": 1
       }
-    ]
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "entry": "flow-protocol.json"
   },
   {
     "kind": "object",
@@ -444,7 +466,9 @@
         "optional": true,
         "tag": 3
       }
-    ]
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
   },
   {
     "kind": "object",
@@ -474,7 +498,9 @@
         "optional": false,
         "tag": 4
       }
-    ]
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
   },
   {
     "kind": "object",
@@ -502,6 +528,8 @@
         "optional": false,
         "tag": 3
       }
-    ]
+    ],
+    "minProperties": 2,
+    "maxProperties": 3
   }
 ]

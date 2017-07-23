@@ -1,5 +1,5 @@
 /**
- * @entry request-protocol
+ * @entry request-protocol.json
  */
 export type RequestProtocol = {
     requestId: number;
@@ -34,6 +34,9 @@ type SearchSamples = {
     to: string;
 };
 
+/**
+ * @entry response-protocol.json
+ */
 export type ResponseProtocol =
     {
         kind: ProtocolKind.flows,
@@ -113,6 +116,9 @@ export type SampleFrame = {
     samples?: Sample[];
 };
 
+/**
+ * @entry flow-protocol.json
+ */
 export type FlowProtocol = {
     flows: Flow[];
 };

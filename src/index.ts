@@ -1,6 +1,7 @@
 import * as minimist from "minimist";
 import * as ts from "typescript";
 import * as fs from "fs";
+import * as path from "path";
 import * as packageJson from "../package.json";
 
 async function executeCommandLine() {
@@ -73,10 +74,13 @@ async function executeCommandLine() {
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
+            const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
             const model: ObjectModel = {
                 kind: "object",
                 name: declaration.name.text,
-                members: getMembers(declaration.type, models),
+                members,
+                minProperties,
+                maxProperties,
                 entry: entry ? entry.comment : undefined,
             };
             models.push(model);
@@ -92,12 +96,20 @@ async function executeCommandLine() {
     }
 
     if (jsonPath) {
-        fs.writeFileSync(jsonPath, JSON.stringify(generateJsonSchema(models), null, "  "));
+        generateJsonSchema(jsonPath, models);
     }
 }
 
-function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
+type MembersInfo = {
+    members: Member[];
+    minProperties: number;
+    maxProperties: number;
+};
+
+function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     const members: Member[] = [];
+    let minProperties = 0;
+    let maxProperties = 0;
     let lastTag = 0;
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
         const typeLiteral = node as ts.TypeLiteralNode;
@@ -115,7 +127,10 @@ function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
 
                 if (property.questionToken) {
                     member.optional = true;
+                } else {
+                    minProperties++;
                 }
+                maxProperties++;
 
                 if (property.type) {
                     member.type = getType(property.type, models);
@@ -141,8 +156,16 @@ function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
         }
     } else if (node.kind === ts.SyntaxKind.UnionType) {
         const unionType = node as ts.UnionTypeNode;
+        minProperties = Infinity;
         for (const type of unionType.types) {
-            const childMembers = getMembers(type, models);
+            const childMembersInfo = getMembersInfo(type, models);
+            if (minProperties > childMembersInfo.minProperties) {
+                minProperties = childMembersInfo.minProperties;
+            }
+            if (maxProperties < childMembersInfo.maxProperties) {
+                maxProperties = childMembersInfo.maxProperties;
+            }
+            const childMembers = childMembersInfo.members;
             if (members.length === 0) {
                 members.push(...childMembers);
                 lastTag = childMembers[childMembers.length - 1].tag;
@@ -165,7 +188,10 @@ function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
     } else if (node.kind === ts.SyntaxKind.IntersectionType) {
         const intersectionType = node as ts.IntersectionTypeNode;
         for (const type of intersectionType.types) {
-            const childMembers = getMembers(type, models);
+            const childMembersInfo = getMembersInfo(type, models);
+            minProperties += childMembersInfo.minProperties;
+            maxProperties += childMembersInfo.maxProperties;
+            const childMembers = childMembersInfo.members;
             for (const member of childMembers) {
                 if (members.every(m => m.name !== member.name)) {
                     members.push(member);
@@ -176,14 +202,17 @@ function getMembers(node: ts.TypeNode, models: Model[]): Member[] {
         }
     } else if (node.kind === ts.SyntaxKind.ParenthesizedType) {
         const parenthesizedType = node as ts.ParenthesizedTypeNode;
-        const childMembers = getMembers(parenthesizedType.type, models);
+        const childMembersInfo = getMembersInfo(parenthesizedType.type, models);
+        minProperties = childMembersInfo.minProperties;
+        maxProperties = childMembersInfo.maxProperties;
+        const childMembers = childMembersInfo.members;
         for (const member of childMembers) {
             members.push(member);
             member.tag = lastTag + 1;
             lastTag = member.tag;
         }
     }
-    return members;
+    return { members, minProperties, maxProperties };
 }
 
 function getExpressType(type: ts.Expression): Type {
@@ -298,6 +327,8 @@ type ObjectModel = {
     kind: "object";
     name: string;
     members: Member[];
+    minProperties: number;
+    maxProperties: number;
     entry: string | undefined;
 };
 
@@ -421,11 +452,12 @@ function getJsonSchemaProperty(memberType: Type) {
     };
 }
 
-function generateJsonSchema(models: Model[]) {
+function generateJsonSchema(outDir: string, models: Model[]) {
     const result: {
         definitions: { [name: string]: any };
         $ref?: string;
     } = { definitions: {} };
+    const entryModels: ObjectModel[] = [];
     for (const model of models) {
         if (model.kind === "object") {
             const properties: { [name: string]: any } = {};
@@ -441,13 +473,20 @@ function generateJsonSchema(models: Model[]) {
                 properties,
                 required,
                 additionalProperties: false,
+                minProperties: model.minProperties > model.members.filter(m => !m.optional).length ? model.minProperties : undefined,
+                maxProperties: model.maxProperties < model.members.length ? model.maxProperties : undefined,
             };
             if (model.entry) {
-                result.$ref = `#/definitions/${model.name}`;
+                entryModels.push(model);
             }
         }
     }
-    return result;
+    const resultString = JSON.stringify(result);
+    for (const model of entryModels) {
+        const newResult: typeof result = JSON.parse(resultString);
+        newResult.$ref = `#/definitions/${model.name}`;
+        fs.writeFileSync(path.resolve(outDir, model.entry), JSON.stringify(newResult, null, "  "));
+    }
 }
 
 executeCommandLine().then(() => {
