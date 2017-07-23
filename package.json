@@ -37,7 +37,8 @@
     "tslint": "5.5.0"
   },
   "dependencies": {
-    "minimist": "1"
+    "minimist": "1",
+    "typescript": "2"
   },
   "peerDependencies": {
     "typescript": "2"
