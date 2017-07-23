@@ -76,11 +76,13 @@ async function executeCommandLine() {
             const declaration = node as ts.TypeAliasDeclaration;
             if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
+                const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
                 models.push({
                     kind: "array",
                     name: declaration.name.text,
                     type: getType(arrayType.elementType, models),
                     entry: entry ? entry.comment : undefined,
+                    uniqueItems: uniqueItems ? true : undefined,
                 });
             } else {
                 const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
@@ -93,7 +95,6 @@ async function executeCommandLine() {
                     entry: entry ? entry.comment : undefined,
                 });
             }
-
         }
     });
 
@@ -155,6 +156,11 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                         (member.type as MapType).value = propertyJsDoc.comment;
                     } else if (propertyJsDoc.name === "type" && propertyJsDoc.comment) {
                         member.type = propertyJsDoc.comment;
+                    } else if (propertyJsDoc.name === "uniqueItems") {
+                        const arrayType = member.type as ArrayType;
+                        if (arrayType) {
+                            arrayType.uniqueItems = true;
+                        }
                     }
                 }
 
@@ -309,6 +315,7 @@ type MapType = {
 type ArrayType = {
     kind: "array";
     type: Type;
+    uniqueItems?: boolean;
 };
 
 type EnumType = {
@@ -362,6 +369,7 @@ type ArrayModel = {
     name: string;
     type: Type;
     entry: string | undefined;
+    uniqueItems?: boolean;
 };
 
 type JsDoc = {
@@ -472,6 +480,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any
             return {
                 type: "array",
                 items: getJsonSchemaProperty(memberType.type),
+                uniqueItems: memberType.uniqueItems,
             };
         } else if (memberType.kind === "enum") {
             return {

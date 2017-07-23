@@ -22,9 +22,13 @@ Genetate json scheme or protobuf file from types.
 
 #### jsDoc
 
-code | description
---- | ---
-`@tag 1` | protobuf tag
-`@type uint32` | more detailed type
-`@mapValueType uint32` | more detailed type of a map type value
-`@entry request-protocol.json` | the entry type, used for json schema
+code | use case | description
+--- | --- | ---
+`@tag 1` | protobuf | tag or id
+`@type uint32` | protobuf and json schema | set `type = "uint32"`
+`@mapValueType uint32` | protobuf and json schema | more detailed type of a map type value
+`@entry request-protocol.json` | json schema | the entry file name
+`@uniqueItems` | json schema  | set `uniqueItems = true`
+`@minItems 1` | json schema | set `minItems = 1`
+`@itemType integer` | json schema | set item `type = "integer"`
+`@itemMinimum 1` | json schema | set item `minimum = 1`

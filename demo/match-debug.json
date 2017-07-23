@@ -6,7 +6,8 @@
       "kind": "reference",
       "name": "Group"
     },
-    "entry": "match-schema.json"
+    "entry": "match-schema.json",
+    "uniqueItems": true
   },
   {
     "kind": "object",
@@ -19,7 +20,8 @@
           "type": {
             "kind": "reference",
             "name": "Match"
-          }
+          },
+          "uniqueItems": true
         },
         "optional": false,
         "tag": 1
@@ -27,8 +29,8 @@
       {
         "name": "teams",
         "type": {
-          "kind": "array",
-          "type": "string"
+          "kind": "reference",
+          "name": "Teams"
         },
         "optional": false,
         "tag": 2
@@ -37,7 +39,8 @@
         "name": "tops",
         "type": {
           "kind": "array",
-          "type": "number"
+          "type": "number",
+          "uniqueItems": true
         },
         "optional": false,
         "tag": 3
@@ -71,20 +74,21 @@
             "members": [
               {
                 "name": "a",
-                "type": "number",
+                "type": "integer",
                 "optional": false,
                 "tag": 1
               },
               {
                 "name": "b",
-                "type": "number",
+                "type": "integer",
                 "optional": false,
                 "tag": 2
               }
             ],
             "minProperties": 2,
             "maxProperties": 2
-          }
+          },
+          "uniqueItems": true
         },
         "optional": false,
         "tag": 3
@@ -96,6 +100,7 @@
   {
     "kind": "array",
     "name": "Teams",
-    "type": "string"
+    "type": "string",
+    "uniqueItems": true
   }
 ]

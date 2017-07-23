@@ -4,7 +4,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Group"
-      }
+      },
+      "uniqueItems": true
     },
     "Group": {
       "type": "object",
@@ -13,19 +14,18 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Match"
-          }
+          },
+          "uniqueItems": true
         },
         "teams": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/definitions/Teams"
         },
         "tops": {
           "type": "array",
           "items": {
             "type": "number"
-          }
+          },
+          "uniqueItems": true
         }
       },
       "required": [
@@ -50,10 +50,10 @@
             "type": "object",
             "properties": {
               "a": {
-                "type": "number"
+                "type": "integer"
               },
               "b": {
-                "type": "number"
+                "type": "integer"
               }
             },
             "required": [
@@ -61,7 +61,8 @@
               "b"
             ],
             "additionalProperties": false
-          }
+          },
+          "uniqueItems": true
         }
       },
       "required": [
@@ -75,7 +76,8 @@
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "uniqueItems": true
     }
   },
   "$ref": "#/definitions/Groups"

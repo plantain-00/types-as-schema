@@ -177,7 +177,7 @@
         "name": "historySamples",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "SampleFrame"
           }
@@ -231,7 +231,7 @@
         "name": "flows",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "Flow"
           }
@@ -276,7 +276,7 @@
         "name": "logs",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "Log"
           }
@@ -321,7 +321,7 @@
         "name": "searchSampleResult",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "SampleFrame"
           }
@@ -398,7 +398,7 @@
         "name": "samples",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "Sample"
           }
@@ -418,7 +418,7 @@
         "name": "flows",
         "type": {
           "kind": "array",
-          "element": {
+          "type": {
             "kind": "reference",
             "name": "Flow"
           }
