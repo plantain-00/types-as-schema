@@ -11,6 +11,27 @@
   },
   {
     "kind": "enum",
+    "name": "ProtocolKind",
+    "type": "string",
+    "members": {
+      "flows": "flows",
+      "historySamples": "history samples",
+      "searchLogsResult": "search logs result",
+      "searchSamplesResult": "search samples result",
+      "resaveFailedLogsResult": "resave failed logs result"
+    }
+  },
+  {
+    "kind": "enum",
+    "name": "ResultKind",
+    "type": "string",
+    "members": {
+      "success": "success",
+      "fail": "fail"
+    }
+  },
+  {
+    "kind": "enum",
     "name": "FlowKind",
     "type": "string",
     "members": {
@@ -21,20 +42,7 @@
   {
     "kind": "object",
     "name": "RequestProtocol",
-    "members": [
-      {
-        "name": "requestId",
-        "type": "uint32",
-        "optional": true,
-        "tag": 1
-      },
-      {
-        "name": "error",
-        "type": "string",
-        "optional": true,
-        "tag": 2
-      }
-    ],
+    "members": [],
     "isEntry": true
   },
   {
@@ -61,13 +69,13 @@
       },
       {
         "name": "from",
-        "type": "uint32",
+        "type": "number",
         "optional": false,
         "tag": 4
       },
       {
         "name": "size",
-        "type": "uint32",
+        "type": "number",
         "optional": false,
         "tag": 5
       }
@@ -95,24 +103,98 @@
   },
   {
     "kind": "object",
-    "name": "SearchLogsResult",
+    "name": "ResponseProtocol",
     "members": [
       {
-        "name": "total",
-        "type": "uint32",
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "flows",
+            "history samples",
+            "search logs result",
+            "search samples result",
+            "resave failed logs result"
+          ]
+        },
         "optional": false,
         "tag": 1
       },
       {
-        "name": "logs",
+        "name": "flows",
+        "type": "Flows",
+        "optional": true,
+        "tag": 2
+      },
+      {
+        "name": "historySamples",
         "type": {
           "kind": "array",
-          "element": "Log"
+          "element": "SampleFrame"
         },
+        "optional": true,
+        "tag": 3
+      },
+      {
+        "name": "searchLogsResult",
+        "type": "SearchLogsResult",
+        "optional": true,
+        "tag": 4
+      },
+      {
+        "name": "searchSamplesResult",
+        "type": "SearchSamplesResult",
+        "optional": true,
+        "tag": 5
+      },
+      {
+        "name": "resaveFailedLogsResult",
+        "type": "ResaveFailedLogsResult",
+        "optional": true,
+        "tag": 6
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "Flows",
+    "members": [
+      {
+        "name": "serverTime",
+        "type": "string",
         "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "flows",
+        "type": {
+          "kind": "array",
+          "element": "Flow"
+        },
+        "optional": true,
         "tag": 2
       }
     ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "SearchLogsResult",
+    "members": [],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "SearchSamplesResult",
+    "members": [],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "ResaveFailedLogsResult",
+    "members": [],
     "isEntry": false
   },
   {
@@ -133,6 +215,22 @@
         },
         "optional": true,
         "tag": 2
+      }
+    ],
+    "isEntry": false
+  },
+  {
+    "kind": "object",
+    "name": "FlowProtocol",
+    "members": [
+      {
+        "name": "flows",
+        "type": {
+          "kind": "array",
+          "element": "Flow"
+        },
+        "optional": true,
+        "tag": 1
       }
     ],
     "isEntry": false
@@ -212,7 +310,7 @@
       },
       {
         "name": "port",
-        "type": "uint32",
+        "type": "number",
         "optional": true,
         "tag": 2
       },
@@ -221,7 +319,7 @@
         "type": {
           "kind": "map",
           "key": "string",
-          "value": "uint32"
+          "value": "number"
         },
         "optional": false,
         "tag": 3

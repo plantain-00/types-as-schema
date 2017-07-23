@@ -315,25 +315,20 @@ function generateProtobuf(models: Model[]) {
         if (model.kind === "object") {
             const members: string[] = [];
             for (const member of model.members) {
-                let modifier: string;
-                let propertyType: Type;
+                let modifier = "";
+                let propertyType: Type = "";
                 if (typeof member.type !== "string") {
                     if (member.type.kind === "map") {
-                        modifier = "";
-                        propertyType = `map<${member.type.key}, ${member.type.value}>`;
+                        const valueType = member.type.value === "number" ? "uint32" : member.type.value;
+                        propertyType = `map<${member.type.key}, ${valueType}>`;
                     } else if (member.type.kind === "array") {
                         modifier = "repeated ";
                         propertyType = member.type.element;
                     } else if (member.type.kind === "enum") {
-                        modifier = "";
                         propertyType = member.type.type;
-                    } else {
-                        modifier = "";
-                        propertyType = "";
                     }
                 } else {
-                    modifier = "";
-                    propertyType = member.type!;
+                    propertyType = member.type === "number" ? "uint32" : member.type!;
                 }
                 members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag};`);
             }

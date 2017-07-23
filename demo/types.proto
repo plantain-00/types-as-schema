@@ -1,8 +1,7 @@
 syntax = "proto3";
 
 message RequestProtocol {
-    uint32 requestId = 1;
-    string error = 2;
+
 }
 
 message SearchLogs {
@@ -18,14 +17,39 @@ message SearchSamples {
     string to = 2;
 }
 
+message ResponseProtocol {
+    string kind = 1;
+    Flows flows = 2;
+    repeated SampleFrame historySamples = 3;
+    SearchLogsResult searchLogsResult = 4;
+    SearchSamplesResult searchSamplesResult = 5;
+    ResaveFailedLogsResult resaveFailedLogsResult = 6;
+}
+
+message Flows {
+    string serverTime = 1;
+    repeated Flow flows = 2;
+}
+
 message SearchLogsResult {
-    uint32 total = 1;
-    repeated Log logs = 2;
+
+}
+
+message SearchSamplesResult {
+
+}
+
+message ResaveFailedLogsResult {
+
 }
 
 message SampleFrame {
     string time = 1;
     repeated Sample samples = 2;
+}
+
+message FlowProtocol {
+    repeated Flow flows = 1;
 }
 
 message Flow {

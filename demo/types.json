@@ -2,16 +2,7 @@
   "definitions": {
     "RequestProtocol": {
       "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295
-        },
-        "error": {
-          "type": "string"
-        }
-      },
+      "properties": {},
       "required": []
     },
     "SearchLogs": {
@@ -27,14 +18,10 @@
           "type": "string"
         },
         "from": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295
+          "type": "number"
         },
         "size": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295
+          "type": "number"
         }
       },
       "required": [
@@ -60,25 +47,73 @@
         "to"
       ]
     },
-    "SearchLogsResult": {
+    "ResponseProtocol": {
       "type": "object",
       "properties": {
-        "total": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295
+        "kind": {
+          "type": "string",
+          "enum": [
+            "flows",
+            "history samples",
+            "search logs result",
+            "search samples result",
+            "resave failed logs result"
+          ]
         },
-        "logs": {
+        "flows": {
+          "type": "Flows"
+        },
+        "historySamples": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Log"
+            "$ref": "#/definitions/SampleFrame"
+          }
+        },
+        "searchLogsResult": {
+          "type": "SearchLogsResult"
+        },
+        "searchSamplesResult": {
+          "type": "SearchSamplesResult"
+        },
+        "resaveFailedLogsResult": {
+          "type": "ResaveFailedLogsResult"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    },
+    "Flows": {
+      "type": "object",
+      "properties": {
+        "serverTime": {
+          "type": "string"
+        },
+        "flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Flow"
           }
         }
       },
       "required": [
-        "total",
-        "logs"
+        "serverTime"
       ]
+    },
+    "SearchLogsResult": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "SearchSamplesResult": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "ResaveFailedLogsResult": {
+      "type": "object",
+      "properties": {},
+      "required": []
     },
     "SampleFrame": {
       "type": "object",
@@ -96,6 +131,18 @@
       "required": [
         "time"
       ]
+    },
+    "FlowProtocol": {
+      "type": "object",
+      "properties": {
+        "flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Flow"
+          }
+        }
+      },
+      "required": []
     },
     "Flow": {
       "type": "object",
@@ -148,16 +195,12 @@
           "type": "string"
         },
         "port": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295
+          "type": "number"
         },
         "values": {
           "type": "object",
           "additionalProperties": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 4294967295
+            "type": "number"
           }
         }
       },
