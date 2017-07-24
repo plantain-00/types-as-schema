@@ -1,15 +1,56 @@
-export interface Foo {
+// type literal
+type TypeLiteral = {
+    typeLiteralMember1: number;
+    typeLiteralMember2: string;
+};
+
+// interface
+interface Interface {
+    interfaceMember1: number;
+    interfaceMember2: string;
+}
+
+// type union
+type TypeUnion = TypeLiteral | {
+    typeUnionMember1: number;
+    typeUnionMember2: string;
+};
+
+// interface extends
+interface InterfaceExtends extends Interface {
+    interfaceExtendsMember1: number;
+    interfaceExtendsMember2: string;
+}
+
+// type intersection
+type TypeIntersection = Interface & {
+    typeIntersectionMember1: number;
+    typeIntersectionMember2: string;
+};
+
+// type array
+type TypeArray = TypeLiteral[];
+
+// map type
+type MapType = { [name: string]: TypeLiteral };
+
+// tagged field
+export type TaggedField = {
     /**
      * @tag 2
      */
-    bar: number;
-    baz: string;
-}
+    taggedFieldMember1: number;
+    /**
+     * @tag 3
+     */
+    taggedFieldMember2: string;
+};
 
+// marked as more precise type
 /**
  * @entry cases.json
  */
-export type Foo2 = {
+export type PreciseType = {
     booleanBar: boolean;
 
     stringBar: string;
@@ -72,5 +113,12 @@ export type Foo2 = {
      */
     doubleBar: number;
 
-    referenceBar: Foo;
+    typeLiteral: TypeLiteral;
+    interface: Interface;
+    typeUnion: TypeUnion;
+    interfaceExtends: InterfaceExtends;
+    typeIntersection: TypeIntersection;
+    typeArray: TypeArray;
+    mapType: MapType;
+    taggedField: TaggedField;
 };

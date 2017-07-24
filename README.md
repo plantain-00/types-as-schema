@@ -7,10 +7,22 @@
 # types-as-schema
 Genetate json scheme or protobuf file from types.
 
-#### features
+#### supported types features
 
-+ generate json schema file
-+ generate protobuf file
++ type literal
++ interface
++ type union
++ interface extends
++ type intersection
++ type array
++ tagged field
++ marked as more precise type
+
+#### supported types features
+
++ class
++ function
++ variable statement
 
 #### install
 

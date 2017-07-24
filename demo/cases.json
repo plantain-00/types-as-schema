@@ -1,7 +1,7 @@
 {
-  "$ref": "#/definitions/Foo2",
+  "$ref": "#/definitions/PreciseType",
   "definitions": {
-    "Foo2": {
+    "PreciseType": {
       "type": "object",
       "properties": {
         "booleanBar": {
@@ -72,8 +72,29 @@
         "doubleBar": {
           "type": "number"
         },
-        "referenceBar": {
-          "$ref": "#/definitions/Foo"
+        "typeLiteral": {
+          "$ref": "#/definitions/TypeLiteral"
+        },
+        "interface": {
+          "$ref": "#/definitions/Interface"
+        },
+        "typeUnion": {
+          "$ref": "#/definitions/TypeUnion"
+        },
+        "interfaceExtends": {
+          "$ref": "#/definitions/InterfaceExtends"
+        },
+        "typeIntersection": {
+          "$ref": "#/definitions/TypeIntersection"
+        },
+        "typeArray": {
+          "$ref": "#/definitions/TypeArray"
+        },
+        "mapType": {
+          "$ref": "#/definitions/MapType"
+        },
+        "taggedField": {
+          "$ref": "#/definitions/TaggedField"
         }
       },
       "required": [
@@ -93,23 +114,130 @@
         "sfixed64Bar",
         "floatBar",
         "doubleBar",
-        "referenceBar"
+        "typeLiteral",
+        "interface",
+        "typeUnion",
+        "interfaceExtends",
+        "typeIntersection",
+        "typeArray",
+        "mapType",
+        "taggedField"
       ],
       "additionalProperties": false
     },
-    "Foo": {
+    "TypeLiteral": {
       "type": "object",
       "properties": {
-        "bar": {
+        "typeLiteralMember1": {
           "type": "number"
         },
-        "baz": {
+        "typeLiteralMember2": {
           "type": "string"
         }
       },
       "required": [
-        "bar",
-        "baz"
+        "typeLiteralMember1",
+        "typeLiteralMember2"
+      ],
+      "additionalProperties": false
+    },
+    "Interface": {
+      "type": "object",
+      "properties": {
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "interfaceMember1",
+        "interfaceMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeUnion": {
+      "type": "object",
+      "properties": {
+        "typeUnionMember1": {
+          "type": "number"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeUnionMember1",
+        "typeUnionMember2"
+      ],
+      "additionalProperties": false
+    },
+    "InterfaceExtends": {
+      "type": "object",
+      "properties": {
+        "interfaceExtendsMember1": {
+          "type": "number"
+        },
+        "interfaceExtendsMember2": {
+          "type": "string"
+        },
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "interfaceExtendsMember1",
+        "interfaceExtendsMember2",
+        "interfaceMember1",
+        "interfaceMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeIntersection": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "typeIntersectionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TypeLiteral"
+      }
+    },
+    "MapType": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "TaggedField": {
+      "type": "object",
+      "properties": {
+        "taggedFieldMember1": {
+          "type": "number"
+        },
+        "taggedFieldMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "taggedFieldMember1",
+        "taggedFieldMember2"
       ],
       "additionalProperties": false
     }

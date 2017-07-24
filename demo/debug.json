@@ -48,9 +48,7 @@
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "kind",
@@ -62,9 +60,7 @@
             "search samples",
             "resave failed logs"
           ]
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "searchLogs",
@@ -72,8 +68,7 @@
           "kind": "reference",
           "name": "SearchLogs"
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       },
       {
         "name": "searchSamples",
@@ -81,8 +76,7 @@
           "kind": "reference",
           "name": "SearchSamples"
         },
-        "optional": true,
-        "tag": 4
+        "optional": true
       }
     ],
     "minProperties": 2,
@@ -97,43 +91,33 @@
         "name": "content",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "time",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "hostname",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 3
+        }
       },
       {
         "name": "from",
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 4
+        }
       },
       {
         "name": "size",
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 5
+        }
       }
     ],
     "minProperties": 5,
@@ -147,17 +131,13 @@
         "name": "from",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "to",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 2
+        }
       }
     ],
     "minProperties": 2,
@@ -179,9 +159,7 @@
             "search samples result",
             "resave failed logs result"
           ]
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "flows",
@@ -189,8 +167,7 @@
           "kind": "reference",
           "name": "Flows"
         },
-        "optional": true,
-        "tag": 2
+        "optional": true
       },
       {
         "name": "historySamples",
@@ -201,8 +178,7 @@
             "name": "SampleFrame"
           }
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       },
       {
         "name": "searchLogsResult",
@@ -210,8 +186,7 @@
           "kind": "reference",
           "name": "SearchLogsResult"
         },
-        "optional": true,
-        "tag": 4
+        "optional": true
       },
       {
         "name": "searchSamplesResult",
@@ -219,8 +194,7 @@
           "kind": "reference",
           "name": "SearchSamplesResult"
         },
-        "optional": true,
-        "tag": 5
+        "optional": true
       },
       {
         "name": "resaveFailedLogsResult",
@@ -228,8 +202,7 @@
           "kind": "reference",
           "name": "ResaveFailedLogsResult"
         },
-        "optional": true,
-        "tag": 6
+        "optional": true
       }
     ],
     "minProperties": 1,
@@ -244,9 +217,7 @@
         "name": "serverTime",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "flows",
@@ -256,9 +227,7 @@
             "kind": "reference",
             "name": "Flow"
           }
-        },
-        "optional": false,
-        "tag": 2
+        }
       }
     ],
     "minProperties": 2,
@@ -273,9 +242,7 @@
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "kind",
@@ -286,9 +253,7 @@
             "success",
             "fail"
           ]
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "total",
@@ -296,8 +261,7 @@
           "kind": "number",
           "type": "uint32"
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       },
       {
         "name": "logs",
@@ -308,16 +272,14 @@
             "name": "Log"
           }
         },
-        "optional": true,
-        "tag": 4
+        "optional": true
       },
       {
         "name": "error",
         "type": {
           "kind": "string"
         },
-        "optional": true,
-        "tag": 5
+        "optional": true
       }
     ],
     "minProperties": 3,
@@ -332,9 +294,7 @@
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "kind",
@@ -345,9 +305,7 @@
             "success",
             "fail"
           ]
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "searchSampleResult",
@@ -358,16 +316,14 @@
             "name": "SampleFrame"
           }
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       },
       {
         "name": "error",
         "type": {
           "kind": "string"
         },
-        "optional": true,
-        "tag": 4
+        "optional": true
       }
     ],
     "minProperties": 2,
@@ -382,9 +338,7 @@
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "kind",
@@ -395,9 +349,7 @@
             "success",
             "fail"
           ]
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "savedCount",
@@ -405,8 +357,7 @@
           "kind": "number",
           "type": "uint32"
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       },
       {
         "name": "totalCount",
@@ -414,16 +365,14 @@
           "kind": "number",
           "type": "uint32"
         },
-        "optional": true,
-        "tag": 4
+        "optional": true
       },
       {
         "name": "error",
         "type": {
           "kind": "string"
         },
-        "optional": true,
-        "tag": 5
+        "optional": true
       }
     ],
     "minProperties": 3,
@@ -437,9 +386,7 @@
         "name": "time",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "samples",
@@ -450,8 +397,7 @@
             "name": "Sample"
           }
         },
-        "optional": true,
-        "tag": 2
+        "optional": true
       }
     ],
     "minProperties": 1,
@@ -469,9 +415,7 @@
             "kind": "reference",
             "name": "Flow"
           }
-        },
-        "optional": false,
-        "tag": 1
+        }
       }
     ],
     "minProperties": 1,
@@ -491,9 +435,7 @@
             "log",
             "sample"
           ]
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "log",
@@ -501,8 +443,7 @@
           "kind": "reference",
           "name": "Log"
         },
-        "optional": true,
-        "tag": 2
+        "optional": true
       },
       {
         "name": "sample",
@@ -510,8 +451,7 @@
           "kind": "reference",
           "name": "Sample"
         },
-        "optional": true,
-        "tag": 3
+        "optional": true
       }
     ],
     "minProperties": 2,
@@ -525,33 +465,25 @@
         "name": "time",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "content",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "filepath",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 3
+        }
       },
       {
         "name": "hostname",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 4
+        }
       }
     ],
     "minProperties": 4,
@@ -565,9 +497,7 @@
         "name": "hostname",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "port",
@@ -575,8 +505,7 @@
           "kind": "number",
           "type": "uint32"
         },
-        "optional": true,
-        "tag": 2
+        "optional": true
       },
       {
         "name": "values",
@@ -589,9 +518,7 @@
             "kind": "number",
             "type": "uint32"
           }
-        },
-        "optional": false,
-        "tag": 3
+        }
       }
     ],
     "minProperties": 2,

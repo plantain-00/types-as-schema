@@ -24,18 +24,14 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "teams",
         "type": {
           "kind": "reference",
           "name": "Teams"
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "tops",
@@ -48,9 +44,7 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        },
-        "optional": false,
-        "tag": 3
+        }
       }
     ],
     "minProperties": 3,
@@ -64,17 +58,13 @@
         "name": "a",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "b",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "possibilities",
@@ -88,18 +78,14 @@
                 "type": {
                   "kind": "number",
                   "type": "integer"
-                },
-                "optional": false,
-                "tag": 1
+                }
               },
               {
                 "name": "b",
                 "type": {
                   "kind": "number",
                   "type": "integer"
-                },
-                "optional": false,
-                "tag": 2
+                }
               }
             ],
             "minProperties": 2,
@@ -107,9 +93,7 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        },
-        "optional": false,
-        "tag": 3
+        }
       }
     ],
     "minProperties": 3,

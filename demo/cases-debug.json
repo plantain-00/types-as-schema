@@ -1,23 +1,154 @@
 [
   {
     "kind": "object",
-    "name": "Foo",
+    "name": "TypeLiteral",
     "members": [
       {
-        "name": "bar",
+        "name": "typeLiteralMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "typeLiteralMember2",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Interface",
+    "members": [
+      {
+        "name": "interfaceMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "interfaceMember2",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "TypeUnion",
+    "members": [
+      {
+        "name": "typeUnionMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "typeUnionMember2",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "InterfaceExtends",
+    "members": [
+      {
+        "name": "interfaceExtendsMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "interfaceExtendsMember2",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "interfaceMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "interfaceMember2",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "TypeIntersection",
+    "members": [
+      {
+        "name": "typeIntersectionMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "typeIntersectionMember2",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "array",
+    "name": "TypeArray",
+    "type": {
+      "kind": "reference",
+      "name": "TypeLiteral"
+    }
+  },
+  {
+    "kind": "object",
+    "name": "MapType",
+    "members": [],
+    "minProperties": 0,
+    "maxProperties": 0
+  },
+  {
+    "kind": "object",
+    "name": "TaggedField",
+    "members": [
+      {
+        "name": "taggedFieldMember1",
         "type": {
           "kind": "number",
           "type": "number"
         },
-        "optional": false,
         "tag": 2
       },
       {
-        "name": "baz",
+        "name": "taggedFieldMember2",
         "type": {
           "kind": "string"
         },
-        "optional": false,
         "tag": 3
       }
     ],
@@ -26,162 +157,177 @@
   },
   {
     "kind": "object",
-    "name": "Foo2",
+    "name": "PreciseType",
     "members": [
       {
         "name": "booleanBar",
         "type": {
           "kind": "boolean"
-        },
-        "optional": false,
-        "tag": 1
+        }
       },
       {
         "name": "stringBar",
         "type": {
           "kind": "string"
-        },
-        "optional": false,
-        "tag": 2
+        }
       },
       {
         "name": "numberBar",
         "type": {
           "kind": "number",
           "type": "number"
-        },
-        "optional": false,
-        "tag": 3
+        }
       },
       {
         "name": "integerBar",
         "type": {
           "kind": "number",
           "type": "integer"
-        },
-        "optional": false,
-        "tag": 4
+        }
       },
       {
         "name": "uint32Bar",
         "type": {
           "kind": "number",
           "type": "uint32"
-        },
-        "optional": false,
-        "tag": 5
+        }
       },
       {
         "name": "int32Bar",
         "type": {
           "kind": "number",
           "type": "int32"
-        },
-        "optional": false,
-        "tag": 6
+        }
       },
       {
         "name": "sint32Bar",
         "type": {
           "kind": "number",
           "type": "sint32"
-        },
-        "optional": false,
-        "tag": 7
+        }
       },
       {
         "name": "fixed32Bar",
         "type": {
           "kind": "number",
           "type": "fixed32"
-        },
-        "optional": false,
-        "tag": 8
+        }
       },
       {
         "name": "sfixed32Bar",
         "type": {
           "kind": "number",
           "type": "sfixed32"
-        },
-        "optional": false,
-        "tag": 9
+        }
       },
       {
         "name": "uint64Bar",
         "type": {
           "kind": "number",
           "type": "uint64"
-        },
-        "optional": false,
-        "tag": 10
+        }
       },
       {
         "name": "int64Bar",
         "type": {
           "kind": "number",
           "type": "int64"
-        },
-        "optional": false,
-        "tag": 11
+        }
       },
       {
         "name": "sint64Bar",
         "type": {
           "kind": "number",
           "type": "sint64"
-        },
-        "optional": false,
-        "tag": 12
+        }
       },
       {
         "name": "fixed64Bar",
         "type": {
           "kind": "number",
           "type": "fixed64"
-        },
-        "optional": false,
-        "tag": 13
+        }
       },
       {
         "name": "sfixed64Bar",
         "type": {
           "kind": "number",
           "type": "sfixed64"
-        },
-        "optional": false,
-        "tag": 14
+        }
       },
       {
         "name": "floatBar",
         "type": {
           "kind": "number",
           "type": "float"
-        },
-        "optional": false,
-        "tag": 15
+        }
       },
       {
         "name": "doubleBar",
         "type": {
           "kind": "number",
           "type": "double"
-        },
-        "optional": false,
-        "tag": 16
+        }
       },
       {
-        "name": "referenceBar",
+        "name": "typeLiteral",
         "type": {
           "kind": "reference",
-          "name": "Foo"
-        },
-        "optional": false,
-        "tag": 17
+          "name": "TypeLiteral"
+        }
+      },
+      {
+        "name": "interface",
+        "type": {
+          "kind": "reference",
+          "name": "Interface"
+        }
+      },
+      {
+        "name": "typeUnion",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion"
+        }
+      },
+      {
+        "name": "interfaceExtends",
+        "type": {
+          "kind": "reference",
+          "name": "InterfaceExtends"
+        }
+      },
+      {
+        "name": "typeIntersection",
+        "type": {
+          "kind": "reference",
+          "name": "TypeIntersection"
+        }
+      },
+      {
+        "name": "typeArray",
+        "type": {
+          "kind": "reference",
+          "name": "TypeArray"
+        }
+      },
+      {
+        "name": "mapType",
+        "type": {
+          "kind": "reference",
+          "name": "MapType"
+        }
+      },
+      {
+        "name": "taggedField",
+        "type": {
+          "kind": "reference",
+          "name": "TaggedField"
+        }
       }
     ],
-    "minProperties": 17,
-    "maxProperties": 17,
+    "minProperties": 24,
+    "maxProperties": 24,
     "entry": "cases.json"
   }
 ]

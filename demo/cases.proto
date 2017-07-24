@@ -1,11 +1,42 @@
 syntax = "proto3";
 
-message Foo {
-    double bar = 2;
-    string baz = 3;
+message TypeLiteral {
+    double typeLiteralMember1 = 1;
+    string typeLiteralMember2 = 2;
 }
 
-message Foo2 {
+message Interface {
+    double interfaceMember1 = 1;
+    string interfaceMember2 = 2;
+}
+
+message TypeUnion {
+    double typeUnionMember1 = 1;
+    string typeUnionMember2 = 2;
+}
+
+message InterfaceExtends {
+    double interfaceExtendsMember1 = 1;
+    string interfaceExtendsMember2 = 2;
+    double interfaceMember1 = 3;
+    string interfaceMember2 = 4;
+}
+
+message TypeIntersection {
+    double typeIntersectionMember1 = 1;
+    string typeIntersectionMember2 = 2;
+}
+
+message MapType {
+
+}
+
+message TaggedField {
+    double taggedFieldMember1 = 2;
+    string taggedFieldMember2 = 3;
+}
+
+message PreciseType {
     bool booleanBar = 1;
     string stringBar = 2;
     double numberBar = 3;
@@ -22,5 +53,12 @@ message Foo2 {
     sfixed64 sfixed64Bar = 14;
     float floatBar = 15;
     double doubleBar = 16;
-    Foo referenceBar = 17;
+    TypeLiteral typeLiteral = 17;
+    Interface interface = 18;
+    TypeUnion typeUnion = 19;
+    InterfaceExtends interfaceExtends = 20;
+    TypeIntersection typeIntersection = 21;
+    TypeArray typeArray = 22;
+    MapType mapType = 23;
+    TaggedField taggedField = 24;
 }

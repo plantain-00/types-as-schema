@@ -69,7 +69,7 @@ async function executeCommandLine() {
         }
     });
 
-    ts.forEachChild(sourceFile, node => {
+    function handleSourceFile(node: ts.Node) {
         const jsDocs = getJsDocs(node);
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
@@ -106,7 +106,41 @@ async function executeCommandLine() {
             }
         } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
             const declaration = node as ts.InterfaceDeclaration;
-            const { members, minProperties, maxProperties } = getObjectMembers(declaration.members, models);
+
+            // if the node is pre-handled, then it should be in `models` already, so don't continue
+            if (models.some(m => m.name === declaration.name.text)) {
+                return;
+            }
+
+            const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = getObjectMembers(declaration.members, models);
+            let minProperties = selfMinProperties;
+            let maxProperties = selfMaxProperties;
+
+            if (declaration.heritageClauses) {
+                for (const clause of declaration.heritageClauses) {
+                    if (clause.kind === ts.SyntaxKind.HeritageClause) {
+                        for (const type of clause.types) {
+                            if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
+                                const interfaceName = (type.expression as ts.Identifier).text;
+                                preHandleInterface(interfaceName);
+                                const model = models.find(m => m.kind === "object" && m.name === interfaceName);
+                                if (model && model.kind === "object") {
+                                    for (const member of model.members) {
+                                        if (members.every(m => m.name !== member.name)) {
+                                            members.push(member);
+                                            maxProperties++;
+                                            if (!member.optional) {
+                                                minProperties++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             models.push({
                 kind: "object",
                 name: declaration.name.text,
@@ -116,6 +150,31 @@ async function executeCommandLine() {
                 entry: entry ? entry.comment : undefined,
             });
         }
+    }
+
+    function preHandleInterface(interfaceName: string) {
+        // if the node is pre-handled, then it should be in `models` already, so don't continue
+        if (models.some(m => m.name === interfaceName)) {
+            return;
+        }
+
+        let findIt = false;
+        ts.forEachChild(sourceFile, node => {
+            if (findIt) {
+                return;
+            }
+            if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
+                const declaration = node as ts.InterfaceDeclaration;
+                if (declaration.name.text === interfaceName) {
+                    findIt = true;
+                    handleSourceFile(node);
+                }
+            }
+        });
+    }
+
+    ts.forEachChild(sourceFile, node => {
+        handleSourceFile(node);
     });
 
     if (debugPath) {
@@ -156,7 +215,6 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
-    let lastTag = 0;
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
         const typeLiteral = node as ts.TypeLiteralNode;
         return getObjectMembers(typeLiteral.members, models);
@@ -174,7 +232,6 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
             const childMembers = childMembersInfo.members;
             if (members.length === 0) {
                 members.push(...childMembers);
-                lastTag = childMembers[childMembers.length - 1].tag;
             } else {
                 for (const member of members) {
                     if (childMembers.every(m => m.name !== member.name)) {
@@ -185,8 +242,6 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                     if (members.every(m => m.name !== member.name)) {
                         member.optional = true;
                         members.push(member);
-                        member.tag = lastTag + 1;
-                        lastTag = member.tag;
                     }
                 }
             }
@@ -201,8 +256,6 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
             for (const member of childMembers) {
                 if (members.every(m => m.name !== member.name)) {
                     members.push(member);
-                    member.tag = lastTag + 1;
-                    lastTag = member.tag;
                 }
             }
         }
@@ -214,8 +267,6 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
         const childMembers = childMembersInfo.members;
         for (const member of childMembers) {
             members.push(member);
-            member.tag = lastTag + 1;
-            lastTag = member.tag;
         }
     }
     return { members, minProperties, maxProperties };
@@ -225,7 +276,6 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
-    let lastTag = 0;
     for (const element of elements) {
         if (element.kind === ts.SyntaxKind.PropertySignature) {
             const property = element as ts.PropertySignature;
@@ -235,8 +285,6 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
                 type: {
                     kind: "unknown",
                 },
-                optional: false,
-                tag: 0,
             };
             members.push(member);
 
@@ -257,7 +305,6 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
                     if (propertyJsDoc.comment) {
                         member.tag = +propertyJsDoc.comment;
                     }
-                    lastTag = member.tag;
                 } else if (propertyJsDoc.name === "mapValueType") {
                     if (propertyJsDoc.comment && member.type.kind === "map") {
                         if (member.type.value.kind === "number") {
@@ -287,11 +334,6 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
                         member.type.type.minimum = +propertyJsDoc.comment;
                     }
                 }
-            }
-
-            if (!member.tag) {
-                member.tag = lastTag + 1;
-                lastTag = member.tag;
             }
         }
     }
@@ -431,8 +473,8 @@ type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | Object
 type Member = {
     name: string;
     type: Type;
-    optional: boolean;
-    tag: number;
+    optional?: boolean;
+    tag?: number;
     enum?: any[];
 };
 
@@ -522,9 +564,13 @@ function generateProtobuf(models: Model[]) {
     for (const model of models) {
         if (model.kind === "object") {
             const members: string[] = [];
+            let lastTag = model.members.reduce((p, c) => c.tag ? Math.max(p, c.tag) : p, 0);
             for (const member of model.members) {
+                if (!member.tag) {
+                    lastTag++;
+                }
                 const { modifier, propertyType } = getProtobufProperty(member.type);
-                members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag};`);
+                members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`);
             }
             messages.push(`message ${model.name} {
 ${members.join("\n")}
