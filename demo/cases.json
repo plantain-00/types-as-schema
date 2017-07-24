@@ -1,7 +1,7 @@
 {
-  "$ref": "#/definitions/PreciseType",
+  "$ref": "#/definitions/EntryType",
   "definitions": {
-    "PreciseType": {
+    "EntryType": {
       "type": "object",
       "properties": {
         "optionalMember": {
@@ -13,6 +13,77 @@
         "stringMember": {
           "type": "string"
         },
+        "numberType": {
+          "$ref": "#/definitions/NumberType"
+        },
+        "arrayType": {
+          "$ref": "#/definitions/ArrayType"
+        },
+        "typeLiteral": {
+          "type": "object",
+          "properties": {
+            "literal": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "literal"
+          ],
+          "additionalProperties": false
+        },
+        "referenceType": {
+          "$ref": "#/definitions/TypeLiteral"
+        },
+        "interfaceType": {
+          "$ref": "#/definitions/Interface"
+        },
+        "typeUnion": {
+          "$ref": "#/definitions/TypeUnion"
+        },
+        "interfaceExtends": {
+          "$ref": "#/definitions/InterfaceExtends"
+        },
+        "typeIntersection": {
+          "$ref": "#/definitions/TypeIntersection"
+        },
+        "typeUnionAndIntersection": {
+          "$ref": "#/definitions/TypeUnionAndIntersection"
+        },
+        "mapType": {
+          "$ref": "#/definitions/MapType"
+        },
+        "taggedField": {
+          "$ref": "#/definitions/TaggedField"
+        },
+        "stringEnum": {
+          "$ref": "#/definitions/StringEnum"
+        },
+        "enum": {
+          "$ref": "#/definitions/Enum"
+        }
+      },
+      "required": [
+        "booleanMember",
+        "stringMember",
+        "numberType",
+        "arrayType",
+        "typeLiteral",
+        "referenceType",
+        "interfaceType",
+        "typeUnion",
+        "interfaceExtends",
+        "typeIntersection",
+        "typeUnionAndIntersection",
+        "mapType",
+        "taggedField",
+        "stringEnum",
+        "enum"
+      ],
+      "additionalProperties": false
+    },
+    "NumberType": {
+      "type": "object",
+      "properties": {
         "numberMember": {
           "type": "number"
         },
@@ -74,8 +145,30 @@
         },
         "doubleMember": {
           "type": "number"
-        },
-        "arrayType": {
+        }
+      },
+      "required": [
+        "numberMember",
+        "integerMember",
+        "uint32Member",
+        "int32Member",
+        "sint32Member",
+        "fixed32Member",
+        "sfixed32Member",
+        "uint64Member",
+        "int64Member",
+        "sint64Member",
+        "fixed64Member",
+        "sfixed64Member",
+        "floatMember",
+        "doubleMember"
+      ],
+      "additionalProperties": false
+    },
+    "ArrayType": {
+      "type": "object",
+      "properties": {
+        "arrayType1": {
           "type": "array",
           "items": {
             "type": "string"
@@ -101,128 +194,12 @@
             ],
             "additionalProperties": false
           }
-        },
-        "typeLiteral": {
-          "type": "object",
-          "properties": {
-            "literal": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "literal"
-          ],
-          "additionalProperties": false
-        },
-        "referenceType": {
-          "$ref": "#/definitions/TypeLiteral"
-        },
-        "referenceType2": {
-          "$ref": "#/definitions/Interface"
-        },
-        "referenceType3": {
-          "$ref": "#/definitions/TypeUnion"
-        },
-        "referenceType4": {
-          "$ref": "#/definitions/TypeUnion2"
-        },
-        "referenceType5": {
-          "$ref": "#/definitions/TypeUnion3"
-        },
-        "referenceType6": {
-          "$ref": "#/definitions/InterfaceExtends"
-        },
-        "referenceType7": {
-          "$ref": "#/definitions/TypeIntersection"
-        },
-        "referenceType8": {
-          "$ref": "#/definitions/TypeIntersection2"
-        },
-        "referenceType9": {
-          "$ref": "#/definitions/TypeUnionAndIntersection"
-        },
-        "mapType": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "number"
-          }
-        },
-        "mapType2": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/TypeLiteral"
-          }
-        },
-        "mapType3": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "literal": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "literal"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "mapType4": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 4294967295
-          }
-        },
-        "taggedField": {
-          "$ref": "#/definitions/TaggedField"
-        },
-        "stringEnum": {
-          "$ref": "#/definitions/StringEnum"
-        },
-        "enum": {
-          "$ref": "#/definitions/Enum"
         }
       },
       "required": [
-        "booleanMember",
-        "stringMember",
-        "numberMember",
-        "integerMember",
-        "uint32Member",
-        "int32Member",
-        "sint32Member",
-        "fixed32Member",
-        "sfixed32Member",
-        "uint64Member",
-        "int64Member",
-        "sint64Member",
-        "fixed64Member",
-        "sfixed64Member",
-        "floatMember",
-        "doubleMember",
-        "arrayType",
+        "arrayType1",
         "arrayType2",
-        "arrayType3",
-        "typeLiteral",
-        "referenceType",
-        "referenceType2",
-        "referenceType3",
-        "referenceType4",
-        "referenceType5",
-        "referenceType6",
-        "referenceType7",
-        "referenceType8",
-        "referenceType9",
-        "mapType",
-        "mapType2",
-        "mapType3",
-        "mapType4",
-        "taggedField",
-        "stringEnum",
-        "enum"
+        "arrayType3"
       ],
       "additionalProperties": false
     },
@@ -259,6 +236,26 @@
       "additionalProperties": false
     },
     "TypeUnion": {
+      "type": "object",
+      "properties": {
+        "typeUnionMember1": {
+          "$ref": "#/definitions/TypeUnion1"
+        },
+        "typeUnionMember2": {
+          "$ref": "#/definitions/TypeUnion2"
+        },
+        "typeUnionMember3": {
+          "$ref": "#/definitions/TypeUnion3"
+        }
+      },
+      "required": [
+        "typeUnionMember1",
+        "typeUnionMember2",
+        "typeUnionMember3"
+      ],
+      "additionalProperties": false
+    },
+    "TypeUnion1": {
       "type": "object",
       "properties": {
         "typeUnionMember1": {
@@ -346,6 +343,22 @@
       "type": "object",
       "properties": {
         "typeIntersectionMember1": {
+          "$ref": "#/definitions/TypeIntersection1"
+        },
+        "typeIntersectionMember2": {
+          "$ref": "#/definitions/TypeIntersection2"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeIntersection1": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
           "type": "number"
         },
         "typeIntersectionMember2": {
@@ -405,6 +418,53 @@
       "additionalProperties": false,
       "minProperties": 3,
       "maxProperties": 3
+    },
+    "MapType": {
+      "type": "object",
+      "properties": {
+        "mapType": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mapType2": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TypeLiteral"
+          }
+        },
+        "mapType3": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mapType4": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        }
+      },
+      "required": [
+        "mapType",
+        "mapType2",
+        "mapType3",
+        "mapType4"
+      ],
+      "additionalProperties": false
     },
     "TaggedField": {
       "type": "object",

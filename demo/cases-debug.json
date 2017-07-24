@@ -52,7 +52,7 @@
   },
   {
     "kind": "object",
-    "name": "TypeUnion",
+    "name": "TypeUnion1",
     "members": [
       {
         "name": "typeUnionMember1",
@@ -134,6 +134,35 @@
   },
   {
     "kind": "object",
+    "name": "TypeUnion",
+    "members": [
+      {
+        "name": "typeUnionMember1",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion1"
+        }
+      },
+      {
+        "name": "typeUnionMember2",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion2"
+        }
+      },
+      {
+        "name": "typeUnionMember3",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion3"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
     "name": "InterfaceExtends",
     "members": [
       {
@@ -168,7 +197,7 @@
   },
   {
     "kind": "object",
-    "name": "TypeIntersection",
+    "name": "TypeIntersection1",
     "members": [
       {
         "name": "typeIntersectionMember1",
@@ -220,6 +249,28 @@
     ],
     "minProperties": 4,
     "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "TypeIntersection",
+    "members": [
+      {
+        "name": "typeIntersectionMember1",
+        "type": {
+          "kind": "reference",
+          "name": "TypeIntersection1"
+        }
+      },
+      {
+        "name": "typeIntersectionMember2",
+        "type": {
+          "kind": "reference",
+          "name": "TypeIntersection2"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
   },
   {
     "kind": "object",
@@ -281,27 +332,8 @@
   },
   {
     "kind": "object",
-    "name": "PreciseType",
+    "name": "NumberType",
     "members": [
-      {
-        "name": "optionalMember",
-        "type": {
-          "kind": "string"
-        },
-        "optional": true
-      },
-      {
-        "name": "booleanMember",
-        "type": {
-          "kind": "boolean"
-        }
-      },
-      {
-        "name": "stringMember",
-        "type": {
-          "kind": "string"
-        }
-      },
       {
         "name": "numberMember",
         "type": {
@@ -399,9 +431,17 @@
           "kind": "number",
           "type": "double"
         }
-      },
+      }
+    ],
+    "minProperties": 14,
+    "maxProperties": 14
+  },
+  {
+    "kind": "object",
+    "name": "ArrayType",
+    "members": [
       {
-        "name": "arrayType",
+        "name": "arrayType1",
         "type": {
           "kind": "array",
           "type": {
@@ -438,87 +478,15 @@
             "maxProperties": 1
           }
         }
-      },
-      {
-        "name": "typeLiteral",
-        "type": {
-          "kind": "object",
-          "members": [
-            {
-              "name": "literal",
-              "type": {
-                "kind": "number",
-                "type": "number"
-              }
-            }
-          ],
-          "minProperties": 1,
-          "maxProperties": 1
-        }
-      },
-      {
-        "name": "referenceType",
-        "type": {
-          "kind": "reference",
-          "name": "TypeLiteral"
-        }
-      },
-      {
-        "name": "referenceType2",
-        "type": {
-          "kind": "reference",
-          "name": "Interface"
-        }
-      },
-      {
-        "name": "referenceType3",
-        "type": {
-          "kind": "reference",
-          "name": "TypeUnion"
-        }
-      },
-      {
-        "name": "referenceType4",
-        "type": {
-          "kind": "reference",
-          "name": "TypeUnion2"
-        }
-      },
-      {
-        "name": "referenceType5",
-        "type": {
-          "kind": "reference",
-          "name": "TypeUnion3"
-        }
-      },
-      {
-        "name": "referenceType6",
-        "type": {
-          "kind": "reference",
-          "name": "InterfaceExtends"
-        }
-      },
-      {
-        "name": "referenceType7",
-        "type": {
-          "kind": "reference",
-          "name": "TypeIntersection"
-        }
-      },
-      {
-        "name": "referenceType8",
-        "type": {
-          "kind": "reference",
-          "name": "TypeIntersection2"
-        }
-      },
-      {
-        "name": "referenceType9",
-        "type": {
-          "kind": "reference",
-          "name": "TypeUnionAndIntersection"
-        }
-      },
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "MapType",
+    "members": [
       {
         "name": "mapType",
         "type": {
@@ -580,6 +548,113 @@
             "type": "uint32"
           }
         }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "EntryType",
+    "members": [
+      {
+        "name": "optionalMember",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      },
+      {
+        "name": "booleanMember",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "stringMember",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "numberType",
+        "type": {
+          "kind": "reference",
+          "name": "NumberType"
+        }
+      },
+      {
+        "name": "arrayType",
+        "type": {
+          "kind": "reference",
+          "name": "ArrayType"
+        }
+      },
+      {
+        "name": "typeLiteral",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "literal",
+              "type": {
+                "kind": "number",
+                "type": "number"
+              }
+            }
+          ],
+          "minProperties": 1,
+          "maxProperties": 1
+        }
+      },
+      {
+        "name": "referenceType",
+        "type": {
+          "kind": "reference",
+          "name": "TypeLiteral"
+        }
+      },
+      {
+        "name": "interfaceType",
+        "type": {
+          "kind": "reference",
+          "name": "Interface"
+        }
+      },
+      {
+        "name": "typeUnion",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion"
+        }
+      },
+      {
+        "name": "interfaceExtends",
+        "type": {
+          "kind": "reference",
+          "name": "InterfaceExtends"
+        }
+      },
+      {
+        "name": "typeIntersection",
+        "type": {
+          "kind": "reference",
+          "name": "TypeIntersection"
+        }
+      },
+      {
+        "name": "typeUnionAndIntersection",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnionAndIntersection"
+        }
+      },
+      {
+        "name": "mapType",
+        "type": {
+          "kind": "reference",
+          "name": "MapType"
+        }
       },
       {
         "name": "taggedField",
@@ -603,8 +678,8 @@
         }
       }
     ],
-    "minProperties": 36,
-    "maxProperties": 37,
+    "minProperties": 15,
+    "maxProperties": 16,
     "entry": "cases.json"
   }
 ]

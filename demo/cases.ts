@@ -8,7 +8,7 @@ interface Interface {
     interfaceMember2: string;
 }
 
-type TypeUnion = TypeLiteral | {
+type TypeUnion1 = TypeLiteral | {
     typeUnionMember1: number;
     typeUnionMember2: string;
 };
@@ -28,13 +28,18 @@ type TypeUnion3 =
         kind: Enum.enumMember2;
         typeUnionMember2: string;
     };
+type TypeUnion = {
+    typeUnionMember1: TypeUnion1;
+    typeUnionMember2: TypeUnion2;
+    typeUnionMember3: TypeUnion3;
+};
 
 interface InterfaceExtends extends Interface {
     interfaceExtendsMember1: number;
     interfaceExtendsMember2: string;
 }
 
-type TypeIntersection = Interface & {
+type TypeIntersection1 = Interface & {
     typeIntersectionMember1: number;
     typeIntersectionMember2: string;
 };
@@ -46,6 +51,11 @@ type TypeIntersection2 =
         typeIntersectionMember3: number;
         typeIntersectionMember4: string;
     };
+
+type TypeIntersection = {
+    typeIntersectionMember1: TypeIntersection1;
+    typeIntersectionMember2: TypeIntersection2;
+};
 
 type TypeUnionAndIntersection =
     {
@@ -81,16 +91,7 @@ export const enum Enum {
     enumMember2,
 }
 
-/**
- * @entry cases.json
- */
-export type PreciseType = {
-    optionalMember?: string;
-
-    booleanMember: boolean;
-
-    stringMember: string;
-
+type NumberType = {
     numberMember: number;
 
     /**
@@ -148,23 +149,15 @@ export type PreciseType = {
      * @type double
      */
     doubleMember: number;
+};
 
-    arrayType: string[];
+type ArrayType = {
+    arrayType1: string[];
     arrayType2: TypeLiteral[];
     arrayType3: { literal: number }[];
+};
 
-    typeLiteral: { literal: number };
-
-    referenceType: TypeLiteral;
-    referenceType2: Interface;
-    referenceType3: TypeUnion;
-    referenceType4: TypeUnion2;
-    referenceType5: TypeUnion3;
-    referenceType6: InterfaceExtends;
-    referenceType7: TypeIntersection;
-    referenceType8: TypeIntersection2;
-    referenceType9: TypeUnionAndIntersection;
-
+type MapType = {
     mapType: { [name: string]: number };
     mapType2: { [name: string]: TypeLiteral };
     mapType3: { [name: string]: { literal: number } };
@@ -172,6 +165,37 @@ export type PreciseType = {
      * @mapValueType uint32
      */
     mapType4: { [name: string]: number };
+};
+
+/**
+ * @entry cases.json
+ */
+export type EntryType = {
+    optionalMember?: string;
+
+    booleanMember: boolean;
+
+    stringMember: string;
+
+    numberType: NumberType;
+
+    arrayType: ArrayType;
+
+    typeLiteral: { literal: number };
+
+    referenceType: TypeLiteral;
+
+    interfaceType: Interface;
+
+    typeUnion: TypeUnion;
+
+    interfaceExtends: InterfaceExtends;
+
+    typeIntersection: TypeIntersection;
+
+    typeUnionAndIntersection: TypeUnionAndIntersection;
+
+    mapType: MapType;
 
     taggedField: TaggedField;
 

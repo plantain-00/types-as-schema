@@ -10,7 +10,7 @@ message Interface {
     string interfaceMember2 = 2;
 }
 
-message TypeUnion {
+message TypeUnion1 {
     double typeUnionMember1 = 1;
     string typeUnionMember2 = 2;
 }
@@ -27,6 +27,12 @@ message TypeUnion3 {
     string typeUnionMember2 = 3;
 }
 
+message TypeUnion {
+    TypeUnion1 typeUnionMember1 = 1;
+    TypeUnion2 typeUnionMember2 = 2;
+    TypeUnion3 typeUnionMember3 = 3;
+}
+
 message InterfaceExtends {
     double interfaceExtendsMember1 = 1;
     string interfaceExtendsMember2 = 2;
@@ -34,7 +40,7 @@ message InterfaceExtends {
     string interfaceMember2 = 4;
 }
 
-message TypeIntersection {
+message TypeIntersection1 {
     double typeIntersectionMember1 = 1;
     string typeIntersectionMember2 = 2;
 }
@@ -44,6 +50,11 @@ message TypeIntersection2 {
     string typeIntersectionMember2 = 2;
     double typeIntersectionMember3 = 3;
     string typeIntersectionMember4 = 4;
+}
+
+message TypeIntersection {
+    TypeIntersection1 typeIntersectionMember1 = 1;
+    TypeIntersection2 typeIntersectionMember2 = 2;
 }
 
 message TypeUnionAndIntersection {
@@ -58,42 +69,51 @@ message TaggedField {
     string taggedFieldMember2 = 3;
 }
 
-message PreciseType {
+message NumberType {
+    double numberMember = 1;
+    int32 integerMember = 2;
+    uint32 uint32Member = 3;
+    int32 int32Member = 4;
+    sint32 sint32Member = 5;
+    fixed32 fixed32Member = 6;
+    sfixed32 sfixed32Member = 7;
+    uint64 uint64Member = 8;
+    int64 int64Member = 9;
+    sint64 sint64Member = 10;
+    fixed64 fixed64Member = 11;
+    sfixed64 sfixed64Member = 12;
+    float floatMember = 13;
+    double doubleMember = 14;
+}
+
+message ArrayType {
+    repeated string arrayType1 = 1;
+    repeated TypeLiteral arrayType2 = 2;
+    repeated  arrayType3 = 3;
+}
+
+message MapType {
+    map<string, uint32> mapType = 1;
+    map<string, [object Object]> mapType2 = 2;
+    map<string, [object Object]> mapType3 = 3;
+    map<string, uint32> mapType4 = 4;
+}
+
+message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
     string stringMember = 3;
-    double numberMember = 4;
-    int32 integerMember = 5;
-    uint32 uint32Member = 6;
-    int32 int32Member = 7;
-    sint32 sint32Member = 8;
-    fixed32 fixed32Member = 9;
-    sfixed32 sfixed32Member = 10;
-    uint64 uint64Member = 11;
-    int64 int64Member = 12;
-    sint64 sint64Member = 13;
-    fixed64 fixed64Member = 14;
-    sfixed64 sfixed64Member = 15;
-    float floatMember = 16;
-    double doubleMember = 17;
-    repeated string arrayType = 18;
-    repeated TypeLiteral arrayType2 = 19;
-    repeated  arrayType3 = 20;
-     typeLiteral = 21;
-    TypeLiteral referenceType = 22;
-    Interface referenceType2 = 23;
-    TypeUnion referenceType3 = 24;
-    TypeUnion2 referenceType4 = 25;
-    TypeUnion3 referenceType5 = 26;
-    InterfaceExtends referenceType6 = 27;
-    TypeIntersection referenceType7 = 28;
-    TypeIntersection2 referenceType8 = 29;
-    TypeUnionAndIntersection referenceType9 = 30;
-    map<string, uint32> mapType = 31;
-    map<string, [object Object]> mapType2 = 32;
-    map<string, [object Object]> mapType3 = 33;
-    map<string, uint32> mapType4 = 34;
-    TaggedField taggedField = 35;
-    StringEnum stringEnum = 36;
-    Enum enum = 37;
+    NumberType numberType = 4;
+    ArrayType arrayType = 5;
+     typeLiteral = 6;
+    TypeLiteral referenceType = 7;
+    Interface interfaceType = 8;
+    TypeUnion typeUnion = 9;
+    InterfaceExtends interfaceExtends = 10;
+    TypeIntersection typeIntersection = 11;
+    TypeUnionAndIntersection typeUnionAndIntersection = 12;
+    MapType mapType = 13;
+    TaggedField taggedField = 14;
+    StringEnum stringEnum = 15;
+    Enum enum = 16;
 }
