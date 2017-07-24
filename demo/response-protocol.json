@@ -1,77 +1,6 @@
 {
+  "$ref": "#/definitions/ResponseProtocol",
   "definitions": {
-    "RequestProtocol": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "number"
-        },
-        "kind": {
-          "type": "string",
-          "enum": [
-            "search logs",
-            "search samples",
-            "resave failed logs"
-          ]
-        },
-        "searchLogs": {
-          "$ref": "#/definitions/SearchLogs"
-        },
-        "searchSamples": {
-          "$ref": "#/definitions/SearchSamples"
-        }
-      },
-      "required": [
-        "requestId",
-        "kind"
-      ],
-      "additionalProperties": false,
-      "maxProperties": 3
-    },
-    "SearchLogs": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string"
-        },
-        "time": {
-          "type": "string"
-        },
-        "hostname": {
-          "type": "string"
-        },
-        "from": {
-          "type": "number"
-        },
-        "size": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "content",
-        "time",
-        "hostname",
-        "from",
-        "size"
-      ],
-      "additionalProperties": false
-    },
-    "SearchSamples": {
-      "type": "object",
-      "properties": {
-        "from": {
-          "type": "string"
-        },
-        "to": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "from",
-        "to"
-      ],
-      "additionalProperties": false
-    },
     "ResponseProtocol": {
       "type": "object",
       "properties": {
@@ -126,6 +55,94 @@
       "required": [
         "serverTime",
         "flows"
+      ],
+      "additionalProperties": false
+    },
+    "Flow": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "log",
+            "sample"
+          ]
+        },
+        "log": {
+          "$ref": "#/definitions/Log"
+        },
+        "sample": {
+          "$ref": "#/definitions/Sample"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
+    "Log": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "filepath": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "content",
+        "filepath",
+        "hostname"
+      ],
+      "additionalProperties": false
+    },
+    "Sample": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "hostname",
+        "values"
+      ],
+      "additionalProperties": false
+    },
+    "SampleFrame": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "samples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sample"
+          }
+        }
+      },
+      "required": [
+        "time"
       ],
       "additionalProperties": false
     },
@@ -223,110 +240,6 @@
       "additionalProperties": false,
       "minProperties": 3,
       "maxProperties": 4
-    },
-    "SampleFrame": {
-      "type": "object",
-      "properties": {
-        "time": {
-          "type": "string"
-        },
-        "samples": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Sample"
-          }
-        }
-      },
-      "required": [
-        "time"
-      ],
-      "additionalProperties": false
-    },
-    "FlowProtocol": {
-      "type": "object",
-      "properties": {
-        "flows": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Flow"
-          }
-        }
-      },
-      "required": [
-        "flows"
-      ],
-      "additionalProperties": false
-    },
-    "Flow": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "enum": [
-            "log",
-            "sample"
-          ]
-        },
-        "log": {
-          "$ref": "#/definitions/Log"
-        },
-        "sample": {
-          "$ref": "#/definitions/Sample"
-        }
-      },
-      "required": [
-        "kind"
-      ],
-      "additionalProperties": false,
-      "minProperties": 2,
-      "maxProperties": 2
-    },
-    "Log": {
-      "type": "object",
-      "properties": {
-        "time": {
-          "type": "string"
-        },
-        "content": {
-          "type": "string"
-        },
-        "filepath": {
-          "type": "string"
-        },
-        "hostname": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "time",
-        "content",
-        "filepath",
-        "hostname"
-      ],
-      "additionalProperties": false
-    },
-    "Sample": {
-      "type": "object",
-      "properties": {
-        "hostname": {
-          "type": "string"
-        },
-        "port": {
-          "type": "number"
-        },
-        "values": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "number"
-          }
-        }
-      },
-      "required": [
-        "hostname",
-        "values"
-      ],
-      "additionalProperties": false
     }
-  },
-  "$ref": "#/definitions/ResponseProtocol"
+  }
 }

@@ -121,6 +121,7 @@
     "type": {
       "kind": "string"
     },
+    "entry": "team-schema.json",
     "uniqueItems": true,
     "minItems": 1
   }

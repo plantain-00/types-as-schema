@@ -1,4 +1,5 @@
 {
+  "$ref": "#/definitions/Groups",
   "definitions": {
     "Groups": {
       "type": "array",
@@ -85,6 +86,5 @@
       "uniqueItems": true,
       "minItems": 1
     }
-  },
-  "$ref": "#/definitions/Groups"
+  }
 }

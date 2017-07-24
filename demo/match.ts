@@ -41,6 +41,7 @@ export type Match = {
 };
 
 /**
+ * @entry team-schema.json
  * @uniqueItems
  * @minItems 1
  */

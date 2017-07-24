@@ -419,7 +419,7 @@ type EnumModel = {
     kind: "enum";
     name: string;
     type: string;
-    members: { [key: string]: any };
+    members: { [key: string]: string };
 };
 
 type ObjectModel = {
@@ -505,7 +505,66 @@ ${messages.join("\n\n")}
 `;
 }
 
-function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any {
+type Definition =
+    {
+        type: "number" | "integer",
+        minimum?: number,
+        maximum?: number,
+        enum?: number[],
+    } | {
+        type: "boolean",
+    } | {
+        type: "object",
+        additionalProperties?: Definition | false,
+        properties?: { [name: string]: Definition },
+        required?: string[],
+        minProperties?: number,
+        maxProperties?: number,
+    } | {
+        type: "array",
+        items: Definition,
+        uniqueItems?: boolean,
+        minItems?: number,
+    } | {
+        type: undefined,
+        $ref: string,
+    } | {
+        type: "string",
+        enum?: string[],
+    } | {
+        type: "unknown",
+    };
+
+function getReferencedDefinitions(typeName: string, definitions: { [name: string]: Definition }) {
+    const result: { [name: string]: Definition } = {};
+    const definition = definitions[typeName];
+    result[typeName] = definition;
+    if (definition.type === "array") {
+        if (definition.items.type === undefined) {
+            const itemTypeName = definition.items.$ref.substring("#/definitions/".length);
+            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions));
+        }
+    } else if (definition.type === "object") {
+        if (definition.properties) {
+            // tslint:disable-next-line:forin
+            for (const propertyName in definition.properties) {
+                const propertyDefinition = definition.properties[propertyName];
+                if (propertyDefinition.type === undefined) {
+                    const itemTypeName = propertyDefinition.$ref.substring("#/definitions/".length);
+                    Object.assign(result, getReferencedDefinitions(itemTypeName, definitions));
+                } else if (propertyDefinition.type === "array") {
+                    if (propertyDefinition.items.type === undefined) {
+                        const itemTypeName = propertyDefinition.items.$ref.substring("#/definitions/".length);
+                        Object.assign(result, getReferencedDefinitions(itemTypeName, definitions));
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+
+function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Definition {
     if (memberType.kind === "number") {
         if (memberType.type === "double" || memberType.type === "float") {
             return {
@@ -536,9 +595,14 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any
                 minimum: memberType.minimum !== undefined ? memberType.minimum : -9223372036854775808,
                 maximum: 9223372036854775807,
             };
-        } else {
+        } else if (memberType.type === "number" || memberType.type === "integer") {
             return {
                 type: memberType.type,
+                minimum: memberType.minimum,
+            };
+        } else {
+            return {
+                type: memberType.kind,
                 minimum: memberType.minimum,
             };
         }
@@ -559,16 +623,24 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any
             minItems: memberType.minItems,
         };
     } else if (memberType.kind === "enum") {
-        return {
-            type: typeof memberType.type === "string" ? memberType.type : "",
-            enum: memberType.enums,
-        };
+        if (memberType.type === "string") {
+            return {
+                type: "string",
+                enum: memberType.enums,
+            };
+        } else {
+            return {
+                type: "number",
+                enum: memberType.enums,
+            };
+        }
     } else if (memberType.kind === "reference") {
         return {
+            type: undefined,
             $ref: `#/definitions/${memberType.name}`,
         };
     } else if (memberType.kind === "object") {
-        const properties: { [name: string]: any } = {};
+        const properties: { [name: string]: Definition } = {};
         const required: string[] = [];
         for (const member of memberType.members) {
             if (!member.optional) {
@@ -597,7 +669,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any
 
 function generateJsonSchema(outDir: string, models: Model[]) {
     const result: {
-        definitions: { [name: string]: any };
+        definitions: { [name: string]: Definition };
         $ref?: string;
     } = { definitions: {} };
     const entryModels: (ObjectModel | ArrayModel)[] = [];
@@ -609,11 +681,11 @@ function generateJsonSchema(outDir: string, models: Model[]) {
             }
         }
     }
-    const resultString = JSON.stringify(result);
     for (const model of entryModels) {
-        const newResult: typeof result = JSON.parse(resultString);
-        newResult.$ref = `#/definitions/${model.name}`;
-        fs.writeFileSync(path.resolve(outDir, model.entry), JSON.stringify(newResult, null, "  "));
+        fs.writeFileSync(path.resolve(outDir, model.entry), JSON.stringify({
+            $ref: `#/definitions/${model.name}`,
+            definitions: getReferencedDefinitions(model.name, result.definitions),
+        }, null, "  "));
     }
 }
 
