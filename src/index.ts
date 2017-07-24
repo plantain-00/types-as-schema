@@ -4,6 +4,9 @@ import * as fs from "fs";
 import * as path from "path";
 import * as packageJson from "../package.json";
 
+let sourceFile: ts.SourceFile;
+const models: Model[] = [];
+
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
 
@@ -39,9 +42,7 @@ async function executeCommandLine() {
 
     const program = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext });
 
-    const models: Model[] = [];
-
-    const sourceFile = program.getSourceFile(filePath);
+    sourceFile = program.getSourceFile(filePath);
 
     ts.forEachChild(sourceFile, node => {
         if (node.kind === ts.SyntaxKind.EnumDeclaration) {
@@ -70,7 +71,7 @@ async function executeCommandLine() {
     });
 
     ts.forEachChild(sourceFile, node => {
-        handleSourceFile(models, sourceFile, node);
+        handleSourceFile(node);
     });
 
     if (debugPath) {
@@ -78,15 +79,15 @@ async function executeCommandLine() {
     }
 
     if (protobufPath) {
-        fs.writeFileSync(protobufPath, generateProtobuf(models));
+        fs.writeFileSync(protobufPath, generateProtobuf());
     }
 
     if (jsonPath) {
-        generateJsonSchema(jsonPath, models);
+        generateJsonSchema(jsonPath);
     }
 }
 
-function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.Node) {
+function handleSourceFile(node: ts.Node) {
     const jsDocs = getJsDocs(node);
     const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
     if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
@@ -97,7 +98,7 @@ function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.N
             const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
             const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
             const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
-            const type = getType(arrayType.elementType, models, sourceFile);
+            const type = getType(arrayType.elementType);
             overrideType(type, itemType);
             if (type.kind === "number" && itemMinimum && itemMinimum.comment) {
                 type.minimum = +itemMinimum.comment;
@@ -111,7 +112,7 @@ function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.N
                 minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
             });
         } else {
-            const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models, sourceFile);
+            const { members, minProperties, maxProperties } = getMembersInfo(declaration.type);
             models.push({
                 kind: "object",
                 name: declaration.name.text,
@@ -129,7 +130,7 @@ function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.N
             return;
         }
 
-        const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = getObjectMembers(declaration.members, models, sourceFile);
+        const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = getObjectMembers(declaration.members);
         let minProperties = selfMinProperties;
         let maxProperties = selfMaxProperties;
 
@@ -139,7 +140,7 @@ function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.N
                     for (const type of clause.types) {
                         if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
                             const interfaceName = (type.expression as ts.Identifier).text;
-                            preHandleType(models, sourceFile, interfaceName);
+                            preHandleType(interfaceName);
                             const model = models.find(m => m.kind === "object" && m.name === interfaceName);
                             if (model && model.kind === "object") {
                                 for (const member of model.members) {
@@ -169,7 +170,7 @@ function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.N
     }
 }
 
-function preHandleType(models: Model[], sourceFile: ts.SourceFile, typeName: string) {
+function preHandleType(typeName: string) {
     // if the node is pre-handled, then it should be in `models` already, so don't continue
     if (models.some(m => m.name === typeName)) {
         return;
@@ -184,13 +185,13 @@ function preHandleType(models: Model[], sourceFile: ts.SourceFile, typeName: str
             const declaration = node as ts.InterfaceDeclaration;
             if (declaration.name.text === typeName) {
                 findIt = true;
-                handleSourceFile(models, sourceFile, node);
+                handleSourceFile(node);
             }
         } else if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
             const declaration = node as ts.TypeAliasDeclaration;
             if (declaration.name.text === typeName) {
                 findIt = true;
-                handleSourceFile(models, sourceFile, node);
+                handleSourceFile(node);
             }
         }
     });
@@ -217,18 +218,18 @@ type MembersInfo = {
     maxProperties: number;
 };
 
-function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile): MembersInfo {
+function getMembersInfo(node: ts.TypeNode): MembersInfo {
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
         const typeLiteral = node as ts.TypeLiteralNode;
-        return getObjectMembers(typeLiteral.members, models, sourceFile);
+        return getObjectMembers(typeLiteral.members);
     } else if (node.kind === ts.SyntaxKind.UnionType) {
         const unionType = node as ts.UnionTypeNode;
         minProperties = Infinity;
         for (const type of unionType.types) {
-            const childMembersInfo = getMembersInfo(type, models, sourceFile);
+            const childMembersInfo = getMembersInfo(type);
             if (minProperties > childMembersInfo.minProperties) {
                 minProperties = childMembersInfo.minProperties;
             }
@@ -255,7 +256,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.Sourc
     } else if (node.kind === ts.SyntaxKind.IntersectionType) {
         const intersectionType = node as ts.IntersectionTypeNode;
         for (const type of intersectionType.types) {
-            const childMembersInfo = getMembersInfo(type, models, sourceFile);
+            const childMembersInfo = getMembersInfo(type);
             minProperties += childMembersInfo.minProperties;
             maxProperties += childMembersInfo.maxProperties;
             const childMembers = childMembersInfo.members;
@@ -267,7 +268,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.Sourc
         }
     } else if (node.kind === ts.SyntaxKind.ParenthesizedType) {
         const parenthesizedType = node as ts.ParenthesizedTypeNode;
-        const childMembersInfo = getMembersInfo(parenthesizedType.type, models, sourceFile);
+        const childMembersInfo = getMembersInfo(parenthesizedType.type);
         minProperties = childMembersInfo.minProperties;
         maxProperties = childMembersInfo.maxProperties;
         const childMembers = childMembersInfo.members;
@@ -276,7 +277,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.Sourc
         }
     } else if (node.kind === ts.SyntaxKind.TypeReference) {
         const referenceName = ((node as ts.TypeReferenceNode).typeName as ts.Identifier).text;
-        preHandleType(models, sourceFile, referenceName);
+        preHandleType(referenceName);
         const model = models.find(m => m.kind === "object" && m.name === referenceName);
         if (model && model.kind === "object") {
             for (const member of model.members) {
@@ -293,7 +294,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.Sourc
     return { members, minProperties, maxProperties };
 }
 
-function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[], sourceFile: ts.SourceFile): MembersInfo {
+function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>): MembersInfo {
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
@@ -317,7 +318,7 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
             maxProperties++;
 
             if (property.type) {
-                member.type = getType(property.type, models, sourceFile);
+                member.type = getType(property.type);
             }
 
             const propertyJsDocs = getJsDocs(property);
@@ -361,7 +362,7 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
     return { members, minProperties, maxProperties };
 }
 
-function getType(type: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile): Type {
+function getType(type: ts.TypeNode): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
         return {
             kind: "string",
@@ -384,13 +385,13 @@ function getType(type: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile):
                 if (parameterType && indexSignature.type) {
                     return {
                         kind: "map",
-                        key: getType(parameterType, models, sourceFile),
-                        value: getType(indexSignature.type, models, sourceFile),
+                        key: getType(parameterType),
+                        value: getType(indexSignature.type),
                     };
                 }
             }
         } else {
-            const { members, minProperties, maxProperties } = getMembersInfo(literal, models, sourceFile);
+            const { members, minProperties, maxProperties } = getMembersInfo(literal);
             return {
                 kind: "object",
                 members,
@@ -400,7 +401,7 @@ function getType(type: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile):
         }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
         const array = type as ts.ArrayTypeNode;
-        const elementType = getType(array.elementType, models, sourceFile);
+        const elementType = getType(array.elementType);
         return {
             kind: "array",
             type: elementType,
@@ -580,7 +581,7 @@ function getProtobufProperty(memberType: Type): { modifier: string, propertyType
     return { modifier, propertyType };
 }
 
-function generateProtobuf(models: Model[]) {
+function generateProtobuf() {
     const messages: string[] = [];
     for (const model of models) {
         if (model.kind === "object") {
@@ -769,7 +770,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Def
     }
 }
 
-function generateJsonSchema(outDir: string, models: Model[]) {
+function generateJsonSchema(outDir: string) {
     const result: {
         definitions: { [name: string]: Definition };
         $ref?: string;
