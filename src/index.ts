@@ -53,7 +53,7 @@ async function executeCommandLine() {
                     const enumType: EnumModel = {
                         kind: "enum",
                         name: declaration.name.text,
-                        type: getExpressType(firstMember.initializer),
+                        type: firstMember.initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : "",
                         members: {},
                     };
                     for (const member of members) {
@@ -79,10 +79,16 @@ async function executeCommandLine() {
                 const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
                 const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
                 const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
+                const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
+                const type = getType(arrayType.elementType, models);
+                overrideType(type, itemType);
+                if (type.kind === "number" && itemMinimum && itemMinimum.comment) {
+                    type.minimum = +itemMinimum.comment;
+                }
                 models.push({
                     kind: "array",
                     name: declaration.name.text,
-                    type: (itemType && itemType.comment) ? itemType.comment : getType(arrayType.elementType, models),
+                    type,
                     entry: entry ? entry.comment : undefined,
                     uniqueItems: uniqueItems ? true : undefined,
                     minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
@@ -114,6 +120,21 @@ async function executeCommandLine() {
     }
 }
 
+function overrideType(type: Type, jsDoc: JsDoc | undefined) {
+    if (jsDoc && jsDoc.comment) {
+        if (type.kind === "number") {
+            type.type = jsDoc.comment;
+        } else if (type.kind === "array") {
+            if (type.type.kind === "number") {
+                type.type = {
+                    kind: type.type.kind,
+                    type: jsDoc.comment,
+                };
+            }
+        }
+    }
+}
+
 type MembersInfo = {
     members: Member[];
     minProperties: number;
@@ -133,7 +154,9 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                 const name = property.name as ts.Identifier;
                 const member: Member = {
                     name: name.text,
-                    type: "",
+                    type: {
+                        kind: "unknown",
+                    },
                     optional: false,
                     tag: 0,
                 };
@@ -152,13 +175,20 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
 
                 const propertyJsDocs = getJsDocs(property);
                 for (const propertyJsDoc of propertyJsDocs) {
-                    if (propertyJsDoc.name === "tag" && propertyJsDoc.comment) {
-                        member.tag = +propertyJsDoc.comment;
+                    if (propertyJsDoc.name === "tag") {
+                        if (propertyJsDoc.comment) {
+                            member.tag = +propertyJsDoc.comment;
+                        }
                         lastTag = member.tag;
-                    } else if (propertyJsDoc.name === "mapValueType" && propertyJsDoc.comment) {
-                        (member.type as MapType).value = propertyJsDoc.comment;
-                    } else if (propertyJsDoc.name === "type" && propertyJsDoc.comment) {
-                        member.type = propertyJsDoc.comment;
+                    } else if (propertyJsDoc.name === "mapValueType") {
+                        if (propertyJsDoc.comment && member.type.kind === "map") {
+                            member.type.value = {
+                                kind: "string",
+                                value: propertyJsDoc.comment,
+                            };
+                        }
+                    } else if (propertyJsDoc.name === "type") {
+                        overrideType(member.type, propertyJsDoc);
                     } else if (propertyJsDoc.name === "uniqueItems") {
                         const arrayType = member.type as ArrayType;
                         if (arrayType) {
@@ -170,9 +200,14 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
                             arrayType.minItems = +propertyJsDoc.comment;
                         }
                     } else if (propertyJsDoc.name === "itemType") {
-                        const arrayType = member.type as ArrayType;
-                        if (arrayType && propertyJsDoc.comment) {
-                            arrayType.type = propertyJsDoc.comment;
+                        if (propertyJsDoc.comment && member.type.kind === "array") {
+                            overrideType(member.type, propertyJsDoc);
+                        }
+                    } else if (propertyJsDoc.name === "itemMinimum") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "array"
+                            && member.type.type.kind === "number") {
+                            member.type.type.minimum = +propertyJsDoc.comment;
                         }
                     }
                 }
@@ -244,18 +279,16 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     return { members, minProperties, maxProperties };
 }
 
-function getExpressType(type: ts.Expression): Type {
-    if (type.kind === ts.SyntaxKind.StringLiteral) {
-        return ts.ClassificationTypeNames.stringLiteral;
-    }
-    return "";
-}
-
 function getType(type: ts.TypeNode, models: Model[]): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
-        return ts.ClassificationTypeNames.stringLiteral;
+        return {
+            kind: "string",
+        };
     } else if (type.kind === ts.SyntaxKind.NumberKeyword) {
-        return ts.ClassificationTypeNames.numericLiteral;
+        return {
+            kind: "number",
+            type: "number",
+        };
     } else if (type.kind === ts.SyntaxKind.TypeLiteral) {
         const literal = type as ts.TypeLiteralNode;
         if (literal.members.length === 1 && literal.members[0].kind === ts.SyntaxKind.IndexSignature) {
@@ -307,7 +340,9 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
             }
         }
     }
-    return "";
+    return {
+        kind: "unknown",
+    };
 }
 
 function printInConsole(message: any) {
@@ -334,7 +369,7 @@ type ArrayType = {
 
 type EnumType = {
     kind: "enum";
-    type: Type;
+    type: string;
     enums: any[];
 };
 
@@ -350,7 +385,25 @@ type ObjectType = {
     maxProperties: number;
 };
 
-type Type = string | MapType | ArrayType | EnumType | ReferenceType | ObjectType;
+type NumberType = {
+    kind: "number";
+    type: string;
+    minimum?: number;
+};
+
+type StringType = {
+    kind: "string";
+};
+
+type BooleanType = {
+    kind: "boolean";
+};
+
+type UnknownType = {
+    kind: "unknown";
+};
+
+type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | UnknownType;
 
 type Member = {
     name: string;
@@ -365,7 +418,7 @@ type Model = EnumModel | ObjectModel | ArrayModel;
 type EnumModel = {
     kind: "enum";
     name: string;
-    type: Type;
+    type: string;
     members: { [key: string]: any };
 };
 
@@ -410,24 +463,24 @@ function getJsDocs(node: ts.Node) {
     return result;
 }
 
-function getProtobufProperty(memberType: Type): { modifier: string, propertyType: Type } {
+function getProtobufProperty(memberType: Type): { modifier: string, propertyType: string } {
     let modifier = "";
-    let propertyType: Type = "";
-    if (typeof memberType !== "string") {
-        if (memberType.kind === "map") {
-            const valueType = memberType.value === "number" ? "uint32" : memberType.value;
-            propertyType = `map<${memberType.key}, ${valueType}>`;
-        } else if (memberType.kind === "array") {
-            modifier = "repeated ";
-            const { propertyType: elementPropertyType } = getProtobufProperty(memberType.type);
-            propertyType = elementPropertyType;
-        } else if (memberType.kind === "enum") {
-            propertyType = memberType.type;
-        } else if (memberType.kind === "reference") {
-            propertyType = memberType.name;
-        }
-    } else {
-        propertyType = memberType === "number" ? "uint32" : memberType;
+    let propertyType = "";
+    if (memberType.kind === "map") {
+        const valueType = memberType.value.kind === "number" ? "uint32" : memberType.value;
+        propertyType = `map<${memberType.key.kind}, ${valueType}>`;
+    } else if (memberType.kind === "array") {
+        modifier = "repeated ";
+        const { propertyType: elementPropertyType } = getProtobufProperty(memberType.type);
+        propertyType = elementPropertyType;
+    } else if (memberType.kind === "enum") {
+        propertyType = memberType.type;
+    } else if (memberType.kind === "reference") {
+        propertyType = memberType.name;
+    } else if (memberType.kind === "number") {
+        propertyType = memberType.type === "number" ? "uint32" : memberType.type;
+    } else if (memberType.kind === "string") {
+        propertyType = memberType.kind;
     }
     return { modifier, propertyType };
 }
@@ -453,81 +506,91 @@ ${messages.join("\n\n")}
 }
 
 function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): any {
-    if (memberType === "double" || memberType === "float") {
-        return {
-            type: "number",
-        };
-    } else if (memberType === "uint32" || memberType === "fixed32") {
-        return {
-            type: "integer",
-            minimum: 0,
-            maximum: 4294967295,
-        };
-    } else if (memberType === "int32" || memberType === "sint32" || memberType === "sfixed32") {
-        return {
-            type: "integer",
-            minimum: -2147483648,
-            maximum: 2147483647,
-        };
-    } else if (memberType === "uint64" || memberType === "fixed64") {
-        return {
-            type: "integer",
-            minimum: 0,
-            maximum: 18446744073709551615,
-        };
-    } else if (memberType === "int64" || memberType === "sint64" || memberType === "sfixed64") {
-        return {
-            type: "integer",
-            minimum: -9223372036854775808,
-            maximum: 9223372036854775807,
-        };
-    } else if (memberType === "bool") {
+    if (memberType.kind === "number") {
+        if (memberType.type === "double" || memberType.type === "float") {
+            return {
+                type: "number",
+                minimum: memberType.minimum,
+            };
+        } else if (memberType.type === "uint32" || memberType.type === "fixed32") {
+            return {
+                type: "integer",
+                minimum: memberType.minimum !== undefined ? memberType.minimum : 0,
+                maximum: 4294967295,
+            };
+        } else if (memberType.type === "int32" || memberType.type === "sint32" || memberType.type === "sfixed32") {
+            return {
+                type: "integer",
+                minimum: memberType.minimum !== undefined ? memberType.minimum : -2147483648,
+                maximum: 2147483647,
+            };
+        } else if (memberType.type === "uint64" || memberType.type === "fixed64") {
+            return {
+                type: "integer",
+                minimum: memberType.minimum !== undefined ? memberType.minimum : 0,
+                maximum: 18446744073709551615,
+            };
+        } else if (memberType.type === "int64" || memberType.type === "sint64" || memberType.type === "sfixed64") {
+            return {
+                type: "integer",
+                minimum: memberType.minimum !== undefined ? memberType.minimum : -9223372036854775808,
+                maximum: 9223372036854775807,
+            };
+        } else {
+            return {
+                type: memberType.type,
+                minimum: memberType.minimum,
+            };
+        }
+    } else if (memberType.kind === "boolean") {
         return {
             type: "boolean",
         };
-    } else if (memberType && typeof memberType !== "string") {
-        if (memberType.kind === "map") {
-            return {
-                type: "object",
-                additionalProperties: getJsonSchemaProperty(memberType.value),
-            };
-        } else if (memberType.kind === "array") {
-            return {
-                type: "array",
-                items: getJsonSchemaProperty(memberType.type),
-                uniqueItems: memberType.uniqueItems,
-                minItems: memberType.minItems,
-            };
-        } else if (memberType.kind === "enum") {
-            return {
-                type: typeof memberType.type === "string" ? memberType.type : "",
-                enum: memberType.enums,
-            };
-        } else if (memberType.kind === "reference") {
-            return {
-                $ref: `#/definitions/${memberType.name}`,
-            };
-        } else if (memberType.kind === "object") {
-            const properties: { [name: string]: any } = {};
-            const required: string[] = [];
-            for (const member of memberType.members) {
-                if (!member.optional) {
-                    required.push(member.name);
-                }
-                properties[member.name] = getJsonSchemaProperty(member.type);
+    } else if (memberType.kind === "map") {
+        return {
+            type: "object",
+            additionalProperties: getJsonSchemaProperty(memberType.value),
+        };
+    } else if (memberType.kind === "array") {
+        return {
+            type: "array",
+            items: getJsonSchemaProperty(memberType.type),
+            uniqueItems: memberType.uniqueItems,
+            minItems: memberType.minItems,
+        };
+    } else if (memberType.kind === "enum") {
+        return {
+            type: typeof memberType.type === "string" ? memberType.type : "",
+            enum: memberType.enums,
+        };
+    } else if (memberType.kind === "reference") {
+        return {
+            $ref: `#/definitions/${memberType.name}`,
+        };
+    } else if (memberType.kind === "object") {
+        const properties: { [name: string]: any } = {};
+        const required: string[] = [];
+        for (const member of memberType.members) {
+            if (!member.optional) {
+                required.push(member.name);
             }
-            return {
-                type: "object",
-                properties,
-                required,
-                additionalProperties: false,
-                minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
-                maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
-            };
+            properties[member.name] = getJsonSchemaProperty(member.type);
         }
+        return {
+            type: "object",
+            properties,
+            required,
+            additionalProperties: false,
+            minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
+            maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
+        };
+    } else if (memberType.kind === "string") {
+        return {
+            type: memberType.kind,
+        };
     } else {
         return {
-            type: memberType,
+            type: memberType.kind,
         };
     }
 }

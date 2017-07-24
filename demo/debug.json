@@ -45,7 +45,10 @@
     "members": [
       {
         "name": "requestId",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 1
       },
@@ -92,31 +95,43 @@
     "members": [
       {
         "name": "content",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
       {
         "name": "time",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 2
       },
       {
         "name": "hostname",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 3
       },
       {
         "name": "from",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 4
       },
       {
         "name": "size",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 5
       }
@@ -130,13 +145,17 @@
     "members": [
       {
         "name": "from",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
       {
         "name": "to",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 2
       }
@@ -223,7 +242,9 @@
     "members": [
       {
         "name": "serverTime",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
@@ -249,7 +270,10 @@
     "members": [
       {
         "name": "requestId",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 1
       },
@@ -268,7 +292,10 @@
       },
       {
         "name": "total",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": true,
         "tag": 3
       },
@@ -286,7 +313,9 @@
       },
       {
         "name": "error",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": true,
         "tag": 5
       }
@@ -300,7 +329,10 @@
     "members": [
       {
         "name": "requestId",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 1
       },
@@ -331,7 +363,9 @@
       },
       {
         "name": "error",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": true,
         "tag": 4
       }
@@ -345,7 +379,10 @@
     "members": [
       {
         "name": "requestId",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": false,
         "tag": 1
       },
@@ -364,19 +401,27 @@
       },
       {
         "name": "savedCount",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": true,
         "tag": 3
       },
       {
         "name": "totalCount",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": true,
         "tag": 4
       },
       {
         "name": "error",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": true,
         "tag": 5
       }
@@ -390,7 +435,9 @@
     "members": [
       {
         "name": "time",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
@@ -476,25 +523,33 @@
     "members": [
       {
         "name": "time",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
       {
         "name": "content",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 2
       },
       {
         "name": "filepath",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 3
       },
       {
         "name": "hostname",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 4
       }
@@ -508,13 +563,18 @@
     "members": [
       {
         "name": "hostname",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
       {
         "name": "port",
-        "type": "number",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
         "optional": true,
         "tag": 2
       },
@@ -522,8 +582,13 @@
         "name": "values",
         "type": {
           "kind": "map",
-          "key": "string",
-          "value": "number"
+          "key": {
+            "kind": "string"
+          },
+          "value": {
+            "kind": "number",
+            "type": "number"
+          }
         },
         "optional": false,
         "tag": 3

@@ -41,7 +41,11 @@
         "name": "tops",
         "type": {
           "kind": "array",
-          "type": "integer",
+          "type": {
+            "kind": "number",
+            "type": "integer",
+            "minimum": 1
+          },
           "uniqueItems": true,
           "minItems": 1
         },
@@ -58,13 +62,17 @@
     "members": [
       {
         "name": "a",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 1
       },
       {
         "name": "b",
-        "type": "string",
+        "type": {
+          "kind": "string"
+        },
         "optional": false,
         "tag": 2
       },
@@ -77,13 +85,19 @@
             "members": [
               {
                 "name": "a",
-                "type": "integer",
+                "type": {
+                  "kind": "number",
+                  "type": "integer"
+                },
                 "optional": false,
                 "tag": 1
               },
               {
                 "name": "b",
-                "type": "integer",
+                "type": {
+                  "kind": "number",
+                  "type": "integer"
+                },
                 "optional": false,
                 "tag": 2
               }
@@ -104,7 +118,9 @@
   {
     "kind": "array",
     "name": "Teams",
-    "type": "string",
+    "type": {
+      "kind": "string"
+    },
     "uniqueItems": true,
     "minItems": 1
   }

@@ -25,7 +25,8 @@
         "tops": {
           "type": "array",
           "items": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 1
           },
           "uniqueItems": true,
           "minItems": 1
