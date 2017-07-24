@@ -302,7 +302,13 @@
       "type": "object",
       "properties": {
         "kind": {
-          "type": "unknown"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295,
+          "enum": [
+            0,
+            1
+          ]
         },
         "typeUnionMember1": {
           "type": "string"
@@ -413,7 +419,13 @@
           "type": "number"
         },
         "kind": {
-          "type": "unknown"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295,
+          "enum": [
+            0,
+            1
+          ]
         },
         "typeUnionMember1": {
           "type": "string"

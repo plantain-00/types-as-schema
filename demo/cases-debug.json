@@ -9,6 +9,15 @@
     }
   },
   {
+    "kind": "enum",
+    "name": "Enum",
+    "type": "uint32",
+    "members": {
+      "enumMember1": 0,
+      "enumMember2": 1
+    }
+  },
+  {
     "kind": "object",
     "name": "TypeLiteral",
     "members": [
@@ -130,7 +139,12 @@
       {
         "name": "kind",
         "type": {
-          "kind": "unknown"
+          "kind": "enum",
+          "type": "uint32",
+          "enums": [
+            0,
+            1
+          ]
         }
       },
       {
@@ -318,7 +332,12 @@
       {
         "name": "kind",
         "type": {
-          "kind": "unknown"
+          "kind": "enum",
+          "type": "uint32",
+          "enums": [
+            0,
+            1
+          ]
         }
       },
       {

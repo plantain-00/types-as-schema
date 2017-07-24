@@ -54,7 +54,7 @@ async function executeCommandLine() {
                     const enumType: EnumModel = {
                         kind: "enum",
                         name: declaration.name.text,
-                        type: firstMember.initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : "",
+                        type: firstMember.initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : "uint32",
                         members: {},
                     };
                     for (const member of members) {
@@ -62,6 +62,26 @@ async function executeCommandLine() {
                             const name = member.name as ts.Identifier;
                             const initializer = member.initializer as ts.StringLiteral;
                             enumType.members[name.text] = initializer.text;
+                        }
+                    }
+                    models.push(enumType);
+                } else {
+                    const enumType: EnumModel = {
+                        kind: "enum",
+                        name: declaration.name.text,
+                        type: "uint32",
+                        members: {},
+                    };
+                    let lastIndex = 0;
+                    for (const member of members) {
+                        const name = member.name as ts.Identifier;
+                        if (member.initializer && member.initializer.kind === ts.SyntaxKind.NumericLiteral) {
+                            const initializer = member.initializer as ts.NumericLiteral;
+                            enumType.members[name.text] = +initializer.text;
+                            lastIndex = +initializer.text + 1;
+                        } else {
+                            enumType.members[name.text] = lastIndex;
+                            lastIndex++;
                         }
                     }
                     models.push(enumType);
@@ -506,7 +526,7 @@ type EnumModel = {
     kind: "enum";
     name: string;
     type: string;
-    members: { [key: string]: string };
+    members: { [key: string]: string | number | undefined };
 };
 
 type ObjectModel = {
@@ -667,48 +687,52 @@ function getReferencedDefinitions(typeName: string, definitions: { [name: string
     return result;
 }
 
+function getNumberType(numberType: NumberType): Definition {
+    if (numberType.type === "double" || numberType.type === "float") {
+        return {
+            type: "number",
+            minimum: numberType.minimum,
+        };
+    } else if (numberType.type === "uint32" || numberType.type === "fixed32") {
+        return {
+            type: "integer",
+            minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
+            maximum: 4294967295,
+        };
+    } else if (numberType.type === "int32" || numberType.type === "sint32" || numberType.type === "sfixed32") {
+        return {
+            type: "integer",
+            minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
+            maximum: 2147483647,
+        };
+    } else if (numberType.type === "uint64" || numberType.type === "fixed64") {
+        return {
+            type: "integer",
+            minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
+            maximum: 18446744073709551615,
+        };
+    } else if (numberType.type === "int64" || numberType.type === "sint64" || numberType.type === "sfixed64") {
+        return {
+            type: "integer",
+            minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
+            maximum: 9223372036854775807,
+        };
+    } else if (numberType.type === "number" || numberType.type === "integer") {
+        return {
+            type: numberType.type,
+            minimum: numberType.minimum,
+        };
+    } else {
+        return {
+            type: numberType.kind,
+            minimum: numberType.minimum,
+        };
+    }
+}
+
 function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Definition {
     if (memberType.kind === "number") {
-        if (memberType.type === "double" || memberType.type === "float") {
-            return {
-                type: "number",
-                minimum: memberType.minimum,
-            };
-        } else if (memberType.type === "uint32" || memberType.type === "fixed32") {
-            return {
-                type: "integer",
-                minimum: memberType.minimum !== undefined ? memberType.minimum : 0,
-                maximum: 4294967295,
-            };
-        } else if (memberType.type === "int32" || memberType.type === "sint32" || memberType.type === "sfixed32") {
-            return {
-                type: "integer",
-                minimum: memberType.minimum !== undefined ? memberType.minimum : -2147483648,
-                maximum: 2147483647,
-            };
-        } else if (memberType.type === "uint64" || memberType.type === "fixed64") {
-            return {
-                type: "integer",
-                minimum: memberType.minimum !== undefined ? memberType.minimum : 0,
-                maximum: 18446744073709551615,
-            };
-        } else if (memberType.type === "int64" || memberType.type === "sint64" || memberType.type === "sfixed64") {
-            return {
-                type: "integer",
-                minimum: memberType.minimum !== undefined ? memberType.minimum : -9223372036854775808,
-                maximum: 9223372036854775807,
-            };
-        } else if (memberType.type === "number" || memberType.type === "integer") {
-            return {
-                type: memberType.type,
-                minimum: memberType.minimum,
-            };
-        } else {
-            return {
-                type: memberType.kind,
-                minimum: memberType.minimum,
-            };
-        }
+        return getNumberType(memberType);
     } else if (memberType.kind === "boolean") {
         return {
             type: "boolean",
@@ -732,10 +756,12 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Def
                 enum: memberType.enums,
             };
         } else {
-            return {
-                type: "number",
-                enum: memberType.enums,
-            };
+            return Object.assign(getNumberType({
+                kind: "number",
+                type: memberType.type,
+            }), {
+                    enum: memberType.enums,
+                });
         }
     } else if (memberType.kind === "reference") {
         return {
