@@ -17,6 +17,7 @@ Genetate json scheme or protobuf file from types.
 + type array
 + tagged field
 + marked as more precise type
++ enum
 
 #### supported types features
 

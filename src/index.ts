@@ -616,6 +616,9 @@ type Definition =
 function getReferencedDefinitions(typeName: string, definitions: { [name: string]: Definition }) {
     const result: { [name: string]: Definition } = {};
     const definition = definitions[typeName];
+    if (definition === undefined) {
+        return result;
+    }
     result[typeName] = definition;
     if (definition.type === "array") {
         if (definition.items.type === undefined) {

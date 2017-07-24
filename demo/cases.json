@@ -4,124 +4,225 @@
     "PreciseType": {
       "type": "object",
       "properties": {
-        "booleanBar": {
-          "type": "boolean"
-        },
-        "stringBar": {
+        "optionalMember": {
           "type": "string"
         },
-        "numberBar": {
+        "booleanMember": {
+          "type": "boolean"
+        },
+        "stringMember": {
+          "type": "string"
+        },
+        "numberMember": {
           "type": "number"
         },
-        "integerBar": {
+        "integerMember": {
           "type": "integer"
         },
-        "uint32Bar": {
+        "uint32Member": {
           "type": "integer",
           "minimum": 0,
           "maximum": 4294967295
         },
-        "int32Bar": {
+        "int32Member": {
           "type": "integer",
           "minimum": -2147483648,
           "maximum": 2147483647
         },
-        "sint32Bar": {
+        "sint32Member": {
           "type": "integer",
           "minimum": -2147483648,
           "maximum": 2147483647
         },
-        "fixed32Bar": {
+        "fixed32Member": {
           "type": "integer",
           "minimum": 0,
           "maximum": 4294967295
         },
-        "sfixed32Bar": {
+        "sfixed32Member": {
           "type": "integer",
           "minimum": -2147483648,
           "maximum": 2147483647
         },
-        "uint64Bar": {
+        "uint64Member": {
           "type": "integer",
           "minimum": 0,
           "maximum": 18446744073709552000
         },
-        "int64Bar": {
+        "int64Member": {
           "type": "integer",
           "minimum": -9223372036854776000,
           "maximum": 9223372036854776000
         },
-        "sint64Bar": {
+        "sint64Member": {
           "type": "integer",
           "minimum": -9223372036854776000,
           "maximum": 9223372036854776000
         },
-        "fixed64Bar": {
+        "fixed64Member": {
           "type": "integer",
           "minimum": 0,
           "maximum": 18446744073709552000
         },
-        "sfixed64Bar": {
+        "sfixed64Member": {
           "type": "integer",
           "minimum": -9223372036854776000,
           "maximum": 9223372036854776000
         },
-        "floatBar": {
+        "floatMember": {
           "type": "number"
         },
-        "doubleBar": {
+        "doubleMember": {
           "type": "number"
+        },
+        "arrayType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "arrayType2": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeLiteral"
+          }
+        },
+        "arrayType3": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
         },
         "typeLiteral": {
+          "type": "object",
+          "properties": {
+            "literal": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "literal"
+          ],
+          "additionalProperties": false
+        },
+        "referenceType": {
           "$ref": "#/definitions/TypeLiteral"
         },
-        "interface": {
+        "referenceType2": {
           "$ref": "#/definitions/Interface"
         },
-        "typeUnion": {
+        "referenceType3": {
           "$ref": "#/definitions/TypeUnion"
         },
-        "interfaceExtends": {
+        "referenceType4": {
+          "$ref": "#/definitions/TypeUnion2"
+        },
+        "referenceType5": {
+          "$ref": "#/definitions/TypeUnion3"
+        },
+        "referenceType6": {
           "$ref": "#/definitions/InterfaceExtends"
         },
-        "typeIntersection": {
+        "referenceType7": {
           "$ref": "#/definitions/TypeIntersection"
         },
-        "typeArray": {
-          "$ref": "#/definitions/TypeArray"
+        "referenceType8": {
+          "$ref": "#/definitions/TypeIntersection2"
+        },
+        "referenceType9": {
+          "$ref": "#/definitions/TypeUnionAndIntersection"
         },
         "mapType": {
-          "$ref": "#/definitions/MapType"
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mapType2": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TypeLiteral"
+          }
+        },
+        "mapType3": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mapType4": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
         },
         "taggedField": {
           "$ref": "#/definitions/TaggedField"
+        },
+        "stringEnum": {
+          "$ref": "#/definitions/StringEnum"
+        },
+        "enum": {
+          "$ref": "#/definitions/Enum"
         }
       },
       "required": [
-        "booleanBar",
-        "stringBar",
-        "numberBar",
-        "integerBar",
-        "uint32Bar",
-        "int32Bar",
-        "sint32Bar",
-        "fixed32Bar",
-        "sfixed32Bar",
-        "uint64Bar",
-        "int64Bar",
-        "sint64Bar",
-        "fixed64Bar",
-        "sfixed64Bar",
-        "floatBar",
-        "doubleBar",
+        "booleanMember",
+        "stringMember",
+        "numberMember",
+        "integerMember",
+        "uint32Member",
+        "int32Member",
+        "sint32Member",
+        "fixed32Member",
+        "sfixed32Member",
+        "uint64Member",
+        "int64Member",
+        "sint64Member",
+        "fixed64Member",
+        "sfixed64Member",
+        "floatMember",
+        "doubleMember",
+        "arrayType",
+        "arrayType2",
+        "arrayType3",
         "typeLiteral",
-        "interface",
-        "typeUnion",
-        "interfaceExtends",
-        "typeIntersection",
-        "typeArray",
+        "referenceType",
+        "referenceType2",
+        "referenceType3",
+        "referenceType4",
+        "referenceType5",
+        "referenceType6",
+        "referenceType7",
+        "referenceType8",
+        "referenceType9",
         "mapType",
-        "taggedField"
+        "mapType2",
+        "mapType3",
+        "mapType4",
+        "taggedField",
+        "stringEnum",
+        "enum"
       ],
       "additionalProperties": false
     },
@@ -173,6 +274,50 @@
       ],
       "additionalProperties": false
     },
+    "TypeUnion2": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "enum member 1",
+            "enum member 2"
+          ]
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
+    "TypeUnion3": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "unknown"
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
     "InterfaceExtends": {
       "type": "object",
       "properties": {
@@ -213,17 +358,53 @@
       ],
       "additionalProperties": false
     },
-    "TypeArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/TypeLiteral"
-      }
-    },
-    "MapType": {
+    "TypeIntersection2": {
       "type": "object",
-      "properties": {},
-      "required": [],
+      "properties": {
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "typeIntersectionMember2": {
+          "type": "string"
+        },
+        "typeIntersectionMember3": {
+          "type": "number"
+        },
+        "typeIntersectionMember4": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2",
+        "typeIntersectionMember3",
+        "typeIntersectionMember4"
+      ],
       "additionalProperties": false
+    },
+    "TypeUnionAndIntersection": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "unknown"
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3
     },
     "TaggedField": {
       "type": "object",
