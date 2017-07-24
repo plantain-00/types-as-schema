@@ -69,112 +69,8 @@ async function executeCommandLine() {
         }
     });
 
-    function handleSourceFile(node: ts.Node) {
-        const jsDocs = getJsDocs(node);
-        const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
-        if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-            const declaration = node as ts.TypeAliasDeclaration;
-            if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
-                const arrayType = declaration.type as ts.ArrayTypeNode;
-                const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
-                const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
-                const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
-                const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
-                const type = getType(arrayType.elementType, models);
-                overrideType(type, itemType);
-                if (type.kind === "number" && itemMinimum && itemMinimum.comment) {
-                    type.minimum = +itemMinimum.comment;
-                }
-                models.push({
-                    kind: "array",
-                    name: declaration.name.text,
-                    type,
-                    entry: entry ? entry.comment : undefined,
-                    uniqueItems: uniqueItems ? true : undefined,
-                    minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
-                });
-            } else {
-                const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models);
-                models.push({
-                    kind: "object",
-                    name: declaration.name.text,
-                    members,
-                    minProperties,
-                    maxProperties,
-                    entry: entry ? entry.comment : undefined,
-                });
-            }
-        } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
-            const declaration = node as ts.InterfaceDeclaration;
-
-            // if the node is pre-handled, then it should be in `models` already, so don't continue
-            if (models.some(m => m.name === declaration.name.text)) {
-                return;
-            }
-
-            const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = getObjectMembers(declaration.members, models);
-            let minProperties = selfMinProperties;
-            let maxProperties = selfMaxProperties;
-
-            if (declaration.heritageClauses) {
-                for (const clause of declaration.heritageClauses) {
-                    if (clause.kind === ts.SyntaxKind.HeritageClause) {
-                        for (const type of clause.types) {
-                            if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
-                                const interfaceName = (type.expression as ts.Identifier).text;
-                                preHandleInterface(interfaceName);
-                                const model = models.find(m => m.kind === "object" && m.name === interfaceName);
-                                if (model && model.kind === "object") {
-                                    for (const member of model.members) {
-                                        if (members.every(m => m.name !== member.name)) {
-                                            members.push(member);
-                                            maxProperties++;
-                                            if (!member.optional) {
-                                                minProperties++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            models.push({
-                kind: "object",
-                name: declaration.name.text,
-                members,
-                minProperties,
-                maxProperties,
-                entry: entry ? entry.comment : undefined,
-            });
-        }
-    }
-
-    function preHandleInterface(interfaceName: string) {
-        // if the node is pre-handled, then it should be in `models` already, so don't continue
-        if (models.some(m => m.name === interfaceName)) {
-            return;
-        }
-
-        let findIt = false;
-        ts.forEachChild(sourceFile, node => {
-            if (findIt) {
-                return;
-            }
-            if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
-                const declaration = node as ts.InterfaceDeclaration;
-                if (declaration.name.text === interfaceName) {
-                    findIt = true;
-                    handleSourceFile(node);
-                }
-            }
-        });
-    }
-
     ts.forEachChild(sourceFile, node => {
-        handleSourceFile(node);
+        handleSourceFile(models, sourceFile, node);
     });
 
     if (debugPath) {
@@ -188,6 +84,116 @@ async function executeCommandLine() {
     if (jsonPath) {
         generateJsonSchema(jsonPath, models);
     }
+}
+
+function handleSourceFile(models: Model[], sourceFile: ts.SourceFile, node: ts.Node) {
+    const jsDocs = getJsDocs(node);
+    const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
+    if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+        const declaration = node as ts.TypeAliasDeclaration;
+        if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
+            const arrayType = declaration.type as ts.ArrayTypeNode;
+            const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
+            const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
+            const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
+            const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
+            const type = getType(arrayType.elementType, models, sourceFile);
+            overrideType(type, itemType);
+            if (type.kind === "number" && itemMinimum && itemMinimum.comment) {
+                type.minimum = +itemMinimum.comment;
+            }
+            models.push({
+                kind: "array",
+                name: declaration.name.text,
+                type,
+                entry: entry ? entry.comment : undefined,
+                uniqueItems: uniqueItems ? true : undefined,
+                minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
+            });
+        } else {
+            const { members, minProperties, maxProperties } = getMembersInfo(declaration.type, models, sourceFile);
+            models.push({
+                kind: "object",
+                name: declaration.name.text,
+                members,
+                minProperties,
+                maxProperties,
+                entry: entry ? entry.comment : undefined,
+            });
+        }
+    } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
+        const declaration = node as ts.InterfaceDeclaration;
+
+        // if the node is pre-handled, then it should be in `models` already, so don't continue
+        if (models.some(m => m.name === declaration.name.text)) {
+            return;
+        }
+
+        const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = getObjectMembers(declaration.members, models, sourceFile);
+        let minProperties = selfMinProperties;
+        let maxProperties = selfMaxProperties;
+
+        if (declaration.heritageClauses) {
+            for (const clause of declaration.heritageClauses) {
+                if (clause.kind === ts.SyntaxKind.HeritageClause) {
+                    for (const type of clause.types) {
+                        if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
+                            const interfaceName = (type.expression as ts.Identifier).text;
+                            preHandleType(models, sourceFile, interfaceName);
+                            const model = models.find(m => m.kind === "object" && m.name === interfaceName);
+                            if (model && model.kind === "object") {
+                                for (const member of model.members) {
+                                    if (members.every(m => m.name !== member.name)) {
+                                        members.push(member);
+                                        maxProperties++;
+                                        if (!member.optional) {
+                                            minProperties++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        models.push({
+            kind: "object",
+            name: declaration.name.text,
+            members,
+            minProperties,
+            maxProperties,
+            entry: entry ? entry.comment : undefined,
+        });
+    }
+}
+
+function preHandleType(models: Model[], sourceFile: ts.SourceFile, typeName: string) {
+    // if the node is pre-handled, then it should be in `models` already, so don't continue
+    if (models.some(m => m.name === typeName)) {
+        return;
+    }
+
+    let findIt = false;
+    ts.forEachChild(sourceFile, node => {
+        if (findIt) {
+            return;
+        }
+        if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
+            const declaration = node as ts.InterfaceDeclaration;
+            if (declaration.name.text === typeName) {
+                findIt = true;
+                handleSourceFile(models, sourceFile, node);
+            }
+        } else if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+            const declaration = node as ts.TypeAliasDeclaration;
+            if (declaration.name.text === typeName) {
+                findIt = true;
+                handleSourceFile(models, sourceFile, node);
+            }
+        }
+    });
 }
 
 function overrideType(type: Type, jsDoc: JsDoc | undefined) {
@@ -211,18 +217,18 @@ type MembersInfo = {
     maxProperties: number;
 };
 
-function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
+function getMembersInfo(node: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile): MembersInfo {
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
         const typeLiteral = node as ts.TypeLiteralNode;
-        return getObjectMembers(typeLiteral.members, models);
+        return getObjectMembers(typeLiteral.members, models, sourceFile);
     } else if (node.kind === ts.SyntaxKind.UnionType) {
         const unionType = node as ts.UnionTypeNode;
         minProperties = Infinity;
         for (const type of unionType.types) {
-            const childMembersInfo = getMembersInfo(type, models);
+            const childMembersInfo = getMembersInfo(type, models, sourceFile);
             if (minProperties > childMembersInfo.minProperties) {
                 minProperties = childMembersInfo.minProperties;
             }
@@ -249,7 +255,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     } else if (node.kind === ts.SyntaxKind.IntersectionType) {
         const intersectionType = node as ts.IntersectionTypeNode;
         for (const type of intersectionType.types) {
-            const childMembersInfo = getMembersInfo(type, models);
+            const childMembersInfo = getMembersInfo(type, models, sourceFile);
             minProperties += childMembersInfo.minProperties;
             maxProperties += childMembersInfo.maxProperties;
             const childMembers = childMembersInfo.members;
@@ -261,18 +267,33 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
         }
     } else if (node.kind === ts.SyntaxKind.ParenthesizedType) {
         const parenthesizedType = node as ts.ParenthesizedTypeNode;
-        const childMembersInfo = getMembersInfo(parenthesizedType.type, models);
+        const childMembersInfo = getMembersInfo(parenthesizedType.type, models, sourceFile);
         minProperties = childMembersInfo.minProperties;
         maxProperties = childMembersInfo.maxProperties;
         const childMembers = childMembersInfo.members;
         for (const member of childMembers) {
             members.push(member);
         }
+    } else if (node.kind === ts.SyntaxKind.TypeReference) {
+        const referenceName = ((node as ts.TypeReferenceNode).typeName as ts.Identifier).text;
+        preHandleType(models, sourceFile, referenceName);
+        const model = models.find(m => m.kind === "object" && m.name === referenceName);
+        if (model && model.kind === "object") {
+            for (const member of model.members) {
+                if (members.every(m => m.name !== member.name)) {
+                    members.push(member);
+                    maxProperties++;
+                    if (!member.optional) {
+                        minProperties++;
+                    }
+                }
+            }
+        }
     }
     return { members, minProperties, maxProperties };
 }
 
-function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[]): MembersInfo {
+function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[], sourceFile: ts.SourceFile): MembersInfo {
     const members: Member[] = [];
     let minProperties = 0;
     let maxProperties = 0;
@@ -296,7 +317,7 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
             maxProperties++;
 
             if (property.type) {
-                member.type = getType(property.type, models);
+                member.type = getType(property.type, models, sourceFile);
             }
 
             const propertyJsDocs = getJsDocs(property);
@@ -340,7 +361,7 @@ function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[
     return { members, minProperties, maxProperties };
 }
 
-function getType(type: ts.TypeNode, models: Model[]): Type {
+function getType(type: ts.TypeNode, models: Model[], sourceFile: ts.SourceFile): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
         return {
             kind: "string",
@@ -363,13 +384,13 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
                 if (parameterType && indexSignature.type) {
                     return {
                         kind: "map",
-                        key: getType(parameterType, models),
-                        value: getType(indexSignature.type, models),
+                        key: getType(parameterType, models, sourceFile),
+                        value: getType(indexSignature.type, models, sourceFile),
                     };
                 }
             }
         } else {
-            const { members, minProperties, maxProperties } = getMembersInfo(literal, models);
+            const { members, minProperties, maxProperties } = getMembersInfo(literal, models, sourceFile);
             return {
                 kind: "object",
                 members,
@@ -379,7 +400,7 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
         }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
         const array = type as ts.ArrayTypeNode;
-        const elementType = getType(array.elementType, models);
+        const elementType = getType(array.elementType, models, sourceFile);
         return {
             kind: "array",
             type: elementType,

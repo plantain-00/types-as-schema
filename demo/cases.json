@@ -213,11 +213,9 @@
           "type": "string"
         }
       },
-      "required": [
-        "typeLiteralMember1",
-        "typeLiteralMember2"
-      ],
-      "additionalProperties": false
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 2
     },
     "Interface": {
       "type": "object",
@@ -258,6 +256,12 @@
     "TypeUnion1": {
       "type": "object",
       "properties": {
+        "typeLiteralMember1": {
+          "type": "number"
+        },
+        "typeLiteralMember2": {
+          "type": "string"
+        },
         "typeUnionMember1": {
           "type": "number"
         },
@@ -265,11 +269,10 @@
           "type": "string"
         }
       },
-      "required": [
-        "typeUnionMember1",
-        "typeUnionMember2"
-      ],
-      "additionalProperties": false
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
     },
     "TypeUnion2": {
       "type": "object",
@@ -358,6 +361,12 @@
     "TypeIntersection1": {
       "type": "object",
       "properties": {
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        },
         "typeIntersectionMember1": {
           "type": "number"
         },
@@ -366,6 +375,8 @@
         }
       },
       "required": [
+        "interfaceMember1",
+        "interfaceMember2",
         "typeIntersectionMember1",
         "typeIntersectionMember2"
       ],

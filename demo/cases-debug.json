@@ -17,13 +17,15 @@
         "type": {
           "kind": "number",
           "type": "number"
-        }
+        },
+        "optional": true
       },
       {
         "name": "typeLiteralMember2",
         "type": {
           "kind": "string"
-        }
+        },
+        "optional": true
       }
     ],
     "minProperties": 2,
@@ -55,20 +57,37 @@
     "name": "TypeUnion1",
     "members": [
       {
+        "name": "typeLiteralMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
+        "optional": true
+      },
+      {
+        "name": "typeLiteralMember2",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      },
+      {
         "name": "typeUnionMember1",
         "type": {
           "kind": "number",
           "type": "number"
-        }
+        },
+        "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
           "kind": "string"
-        }
+        },
+        "optional": true
       }
     ],
-    "minProperties": 0,
+    "minProperties": 2,
     "maxProperties": 2
   },
   {
@@ -200,6 +219,19 @@
     "name": "TypeIntersection1",
     "members": [
       {
+        "name": "interfaceMember1",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "interfaceMember2",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "number",
@@ -213,8 +245,8 @@
         }
       }
     ],
-    "minProperties": 2,
-    "maxProperties": 2
+    "minProperties": 4,
+    "maxProperties": 4
   },
   {
     "kind": "object",

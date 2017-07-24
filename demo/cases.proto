@@ -11,8 +11,10 @@ message Interface {
 }
 
 message TypeUnion1 {
-    double typeUnionMember1 = 1;
-    string typeUnionMember2 = 2;
+    double typeLiteralMember1 = 1;
+    string typeLiteralMember2 = 2;
+    double typeUnionMember1 = 3;
+    string typeUnionMember2 = 4;
 }
 
 message TypeUnion2 {
@@ -41,8 +43,10 @@ message InterfaceExtends {
 }
 
 message TypeIntersection1 {
-    double typeIntersectionMember1 = 1;
-    string typeIntersectionMember2 = 2;
+    double interfaceMember1 = 1;
+    string interfaceMember2 = 2;
+    double typeIntersectionMember1 = 3;
+    string typeIntersectionMember2 = 4;
 }
 
 message TypeIntersection2 {
