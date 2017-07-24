@@ -9,6 +9,7 @@
     "tslint": "tslint \"src/**/*.ts\"",
     "demoTest": "./bin/types-as-schema demo/types.ts --json demo/ --debug demo/debug.json --protobuf demo/types.proto",
     "demoMatch": "./bin/types-as-schema demo/match.ts --json demo/ --debug demo/match-debug.json",
+    "demoCases": "./bin/types-as-schema demo/cases.ts --json demo/ --debug demo/cases-debug.json --protobuf demo/cases.proto",
     "test": "tsc -p spec && jasmine",
     "standard": "standard \"**/*.config.js\"",
     "fix": "standard --fix \"**/*.config.js\"",

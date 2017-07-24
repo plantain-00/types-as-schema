@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+message Foo {
+    double bar = 2;
+    string baz = 3;
+}
+
+message Foo2 {
+    bool booleanBar = 1;
+    string stringBar = 2;
+    double numberBar = 3;
+    int32 integerBar = 4;
+    uint32 uint32Bar = 5;
+    int32 int32Bar = 6;
+    sint32 sint32Bar = 7;
+    fixed32 fixed32Bar = 8;
+    sfixed32 sfixed32Bar = 9;
+    uint64 uint64Bar = 10;
+    int64 int64Bar = 11;
+    sint64 sint64Bar = 12;
+    fixed64 fixed64Bar = 13;
+    sfixed64 sfixed64Bar = 14;
+    float floatBar = 15;
+    double doubleBar = 16;
+    Foo referenceBar = 17;
+}

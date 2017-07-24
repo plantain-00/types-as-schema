@@ -2,6 +2,9 @@
  * @entry request-protocol.json
  */
 export type RequestProtocol = {
+    /**
+     * @type uint32
+     */
     requestId: number;
 } & (
         {
@@ -25,7 +28,13 @@ export type SearchLogs = {
     content: string;
     time: string;
     hostname: string;
+    /**
+     * @type uint32
+     */
     from: number;
+    /**
+     * @type uint32
+     */
     size: number;
 };
 
@@ -69,10 +78,16 @@ type Flows = {
 };
 
 export type SearchLogsResult = {
+    /**
+     * @type uint32
+     */
     requestId: number;
 } & (
         {
             kind: ResultKind.success;
+            /**
+             * @type uint32
+             */
             total: number;
             logs?: Log[];
         } | {
@@ -82,6 +97,9 @@ export type SearchLogsResult = {
     );
 
 type SearchSamplesResult = {
+    /**
+     * @type uint32
+     */
     requestId: number;
 } & (
         {
@@ -94,11 +112,20 @@ type SearchSamplesResult = {
     );
 
 export type ResaveFailedLogsResult = {
+    /**
+     * @type uint32
+     */
     requestId: number;
 } & (
         {
             kind: ResultKind.success;
+            /**
+             * @type uint32
+             */
             savedCount: number;
+            /**
+             * @type uint32
+             */
             totalCount: number;
         } | {
             kind: ResultKind.fail
@@ -146,6 +173,12 @@ export type Log = {
 
 export type Sample = {
     hostname: string;
+    /**
+     * @type uint32
+     */
     port?: number;
+    /**
+     * @mapValueType uint32
+     */
     values: { [name: string]: number };
 };

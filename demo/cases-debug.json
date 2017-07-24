@@ -1,0 +1,187 @@
+[
+  {
+    "kind": "object",
+    "name": "Foo",
+    "members": [
+      {
+        "name": "bar",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "baz",
+        "type": {
+          "kind": "string"
+        },
+        "optional": false,
+        "tag": 3
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Foo2",
+    "members": [
+      {
+        "name": "booleanBar",
+        "type": {
+          "kind": "boolean"
+        },
+        "optional": false,
+        "tag": 1
+      },
+      {
+        "name": "stringBar",
+        "type": {
+          "kind": "string"
+        },
+        "optional": false,
+        "tag": 2
+      },
+      {
+        "name": "numberBar",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        },
+        "optional": false,
+        "tag": 3
+      },
+      {
+        "name": "integerBar",
+        "type": {
+          "kind": "number",
+          "type": "integer"
+        },
+        "optional": false,
+        "tag": 4
+      },
+      {
+        "name": "uint32Bar",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": false,
+        "tag": 5
+      },
+      {
+        "name": "int32Bar",
+        "type": {
+          "kind": "number",
+          "type": "int32"
+        },
+        "optional": false,
+        "tag": 6
+      },
+      {
+        "name": "sint32Bar",
+        "type": {
+          "kind": "number",
+          "type": "sint32"
+        },
+        "optional": false,
+        "tag": 7
+      },
+      {
+        "name": "fixed32Bar",
+        "type": {
+          "kind": "number",
+          "type": "fixed32"
+        },
+        "optional": false,
+        "tag": 8
+      },
+      {
+        "name": "sfixed32Bar",
+        "type": {
+          "kind": "number",
+          "type": "sfixed32"
+        },
+        "optional": false,
+        "tag": 9
+      },
+      {
+        "name": "uint64Bar",
+        "type": {
+          "kind": "number",
+          "type": "uint64"
+        },
+        "optional": false,
+        "tag": 10
+      },
+      {
+        "name": "int64Bar",
+        "type": {
+          "kind": "number",
+          "type": "int64"
+        },
+        "optional": false,
+        "tag": 11
+      },
+      {
+        "name": "sint64Bar",
+        "type": {
+          "kind": "number",
+          "type": "sint64"
+        },
+        "optional": false,
+        "tag": 12
+      },
+      {
+        "name": "fixed64Bar",
+        "type": {
+          "kind": "number",
+          "type": "fixed64"
+        },
+        "optional": false,
+        "tag": 13
+      },
+      {
+        "name": "sfixed64Bar",
+        "type": {
+          "kind": "number",
+          "type": "sfixed64"
+        },
+        "optional": false,
+        "tag": 14
+      },
+      {
+        "name": "floatBar",
+        "type": {
+          "kind": "number",
+          "type": "float"
+        },
+        "optional": false,
+        "tag": 15
+      },
+      {
+        "name": "doubleBar",
+        "type": {
+          "kind": "number",
+          "type": "double"
+        },
+        "optional": false,
+        "tag": 16
+      },
+      {
+        "name": "referenceBar",
+        "type": {
+          "kind": "reference",
+          "name": "Foo"
+        },
+        "optional": false,
+        "tag": 17
+      }
+    ],
+    "minProperties": 17,
+    "maxProperties": 17,
+    "entry": "cases.json"
+  }
+]

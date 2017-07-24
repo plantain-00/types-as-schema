@@ -71,12 +71,16 @@
           "type": "string"
         },
         "port": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "values": {
           "type": "object",
           "additionalProperties": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
           }
         }
       },

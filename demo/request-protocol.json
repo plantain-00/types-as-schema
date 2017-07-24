@@ -5,7 +5,9 @@
       "type": "object",
       "properties": {
         "requestId": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "kind": {
           "type": "string",
@@ -42,10 +44,14 @@
           "type": "string"
         },
         "from": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "size": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         }
       },
       "required": [

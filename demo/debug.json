@@ -47,7 +47,7 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 1
@@ -121,7 +121,7 @@
         "name": "from",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 4
@@ -130,7 +130,7 @@
         "name": "size",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 5
@@ -272,7 +272,7 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 1
@@ -294,7 +294,7 @@
         "name": "total",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": true,
         "tag": 3
@@ -331,7 +331,7 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 1
@@ -381,7 +381,7 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": false,
         "tag": 1
@@ -403,7 +403,7 @@
         "name": "savedCount",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": true,
         "tag": 3
@@ -412,7 +412,7 @@
         "name": "totalCount",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": true,
         "tag": 4
@@ -573,7 +573,7 @@
         "name": "port",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "uint32"
         },
         "optional": true,
         "tag": 2
@@ -587,7 +587,7 @@
           },
           "value": {
             "kind": "number",
-            "type": "number"
+            "type": "uint32"
           }
         },
         "optional": false,

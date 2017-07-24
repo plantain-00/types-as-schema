@@ -113,12 +113,16 @@
           "type": "string"
         },
         "port": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "values": {
           "type": "object",
           "additionalProperties": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
           }
         }
       },
@@ -150,7 +154,9 @@
       "type": "object",
       "properties": {
         "requestId": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "kind": {
           "type": "string",
@@ -160,7 +166,9 @@
           ]
         },
         "total": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "logs": {
           "type": "array",
@@ -184,7 +192,9 @@
       "type": "object",
       "properties": {
         "requestId": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "kind": {
           "type": "string",
@@ -214,7 +224,9 @@
       "type": "object",
       "properties": {
         "requestId": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "kind": {
           "type": "string",
@@ -224,10 +236,14 @@
           ]
         },
         "savedCount": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "totalCount": {
-          "type": "number"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         },
         "error": {
           "type": "string"

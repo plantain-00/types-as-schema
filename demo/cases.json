@@ -1,0 +1,117 @@
+{
+  "$ref": "#/definitions/Foo2",
+  "definitions": {
+    "Foo2": {
+      "type": "object",
+      "properties": {
+        "booleanBar": {
+          "type": "boolean"
+        },
+        "stringBar": {
+          "type": "string"
+        },
+        "numberBar": {
+          "type": "number"
+        },
+        "integerBar": {
+          "type": "integer"
+        },
+        "uint32Bar": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "int32Bar": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "sint32Bar": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "fixed32Bar": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "sfixed32Bar": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "uint64Bar": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709552000
+        },
+        "int64Bar": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "sint64Bar": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "fixed64Bar": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709552000
+        },
+        "sfixed64Bar": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "floatBar": {
+          "type": "number"
+        },
+        "doubleBar": {
+          "type": "number"
+        },
+        "referenceBar": {
+          "$ref": "#/definitions/Foo"
+        }
+      },
+      "required": [
+        "booleanBar",
+        "stringBar",
+        "numberBar",
+        "integerBar",
+        "uint32Bar",
+        "int32Bar",
+        "sint32Bar",
+        "fixed32Bar",
+        "sfixed32Bar",
+        "uint64Bar",
+        "int64Bar",
+        "sint64Bar",
+        "fixed64Bar",
+        "sfixed64Bar",
+        "floatBar",
+        "doubleBar",
+        "referenceBar"
+      ],
+      "additionalProperties": false
+    },
+    "Foo": {
+      "type": "object",
+      "properties": {
+        "bar": {
+          "type": "number"
+        },
+        "baz": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "bar",
+        "baz"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

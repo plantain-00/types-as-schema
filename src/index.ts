@@ -104,6 +104,17 @@ async function executeCommandLine() {
                     entry: entry ? entry.comment : undefined,
                 });
             }
+        } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
+            const declaration = node as ts.InterfaceDeclaration;
+            const { members, minProperties, maxProperties } = getObjectMembers(declaration.members, models);
+            models.push({
+                kind: "object",
+                name: declaration.name.text,
+                members,
+                minProperties,
+                maxProperties,
+                entry: entry ? entry.comment : undefined,
+            });
         }
     });
 
@@ -148,76 +159,7 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     let lastTag = 0;
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
         const typeLiteral = node as ts.TypeLiteralNode;
-        for (const element of typeLiteral.members) {
-            if (element.kind === ts.SyntaxKind.PropertySignature) {
-                const property = element as ts.PropertySignature;
-                const name = property.name as ts.Identifier;
-                const member: Member = {
-                    name: name.text,
-                    type: {
-                        kind: "unknown",
-                    },
-                    optional: false,
-                    tag: 0,
-                };
-                members.push(member);
-
-                if (property.questionToken) {
-                    member.optional = true;
-                } else {
-                    minProperties++;
-                }
-                maxProperties++;
-
-                if (property.type) {
-                    member.type = getType(property.type, models);
-                }
-
-                const propertyJsDocs = getJsDocs(property);
-                for (const propertyJsDoc of propertyJsDocs) {
-                    if (propertyJsDoc.name === "tag") {
-                        if (propertyJsDoc.comment) {
-                            member.tag = +propertyJsDoc.comment;
-                        }
-                        lastTag = member.tag;
-                    } else if (propertyJsDoc.name === "mapValueType") {
-                        if (propertyJsDoc.comment && member.type.kind === "map") {
-                            member.type.value = {
-                                kind: "string",
-                                value: propertyJsDoc.comment,
-                            };
-                        }
-                    } else if (propertyJsDoc.name === "type") {
-                        overrideType(member.type, propertyJsDoc);
-                    } else if (propertyJsDoc.name === "uniqueItems") {
-                        const arrayType = member.type as ArrayType;
-                        if (arrayType) {
-                            arrayType.uniqueItems = true;
-                        }
-                    } else if (propertyJsDoc.name === "minItems") {
-                        const arrayType = member.type as ArrayType;
-                        if (arrayType && propertyJsDoc.comment) {
-                            arrayType.minItems = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "itemType") {
-                        if (propertyJsDoc.comment && member.type.kind === "array") {
-                            overrideType(member.type, propertyJsDoc);
-                        }
-                    } else if (propertyJsDoc.name === "itemMinimum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "array"
-                            && member.type.type.kind === "number") {
-                            member.type.type.minimum = +propertyJsDoc.comment;
-                        }
-                    }
-                }
-
-                if (!member.tag) {
-                    member.tag = lastTag + 1;
-                    lastTag = member.tag;
-                }
-            }
-        }
+        return getObjectMembers(typeLiteral.members, models);
     } else if (node.kind === ts.SyntaxKind.UnionType) {
         const unionType = node as ts.UnionTypeNode;
         minProperties = Infinity;
@@ -279,6 +221,83 @@ function getMembersInfo(node: ts.TypeNode, models: Model[]): MembersInfo {
     return { members, minProperties, maxProperties };
 }
 
+function getObjectMembers(elements: ts.NodeArray<ts.TypeElement>, models: Model[]): MembersInfo {
+    const members: Member[] = [];
+    let minProperties = 0;
+    let maxProperties = 0;
+    let lastTag = 0;
+    for (const element of elements) {
+        if (element.kind === ts.SyntaxKind.PropertySignature) {
+            const property = element as ts.PropertySignature;
+            const name = property.name as ts.Identifier;
+            const member: Member = {
+                name: name.text,
+                type: {
+                    kind: "unknown",
+                },
+                optional: false,
+                tag: 0,
+            };
+            members.push(member);
+
+            if (property.questionToken) {
+                member.optional = true;
+            } else {
+                minProperties++;
+            }
+            maxProperties++;
+
+            if (property.type) {
+                member.type = getType(property.type, models);
+            }
+
+            const propertyJsDocs = getJsDocs(property);
+            for (const propertyJsDoc of propertyJsDocs) {
+                if (propertyJsDoc.name === "tag") {
+                    if (propertyJsDoc.comment) {
+                        member.tag = +propertyJsDoc.comment;
+                    }
+                    lastTag = member.tag;
+                } else if (propertyJsDoc.name === "mapValueType") {
+                    if (propertyJsDoc.comment && member.type.kind === "map") {
+                        if (member.type.value.kind === "number") {
+                            member.type.value.type = propertyJsDoc.comment;
+                        }
+                    }
+                } else if (propertyJsDoc.name === "type") {
+                    overrideType(member.type, propertyJsDoc);
+                } else if (propertyJsDoc.name === "uniqueItems") {
+                    const arrayType = member.type as ArrayType;
+                    if (arrayType) {
+                        arrayType.uniqueItems = true;
+                    }
+                } else if (propertyJsDoc.name === "minItems") {
+                    const arrayType = member.type as ArrayType;
+                    if (arrayType && propertyJsDoc.comment) {
+                        arrayType.minItems = +propertyJsDoc.comment;
+                    }
+                } else if (propertyJsDoc.name === "itemType") {
+                    if (propertyJsDoc.comment && member.type.kind === "array") {
+                        overrideType(member.type, propertyJsDoc);
+                    }
+                } else if (propertyJsDoc.name === "itemMinimum") {
+                    if (propertyJsDoc.comment
+                        && member.type.kind === "array"
+                        && member.type.type.kind === "number") {
+                        member.type.type.minimum = +propertyJsDoc.comment;
+                    }
+                }
+            }
+
+            if (!member.tag) {
+                member.tag = lastTag + 1;
+                lastTag = member.tag;
+            }
+        }
+    }
+    return { members, minProperties, maxProperties };
+}
+
 function getType(type: ts.TypeNode, models: Model[]): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
         return {
@@ -288,6 +307,10 @@ function getType(type: ts.TypeNode, models: Model[]): Type {
         return {
             kind: "number",
             type: "number",
+        };
+    } else if (type.kind === ts.SyntaxKind.BooleanKeyword) {
+        return {
+            kind: "boolean",
         };
     } else if (type.kind === ts.SyntaxKind.TypeLiteral) {
         const literal = type as ts.TypeLiteralNode;
@@ -478,9 +501,18 @@ function getProtobufProperty(memberType: Type): { modifier: string, propertyType
     } else if (memberType.kind === "reference") {
         propertyType = memberType.name;
     } else if (memberType.kind === "number") {
-        propertyType = memberType.type === "number" ? "uint32" : memberType.type;
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (memberType.type === "number") {
+            propertyType = "double";
+        } else if (memberType.type === "integer") {
+            propertyType = "int32";
+        } else {
+            propertyType = memberType.type;
+        }
     } else if (memberType.kind === "string") {
         propertyType = memberType.kind;
+    } else if (memberType.kind === "boolean") {
+        propertyType = "bool";
     }
     return { modifier, propertyType };
 }
