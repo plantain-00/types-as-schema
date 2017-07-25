@@ -22,10 +22,10 @@ type TypeUnion2 =
     };
 type TypeUnion3 =
     {
-        kind: Enum.enumMember1;
+        kind: NumberEnum.enumMember1;
         typeUnionMember1: string;
     } | {
-        kind: Enum.enumMember2;
+        kind: NumberEnum.enumMember2;
         typeUnionMember2: string;
     };
 type TypeUnion = {
@@ -62,10 +62,10 @@ type TypeUnionAndIntersection =
         typeIntersectionMember1: number;
     } & (
         {
-            kind: Enum.enumMember1;
+            kind: NumberEnum.enumMember1;
             typeUnionMember1: string;
         } | {
-            kind: Enum.enumMember2;
+            kind: NumberEnum.enumMember2;
             typeUnionMember2: string;
         }
     );
@@ -85,11 +85,19 @@ export const enum StringEnum {
     enumMember1 = "enum member 1",
     enumMember2 = "enum member 2",
 }
-
-export const enum Enum {
+export const enum NumberEnum {
     enumMember1,
     enumMember2,
 }
+export const enum NumberEnum2 {
+    enumMember1 = 3,
+    enumMember2 = 4,
+}
+export type Enum = {
+    stringEnum: StringEnum;
+    numberEnum: NumberEnum;
+    numberEnum2: NumberEnum2;
+};
 
 type NumberType = {
     numberMember: number;
@@ -199,6 +207,5 @@ export type EntryType = {
 
     taggedField: TaggedField;
 
-    stringEnum: StringEnum;
     enum: Enum;
 };

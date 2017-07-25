@@ -10,12 +10,18 @@
   },
   {
     "kind": "enum",
-    "name": "Enum",
+    "name": "NumberEnum",
     "type": "uint32",
     "members": {
       "enumMember1": 0,
       "enumMember2": 1
     }
+  },
+  {
+    "kind": "enum",
+    "name": "NumberEnum2",
+    "type": "uint32",
+    "members": {}
   },
   {
     "kind": "object",
@@ -383,6 +389,35 @@
   },
   {
     "kind": "object",
+    "name": "Enum",
+    "members": [
+      {
+        "name": "stringEnum",
+        "type": {
+          "kind": "reference",
+          "name": "StringEnum"
+        }
+      },
+      {
+        "name": "numberEnum",
+        "type": {
+          "kind": "reference",
+          "name": "NumberEnum"
+        }
+      },
+      {
+        "name": "numberEnum2",
+        "type": {
+          "kind": "reference",
+          "name": "NumberEnum2"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
     "name": "NumberType",
     "members": [
       {
@@ -715,13 +750,6 @@
         }
       },
       {
-        "name": "stringEnum",
-        "type": {
-          "kind": "reference",
-          "name": "StringEnum"
-        }
-      },
-      {
         "name": "enum",
         "type": {
           "kind": "reference",
@@ -729,8 +757,8 @@
         }
       }
     ],
-    "minProperties": 15,
-    "maxProperties": 16,
+    "minProperties": 14,
+    "maxProperties": 15,
     "entry": "cases.json"
   }
 ]

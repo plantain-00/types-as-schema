@@ -756,12 +756,16 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Def
                 enum: memberType.enums,
             };
         } else {
-            return Object.assign(getNumberType({
+            const definition = getNumberType({
                 kind: "number",
                 type: memberType.type,
-            }), {
-                    enum: memberType.enums,
-                });
+            });
+            Object.assign(definition, {
+                enum: memberType.enums,
+                minimum: undefined,
+                maximum: undefined,
+            });
+            return definition;
         }
     } else if (memberType.kind === "reference") {
         return {

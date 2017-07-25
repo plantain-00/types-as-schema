@@ -55,9 +55,6 @@
         "taggedField": {
           "$ref": "#/definitions/TaggedField"
         },
-        "stringEnum": {
-          "$ref": "#/definitions/StringEnum"
-        },
         "enum": {
           "$ref": "#/definitions/Enum"
         }
@@ -76,7 +73,6 @@
         "typeUnionAndIntersection",
         "mapType",
         "taggedField",
-        "stringEnum",
         "enum"
       ],
       "additionalProperties": false
@@ -303,8 +299,6 @@
       "properties": {
         "kind": {
           "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295,
           "enum": [
             0,
             1
@@ -420,8 +414,6 @@
         },
         "kind": {
           "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295,
           "enum": [
             0,
             1
@@ -502,6 +494,26 @@
       "required": [
         "taggedFieldMember1",
         "taggedFieldMember2"
+      ],
+      "additionalProperties": false
+    },
+    "Enum": {
+      "type": "object",
+      "properties": {
+        "stringEnum": {
+          "$ref": "#/definitions/StringEnum"
+        },
+        "numberEnum": {
+          "$ref": "#/definitions/NumberEnum"
+        },
+        "numberEnum2": {
+          "$ref": "#/definitions/NumberEnum2"
+        }
+      },
+      "required": [
+        "stringEnum",
+        "numberEnum",
+        "numberEnum2"
       ],
       "additionalProperties": false
     }

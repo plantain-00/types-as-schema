@@ -73,6 +73,12 @@ message TaggedField {
     string taggedFieldMember2 = 3;
 }
 
+message Enum {
+    StringEnum stringEnum = 1;
+    NumberEnum numberEnum = 2;
+    NumberEnum2 numberEnum2 = 3;
+}
+
 message NumberType {
     double numberMember = 1;
     int32 integerMember = 2;
@@ -118,6 +124,5 @@ message EntryType {
     TypeUnionAndIntersection typeUnionAndIntersection = 12;
     MapType mapType = 13;
     TaggedField taggedField = 14;
-    StringEnum stringEnum = 15;
-    Enum enum = 16;
+    Enum enum = 15;
 }
