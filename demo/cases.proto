@@ -84,7 +84,7 @@ message TaggedField {
 }
 
 message Enum {
-    StringEnum stringEnum = 1;
+    string stringEnum = 1;
     NumberEnum numberEnum = 2;
     NumberEnum2 numberEnum2 = 3;
 }

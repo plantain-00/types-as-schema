@@ -606,7 +606,13 @@ function getProtobufProperty(memberType: Type): { modifier: string, propertyType
     } else if (memberType.kind === "enum") {
         propertyType = memberType.type;
     } else if (memberType.kind === "reference") {
-        propertyType = memberType.name;
+        const model = models.find(m => m.kind === "enum" && m.name === memberType.name);
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (model && model.kind === "enum" && model.type === "string") {
+            propertyType = "string";
+        } else {
+            propertyType = memberType.name;
+        }
     } else if (memberType.kind === "number") {
         // tslint:disable-next-line:prefer-conditional-expression
         if (memberType.type === "number") {
