@@ -3,25 +3,46 @@
     "kind": "enum",
     "name": "StringEnum",
     "type": "string",
-    "members": {
-      "enumMember1": "enum member 1",
-      "enumMember2": "enum member 2"
-    }
+    "members": [
+      {
+        "name": "enumMember1",
+        "value": "enum member 1"
+      },
+      {
+        "name": "enumMember2",
+        "value": "enum member 2"
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "NumberEnum",
     "type": "uint32",
-    "members": {
-      "enumMember1": 0,
-      "enumMember2": 1
-    }
+    "members": [
+      {
+        "name": "enumMember1",
+        "value": 0
+      },
+      {
+        "name": "enumMember2",
+        "value": 1
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "NumberEnum2",
     "type": "uint32",
-    "members": {}
+    "members": [
+      {
+        "name": "enumMember1",
+        "value": 3
+      },
+      {
+        "name": "enumMember2",
+        "value": 4
+      }
+    ]
   },
   {
     "kind": "object",

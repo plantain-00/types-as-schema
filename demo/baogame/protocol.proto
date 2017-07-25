@@ -1,5 +1,38 @@
 syntax = "proto3";
 
+enum ItemType {
+    power = 0;
+    gun = 1;
+    mine = 2;
+    drug = 3;
+    hide = 4;
+    bomb = 5;
+    doublejump = 6;
+    flypack = 7;
+    grenade = 8;
+}
+
+enum ProtocolKind {
+    tick = 0;
+    initSuccess = 1;
+    join = 2;
+    joinSuccess = 3;
+    control = 4;
+    explode = 5;
+    userDead = 6;
+}
+
+enum UserStatus {
+    dieing = 0;
+    climbing = 1;
+    rolling2 = 2;
+    standing = 3;
+    rolling = 4;
+    mining = 5;
+    crawling = 6;
+    falling = 7;
+}
+
 message Item {
     uint32 x = 1;
     uint32 y = 2;

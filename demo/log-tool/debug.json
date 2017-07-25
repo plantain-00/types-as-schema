@@ -3,41 +3,77 @@
     "kind": "enum",
     "name": "RequestProtocolKind",
     "type": "string",
-    "members": {
-      "searchLogs": "search logs",
-      "searchSamples": "search samples",
-      "resaveFailedLogs": "resave failed logs"
-    }
+    "members": [
+      {
+        "name": "searchLogs",
+        "value": "search logs"
+      },
+      {
+        "name": "searchSamples",
+        "value": "search samples"
+      },
+      {
+        "name": "resaveFailedLogs",
+        "value": "resave failed logs"
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "ProtocolKind",
     "type": "string",
-    "members": {
-      "flows": "flows",
-      "historySamples": "history samples",
-      "searchLogsResult": "search logs result",
-      "searchSamplesResult": "search samples result",
-      "resaveFailedLogsResult": "resave failed logs result"
-    }
+    "members": [
+      {
+        "name": "flows",
+        "value": "flows"
+      },
+      {
+        "name": "historySamples",
+        "value": "history samples"
+      },
+      {
+        "name": "searchLogsResult",
+        "value": "search logs result"
+      },
+      {
+        "name": "searchSamplesResult",
+        "value": "search samples result"
+      },
+      {
+        "name": "resaveFailedLogsResult",
+        "value": "resave failed logs result"
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "ResultKind",
     "type": "string",
-    "members": {
-      "success": "success",
-      "fail": "fail"
-    }
+    "members": [
+      {
+        "name": "success",
+        "value": "success"
+      },
+      {
+        "name": "fail",
+        "value": "fail"
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "FlowKind",
     "type": "string",
-    "members": {
-      "log": "log",
-      "sample": "sample"
-    }
+    "members": [
+      {
+        "name": "log",
+        "value": "log"
+      },
+      {
+        "name": "sample",
+        "value": "sample"
+      }
+    ]
   },
   {
     "kind": "object",

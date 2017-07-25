@@ -55,13 +55,24 @@ async function executeCommandLine() {
                         kind: "enum",
                         name: declaration.name.text,
                         type: firstMember.initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : "uint32",
-                        members: {},
+                        members: [],
                     };
                     for (const member of members) {
-                        if (member.initializer && member.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                        if (member.initializer) {
                             const name = member.name as ts.Identifier;
-                            const initializer = member.initializer as ts.StringLiteral;
-                            enumType.members[name.text] = initializer.text;
+                            if (member.initializer.kind === ts.SyntaxKind.StringLiteral) {
+                                const initializer = member.initializer as ts.StringLiteral;
+                                enumType.members.push({
+                                    name: name.text,
+                                    value: initializer.text,
+                                });
+                            } else if (member.initializer.kind === ts.SyntaxKind.NumericLiteral) {
+                                const initializer = member.initializer as ts.NumericLiteral;
+                                enumType.members.push({
+                                    name: name.text,
+                                    value: +initializer.text,
+                                });
+                            }
                         }
                     }
                     models.push(enumType);
@@ -70,17 +81,24 @@ async function executeCommandLine() {
                         kind: "enum",
                         name: declaration.name.text,
                         type: "uint32",
-                        members: {},
+                        members: [],
                     };
                     let lastIndex = 0;
                     for (const member of members) {
                         const name = member.name as ts.Identifier;
                         if (member.initializer && member.initializer.kind === ts.SyntaxKind.NumericLiteral) {
                             const initializer = member.initializer as ts.NumericLiteral;
-                            enumType.members[name.text] = +initializer.text;
-                            lastIndex = +initializer.text + 1;
+                            const value = +initializer.text;
+                            enumType.members.push({
+                                name: name.text,
+                                value,
+                            });
+                            lastIndex = value + 1;
                         } else {
-                            enumType.members[name.text] = lastIndex;
+                            enumType.members.push({
+                                name: name.text,
+                                value: lastIndex,
+                            });
                             lastIndex++;
                         }
                     }
@@ -442,7 +460,7 @@ function getType(type: ts.TypeNode): Type {
                 return {
                     kind: "enum",
                     type: enumModel.type,
-                    enums: Object.values(enumModel.members),
+                    enums: enumModel.members.map(m => m.value),
                 };
             }
         }
@@ -526,7 +544,12 @@ type EnumModel = {
     kind: "enum";
     name: string;
     type: string;
-    members: { [key: string]: string | number | undefined };
+    members: EnumMember[];
+};
+
+type EnumMember = {
+    name: string;
+    value: string | number;
 };
 
 type ObjectModel = {
@@ -617,6 +640,18 @@ function generateProtobuf() {
             messages.push(`message ${model.name} {
 ${members.join("\n")}
 }`);
+        } else if (model.kind === "enum") {
+            const members: string[] = [];
+            for (const member of model.members) {
+                if (typeof member.value === "number") {
+                    members.push(`    ${member.name} = ${member.value};`);
+                }
+            }
+            if (members.length > 0) {
+                messages.push(`enum ${model.name} {
+${members.join("\n")}
+}`);
+            }
         }
     }
     return `syntax = "proto3";

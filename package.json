@@ -11,6 +11,7 @@
     "demo:match-calculator": "./bin/types-as-schema demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json",
     "demo:baogame": "./bin/types-as-schema demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json",
     "demo": "./bin/types-as-schema demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto",
+    "demo:all": "npm run demo && npm run demo:log-tool && npm run demo:match-calculator && npm run demo:baogame",
     "test": "tsc -p spec && jasmine",
     "standard": "standard \"**/*.config.js\"",
     "fix": "standard --fix \"**/*.config.js\"",

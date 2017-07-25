@@ -1,5 +1,15 @@
 syntax = "proto3";
 
+enum NumberEnum {
+    enumMember1 = 0;
+    enumMember2 = 1;
+}
+
+enum NumberEnum2 {
+    enumMember1 = 3;
+    enumMember2 = 4;
+}
+
 message TypeLiteral {
     double typeLiteralMember1 = 1;
     string typeLiteralMember2 = 2;

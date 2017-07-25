@@ -3,19 +3,118 @@
     "kind": "enum",
     "name": "ItemType",
     "type": "uint32",
-    "members": {}
+    "members": [
+      {
+        "name": "power",
+        "value": 0
+      },
+      {
+        "name": "gun",
+        "value": 1
+      },
+      {
+        "name": "mine",
+        "value": 2
+      },
+      {
+        "name": "drug",
+        "value": 3
+      },
+      {
+        "name": "hide",
+        "value": 4
+      },
+      {
+        "name": "bomb",
+        "value": 5
+      },
+      {
+        "name": "doublejump",
+        "value": 6
+      },
+      {
+        "name": "flypack",
+        "value": 7
+      },
+      {
+        "name": "grenade",
+        "value": 8
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "ProtocolKind",
     "type": "uint32",
-    "members": {}
+    "members": [
+      {
+        "name": "tick",
+        "value": 0
+      },
+      {
+        "name": "initSuccess",
+        "value": 1
+      },
+      {
+        "name": "join",
+        "value": 2
+      },
+      {
+        "name": "joinSuccess",
+        "value": 3
+      },
+      {
+        "name": "control",
+        "value": 4
+      },
+      {
+        "name": "explode",
+        "value": 5
+      },
+      {
+        "name": "userDead",
+        "value": 6
+      }
+    ]
   },
   {
     "kind": "enum",
     "name": "UserStatus",
     "type": "uint32",
-    "members": {}
+    "members": [
+      {
+        "name": "dieing",
+        "value": 0
+      },
+      {
+        "name": "climbing",
+        "value": 1
+      },
+      {
+        "name": "rolling2",
+        "value": 2
+      },
+      {
+        "name": "standing",
+        "value": 3
+      },
+      {
+        "name": "rolling",
+        "value": 4
+      },
+      {
+        "name": "mining",
+        "value": 5
+      },
+      {
+        "name": "crawling",
+        "value": 6
+      },
+      {
+        "name": "falling",
+        "value": 7
+      }
+    ]
   },
   {
     "kind": "object",
@@ -515,7 +614,15 @@
         "type": {
           "kind": "enum",
           "type": "uint32",
-          "enums": []
+          "enums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
         }
       },
       {
@@ -590,7 +697,15 @@
         "type": {
           "kind": "enum",
           "type": "uint32",
-          "enums": []
+          "enums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
         }
       },
       {
