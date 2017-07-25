@@ -6,7 +6,7 @@
       "kind": "reference",
       "name": "Group"
     },
-    "entry": "match-schema.json",
+    "entry": "groups-schema.json",
     "uniqueItems": true,
     "minItems": 1
   },
@@ -105,7 +105,7 @@
     "type": {
       "kind": "string"
     },
-    "entry": "team-schema.json",
+    "entry": "teams-schema.json",
     "uniqueItems": true,
     "minItems": 1
   }

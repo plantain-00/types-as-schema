@@ -1,0 +1,527 @@
+[
+  {
+    "kind": "enum",
+    "name": "RequestProtocolKind",
+    "type": "string",
+    "members": {
+      "searchLogs": "search logs",
+      "searchSamples": "search samples",
+      "resaveFailedLogs": "resave failed logs"
+    }
+  },
+  {
+    "kind": "enum",
+    "name": "ProtocolKind",
+    "type": "string",
+    "members": {
+      "flows": "flows",
+      "historySamples": "history samples",
+      "searchLogsResult": "search logs result",
+      "searchSamplesResult": "search samples result",
+      "resaveFailedLogsResult": "resave failed logs result"
+    }
+  },
+  {
+    "kind": "enum",
+    "name": "ResultKind",
+    "type": "string",
+    "members": {
+      "success": "success",
+      "fail": "fail"
+    }
+  },
+  {
+    "kind": "enum",
+    "name": "FlowKind",
+    "type": "string",
+    "members": {
+      "log": "log",
+      "sample": "sample"
+    }
+  },
+  {
+    "kind": "object",
+    "name": "RequestProtocol",
+    "members": [
+      {
+        "name": "requestId",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "search logs",
+            "search samples",
+            "resave failed logs"
+          ]
+        }
+      },
+      {
+        "name": "searchLogs",
+        "type": {
+          "kind": "reference",
+          "name": "SearchLogs"
+        },
+        "optional": true
+      },
+      {
+        "name": "searchSamples",
+        "type": {
+          "kind": "reference",
+          "name": "SearchSamples"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 3,
+    "entry": "request-protocol.json"
+  },
+  {
+    "kind": "object",
+    "name": "SearchLogs",
+    "members": [
+      {
+        "name": "content",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "time",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "hostname",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "from",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "size",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 5,
+    "maxProperties": 5
+  },
+  {
+    "kind": "object",
+    "name": "SearchSamples",
+    "members": [
+      {
+        "name": "from",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "to",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "ResponseProtocol",
+    "members": [
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "flows",
+            "history samples",
+            "search logs result",
+            "search samples result",
+            "resave failed logs result"
+          ]
+        }
+      },
+      {
+        "name": "flows",
+        "type": {
+          "kind": "reference",
+          "name": "Flows"
+        },
+        "optional": true
+      },
+      {
+        "name": "historySamples",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "SampleFrame"
+          }
+        },
+        "optional": true
+      },
+      {
+        "name": "searchLogsResult",
+        "type": {
+          "kind": "reference",
+          "name": "SearchLogsResult"
+        },
+        "optional": true
+      },
+      {
+        "name": "searchSamplesResult",
+        "type": {
+          "kind": "reference",
+          "name": "SearchSamplesResult"
+        },
+        "optional": true
+      },
+      {
+        "name": "resaveFailedLogsResult",
+        "type": {
+          "kind": "reference",
+          "name": "ResaveFailedLogsResult"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 2,
+    "entry": "response-protocol.json"
+  },
+  {
+    "kind": "object",
+    "name": "Flows",
+    "members": [
+      {
+        "name": "serverTime",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "flows",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Flow"
+          }
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "SearchLogsResult",
+    "members": [
+      {
+        "name": "requestId",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        }
+      },
+      {
+        "name": "total",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": true
+      },
+      {
+        "name": "logs",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Log"
+          }
+        },
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "SearchSamplesResult",
+    "members": [
+      {
+        "name": "requestId",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        }
+      },
+      {
+        "name": "searchSampleResult",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "SampleFrame"
+          }
+        },
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "ResaveFailedLogsResult",
+    "members": [
+      {
+        "name": "requestId",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "success",
+            "fail"
+          ]
+        }
+      },
+      {
+        "name": "savedCount",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": true
+      },
+      {
+        "name": "totalCount",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "SampleFrame",
+    "members": [
+      {
+        "name": "time",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "samples",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Sample"
+          }
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "FlowProtocol",
+    "members": [
+      {
+        "name": "flows",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Flow"
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "entry": "flow-protocol.json"
+  },
+  {
+    "kind": "object",
+    "name": "Flow",
+    "members": [
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "enums": [
+            "log",
+            "sample"
+          ]
+        }
+      },
+      {
+        "name": "log",
+        "type": {
+          "kind": "reference",
+          "name": "Log"
+        },
+        "optional": true
+      },
+      {
+        "name": "sample",
+        "type": {
+          "kind": "reference",
+          "name": "Sample"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Log",
+    "members": [
+      {
+        "name": "time",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "content",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "filepath",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "hostname",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "Sample",
+    "members": [
+      {
+        "name": "hostname",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "port",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": true
+      },
+      {
+        "name": "values",
+        "type": {
+          "kind": "map",
+          "key": {
+            "kind": "string"
+          },
+          "value": {
+            "kind": "number",
+            "type": "uint32"
+          }
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 3
+  }
+]

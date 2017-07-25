@@ -1,5 +1,5 @@
 /**
- * @entry match-schema.json
+ * @entry groups-schema.json
  * @uniqueItems
  * @minItems 1
  */
@@ -41,7 +41,7 @@ export type Match = {
 };
 
 /**
- * @entry team-schema.json
+ * @entry teams-schema.json
  * @uniqueItems
  * @minItems 1
  */
