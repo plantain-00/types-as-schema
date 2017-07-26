@@ -125,9 +125,9 @@ export class Generator {
                             if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
                                 const interfaceName = (type.expression as ts.Identifier).text;
                                 this.preHandleType(interfaceName);
-                                const model = this.models.find(m => m.kind === "object" && m.name === interfaceName);
-                                if (model && model.kind === "object") {
-                                    for (const member of model.members) {
+                                const clauseModel = this.models.find(m => m.kind === "object" && m.name === interfaceName);
+                                if (clauseModel && clauseModel.kind === "object") {
+                                    for (const member of clauseModel.members) {
                                         if (members.every(m => m.name !== member.name)) {
                                             members.push(member);
                                             maxProperties++;
