@@ -157,12 +157,25 @@ type NumberType = {
      * @type double
      */
     doubleMember: number;
+
+    /**
+     * @type uint32
+     * @multipleOf 10
+     */
+    multipleOfMember: number;
 };
 
 type ArrayType = {
     arrayType1: string[];
     arrayType2: TypeLiteral[];
     arrayType3: { literal: number }[];
+    /**
+     * @uniqueItems
+     * @minItems 1
+     * @itemType uint32
+     * @itemMinimum 100
+     */
+    arrayType4: number[];
 };
 
 type MapType = {

@@ -104,11 +104,13 @@ message NumberType {
     sfixed64 sfixed64Member = 12;
     float floatMember = 13;
     double doubleMember = 14;
+    uint32 multipleOfMember = 15;
 }
 
 message ArrayType {
     repeated string arrayType1 = 1;
     repeated TypeLiteral arrayType2 = 2;
+    repeated uint32 arrayType4 = 4;
 }
 
 message MapType {

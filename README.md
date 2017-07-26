@@ -45,3 +45,4 @@ code | use case | description
 `@minItems 1` | json schema | set `minItems = 1`
 `@itemType integer` | json schema | set item `type = "integer"`
 `@itemMinimum 1` | json schema | set item `minimum = 1`
+`@multipleOf 10` | json schema | set `multipleOf = 10`

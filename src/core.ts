@@ -720,6 +720,7 @@ export type NumberType = {
     kind: "number";
     type: string;
     minimum?: number;
+    multipleOf?: number;
 };
 
 export type StringType = {

@@ -141,6 +141,11 @@
         },
         "doubleMember": {
           "type": "number"
+        },
+        "multipleOfMember": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
         }
       },
       "required": [
@@ -157,7 +162,8 @@
         "fixed64Member",
         "sfixed64Member",
         "floatMember",
-        "doubleMember"
+        "doubleMember",
+        "multipleOfMember"
       ],
       "additionalProperties": false
     },
@@ -190,12 +196,23 @@
             ],
             "additionalProperties": false
           }
+        },
+        "arrayType4": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 4294967295
+          },
+          "uniqueItems": true,
+          "minItems": 1
         }
       },
       "required": [
         "arrayType1",
         "arrayType2",
-        "arrayType3"
+        "arrayType3",
+        "arrayType4"
       ],
       "additionalProperties": false
     },

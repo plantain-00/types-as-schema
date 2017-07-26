@@ -539,10 +539,17 @@
           "kind": "number",
           "type": "double"
         }
+      },
+      {
+        "name": "multipleOfMember",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
       }
     ],
-    "minProperties": 14,
-    "maxProperties": 14
+    "minProperties": 15,
+    "maxProperties": 15
   },
   {
     "kind": "object",
@@ -586,10 +593,23 @@
             "maxProperties": 1
           }
         }
+      },
+      {
+        "name": "arrayType4",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "number",
+            "type": "uint32",
+            "minimum": 100
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
       }
     ],
-    "minProperties": 3,
-    "maxProperties": 3
+    "minProperties": 4,
+    "maxProperties": 4
   },
   {
     "kind": "object",
