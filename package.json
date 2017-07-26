@@ -58,8 +58,9 @@
     "webpack": "3.4.0"
   },
   "dependencies": {
-    "minimist": "1",
-    "typescript": "2"
+    "minimist": "1.2.0",
+    "protobufjs": "6.8.0",
+    "typescript": "2.4.2"
   },
   "peerDependencies": {
     "typescript": "2"

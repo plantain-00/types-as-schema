@@ -215,10 +215,11 @@ export class Generator {
                 if (maxProperties < childMembersInfo.maxProperties) {
                     maxProperties = childMembersInfo.maxProperties;
                 }
-                const childMembers: Member[] = JSON.parse(JSON.stringify(childMembersInfo.members));
                 if (members.length === 0) {
+                    const childMembers: Member[] = JSON.parse(JSON.stringify(childMembersInfo.members));
                     members.push(...childMembers);
                 } else {
+                    const childMembers = childMembersInfo.members;
                     for (const member of members) {
                         if (childMembers.every(m => m.name !== member.name)) {
                             member.optional = true;
@@ -226,8 +227,9 @@ export class Generator {
                     }
                     for (const member of childMembers) {
                         if (members.every(m => m.name !== member.name)) {
-                            member.optional = true;
-                            members.push(member);
+                            const childMember: Member = JSON.parse(JSON.stringify(member));
+                            childMember.optional = true;
+                            members.push(childMember);
                         }
                     }
                 }
@@ -241,7 +243,7 @@ export class Generator {
                 const childMembers = childMembersInfo.members;
                 for (const member of childMembers) {
                     if (members.every(m => m.name !== member.name)) {
-                        members.push(member);
+                        members.push(JSON.parse(JSON.stringify(member)));
                     }
                 }
             }
@@ -250,7 +252,7 @@ export class Generator {
             const childMembersInfo = this.getMembersInfo(parenthesizedType.type);
             minProperties = childMembersInfo.minProperties;
             maxProperties = childMembersInfo.maxProperties;
-            const childMembers = childMembersInfo.members;
+            const childMembers: Member[] = JSON.parse(JSON.stringify(childMembersInfo.members));
             for (const member of childMembers) {
                 members.push(member);
             }
@@ -261,7 +263,7 @@ export class Generator {
             if (model && model.kind === "object") {
                 for (const member of model.members) {
                     if (members.every(m => m.name !== member.name)) {
-                        members.push(member);
+                        members.push(JSON.parse(JSON.stringify(member)));
                         maxProperties++;
                         if (!member.optional) {
                             minProperties++;

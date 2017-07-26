@@ -5,6 +5,8 @@ import * as path from "path";
 import { Generator } from "./core";
 import * as packageJson from "../package.json";
 
+import * as protobuf from "protobufjs";
+
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
 
@@ -49,7 +51,9 @@ async function executeCommandLine() {
     }
 
     if (protobufPath) {
-        fs.writeFileSync(protobufPath, generator.generateProtobuf());
+        const protobufContent = generator.generateProtobuf();
+        protobuf.parse(protobufContent);
+        fs.writeFileSync(protobufPath, protobufContent);
     }
 
     if (jsonPath) {
