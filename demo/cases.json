@@ -188,7 +188,8 @@
             "$ref": "#/definitions/TypeLiteral"
           },
           "uniqueItems": true,
-          "minItems": 1
+          "minItems": 1,
+          "maxItems": 10
         },
         "arrayType3": {
           "type": "array",

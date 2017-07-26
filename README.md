@@ -66,6 +66,7 @@ array:
 
 + `@uniqueItems`: set `uniqueItems = true`
 + `@minItems 1`: set `minItems = 1`
++ `@maxItems 10`: set `maxItems = 10`
 + `@itemType integer`: set item `type = "integer"`
 
 number[]:

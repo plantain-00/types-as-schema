@@ -82,6 +82,7 @@ export class Generator {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
                 const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
                 const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
+                const maxItems = jsDocs.find(jsDoc => jsDoc.name === "maxItems");
                 const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
                 const itemMultipleOf = jsDocs.find(jsDoc => jsDoc.name === "itemMultipleOf");
                 const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
@@ -114,6 +115,7 @@ export class Generator {
                     entry: entry ? entry.comment : undefined,
                     uniqueItems: uniqueItems ? true : undefined,
                     minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
+                    maxItems: (maxItems && maxItems.comment) ? +maxItems.comment : undefined,
                 });
             } else {
                 const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type);
@@ -338,6 +340,8 @@ export class Generator {
                         if (propertyJsDoc.comment) {
                             if (propertyJsDoc.name === "minItems") {
                                 member.type.minItems = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "maxItems") {
+                                member.type.maxItems = +propertyJsDoc.comment;
                             } else if (propertyJsDoc.name === "itemType") {
                                 this.overrideType(member.type, propertyJsDoc);
                             } else if (member.type.type.kind === "number") {
@@ -670,6 +674,7 @@ ${messages.join("\n\n")}
                 items: this.getJsonSchemaProperty(memberType.type),
                 uniqueItems: memberType.uniqueItems,
                 minItems: memberType.minItems,
+                maxItems: memberType.maxItems,
             };
         } else if (memberType.kind === "enum") {
             if (memberType.type === "string") {
@@ -760,6 +765,7 @@ export type ArrayType = {
     type: Type;
     uniqueItems?: boolean;
     minItems?: number;
+    maxItems?: number;
 };
 
 export type EnumType = {
@@ -846,6 +852,7 @@ export type ArrayModel = {
     entry: string | undefined;
     uniqueItems?: boolean;
     minItems?: number;
+    maxItems?: number;
 };
 
 export type JsDoc = {
@@ -876,6 +883,7 @@ export type Definition =
         items: Definition,
         uniqueItems?: boolean,
         minItems?: number,
+        maxItems?: number,
     } | {
         type: undefined,
         $ref: string,

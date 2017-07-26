@@ -185,6 +185,7 @@ type ArrayType = {
     /**
      * @uniqueItems
      * @minItems 1
+     * @maxItems 10
      */
     arrayType2: TypeLiteral[];
     arrayType3: { literal: number }[];
