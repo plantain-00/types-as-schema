@@ -180,32 +180,18 @@ type MapType = {
  */
 export type EntryType = {
     optionalMember?: string;
-
     booleanMember: boolean;
-
     stringMember: string;
-
     numberType: NumberType;
-
     arrayType: ArrayType;
-
     typeLiteral: { literal: number };
-
     referenceType: TypeLiteral;
-
     interfaceType: Interface;
-
     typeUnion: TypeUnion;
-
     interfaceExtends: InterfaceExtends;
-
     typeIntersection: TypeIntersection;
-
     typeUnionAndIntersection: TypeUnionAndIntersection;
-
     mapType: MapType;
-
     taggedField: TaggedField;
-
     enum: Enum;
 };

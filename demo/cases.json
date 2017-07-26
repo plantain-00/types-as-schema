@@ -209,9 +209,11 @@
           "type": "string"
         }
       },
-      "required": [],
-      "additionalProperties": false,
-      "minProperties": 2
+      "required": [
+        "typeLiteralMember1",
+        "typeLiteralMember2"
+      ],
+      "additionalProperties": false
     },
     "Interface": {
       "type": "object",

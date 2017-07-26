@@ -215,7 +215,7 @@ export class Generator {
                 if (maxProperties < childMembersInfo.maxProperties) {
                     maxProperties = childMembersInfo.maxProperties;
                 }
-                const childMembers = childMembersInfo.members;
+                const childMembers: Member[] = JSON.parse(JSON.stringify(childMembersInfo.members));
                 if (members.length === 0) {
                     members.push(...childMembers);
                 } else {

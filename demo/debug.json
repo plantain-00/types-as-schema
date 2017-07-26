@@ -53,15 +53,13 @@
         "type": {
           "kind": "number",
           "type": "number"
-        },
-        "optional": true
+        }
       },
       {
         "name": "typeLiteralMember2",
         "type": {
           "kind": "string"
-        },
-        "optional": true
+        }
       }
     ],
     "minProperties": 2,
