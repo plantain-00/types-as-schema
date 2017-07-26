@@ -446,7 +446,12 @@
         "name": "numberMember",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "multipleOf": 10,
+          "minimum": 70,
+          "maximum": 90,
+          "exclusiveMinimum": 70,
+          "exclusiveMaximum": 90
         }
       },
       {
@@ -539,50 +544,27 @@
           "kind": "number",
           "type": "double"
         }
-      },
+      }
+    ],
+    "minProperties": 14,
+    "maxProperties": 14
+  },
+  {
+    "kind": "object",
+    "name": "StringType",
+    "members": [
       {
-        "name": "multipleOfMember",
+        "name": "stringMember",
         "type": {
-          "kind": "number",
-          "type": "uint32",
-          "multipleOf": 10
-        }
-      },
-      {
-        "name": "minimumMember",
-        "type": {
-          "kind": "number",
-          "type": "number",
-          "minimum": 70
-        }
-      },
-      {
-        "name": "maximumMember",
-        "type": {
-          "kind": "number",
-          "type": "number",
-          "maximum": 90
-        }
-      },
-      {
-        "name": "exclusiveMinimumMember",
-        "type": {
-          "kind": "number",
-          "type": "number",
-          "exclusiveMinimum": 70
-        }
-      },
-      {
-        "name": "exclusiveMaximumMember",
-        "type": {
-          "kind": "number",
-          "type": "number",
-          "exclusiveMaximum": 90
+          "kind": "string",
+          "minLength": 10,
+          "maxLength": 20,
+          "pattern": "^[A-z]{3}$`"
         }
       }
     ],
-    "minProperties": 19,
-    "maxProperties": 19
+    "minProperties": 1,
+    "maxProperties": 1
   },
   {
     "kind": "object",
@@ -593,7 +575,10 @@
         "type": {
           "kind": "array",
           "type": {
-            "kind": "string"
+            "kind": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[A-z]{3}$"
           }
         }
       },
@@ -604,7 +589,9 @@
           "type": {
             "kind": "reference",
             "name": "TypeLiteral"
-          }
+          },
+          "uniqueItems": true,
+          "minItems": 1
         }
       },
       {
@@ -639,9 +626,7 @@
             "maximum": 200,
             "exclusiveMinimum": 300,
             "exclusiveMaximum": 400
-          },
-          "uniqueItems": true,
-          "minItems": 1
+          }
         }
       }
     ],
@@ -834,10 +819,17 @@
           "kind": "reference",
           "name": "Enum"
         }
+      },
+      {
+        "name": "stringNumber",
+        "type": {
+          "kind": "reference",
+          "name": "StringType"
+        }
       }
     ],
-    "minProperties": 14,
-    "maxProperties": 15,
+    "minProperties": 15,
+    "maxProperties": 16,
     "entry": "cases.json"
   }
 ]

@@ -352,6 +352,14 @@ export class Generator {
                                 } else if (propertyJsDoc.name === "itemExclusiveMaximum") {
                                     member.type.type.exclusiveMaximum = +propertyJsDoc.comment;
                                 }
+                            } else if (member.type.type.kind === "string") {
+                                if (propertyJsDoc.name === "itemMinLength") {
+                                    member.type.type.minLength = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemMaxLength") {
+                                    member.type.type.maxLength = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemPattern") {
+                                    member.type.type.pattern = propertyJsDoc.comment;
+                                }
                             }
                         } else if (propertyJsDoc.name === "uniqueItems") {
                             member.type.uniqueItems = true;
@@ -368,6 +376,16 @@ export class Generator {
                                 member.type.exclusiveMaximum = +propertyJsDoc.comment;
                             } else if (propertyJsDoc.name === "exclusiveMinimum") {
                                 member.type.exclusiveMinimum = +propertyJsDoc.comment;
+                            }
+                        }
+                    } else if (member.type.kind === "string") {
+                        if (propertyJsDoc.comment) {
+                            if (propertyJsDoc.name === "minLength") {
+                                member.type.minLength = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "maxLength") {
+                                member.type.maxLength = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "pattern") {
+                                member.type.pattern = propertyJsDoc.comment;
                             }
                         }
                     }
@@ -696,6 +714,9 @@ ${messages.join("\n\n")}
         } else if (memberType.kind === "string") {
             return {
                 type: memberType.kind,
+                minLength: memberType.minLength,
+                maxLength: memberType.maxLength,
+                pattern: memberType.pattern,
             };
         } else {
             return {
@@ -772,6 +793,9 @@ export type NumberType = {
 
 export type StringType = {
     kind: "string";
+    minLength?: number;
+    maxLength?: number;
+    pattern?: string;
 };
 
 export type BooleanType = {
@@ -858,6 +882,9 @@ export type Definition =
     } | {
         type: "string",
         enum?: string[],
+        minLength?: number;
+        maxLength?: number;
+        pattern?: string;
     } | {
         type: "unknown",
     };

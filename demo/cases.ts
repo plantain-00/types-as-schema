@@ -100,6 +100,13 @@ export type Enum = {
 };
 
 type NumberType = {
+    /**
+     * @multipleOf 10
+     * @minimum 70
+     * @maximum 90
+     * @exclusiveMinimum 70
+     * @exclusiveMaximum 90
+     */
     numberMember: number;
 
     /**
@@ -157,37 +164,31 @@ type NumberType = {
      * @type double
      */
     doubleMember: number;
+};
 
+type StringType = {
     /**
-     * @type uint32
-     * @multipleOf 10
+     * @minLength 10
+     * @maxLength 20
+     * @pattern ^[A-z]{3}$`
      */
-    multipleOfMember: number;
-    /**
-     * @minimum 70
-     */
-    minimumMember: number;
-    /**
-     * @maximum 90
-     */
-    maximumMember: number;
-    /**
-     * @exclusiveMinimum 70
-     */
-    exclusiveMinimumMember: number;
-    /**
-     * @exclusiveMaximum 90
-     */
-    exclusiveMaximumMember: number;
+    stringMember: string;
 };
 
 type ArrayType = {
+    /**
+     * @itemMinLength 10
+     * @itemMaxLength 20
+     * @itemPattern ^[A-z]{3}$
+     */
     arrayType1: string[];
-    arrayType2: TypeLiteral[];
-    arrayType3: { literal: number }[];
     /**
      * @uniqueItems
      * @minItems 1
+     */
+    arrayType2: TypeLiteral[];
+    arrayType3: { literal: number }[];
+    /**
      * @itemType uint32
      * @itemMultipleOf 100
      * @itemMinimum 100
@@ -227,4 +228,5 @@ export type EntryType = {
     mapType: MapType;
     taggedField: TaggedField;
     enum: Enum;
+    stringNumber: StringType;
 };

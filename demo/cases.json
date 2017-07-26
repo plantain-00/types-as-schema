@@ -57,6 +57,9 @@
         },
         "enum": {
           "$ref": "#/definitions/Enum"
+        },
+        "stringNumber": {
+          "$ref": "#/definitions/StringType"
         }
       },
       "required": [
@@ -73,7 +76,8 @@
         "typeUnionAndIntersection",
         "mapType",
         "taggedField",
-        "enum"
+        "enum",
+        "stringNumber"
       ],
       "additionalProperties": false
     },
@@ -81,7 +85,12 @@
       "type": "object",
       "properties": {
         "numberMember": {
-          "type": "number"
+          "type": "number",
+          "minimum": 70,
+          "maximum": 90,
+          "multipleOf": 10,
+          "exclusiveMinimum": 70,
+          "exclusiveMaximum": 90
         },
         "integerMember": {
           "type": "integer"
@@ -141,28 +150,6 @@
         },
         "doubleMember": {
           "type": "number"
-        },
-        "multipleOfMember": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 4294967295,
-          "multipleOf": 10
-        },
-        "minimumMember": {
-          "type": "number",
-          "minimum": 70
-        },
-        "maximumMember": {
-          "type": "number",
-          "maximum": 90
-        },
-        "exclusiveMinimumMember": {
-          "type": "number",
-          "exclusiveMinimum": 70
-        },
-        "exclusiveMaximumMember": {
-          "type": "number",
-          "exclusiveMaximum": 90
         }
       },
       "required": [
@@ -179,12 +166,7 @@
         "fixed64Member",
         "sfixed64Member",
         "floatMember",
-        "doubleMember",
-        "multipleOfMember",
-        "minimumMember",
-        "maximumMember",
-        "exclusiveMinimumMember",
-        "exclusiveMaximumMember"
+        "doubleMember"
       ],
       "additionalProperties": false
     },
@@ -194,14 +176,19 @@
         "arrayType1": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[A-z]{3}$"
           }
         },
         "arrayType2": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TypeLiteral"
-          }
+          },
+          "uniqueItems": true,
+          "minItems": 1
         },
         "arrayType3": {
           "type": "array",
@@ -227,9 +214,7 @@
             "multipleOf": 100,
             "exclusiveMinimum": 300,
             "exclusiveMaximum": 400
-          },
-          "uniqueItems": true,
-          "minItems": 1
+          }
         }
       },
       "required": [
@@ -557,6 +542,21 @@
         "stringEnum",
         "numberEnum",
         "numberEnum2"
+      ],
+      "additionalProperties": false
+    },
+    "StringType": {
+      "type": "object",
+      "properties": {
+        "stringMember": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 20,
+          "pattern": "^[A-z]{3}$`"
+        }
+      },
+      "required": [
+        "stringMember"
       ],
       "additionalProperties": false
     }

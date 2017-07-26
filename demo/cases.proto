@@ -104,11 +104,10 @@ message NumberType {
     sfixed64 sfixed64Member = 12;
     float floatMember = 13;
     double doubleMember = 14;
-    uint32 multipleOfMember = 15;
-    double minimumMember = 16;
-    double maximumMember = 17;
-    double exclusiveMinimumMember = 18;
-    double exclusiveMaximumMember = 19;
+}
+
+message StringType {
+    string stringMember = 1;
 }
 
 message ArrayType {
@@ -138,4 +137,5 @@ message EntryType {
     MapType mapType = 13;
     TaggedField taggedField = 14;
     Enum enum = 15;
+    StringType stringNumber = 16;
 }
