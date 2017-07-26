@@ -134,6 +134,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "StringEnum",
           "type": "string",
           "enums": [
             "enum member 1",
@@ -167,6 +168,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "NumberEnum",
           "type": "uint32",
           "enums": [
             0,
@@ -360,6 +362,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "NumberEnum",
           "type": "uint32",
           "enums": [
             0,

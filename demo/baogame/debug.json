@@ -613,6 +613,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ProtocolKind",
           "type": "uint32",
           "enums": [
             0,
@@ -696,6 +697,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ProtocolKind",
           "type": "uint32",
           "enums": [
             0,

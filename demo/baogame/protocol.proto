@@ -124,7 +124,7 @@ message Control {
 }
 
 message ControlProtocol {
-    uint32 kind = 1;
+    ProtocolKind kind = 1;
     Control control = 2;
 }
 
@@ -140,7 +140,7 @@ message UserDead {
 }
 
 message Protocol {
-    uint32 kind = 1;
+    ProtocolKind kind = 1;
     InitSuccess initSuccess = 2;
     Join join = 3;
     JoinSuccess joinSuccess = 4;

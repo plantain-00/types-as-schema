@@ -90,6 +90,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "RequestProtocolKind",
           "type": "string",
           "enums": [
             "search logs",
@@ -187,6 +188,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ProtocolKind",
           "type": "string",
           "enums": [
             "flows",
@@ -284,6 +286,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ResultKind",
           "type": "string",
           "enums": [
             "success",
@@ -336,6 +339,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ResultKind",
           "type": "string",
           "enums": [
             "success",
@@ -380,6 +384,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "ResultKind",
           "type": "string",
           "enums": [
             "success",
@@ -466,6 +471,7 @@
         "name": "kind",
         "type": {
           "kind": "enum",
+          "name": "FlowKind",
           "type": "string",
           "enums": [
             "log",

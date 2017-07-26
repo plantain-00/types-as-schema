@@ -400,6 +400,7 @@ export class Generator {
                 if (enumModel) {
                     return {
                         kind: "enum",
+                        name: enumModel.name,
                         type: enumModel.type,
                         enums: enumModel.members.map(m => m.value),
                     };
@@ -440,7 +441,7 @@ export class Generator {
             const { propertyType: elementPropertyType } = this.getProtobufProperty(memberType.type);
             propertyType = elementPropertyType;
         } else if (memberType.kind === "enum") {
-            propertyType = memberType.type;
+            propertyType = memberType.type === "string" ? "string" : memberType.name;
         } else if (memberType.kind === "reference") {
             const model = this.models.find(m => m.kind === "enum" && m.name === memberType.name);
             // tslint:disable-next-line:prefer-conditional-expression
@@ -687,6 +688,7 @@ export type ArrayType = {
 export type EnumType = {
     kind: "enum";
     type: string;
+    name: string;
     enums: any[];
 };
 

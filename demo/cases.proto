@@ -34,7 +34,7 @@ message TypeUnion2 {
 }
 
 message TypeUnion3 {
-    uint32 kind = 1;
+    NumberEnum kind = 1;
     string typeUnionMember1 = 2;
     string typeUnionMember2 = 3;
 }
@@ -73,7 +73,7 @@ message TypeIntersection {
 
 message TypeUnionAndIntersection {
     double typeIntersectionMember1 = 1;
-    uint32 kind = 2;
+    NumberEnum kind = 2;
     string typeUnionMember1 = 3;
     string typeUnionMember2 = 4;
 }
