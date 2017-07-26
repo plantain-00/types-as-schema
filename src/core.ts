@@ -336,6 +336,11 @@ export class Generator {
                             && member.type.type.kind === "number") {
                             member.type.type.minimum = +propertyJsDoc.comment;
                         }
+                    } else if (propertyJsDoc.name === "multipleOf") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "number") {
+                            member.type.multipleOf = +propertyJsDoc.comment;
+                        }
                     }
                 }
             }
@@ -552,40 +557,47 @@ ${messages.join("\n\n")}
             return {
                 type: "number",
                 minimum: numberType.minimum,
+                multipleOf: numberType.multipleOf,
             };
         } else if (numberType.type === "uint32" || numberType.type === "fixed32") {
             return {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
                 maximum: 4294967295,
+                multipleOf: numberType.multipleOf,
             };
         } else if (numberType.type === "int32" || numberType.type === "sint32" || numberType.type === "sfixed32") {
             return {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
                 maximum: 2147483647,
+                multipleOf: numberType.multipleOf,
             };
         } else if (numberType.type === "uint64" || numberType.type === "fixed64") {
             return {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
                 maximum: 18446744073709551615,
+                multipleOf: numberType.multipleOf,
             };
         } else if (numberType.type === "int64" || numberType.type === "sint64" || numberType.type === "sfixed64") {
             return {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
                 maximum: 9223372036854775807,
+                multipleOf: numberType.multipleOf,
             };
         } else if (numberType.type === "number" || numberType.type === "integer") {
             return {
                 type: numberType.type,
                 minimum: numberType.minimum,
+                multipleOf: numberType.multipleOf,
             };
         } else {
             return {
                 type: numberType.kind,
                 minimum: numberType.minimum,
+                multipleOf: numberType.multipleOf,
             };
         }
     }
@@ -788,6 +800,7 @@ export type Definition =
         minimum?: number,
         maximum?: number,
         enum?: number[],
+        multipleOf?: number;
     } | {
         type: "boolean",
     } | {

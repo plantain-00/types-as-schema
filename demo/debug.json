@@ -544,7 +544,8 @@
         "name": "multipleOfMember",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "multipleOf": 10
         }
       }
     ],
