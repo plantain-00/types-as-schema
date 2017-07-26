@@ -74,17 +74,20 @@
         "type": {
           "kind": "number",
           "type": "number"
-        }
+        },
+        "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
           "kind": "string"
-        }
+        },
+        "optional": true
       }
     ],
-    "minProperties": 2,
-    "maxProperties": 2
+    "minProperties": 1,
+    "maxProperties": 1,
+    "additionalProperties": true
   },
   {
     "kind": "object",
@@ -243,16 +246,18 @@
         "type": {
           "kind": "number",
           "type": "number"
-        }
+        },
+        "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
           "kind": "string"
-        }
+        },
+        "optional": true
       }
     ],
-    "minProperties": 4,
+    "minProperties": 2,
     "maxProperties": 4
   },
   {
@@ -264,13 +269,15 @@
         "type": {
           "kind": "number",
           "type": "number"
-        }
+        },
+        "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
           "kind": "string"
-        }
+        },
+        "optional": true
       },
       {
         "name": "typeIntersectionMember1",
@@ -286,7 +293,7 @@
         }
       }
     ],
-    "minProperties": 4,
+    "minProperties": 2,
     "maxProperties": 4
   },
   {
@@ -559,7 +566,7 @@
           "kind": "string",
           "minLength": 10,
           "maxLength": 20,
-          "pattern": "^[A-z]{3}$`"
+          "pattern": "^[A-z]{3}$"
         }
       }
     ],

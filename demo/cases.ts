@@ -3,9 +3,14 @@ type TypeLiteral = {
     typeLiteralMember2: string;
 };
 
+/**
+ * @minProperties 1
+ * @maxProperties 1
+ * @additionalProperties
+ */
 interface Interface {
-    interfaceMember1: number;
-    interfaceMember2: string;
+    interfaceMember1?: number;
+    interfaceMember2?: string;
 }
 
 type TypeUnion1 = TypeLiteral | {
@@ -170,7 +175,7 @@ type StringType = {
     /**
      * @minLength 10
      * @maxLength 20
-     * @pattern ^[A-z]{3}$`
+     * @pattern ^[A-z]{3}$
      */
     stringMember: string;
 };

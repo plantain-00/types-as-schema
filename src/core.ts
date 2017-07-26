@@ -81,7 +81,7 @@ export class Generator {
             if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
                 const type = this.getType(arrayType.elementType);
-                const model: ArrayModel = {
+                const model: Model = {
                     kind: "array",
                     name: declaration.name.text,
                     type,
@@ -93,14 +93,18 @@ export class Generator {
                 this.models.push(model);
             } else {
                 const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type);
-                this.models.push({
+                const model: Model = {
                     kind: "object",
                     name: declaration.name.text,
                     members,
                     minProperties,
                     maxProperties,
                     entry: entry ? entry.comment : undefined,
-                });
+                };
+                for (const jsDoc of jsDocs) {
+                    this.setJsonSchemaObject(jsDoc, model);
+                }
+                this.models.push(model);
             }
         } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
             const declaration = node as ts.InterfaceDeclaration;
@@ -139,14 +143,20 @@ export class Generator {
                 }
             }
 
-            this.models.push({
+            const model: Model = {
                 kind: "object",
                 name: declaration.name.text,
                 members,
                 minProperties,
                 maxProperties,
                 entry: entry ? entry.comment : undefined,
-            });
+            };
+
+            for (const jsDoc of jsDocs) {
+                this.setJsonSchemaObject(jsDoc, model);
+            }
+
+            this.models.push(model);
         }
     }
 
@@ -336,6 +346,8 @@ export class Generator {
                                 member.type.pattern = propertyJsDoc.comment;
                             }
                         }
+                    } else if (member.type.kind === "object") {
+                        this.setJsonSchemaObject(propertyJsDoc, member.type);
                     }
                 }
             }
@@ -343,7 +355,7 @@ export class Generator {
         return { members, minProperties, maxProperties };
     }
 
-    setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType | ArrayModel) {
+    setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType) {
         if (jsDoc.comment) {
             if (jsDoc.name === "minItems") {
                 type.minItems = +jsDoc.comment;
@@ -374,6 +386,20 @@ export class Generator {
             }
         } else if (jsDoc.name === "uniqueItems") {
             type.uniqueItems = true;
+        }
+    }
+
+    setJsonSchemaObject(jsDoc: JsDoc, type: ObjectType) {
+        if (jsDoc.comment) {
+            if (jsDoc.name === "minProperties") {
+                type.minProperties = +jsDoc.comment;
+            } else if (jsDoc.name === "maxProperties") {
+                type.maxProperties = +jsDoc.comment;
+            }
+        } else {
+            if (jsDoc.name === "additionalProperties") {
+                type.additionalProperties = true;
+            }
         }
     }
 
@@ -690,7 +716,7 @@ ${messages.join("\n\n")}
                 type: "object",
                 properties,
                 required,
-                additionalProperties: false,
+                additionalProperties: memberType.additionalProperties === undefined ? false : undefined,
                 minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
                 maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
             };
@@ -763,6 +789,7 @@ export type ObjectType = {
     members: Member[];
     minProperties: number;
     maxProperties: number;
+    additionalProperties?: true;
 };
 
 export type NumberType = {
@@ -814,23 +841,14 @@ export type EnumMember = {
     value: string | number;
 };
 
-export type ObjectModel = {
-    kind: "object";
+export type ObjectModel = ObjectType & {
     name: string;
-    members: Member[];
-    minProperties: number;
-    maxProperties: number;
     entry: string | undefined;
 };
 
-export type ArrayModel = {
-    kind: "array";
+export type ArrayModel = ArrayType & {
     name: string;
-    type: Type;
     entry: string | undefined;
-    uniqueItems?: boolean;
-    minItems?: number;
-    maxItems?: number;
 };
 
 export type JsDoc = {

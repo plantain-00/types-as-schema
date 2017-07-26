@@ -4,9 +4,14 @@ export const demoCasesTs = `type TypeLiteral = {
     typeLiteralMember2: string;
 };
 
+/**
+ * @minProperties 1
+ * @maxProperties 1
+ * @additionalProperties
+ */
 interface Interface {
-    interfaceMember1: number;
-    interfaceMember2: string;
+    interfaceMember1?: number;
+    interfaceMember2?: string;
 }
 
 type TypeUnion1 = TypeLiteral | {
@@ -101,6 +106,13 @@ export type Enum = {
 };
 
 type NumberType = {
+    /**
+     * @multipleOf 10
+     * @minimum 70
+     * @maximum 90
+     * @exclusiveMinimum 70
+     * @exclusiveMaximum 90
+     */
     numberMember: number;
 
     /**
@@ -160,10 +172,38 @@ type NumberType = {
     doubleMember: number;
 };
 
+type StringType = {
+    /**
+     * @minLength 10
+     * @maxLength 20
+     * @pattern ^[A-z]{3}$
+     */
+    stringMember: string;
+};
+
 type ArrayType = {
+    /**
+     * @itemMinLength 10
+     * @itemMaxLength 20
+     * @itemPattern ^[A-z]{3}$
+     */
     arrayType1: string[];
+    /**
+     * @uniqueItems
+     * @minItems 1
+     * @maxItems 10
+     */
     arrayType2: TypeLiteral[];
     arrayType3: { literal: number }[];
+    /**
+     * @itemType uint32
+     * @itemMultipleOf 100
+     * @itemMinimum 100
+     * @itemMaximum 200
+     * @itemExclusiveMinimum 300
+     * @itemExclusiveMaximum 400
+     */
+    arrayType4: number[];
 };
 
 type MapType = {
@@ -195,5 +235,6 @@ export type EntryType = {
     mapType: MapType;
     taggedField: TaggedField;
     enum: Enum;
+    stringNumber: StringType;
 };
 `;

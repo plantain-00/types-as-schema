@@ -62,6 +62,12 @@ string:
 + `@maxLength 20`: set `maxLength = 20`
 + `@pattern ^[A-z]{3}$`: set `pattern = ^[A-z]{3}$`
 
+object:
+
++ `@minProperties 1`: set `minProperties = 1`
++ `@maxProperties 3`: set `maxProperties = 3`
++ `@additionalProperties`: set `additionalProperties = true`
+
 array:
 
 + `@uniqueItems`: set `uniqueItems = true`

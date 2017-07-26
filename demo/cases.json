@@ -252,11 +252,9 @@
           "type": "string"
         }
       },
-      "required": [
-        "interfaceMember1",
-        "interfaceMember2"
-      ],
-      "additionalProperties": false
+      "required": [],
+      "minProperties": 1,
+      "maxProperties": 1
     },
     "TypeUnion": {
       "type": "object",
@@ -365,9 +363,7 @@
       },
       "required": [
         "interfaceExtendsMember1",
-        "interfaceExtendsMember2",
-        "interfaceMember1",
-        "interfaceMember2"
+        "interfaceExtendsMember2"
       ],
       "additionalProperties": false
     },
@@ -404,8 +400,6 @@
         }
       },
       "required": [
-        "interfaceMember1",
-        "interfaceMember2",
         "typeIntersectionMember1",
         "typeIntersectionMember2"
       ],
@@ -553,7 +547,7 @@
           "type": "string",
           "minLength": 10,
           "maxLength": 20,
-          "pattern": "^[A-z]{3}$`"
+          "pattern": "^[A-z]{3}$"
         }
       },
       "required": [
