@@ -109,7 +109,6 @@ message NumberType {
 message ArrayType {
     repeated string arrayType1 = 1;
     repeated TypeLiteral arrayType2 = 2;
-    repeated  arrayType3 = 3;
 }
 
 message MapType {
@@ -125,7 +124,6 @@ message EntryType {
     string stringMember = 3;
     NumberType numberType = 4;
     ArrayType arrayType = 5;
-     typeLiteral = 6;
     TypeLiteral referenceType = 7;
     Interface interfaceType = 8;
     TypeUnion typeUnion = 9;

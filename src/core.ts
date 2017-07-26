@@ -478,7 +478,9 @@ export class Generator {
                         lastTag++;
                     }
                     const { modifier, propertyType } = this.getProtobufProperty(member.type);
-                    members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`);
+                    if (propertyType) {
+                        members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`);
+                    }
                 }
                 messages.push(`message ${model.name} {
 ${members.join("\n")}
