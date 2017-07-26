@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "tsc": "tsc -p src/",
-    "tslint": "tslint \"src/**/*.ts\"",
+    "tslint": "tslint \"src/**/*.ts\" \"online/*.ts\"",
     "demo:log-tool": "./bin/types-as-schema demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto",
     "demo:match-calculator": "./bin/types-as-schema demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json",
     "demo:baogame": "./bin/types-as-schema demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json",

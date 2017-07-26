@@ -649,22 +649,19 @@ ${messages.join("\n\n")}
 
     generateJsonSchemas() {
         const definitions: { [name: string]: Definition } = {};
-        const entryModels: (ObjectModel | ArrayModel)[] = [];
         for (const model of this.models) {
             if ((model.kind === "object" || model.kind === "array")) {
                 definitions[model.name] = this.getJsonSchemaProperty(model);
-                if (model.entry) {
-                    entryModels.push(model);
-                }
             }
         }
-        return entryModels.map(m => ({
-            entry: m.entry,
-            schema: {
-                $ref: `#/definitions/${m.name}`,
-                definitions: this.getReferencedDefinitions(m.name, definitions),
-            },
-        }));
+        return this.models.filter(m => (m.kind === "object" || m.kind === "array") && m.entry)
+            .map((m: ObjectModel | ArrayModel) => ({
+                entry: m.entry!,
+                schema: {
+                    $ref: `#/definitions/${m.name}`,
+                    definitions: this.getReferencedDefinitions(m.name, definitions),
+                },
+            }));
     }
 }
 

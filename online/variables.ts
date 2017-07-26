@@ -1,4 +1,4 @@
-export const indexTemplateHtml = `<div><button @click="generate()">abc</button></div>`;
+export const indexTemplateHtml = `<div class="app"><textarea class="source" v-model="source"></textarea><div class="result"><button @click="generate()">generate</button><div class="options"><select v-model="selectedOption"><option v-for="option in options" :value="option">{{option}}</option></select></div><pre class="protobuf" v-if="selectedOption === 'protobuf'">{{protobuf}}</pre><pre class="json-schema" v-if="jsonSchema">{{jsonSchema}}</pre></div></div>`;
 export const demoCasesTs = `type TypeLiteral = {
     typeLiteralMember1: number;
     typeLiteralMember2: string;

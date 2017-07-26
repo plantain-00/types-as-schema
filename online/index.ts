@@ -3,21 +3,55 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 import { Generator } from "../src/core";
-import { indexTemplateHtml } from "./variables";
+import { indexTemplateHtml, demoCasesTs } from "./variables";
+
+const localStorageKey = "types-as-schema:source";
 
 @Component({
     template: indexTemplateHtml,
 })
 class App extends Vue {
+    innerSource = localStorage.getItem(localStorageKey) || demoCasesTs;
+    protobuf = "";
+    jsonSchemas: { entry: string; content: string }[] = [];
+    options: string[] = ["protobuf"];
+    selectedOption = "protobuf";
+
+    set source(value: string) {
+        this.innerSource = value;
+        localStorage.setItem(localStorageKey, value);
+    }
+    get source() {
+        return this.innerSource;
+    }
+    get jsonSchema() {
+        if (this.selectedOption) {
+            const schema = this.jsonSchemas.find(s => s.entry === this.selectedOption);
+            if (schema) {
+                return schema.content;
+            }
+        }
+        return "";
+    }
+
     generate() {
-        const sourceFile = ts.createSourceFile("", `type TypeLiteral = {
-    typeLiteralMember1: number;
-    typeLiteralMember2: string;
-};`, ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
+        if (this.source) {
+            const sourceFile = ts.createSourceFile("", this.source, ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
 
-        const generator = new Generator(sourceFile);
+            const generator = new Generator(sourceFile);
 
-        console.log(generator.models);
+            this.protobuf = generator.generateProtobuf();
+
+            this.jsonSchemas = generator.generateJsonSchemas().map(s => ({
+                entry: s.entry,
+                content: JSON.stringify(s.schema, null, "  "),
+            }));
+
+            this.options = ["protobuf"];
+            for (const schema of this.jsonSchemas) {
+                this.options.push(schema.entry);
+            }
+        }
     }
 }
 
