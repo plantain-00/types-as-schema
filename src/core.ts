@@ -80,43 +80,17 @@ export class Generator {
             const declaration = node as ts.TypeAliasDeclaration;
             if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
                 const arrayType = declaration.type as ts.ArrayTypeNode;
-                const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
-                const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
-                const maxItems = jsDocs.find(jsDoc => jsDoc.name === "maxItems");
-                const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
-                const itemMultipleOf = jsDocs.find(jsDoc => jsDoc.name === "itemMultipleOf");
-                const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
-                const itemMaximum = jsDocs.find(jsDoc => jsDoc.name === "itemMaximum");
-                const itemExclusiveMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemExclusiveMinimum");
-                const itemExclusiveMaximum = jsDocs.find(jsDoc => jsDoc.name === "itemExclusiveMaximum");
                 const type = this.getType(arrayType.elementType);
-                this.overrideType(type, itemType);
-                if (type.kind === "number") {
-                    if (itemMultipleOf && itemMultipleOf.comment) {
-                        type.multipleOf = +itemMultipleOf.comment;
-                    }
-                    if (itemMinimum && itemMinimum.comment) {
-                        type.minimum = +itemMinimum.comment;
-                    }
-                    if (itemMaximum && itemMaximum.comment) {
-                        type.maximum = +itemMaximum.comment;
-                    }
-                    if (itemExclusiveMinimum && itemExclusiveMinimum.comment) {
-                        type.exclusiveMinimum = +itemExclusiveMinimum.comment;
-                    }
-                    if (itemExclusiveMaximum && itemExclusiveMaximum.comment) {
-                        type.exclusiveMaximum = +itemExclusiveMaximum.comment;
-                    }
-                }
-                this.models.push({
+                const model: ArrayModel = {
                     kind: "array",
                     name: declaration.name.text,
                     type,
                     entry: entry ? entry.comment : undefined,
-                    uniqueItems: uniqueItems ? true : undefined,
-                    minItems: (minItems && minItems.comment) ? +minItems.comment : undefined,
-                    maxItems: (maxItems && maxItems.comment) ? +maxItems.comment : undefined,
-                });
+                };
+                for (const jsDoc of jsDocs) {
+                    this.setJsonSchemaArray(jsDoc, model);
+                }
+                this.models.push(model);
             } else {
                 const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type);
                 this.models.push({
@@ -337,37 +311,7 @@ export class Generator {
                     } else if (propertyJsDoc.name === "type") {
                         this.overrideType(member.type, propertyJsDoc);
                     } else if (member.type.kind === "array") {
-                        if (propertyJsDoc.comment) {
-                            if (propertyJsDoc.name === "minItems") {
-                                member.type.minItems = +propertyJsDoc.comment;
-                            } else if (propertyJsDoc.name === "maxItems") {
-                                member.type.maxItems = +propertyJsDoc.comment;
-                            } else if (propertyJsDoc.name === "itemType") {
-                                this.overrideType(member.type, propertyJsDoc);
-                            } else if (member.type.type.kind === "number") {
-                                if (propertyJsDoc.name === "itemMultipleOf") {
-                                    member.type.type.multipleOf = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemMinimum") {
-                                    member.type.type.minimum = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemMaximum") {
-                                    member.type.type.maximum = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemExclusiveMinimum") {
-                                    member.type.type.exclusiveMinimum = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemExclusiveMaximum") {
-                                    member.type.type.exclusiveMaximum = +propertyJsDoc.comment;
-                                }
-                            } else if (member.type.type.kind === "string") {
-                                if (propertyJsDoc.name === "itemMinLength") {
-                                    member.type.type.minLength = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemMaxLength") {
-                                    member.type.type.maxLength = +propertyJsDoc.comment;
-                                } else if (propertyJsDoc.name === "itemPattern") {
-                                    member.type.type.pattern = propertyJsDoc.comment;
-                                }
-                            }
-                        } else if (propertyJsDoc.name === "uniqueItems") {
-                            member.type.uniqueItems = true;
-                        }
+                        this.setJsonSchemaArray(propertyJsDoc, member.type);
                     } else if (member.type.kind === "number") {
                         if (propertyJsDoc.comment) {
                             if (propertyJsDoc.name === "multipleOf") {
@@ -397,6 +341,40 @@ export class Generator {
             }
         }
         return { members, minProperties, maxProperties };
+    }
+
+    setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType | ArrayModel) {
+        if (jsDoc.comment) {
+            if (jsDoc.name === "minItems") {
+                type.minItems = +jsDoc.comment;
+            } else if (jsDoc.name === "maxItems") {
+                type.maxItems = +jsDoc.comment;
+            } else if (jsDoc.name === "itemType") {
+                this.overrideType(type, jsDoc);
+            } else if (type.type.kind === "number") {
+                if (jsDoc.name === "itemMultipleOf") {
+                    type.type.multipleOf = +jsDoc.comment;
+                } else if (jsDoc.name === "itemMinimum") {
+                    type.type.minimum = +jsDoc.comment;
+                } else if (jsDoc.name === "itemMaximum") {
+                    type.type.maximum = +jsDoc.comment;
+                } else if (jsDoc.name === "itemExclusiveMinimum") {
+                    type.type.exclusiveMinimum = +jsDoc.comment;
+                } else if (jsDoc.name === "itemExclusiveMaximum") {
+                    type.type.exclusiveMaximum = +jsDoc.comment;
+                }
+            } else if (type.type.kind === "string") {
+                if (jsDoc.name === "itemMinLength") {
+                    type.type.minLength = +jsDoc.comment;
+                } else if (jsDoc.name === "itemMaxLength") {
+                    type.type.maxLength = +jsDoc.comment;
+                } else if (jsDoc.name === "itemPattern") {
+                    type.type.pattern = jsDoc.comment;
+                }
+            }
+        } else if (jsDoc.name === "uniqueItems") {
+            type.uniqueItems = true;
+        }
     }
 
     getType(type: ts.TypeNode): Type {
