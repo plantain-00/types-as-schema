@@ -112,9 +112,8 @@ message ArrayType {
 }
 
 message MapType {
-    map<string, uint32> mapType = 1;
-    map<string, [object Object]> mapType2 = 2;
-    map<string, [object Object]> mapType3 = 3;
+    map<string, double> mapType = 1;
+    map<string, TypeLiteral> mapType2 = 2;
     map<string, uint32> mapType4 = 4;
 }
 

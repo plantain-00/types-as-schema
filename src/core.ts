@@ -434,8 +434,16 @@ export class Generator {
         let modifier = "";
         let propertyType = "";
         if (memberType.kind === "map") {
-            const valueType = memberType.value.kind === "number" ? "uint32" : memberType.value;
-            propertyType = `map<${memberType.key.kind}, ${valueType}>`;
+            let valueType = "";
+            if (memberType.value.kind === "number") {
+                const { propertyType: valuePropertyType } = this.getProtobufProperty(memberType.value);
+                valueType = valuePropertyType;
+            } else if (memberType.value.kind === "reference") {
+                valueType = memberType.value.name;
+            }
+            if (valueType) {
+                propertyType = `map<${memberType.key.kind}, ${valueType}>`;
+            }
         } else if (memberType.kind === "array") {
             modifier = "repeated ";
             const { propertyType: elementPropertyType } = this.getProtobufProperty(memberType.type);
