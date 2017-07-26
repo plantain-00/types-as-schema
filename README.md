@@ -46,3 +46,7 @@ code | use case | description
 `@itemType integer` | json schema | set item `type = "integer"`
 `@itemMinimum 1` | json schema | set item `minimum = 1`
 `@multipleOf 10` | json schema | set `multipleOf = 10`
+`@minimum 70` | json schema | set `minimum = 70`
+`@maximum 90` | json schema | set `maximum = 90`
+`@exclusiveMinimum 70` | json schema | set `exclusiveMinimum = 70`
+`@exclusiveMaximum 90` | json schema | set `exclusiveMaximum = 90`

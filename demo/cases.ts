@@ -163,6 +163,22 @@ type NumberType = {
      * @multipleOf 10
      */
     multipleOfMember: number;
+    /**
+     * @minimum 70
+     */
+    minimumMember: number;
+    /**
+     * @maximum 90
+     */
+    maximumMember: number;
+    /**
+     * @exclusiveMinimum 70
+     */
+    exclusiveMinimumMember: number;
+    /**
+     * @exclusiveMaximum 90
+     */
+    exclusiveMaximumMember: number;
 };
 
 type ArrayType = {

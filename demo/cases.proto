@@ -105,6 +105,10 @@ message NumberType {
     float floatMember = 13;
     double doubleMember = 14;
     uint32 multipleOfMember = 15;
+    double minimumMember = 16;
+    double maximumMember = 17;
+    double exclusiveMinimumMember = 18;
+    double exclusiveMaximumMember = 19;
 }
 
 message ArrayType {

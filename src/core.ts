@@ -341,6 +341,26 @@ export class Generator {
                             && member.type.kind === "number") {
                             member.type.multipleOf = +propertyJsDoc.comment;
                         }
+                    } else if (propertyJsDoc.name === "maximum") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "number") {
+                            member.type.maximum = +propertyJsDoc.comment;
+                        }
+                    } else if (propertyJsDoc.name === "minimum") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "number") {
+                            member.type.minimum = +propertyJsDoc.comment;
+                        }
+                    } else if (propertyJsDoc.name === "exclusiveMaximum") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "number") {
+                            member.type.exclusiveMaximum = +propertyJsDoc.comment;
+                        }
+                    } else if (propertyJsDoc.name === "exclusiveMinimum") {
+                        if (propertyJsDoc.comment
+                            && member.type.kind === "number") {
+                            member.type.exclusiveMinimum = +propertyJsDoc.comment;
+                        }
                     }
                 }
             }
@@ -553,53 +573,56 @@ ${messages.join("\n\n")}
     }
 
     getNumberType(numberType: NumberType): Definition {
+        let definition: Definition;
         if (numberType.type === "double" || numberType.type === "float") {
-            return {
+            definition = {
                 type: "number",
                 minimum: numberType.minimum,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum,
             };
         } else if (numberType.type === "uint32" || numberType.type === "fixed32") {
-            return {
+            definition = {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-                maximum: 4294967295,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum !== undefined ? numberType.maximum : 4294967295,
             };
         } else if (numberType.type === "int32" || numberType.type === "sint32" || numberType.type === "sfixed32") {
-            return {
+            definition = {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
-                maximum: 2147483647,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum !== undefined ? numberType.maximum : 2147483647,
             };
         } else if (numberType.type === "uint64" || numberType.type === "fixed64") {
-            return {
+            definition = {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-                maximum: 18446744073709551615,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum !== undefined ? numberType.maximum : 18446744073709551615,
             };
         } else if (numberType.type === "int64" || numberType.type === "sint64" || numberType.type === "sfixed64") {
-            return {
+            definition = {
                 type: "integer",
                 minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
-                maximum: 9223372036854775807,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum !== undefined ? numberType.maximum : 9223372036854775807,
             };
         } else if (numberType.type === "number" || numberType.type === "integer") {
-            return {
+            definition = {
                 type: numberType.type,
                 minimum: numberType.minimum,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum,
             };
         } else {
-            return {
+            definition = {
                 type: numberType.kind,
                 minimum: numberType.minimum,
-                multipleOf: numberType.multipleOf,
+                maximum: numberType.maximum,
             };
         }
+        Object.assign(definition, {
+            multipleOf: numberType.multipleOf,
+            exclusiveMinimum: numberType.exclusiveMinimum,
+            exclusiveMaximum: numberType.exclusiveMaximum,
+        });
+        return definition;
     }
 
     getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Definition {
@@ -732,6 +755,9 @@ export type NumberType = {
     kind: "number";
     type: string;
     minimum?: number;
+    maximum?: number;
+    exclusiveMinimum?: number;
+    exclusiveMaximum?: number;
     multipleOf?: number;
 };
 
@@ -797,8 +823,10 @@ export type JsDoc = {
 export type Definition =
     {
         type: "number" | "integer",
-        minimum?: number,
-        maximum?: number,
+        minimum?: number;
+        maximum?: number;
+        exclusiveMinimum?: number;
+        exclusiveMaximum?: number;
         enum?: number[],
         multipleOf?: number;
     } | {

@@ -147,6 +147,22 @@
           "minimum": 0,
           "maximum": 4294967295,
           "multipleOf": 10
+        },
+        "minimumMember": {
+          "type": "number",
+          "minimum": 70
+        },
+        "maximumMember": {
+          "type": "number",
+          "maximum": 90
+        },
+        "exclusiveMinimumMember": {
+          "type": "number",
+          "exclusiveMinimum": 70
+        },
+        "exclusiveMaximumMember": {
+          "type": "number",
+          "exclusiveMaximum": 90
         }
       },
       "required": [
@@ -164,7 +180,11 @@
         "sfixed64Member",
         "floatMember",
         "doubleMember",
-        "multipleOfMember"
+        "multipleOfMember",
+        "minimumMember",
+        "maximumMember",
+        "exclusiveMinimumMember",
+        "exclusiveMaximumMember"
       ],
       "additionalProperties": false
     },

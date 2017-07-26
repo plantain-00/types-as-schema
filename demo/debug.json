@@ -547,10 +547,42 @@
           "type": "uint32",
           "multipleOf": 10
         }
+      },
+      {
+        "name": "minimumMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "minimum": 70
+        }
+      },
+      {
+        "name": "maximumMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "maximum": 90
+        }
+      },
+      {
+        "name": "exclusiveMinimumMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "exclusiveMinimum": 70
+        }
+      },
+      {
+        "name": "exclusiveMaximumMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "exclusiveMaximum": 90
+        }
       }
     ],
-    "minProperties": 15,
-    "maxProperties": 15
+    "minProperties": 19,
+    "maxProperties": 19
   },
   {
     "kind": "object",
