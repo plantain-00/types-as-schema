@@ -83,11 +83,29 @@ export class Generator {
                 const uniqueItems = jsDocs.find(jsDoc => jsDoc.name === "uniqueItems");
                 const minItems = jsDocs.find(jsDoc => jsDoc.name === "minItems");
                 const itemType = jsDocs.find(jsDoc => jsDoc.name === "itemType");
+                const itemMultipleOf = jsDocs.find(jsDoc => jsDoc.name === "itemMultipleOf");
                 const itemMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemMinimum");
+                const itemMaximum = jsDocs.find(jsDoc => jsDoc.name === "itemMaximum");
+                const itemExclusiveMinimum = jsDocs.find(jsDoc => jsDoc.name === "itemExclusiveMinimum");
+                const itemExclusiveMaximum = jsDocs.find(jsDoc => jsDoc.name === "itemExclusiveMaximum");
                 const type = this.getType(arrayType.elementType);
                 this.overrideType(type, itemType);
-                if (type.kind === "number" && itemMinimum && itemMinimum.comment) {
-                    type.minimum = +itemMinimum.comment;
+                if (type.kind === "number") {
+                    if (itemMultipleOf && itemMultipleOf.comment) {
+                        type.multipleOf = +itemMultipleOf.comment;
+                    }
+                    if (itemMinimum && itemMinimum.comment) {
+                        type.minimum = +itemMinimum.comment;
+                    }
+                    if (itemMaximum && itemMaximum.comment) {
+                        type.maximum = +itemMaximum.comment;
+                    }
+                    if (itemExclusiveMinimum && itemExclusiveMinimum.comment) {
+                        type.exclusiveMinimum = +itemExclusiveMinimum.comment;
+                    }
+                    if (itemExclusiveMaximum && itemExclusiveMaximum.comment) {
+                        type.exclusiveMaximum = +itemExclusiveMaximum.comment;
+                    }
                 }
                 this.models.push({
                     kind: "array",
@@ -316,50 +334,41 @@ export class Generator {
                         }
                     } else if (propertyJsDoc.name === "type") {
                         this.overrideType(member.type, propertyJsDoc);
-                    } else if (propertyJsDoc.name === "uniqueItems") {
-                        const arrayType = member.type as ArrayType;
-                        if (arrayType) {
-                            arrayType.uniqueItems = true;
+                    } else if (member.type.kind === "array") {
+                        if (propertyJsDoc.comment) {
+                            if (propertyJsDoc.name === "minItems") {
+                                member.type.minItems = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "itemType") {
+                                this.overrideType(member.type, propertyJsDoc);
+                            } else if (member.type.type.kind === "number") {
+                                if (propertyJsDoc.name === "itemMultipleOf") {
+                                    member.type.type.multipleOf = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemMinimum") {
+                                    member.type.type.minimum = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemMaximum") {
+                                    member.type.type.maximum = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemExclusiveMinimum") {
+                                    member.type.type.exclusiveMinimum = +propertyJsDoc.comment;
+                                } else if (propertyJsDoc.name === "itemExclusiveMaximum") {
+                                    member.type.type.exclusiveMaximum = +propertyJsDoc.comment;
+                                }
+                            }
+                        } else if (propertyJsDoc.name === "uniqueItems") {
+                            member.type.uniqueItems = true;
                         }
-                    } else if (propertyJsDoc.name === "minItems") {
-                        const arrayType = member.type as ArrayType;
-                        if (arrayType && propertyJsDoc.comment) {
-                            arrayType.minItems = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "itemType") {
-                        if (propertyJsDoc.comment && member.type.kind === "array") {
-                            this.overrideType(member.type, propertyJsDoc);
-                        }
-                    } else if (propertyJsDoc.name === "itemMinimum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "array"
-                            && member.type.type.kind === "number") {
-                            member.type.type.minimum = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "multipleOf") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "number") {
-                            member.type.multipleOf = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "maximum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "number") {
-                            member.type.maximum = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "minimum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "number") {
-                            member.type.minimum = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "exclusiveMaximum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "number") {
-                            member.type.exclusiveMaximum = +propertyJsDoc.comment;
-                        }
-                    } else if (propertyJsDoc.name === "exclusiveMinimum") {
-                        if (propertyJsDoc.comment
-                            && member.type.kind === "number") {
-                            member.type.exclusiveMinimum = +propertyJsDoc.comment;
+                    } else if (member.type.kind === "number") {
+                        if (propertyJsDoc.comment) {
+                            if (propertyJsDoc.name === "multipleOf") {
+                                member.type.multipleOf = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "maximum") {
+                                member.type.maximum = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "minimum") {
+                                member.type.minimum = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "exclusiveMaximum") {
+                                member.type.exclusiveMaximum = +propertyJsDoc.comment;
+                            } else if (propertyJsDoc.name === "exclusiveMinimum") {
+                                member.type.exclusiveMinimum = +propertyJsDoc.comment;
+                            }
                         }
                     }
                 }

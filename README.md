@@ -33,20 +33,39 @@ Genetate json scheme or protobuf file from types.
 
 `types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json`
 
-#### jsDoc
+#### protobuf and json schema
 
-code | use case | description
---- | --- | ---
-`@tag 1` | protobuf | tag or id
-`@type uint32` | protobuf and json schema | set `type = "uint32"`
-`@mapValueType uint32` | protobuf and json schema | more detailed type of a map type value
-`@entry request-protocol.json` | json schema | the entry file name
-`@uniqueItems` | json schema  | set `uniqueItems = true`
-`@minItems 1` | json schema | set `minItems = 1`
-`@itemType integer` | json schema | set item `type = "integer"`
-`@itemMinimum 1` | json schema | set item `minimum = 1`
-`@multipleOf 10` | json schema | set `multipleOf = 10`
-`@minimum 70` | json schema | set `minimum = 70`
-`@maximum 90` | json schema | set `maximum = 90`
-`@exclusiveMinimum 70` | json schema | set `exclusiveMinimum = 70`
-`@exclusiveMaximum 90` | json schema | set `exclusiveMaximum = 90`
++ `@type uint32`: set `type = "uint32"`
++ `@mapValueType uint32`: more detailed type of a map type value
+
+#### protobuf only
+
++ `@tag 1`: tag or id
+
+#### json schema only
+
+entry:
+
++ `@entry request-protocol.json`: the entry file name
+
+number:
+
++ `@multipleOf 10`: set `multipleOf = 10`
++ `@minimum 70`: set `minimum = 70`
++ `@maximum 90`: set `maximum = 90`
++ `@exclusiveMinimum 70`: set `exclusiveMinimum = 70`
++ `@exclusiveMaximum 90`: set `exclusiveMaximum = 90`
+
+array:
+
++ `@uniqueItems`: set `uniqueItems = true`
++ `@minItems 1`: set `minItems = 1`
++ `@itemType integer`: set item `type = "integer"`
+
+number[]:
+
++ `@itemMultipleOf 10`: set item `multipleOf = 10`
++ `@itemMinimum 70`: set item `minimum = 70`
++ `@itemMaximum 90`: set item `maximum = 90`
++ `@itemExclusiveMinimum 70`: set item `exclusiveMinimum = 70`
++ `@itemExclusiveMaximum 90`: set item `exclusiveMaximum = 90`

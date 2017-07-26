@@ -189,7 +189,11 @@ type ArrayType = {
      * @uniqueItems
      * @minItems 1
      * @itemType uint32
+     * @itemMultipleOf 100
      * @itemMinimum 100
+     * @itemMaximum 200
+     * @itemExclusiveMinimum 300
+     * @itemExclusiveMaximum 400
      */
     arrayType4: number[];
 };

@@ -634,7 +634,11 @@
           "type": {
             "kind": "number",
             "type": "uint32",
-            "minimum": 100
+            "multipleOf": 100,
+            "minimum": 100,
+            "maximum": 200,
+            "exclusiveMinimum": 300,
+            "exclusiveMaximum": 400
           },
           "uniqueItems": true,
           "minItems": 1
