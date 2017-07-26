@@ -6,6 +6,9 @@ import { Generator } from "./core";
 import * as packageJson from "../package.json";
 
 import * as protobuf from "protobufjs";
+import * as Ajv from "ajv";
+
+const ajv = new Ajv();
 
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
@@ -59,7 +62,12 @@ async function executeCommandLine() {
     if (jsonPath) {
         const schemas = generator.generateJsonSchemas();
         for (const { entry, schema } of schemas) {
-            fs.writeFileSync(path.resolve(jsonPath, entry), JSON.stringify(schema, null, "  "));
+            if (ajv.validateSchema(schema)) {
+                fs.writeFileSync(path.resolve(jsonPath, entry), JSON.stringify(schema, null, "  "));
+            } else {
+                printInConsole(`json schema verified fail for entry: ${entry}`);
+                process.exit(1);
+            }
         }
     }
 }
