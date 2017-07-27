@@ -4,28 +4,17 @@
   "description": "Genetate json scheme or protobuf file from types.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist/",
-    "tsc": "tsc -p src/",
-    "tslint": "tslint \"src/**/*.ts\" \"online/*.ts\"",
     "demo:log-tool": "./bin/types-as-schema demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto",
     "demo:match-calculator": "./bin/types-as-schema demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json",
     "demo:baogame": "./bin/types-as-schema demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json",
     "demo": "./bin/types-as-schema demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto",
-    "demo:all": "npm run demo && npm run demo:log-tool && npm run demo:match-calculator && npm run demo:baogame",
-    "test": "tsc -p spec && jasmine",
-    "standard": "standard \"**/*.config.js\"",
-    "fix": "standard --fix \"**/*.config.js\"",
-    "release": "clean-release",
-    "build": "npm run clean && npm run tsc",
-    "lint": "npm run tslint && npm run standard && npm run stylelint",
-    "online": "npm run cleanRev && npm run file2variable && tsc -p online && npm run lessc && npm run cleancss && npm run webpack && npm run revStatic",
-    "file2variable": "file2variable-cli online/index.template.html demo/cases.ts -o online/variables.ts --html-minify --base online",
-    "cleanRev": "rimraf online/*.bundle-*.js online/*.bundle-*.css",
-    "lessc": "lessc online/index.less > online/index.css",
-    "cleancss": "cleancss -o online/index.bundle.css online/index.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css",
-    "webpack": "webpack --config online/webpack.config.js",
-    "revStatic": "rev-static --config online/rev-static.config.js",
-    "stylelint": "stylelint src/**/*.less"
+    "demo:all": "clean-scripts demo:all",
+    "build": "clean-scripts build",
+    "lint": "clean-scripts lint",
+    "test": "clean-scripts test",
+    "online": "clean-scripts online",
+    "fix": "clean-scripts fix",
+    "release": "clean-scripts release"
   },
   "repository": {
     "type": "git",
@@ -43,6 +32,7 @@
     "@types/node": "8.0.14",
     "clean-css-cli": "4.1.6",
     "clean-release": "1.3.2",
+    "clean-scripts": "1.0.0",
     "file2variable-cli": "1.4.1",
     "github-fork-ribbon-css": "0.2.1",
     "jasmine": "2.6.0",
@@ -62,9 +52,6 @@
     "minimist": "1.2.0",
     "protobufjs": "6.8.0",
     "typescript": "2.4.2"
-  },
-  "peerDependencies": {
-    "typescript": "2"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
