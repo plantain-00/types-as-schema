@@ -24,7 +24,7 @@ module.exports = {
     `tsc -p online`,
     `lessc online/index.less > online/index.css`,
     `cleancss -o online/index.bundle.css online/index.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`,
-    `webpack --config online/webpack.config.js`,
+    `webpack --display-modules --config online/webpack.config.js`,
     `rev-static --config online/rev-static.config.js`
   ],
   'demo:all': [
