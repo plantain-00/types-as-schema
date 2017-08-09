@@ -13,6 +13,7 @@ module.exports = {
     'jasmine'
   ],
   fix: {
+    ts: `tslint --fix "src/**/*.ts" "online/**/*.ts"`,
     js: `standard --fix "**/*.config.js"`,
     less: `stylelint --fix "online/**/*.less"`
   },
@@ -32,10 +33,10 @@ module.exports = {
     },
     `rev-static --config online/rev-static.config.js`
   ],
-  'demo:all': [
-    'npm run demo',
-    'npm run demo:log-tool',
-    'npm run demo:match-calculator',
-    'npm run demo:baogame'
-  ]
+  demo: {
+    default: 'node ./dist/index.js demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto',
+    logTool: 'node ./dist/index.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto',
+    matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
+    baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json'
+  }
 }
