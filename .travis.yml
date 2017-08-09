@@ -9,7 +9,7 @@ script:
   - npm run build
   - npm run lint
   - npm run test
-  - npm run demo:all
+  - npm run demo
   - npm run online
 env:
   - CXX=g++-4.8

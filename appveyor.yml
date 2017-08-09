@@ -10,5 +10,7 @@ test_script:
   - npm --version
   - npm run build
   - npm run lint
+  - npm run demo
+  - npm run online
 
 build: off
