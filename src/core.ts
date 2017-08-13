@@ -752,19 +752,19 @@ ${messages.join("\n\n")}
     }
 }
 
-export type MembersInfo = {
+type MembersInfo = {
     members: Member[];
     minProperties: number;
     maxProperties: number;
 };
 
-export type MapType = {
+type MapType = {
     kind: "map";
     key: Type;
     value: Type;
 };
 
-export type ArrayType = {
+type ArrayType = {
     kind: "array";
     type: Type;
     uniqueItems?: boolean;
@@ -772,19 +772,19 @@ export type ArrayType = {
     maxItems?: number;
 };
 
-export type EnumType = {
+type EnumType = {
     kind: "enum";
     type: string;
     name: string;
     enums: any[];
 };
 
-export type ReferenceType = {
+type ReferenceType = {
     kind: "reference";
     name: string;
 };
 
-export type ObjectType = {
+type ObjectType = {
     kind: "object";
     members: Member[];
     minProperties: number;
@@ -792,7 +792,7 @@ export type ObjectType = {
     additionalProperties?: true;
 };
 
-export type NumberType = {
+type NumberType = {
     kind: "number";
     type: string;
     minimum?: number;
@@ -802,24 +802,24 @@ export type NumberType = {
     multipleOf?: number;
 };
 
-export type StringType = {
+type StringType = {
     kind: "string";
     minLength?: number;
     maxLength?: number;
     pattern?: string;
 };
 
-export type BooleanType = {
+type BooleanType = {
     kind: "boolean";
 };
 
-export type UnknownType = {
+type UnknownType = {
     kind: "unknown";
 };
 
-export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | UnknownType;
+type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | UnknownType;
 
-export type Member = {
+type Member = {
     name: string;
     type: Type;
     optional?: boolean;
@@ -827,36 +827,36 @@ export type Member = {
     enum?: any[];
 };
 
-export type Model = EnumModel | ObjectModel | ArrayModel;
+type Model = EnumModel | ObjectModel | ArrayModel;
 
-export type EnumModel = {
+type EnumModel = {
     kind: "enum";
     name: string;
     type: string;
     members: EnumMember[];
 };
 
-export type EnumMember = {
+type EnumMember = {
     name: string;
     value: string | number;
 };
 
-export type ObjectModel = ObjectType & {
+type ObjectModel = ObjectType & {
     name: string;
     entry: string | undefined;
 };
 
-export type ArrayModel = ArrayType & {
+type ArrayModel = ArrayType & {
     name: string;
     entry: string | undefined;
 };
 
-export type JsDoc = {
+type JsDoc = {
     name: string;
     comment: string | undefined;
 };
 
-export type Definition =
+type Definition =
     {
         type: "number" | "integer",
         minimum?: number;
