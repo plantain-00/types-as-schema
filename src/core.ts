@@ -589,16 +589,17 @@ ${messages.join("\n\n")}
             }
         } else if (definition.type === "object") {
             if (definition.properties) {
-                // tslint:disable-next-line:forin
                 for (const propertyName in definition.properties) {
-                    const propertyDefinition = definition.properties[propertyName];
-                    if (propertyDefinition.type === undefined) {
-                        const itemTypeName = propertyDefinition.$ref.substring("#/definitions/".length);
-                        Object.assign(result, this.getReferencedDefinitions(itemTypeName, definitions));
-                    } else if (propertyDefinition.type === "array") {
-                        if (propertyDefinition.items.type === undefined) {
-                            const itemTypeName = propertyDefinition.items.$ref.substring("#/definitions/".length);
+                    if (definition.properties.hasOwnProperty(propertyName)) {
+                        const propertyDefinition = definition.properties[propertyName];
+                        if (propertyDefinition.type === undefined) {
+                            const itemTypeName = propertyDefinition.$ref.substring("#/definitions/".length);
                             Object.assign(result, this.getReferencedDefinitions(itemTypeName, definitions));
+                        } else if (propertyDefinition.type === "array") {
+                            if (propertyDefinition.items.type === undefined) {
+                                const itemTypeName = propertyDefinition.items.$ref.substring("#/definitions/".length);
+                                Object.assign(result, this.getReferencedDefinitions(itemTypeName, definitions));
+                            }
                         }
                     }
                 }

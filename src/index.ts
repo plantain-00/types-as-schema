@@ -82,7 +82,7 @@ function showToolVersion() {
 }
 
 executeCommandLine().then(() => {
-    printInConsole("success.");
+    printInConsole("convert types to protobuf or json schema success.");
 }, error => {
     printInConsole(error);
     process.exit(1);
