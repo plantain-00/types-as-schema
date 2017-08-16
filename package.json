@@ -37,7 +37,7 @@
     "github-fork-ribbon-css": "0.2.1",
     "jasmine": "2.7.0",
     "less": "2.7.2",
-    "no-unused-export": "1.0.1",
+    "no-unused-export": "1.1.0",
     "rev-static": "3.2.2",
     "rimraf": "2.6.1",
     "standard": "10.0.2",

@@ -73,7 +73,62 @@ export class Generator {
         });
     }
 
-    handleSourceFile(node: ts.Node) {
+    generateProtobuf() {
+        const messages: string[] = [];
+        for (const model of this.models) {
+            if (model.kind === "object") {
+                const members: string[] = [];
+                let lastTag = model.members.reduce((p, c) => c.tag ? Math.max(p, c.tag) : p, 0);
+                for (const member of model.members) {
+                    if (!member.tag) {
+                        lastTag++;
+                    }
+                    const { modifier, propertyType } = this.getProtobufProperty(member.type);
+                    if (propertyType) {
+                        members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`);
+                    }
+                }
+                messages.push(`message ${model.name} {
+${members.join("\n")}
+}`);
+            } else if (model.kind === "enum") {
+                const members: string[] = [];
+                for (const member of model.members) {
+                    if (typeof member.value === "number") {
+                        members.push(`    ${member.name} = ${member.value};`);
+                    }
+                }
+                if (members.length > 0) {
+                    messages.push(`enum ${model.name} {
+${members.join("\n")}
+}`);
+                }
+            }
+        }
+        return `syntax = "proto3";
+
+${messages.join("\n\n")}
+`;
+    }
+
+    generateJsonSchemas() {
+        const definitions: { [name: string]: Definition } = {};
+        for (const model of this.models) {
+            if ((model.kind === "object" || model.kind === "array")) {
+                definitions[model.name] = this.getJsonSchemaProperty(model);
+            }
+        }
+        return this.models.filter(m => (m.kind === "object" || m.kind === "array") && m.entry)
+            .map((m: ObjectModel | ArrayModel) => ({
+                entry: m.entry!,
+                schema: {
+                    $ref: `#/definitions/${m.name}`,
+                    definitions: this.getReferencedDefinitions(m.name, definitions),
+                },
+            }));
+    }
+
+    private handleSourceFile(node: ts.Node) {
         const jsDocs = this.getJsDocs(node);
         const entry = jsDocs.find(jsDoc => jsDoc.name === "entry");
         if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
@@ -160,7 +215,7 @@ export class Generator {
         }
     }
 
-    preHandleType(typeName: string) {
+    private preHandleType(typeName: string) {
         // if the node is pre-handled, then it should be in `models` already, so don't continue
         if (this.models.some(m => m.name === typeName)) {
             return;
@@ -187,7 +242,7 @@ export class Generator {
         });
     }
 
-    overrideType(type: Type, jsDoc: JsDoc | undefined) {
+    private overrideType(type: Type, jsDoc: JsDoc | undefined) {
         if (jsDoc && jsDoc.comment) {
             if (type.kind === "number") {
                 type.type = jsDoc.comment;
@@ -201,7 +256,7 @@ export class Generator {
             }
         }
     }
-    getMembersInfo(node: ts.TypeNode): MembersInfo {
+    private getMembersInfo(node: ts.TypeNode): MembersInfo {
         const members: Member[] = [];
         let minProperties = 0;
         let maxProperties = 0;
@@ -279,7 +334,7 @@ export class Generator {
         return { members, minProperties, maxProperties };
     }
 
-    getObjectMembers(elements: ts.NodeArray<ts.TypeElement>): MembersInfo {
+    private getObjectMembers(elements: ts.NodeArray<ts.TypeElement>): MembersInfo {
         const members: Member[] = [];
         let minProperties = 0;
         let maxProperties = 0;
@@ -355,7 +410,7 @@ export class Generator {
         return { members, minProperties, maxProperties };
     }
 
-    setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType) {
+    private setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType) {
         if (jsDoc.comment) {
             if (jsDoc.name === "minItems") {
                 type.minItems = +jsDoc.comment;
@@ -389,7 +444,7 @@ export class Generator {
         }
     }
 
-    setJsonSchemaObject(jsDoc: JsDoc, type: ObjectType) {
+    private setJsonSchemaObject(jsDoc: JsDoc, type: ObjectType) {
         if (jsDoc.comment) {
             if (jsDoc.name === "minProperties") {
                 type.minProperties = +jsDoc.comment;
@@ -403,7 +458,7 @@ export class Generator {
         }
     }
 
-    getType(type: ts.TypeNode): Type {
+    private getType(type: ts.TypeNode): Type {
         if (type.kind === ts.SyntaxKind.StringKeyword) {
             return {
                 kind: "string",
@@ -474,7 +529,7 @@ export class Generator {
         };
     }
 
-    getJsDocs(node: ts.Node) {
+    private getJsDocs(node: ts.Node) {
         const jsDocs: ts.JSDoc[] | undefined = (node as any).jsDoc;
         const result: JsDoc[] = [];
         if (jsDocs && jsDocs.length > 0) {
@@ -492,7 +547,7 @@ export class Generator {
         return result;
     }
 
-    getProtobufProperty(memberType: Type): { modifier: string, propertyType: string } {
+    private getProtobufProperty(memberType: Type): { modifier: string, propertyType: string } {
         let modifier = "";
         let propertyType = "";
         if (memberType.kind === "map") {
@@ -537,45 +592,7 @@ export class Generator {
         return { modifier, propertyType };
     }
 
-    generateProtobuf() {
-        const messages: string[] = [];
-        for (const model of this.models) {
-            if (model.kind === "object") {
-                const members: string[] = [];
-                let lastTag = model.members.reduce((p, c) => c.tag ? Math.max(p, c.tag) : p, 0);
-                for (const member of model.members) {
-                    if (!member.tag) {
-                        lastTag++;
-                    }
-                    const { modifier, propertyType } = this.getProtobufProperty(member.type);
-                    if (propertyType) {
-                        members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`);
-                    }
-                }
-                messages.push(`message ${model.name} {
-${members.join("\n")}
-}`);
-            } else if (model.kind === "enum") {
-                const members: string[] = [];
-                for (const member of model.members) {
-                    if (typeof member.value === "number") {
-                        members.push(`    ${member.name} = ${member.value};`);
-                    }
-                }
-                if (members.length > 0) {
-                    messages.push(`enum ${model.name} {
-${members.join("\n")}
-}`);
-                }
-            }
-        }
-        return `syntax = "proto3";
-
-${messages.join("\n\n")}
-`;
-    }
-
-    getReferencedDefinitions(typeName: string, definitions: { [name: string]: Definition }) {
+    private getReferencedDefinitions(typeName: string, definitions: { [name: string]: Definition }) {
         const result: { [name: string]: Definition } = {};
         const definition = definitions[typeName];
         if (definition === undefined) {
@@ -608,7 +625,7 @@ ${messages.join("\n\n")}
         return result;
     }
 
-    getNumberType(numberType: NumberType): Definition {
+    private getNumberType(numberType: NumberType): Definition {
         let definition: Definition;
         if (numberType.type === "double" || numberType.type === "float") {
             definition = {
@@ -661,7 +678,7 @@ ${messages.join("\n\n")}
         return definition;
     }
 
-    getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Definition {
+    private getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel): Definition {
         if (memberType.kind === "number") {
             return this.getNumberType(memberType);
         } else if (memberType.kind === "boolean") {
@@ -733,23 +750,6 @@ ${messages.join("\n\n")}
                 type: memberType.kind,
             };
         }
-    }
-
-    generateJsonSchemas() {
-        const definitions: { [name: string]: Definition } = {};
-        for (const model of this.models) {
-            if ((model.kind === "object" || model.kind === "array")) {
-                definitions[model.name] = this.getJsonSchemaProperty(model);
-            }
-        }
-        return this.models.filter(m => (m.kind === "object" || m.kind === "array") && m.entry)
-            .map((m: ObjectModel | ArrayModel) => ({
-                entry: m.entry!,
-                schema: {
-                    $ref: `#/definitions/${m.name}`,
-                    definitions: this.getReferencedDefinitions(m.name, definitions),
-                },
-            }));
     }
 }
 

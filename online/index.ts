@@ -11,11 +11,11 @@ const localStorageKey = "types-as-schema:source";
     template: indexTemplateHtml,
 })
 class App extends Vue {
-    innerSource = localStorage.getItem(localStorageKey) || demoCasesTs;
     protobuf = "";
-    jsonSchemas: { entry: string; content: string }[] = [];
     options: string[] = ["protobuf"];
     selectedOption = "protobuf";
+    private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs;
+    private jsonSchemas: { entry: string; content: string }[] = [];
 
     set source(value: string) {
         this.innerSource = value;
@@ -55,5 +55,4 @@ class App extends Vue {
     }
 }
 
-// tslint:disable-next-line:no-unused-expression
 new App({ el: "#container" });
