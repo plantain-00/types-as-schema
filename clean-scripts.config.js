@@ -54,5 +54,12 @@ module.exports = {
       clean: `rimraf online/*.bundle-*.js online/*.bundle-*.css`
     },
     `rev-static --config online/rev-static.config.js`
-  ]
+  ],
+  watch: {
+    vue: `file2variable-cli online/index.template.html demo/cases.ts -o online/variables.ts --html-minify --base online --watch`,
+    online: `tsc -p online --watch`,
+    webpack: `webpack --config demo/webpack.config.js --watch`,
+    less: `watch-then-execute "online/index.less" --script "clean-scripts online[0].css"`,
+    rev: `rev-static --config online/rev-static.config.js --watch`
+  }
 }
