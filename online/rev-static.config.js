@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 module.exports = {
   inputFiles: [
     'online/*.bundle.js',
@@ -16,5 +18,8 @@ module.exports = {
   sha: 256,
   customNewFileName: (filePath, fileString, md5String, baseName, extensionName) => baseName + '-' + md5String + extensionName,
   base: 'online',
-  fileSize: 'online/file-size.json'
+  fileSize: 'online/file-size.json',
+  context: {
+    prerender: fs.readFileSync('online/prerender.html')
+  }
 }

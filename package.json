@@ -14,7 +14,8 @@
     "test": "clean-scripts test",
     "online": "clean-scripts online",
     "fix": "clean-scripts fix",
-    "release": "clean-scripts release"
+    "release": "clean-scripts release",
+    "prerender": "clean-scripts prerender"
   },
   "repository": {
     "type": "git",
@@ -35,10 +36,12 @@
     "clean-scripts": "1.2.3",
     "file2variable-cli": "1.5.2",
     "github-fork-ribbon-css": "0.2.1",
+    "http-server": "0.10.0",
     "jasmine": "2.7.0",
     "less": "2.7.2",
     "no-unused-export": "1.1.0",
-    "rev-static": "3.3.1",
+    "prerender-js": "1.1.0",
+    "rev-static": "3.4.0",
     "rimraf": "2.6.1",
     "standard": "10.0.2",
     "stylelint": "8.0.0",

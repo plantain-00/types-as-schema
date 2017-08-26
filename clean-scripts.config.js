@@ -61,5 +61,16 @@ module.exports = {
     webpack: `webpack --config demo/webpack.config.js --watch`,
     less: `watch-then-execute "online/index.less" --script "clean-scripts online[0].css"`,
     rev: `rev-static --config online/rev-static.config.js --watch`
-  }
+  },
+  prerender: [
+    async () => {
+      const { createServer } = require('http-server')
+      const { prerender } = require('prerender-js')
+      const server = createServer()
+      server.listen(8000)
+      await prerender('http://localhost:8000/online', '#prerender-container', 'online/prerender.html')
+      server.close()
+    },
+    `clean-scripts online[1]`
+  ]
 }
