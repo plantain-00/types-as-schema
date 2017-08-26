@@ -40,7 +40,6 @@
     "jasmine": "2.7.0",
     "less": "2.7.2",
     "no-unused-export": "1.1.0",
-    "prerender-js": "1.1.0",
     "puppeteer": "0.10.1",
     "rev-static": "3.4.0",
     "rimraf": "2.6.1",

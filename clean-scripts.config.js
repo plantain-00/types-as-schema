@@ -78,11 +78,22 @@ module.exports = {
   prerender: [
     async () => {
       const { createServer } = require('http-server')
-      const { prerender } = require('prerender-js')
+      const puppeteer = require('puppeteer')
+      const fs = require('fs')
       const server = createServer()
       server.listen(8000)
-      await prerender('http://localhost:8000/online', '#prerender-container', 'online/prerender.html')
+      const browser = await puppeteer.launch()
+      const page = await browser.newPage()
+      await page.waitFor(1000)
+      await page.goto('http://localhost:8000/online')
+      await page.waitFor(1000)
+      const content = await page.evaluate(() => {
+        const element = document.querySelector('#prerender-container')
+        return element ? element.innerHTML : ''
+      })
+      fs.writeFileSync('online/prerender.html', content)
       server.close()
+      browser.close()
     },
     `clean-scripts online[1]`
   ]
