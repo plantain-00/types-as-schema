@@ -1,4 +1,7 @@
 const childProcess = require('child_process')
+const util = require('util')
+
+const execAsync = util.promisify(childProcess.exec)
 
 module.exports = {
   build: [
@@ -21,19 +24,13 @@ module.exports = {
       baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json'
     },
     'git checkout online/screenshot.png',
-    () => new Promise((resolve, reject) => {
-      childProcess.exec('git status -s', (error, stdout, stderr) => {
-        if (error) {
-          reject(error)
-        } else {
-          if (stdout) {
-            reject(new Error(`generated files doesn't match.`))
-          } else {
-            resolve()
-          }
-        }
-      }).stdout.pipe(process.stdout)
-    })
+    async () => {
+      const { stdout } = await execAsync('git status -s')
+      if (stdout) {
+        console.log(stdout)
+        throw new Error(`generated files doesn't match.`)
+      }
+    }
   ],
   fix: {
     ts: `tslint --fix "src/**/*.ts" "online/**/*.ts"`,
