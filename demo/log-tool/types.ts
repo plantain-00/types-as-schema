@@ -2,10 +2,7 @@
  * @entry request-protocol.json
  */
 export type RequestProtocol = {
-    /**
-     * @type uint32
-     */
-    requestId: number;
+    requestId: uint32;
 } & (
         {
             kind: RequestProtocolKind.searchLogs,
@@ -18,6 +15,8 @@ export type RequestProtocol = {
         }
     );
 
+type uint32 = number;
+
 export const enum RequestProtocolKind {
     searchLogs = "search logs",
     searchSamples = "search samples",
@@ -28,14 +27,8 @@ export type SearchLogs = {
     content: string;
     time: string;
     hostname: string;
-    /**
-     * @type uint32
-     */
-    from: number;
-    /**
-     * @type uint32
-     */
-    size: number;
+    from: uint32;
+    size: uint32;
 };
 
 type SearchSamples = {
@@ -78,17 +71,11 @@ type Flows = {
 };
 
 export type SearchLogsResult = {
-    /**
-     * @type uint32
-     */
-    requestId: number;
+    requestId: uint32;
 } & (
         {
             kind: ResultKind.success;
-            /**
-             * @type uint32
-             */
-            total: number;
+            total: uint32;
             logs?: Log[];
         } | {
             kind: ResultKind.fail
@@ -97,10 +84,7 @@ export type SearchLogsResult = {
     );
 
 type SearchSamplesResult = {
-    /**
-     * @type uint32
-     */
-    requestId: number;
+    requestId: uint32;
 } & (
         {
             kind: ResultKind.success,
@@ -112,21 +96,12 @@ type SearchSamplesResult = {
     );
 
 export type ResaveFailedLogsResult = {
-    /**
-     * @type uint32
-     */
-    requestId: number;
+    requestId: uint32;
 } & (
         {
             kind: ResultKind.success;
-            /**
-             * @type uint32
-             */
-            savedCount: number;
-            /**
-             * @type uint32
-             */
-            totalCount: number;
+            savedCount: uint32;
+            totalCount: uint32;
         } | {
             kind: ResultKind.fail
             error: string;
@@ -173,10 +148,7 @@ export type Log = {
 
 export type Sample = {
     hostname: string;
-    /**
-     * @type uint32
-     */
-    port?: number;
+    port?: uint32;
     /**
      * @mapValueType uint32
      */

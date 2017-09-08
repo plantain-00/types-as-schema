@@ -22,116 +22,57 @@ export const enum ItemType {
 
 export const itemCounts = [1000, 3, 2, 4, 1000, 550, 0, 250, 3];
 
+type uint32 = number;
+
 export type Item = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
+    x: uint32;
+    y: uint32;
     type: ItemType;
     dead: boolean;
 };
 
 export type Mine = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
+    x: uint32;
+    y: uint32;
     dead: boolean;
 };
 
 export type Grenade = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
-    /**
-     * @type uint32
-     */
-    r: number;
+    x: uint32;
+    y: uint32;
+    r: uint32;
 };
+
+type int32 = number;
 
 export type User = {
     itemType?: ItemType;
-    /**
-     * @type uint32
-     */
-    itemCount: number;
+    itemCount: uint32;
     nearLadder?: Ladder;
-    /**
-     * @type int32
-     */
-    faceing: number;
-    /**
-     * @type uint32
-     */
-    fireing?: number;
-    /**
-     * @type uint32
-     */
-    grenadeing: number;
+    faceing: int32;
+    fireing?: uint32;
+    grenadeing: uint32;
     danger: boolean,
     status: UserStatus;
     name: string;
-    /**
-     * @type uint32
-     */
-    id: number;
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
-    /**
-     * @type uint32
-     */
-    vy: number;
-    /**
-     * @type uint32
-     */
-    score: number;
+    id: uint32;
+    x: uint32;
+    y: uint32;
+    vy: uint32;
+    score: uint32;
     dead: boolean,
     doubleJumping: boolean,
-    /**
-     * @type uint32
-     */
-    flying: number;
+    flying: uint32;
 };
 
 export type Door = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
+    x: uint32;
+    y: uint32;
 };
 
 export type ItemGate = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type float
-     */
-    y: number;
+    x: uint32;
+    y: float;
 };
 
 export const enum ProtocolKind {
@@ -152,18 +93,9 @@ type Tick = {
 };
 
 export type MapData = {
-    /**
-     * @type uint32
-     */
-    w: number;
-    /**
-     * @type uint32
-     */
-    h: number;
-    /**
-     * @type uint32
-     */
-    floors: number[];
+    w: uint32;
+    h: uint32;
+    floors: uint32[];
     ladders: Ladder[];
     doors: Door[],
     itemGates: ItemGate[],
@@ -178,33 +110,15 @@ type Join = {
 };
 
 type JoinSuccess = {
-    /**
-     * @type uint32
-     */
-    userId: number;
+    userId: uint32;
 };
 
 export type Control = {
-    /**
-     * @type uint32
-     */
-    leftDown: number;
-    /**
-     * @type uint32
-     */
-    rightDown: number;
-    /**
-     * @type uint32
-     */
-    upDown: number;
-    /**
-     * @type uint32
-     */
-    downDown: number;
-    /**
-     * @type uint32
-     */
-    itemDown: number;
+    leftDown: uint32;
+    rightDown: uint32;
+    upDown: uint32;
+    downDown: uint32;
+    itemDown: uint32;
     leftPress: boolean;
     rightPress: boolean;
     upPress: boolean;
@@ -218,18 +132,9 @@ export type ControlProtocol = {
 };
 
 type Explode = {
-    /**
-     * @type uint32
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y: number;
-    /**
-     * @type uint32
-     */
-    power: number;
+    x: uint32;
+    y: uint32;
+    power: uint32;
 };
 
 type UserDead = {
@@ -284,17 +189,10 @@ export const enum UserStatus {
     falling = 7,
 }
 
+type float = number;
+
 export type Ladder = { // (x,y1) until (x,y2)
-    /**
-     * @type float
-     */
-    x: number;
-    /**
-     * @type uint32
-     */
-    y1: number;
-    /**
-     * @type uint32
-     */
-    y2: number;
+    x: float;
+    y1: uint32;
+    y2: uint32;
 };

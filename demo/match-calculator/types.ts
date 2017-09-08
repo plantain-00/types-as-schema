@@ -21,6 +21,8 @@ export type Group = {
     tops: number[];
 };
 
+type integer = number;
+
 export type Match = {
     a: string;
     b: string;
@@ -29,14 +31,8 @@ export type Match = {
      * @minItems 1
      */
     possibilities: {
-        /**
-         * @type integer
-         */
-        a: number;
-        /**
-         * @type integer
-         */
-        b: number;
+        a: integer;
+        b: integer;
     }[];
 };
 

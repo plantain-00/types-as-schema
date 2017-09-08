@@ -89,3 +89,13 @@ string[]:
 + `@itemMinLength 10`: set item `minLength = 10`
 + `@itemMaxLength 20`: set item `maxLength = 20`
 + `@itemPattern ^[A-z]{3}$`: set item `pattern = ^[A-z]{3}$`
+
+#### number type alias
+
+```ts
+type uint32 = number;
+
+type Foo = {
+    bar: uint32;
+}
+```

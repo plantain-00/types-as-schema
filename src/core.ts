@@ -2,6 +2,7 @@ import * as ts from "typescript";
 
 export class Generator {
     models: Model[] = [];
+    private numberTypes = ["double", "float", "uint32", "fixed32", "integer", "int32", "sint32", "sfixed32", "uint64", "fixed64", "int64", "sint64", "sfixed64"]
 
     constructor(public sourceFile: ts.SourceFile) {
         ts.forEachChild(sourceFile, node => {
@@ -146,7 +147,9 @@ ${messages.join("\n\n")}
                     this.setJsonSchemaArray(jsDoc, model);
                 }
                 this.models.push(model);
-            } else {
+            } else if (declaration.type.kind === ts.SyntaxKind.TypeLiteral
+                || declaration.type.kind === ts.SyntaxKind.UnionType
+                || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
                 const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type);
                 const model: Model = {
                     kind: "object",
@@ -506,10 +509,17 @@ ${messages.join("\n\n")}
             const reference = type as ts.TypeReferenceNode;
             if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
                 const typeName = reference.typeName as ts.Identifier;
-                return {
-                    kind: "reference",
-                    name: typeName.text,
-                };
+                if (this.numberTypes.includes(typeName.text)) {
+                    return {
+                        kind: "number",
+                        type: typeName.text,
+                    };
+                } else {
+                    return {
+                        kind: "reference",
+                        name: typeName.text,
+                    };
+                }
             } else if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
                 const qualified = reference.typeName as ts.QualifiedName;
                 const enumName = (qualified.left as ts.Identifier).text;
