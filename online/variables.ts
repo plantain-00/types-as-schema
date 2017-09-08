@@ -104,6 +104,20 @@ export type Enum = {
     numberEnum2: NumberEnum2;
 };
 
+type integer = number;
+type uint32 = number;
+type int32 = number;
+type sint32 = number;
+type fixed32 = number;
+type sfixed32 = number;
+type uint64 = number;
+type int64 = number;
+type sint64 = number;
+type fixed64 = number;
+type sfixed64 = number;
+type float = number;
+type double = number;
+
 type NumberType = {
     /**
      * @multipleOf 10
@@ -114,61 +128,22 @@ type NumberType = {
      */
     numberMember: number;
 
-    /**
-     * @type integer
-     */
-    integerMember: number;
+    integerMember: integer;
 
-    /**
-     * @type uint32
-     */
-    uint32Member: number;
-    /**
-     * @type int32
-     */
-    int32Member: number;
-    /**
-     * @type sint32
-     */
-    sint32Member: number;
-    /**
-     * @type fixed32
-     */
-    fixed32Member: number;
-    /**
-     * @type sfixed32
-     */
-    sfixed32Member: number;
+    uint32Member: uint32;
+    int32Member: int32;
+    sint32Member: sint32;
+    fixed32Member: fixed32;
+    sfixed32Member: sfixed32;
 
-    /**
-     * @type uint64
-     */
-    uint64Member: number;
-    /**
-     * @type int64
-     */
-    int64Member: number;
-    /**
-     * @type sint64
-     */
-    sint64Member: number;
-    /**
-     * @type fixed64
-     */
-    fixed64Member: number;
-    /**
-     * @type sfixed64
-     */
-    sfixed64Member: number;
+    uint64Member: uint64;
+    int64Member: int64;
+    sint64Member: sint64;
+    fixed64Member: fixed64;
+    sfixed64Member: sfixed64;
 
-    /**
-     * @type float
-     */
-    floatMember: number;
-    /**
-     * @type double
-     */
-    doubleMember: number;
+    floatMember: float;
+    doubleMember: double;
 };
 
 type StringType = {
@@ -209,10 +184,7 @@ type MapType = {
     mapType: { [name: string]: number };
     mapType2: { [name: string]: TypeLiteral };
     mapType3: { [name: string]: { literal: number } };
-    /**
-     * @mapValueType uint32
-     */
-    mapType4: { [name: string]: number };
+    mapType4: { [name: string]: uint32 };
 };
 
 /**
