@@ -149,8 +149,5 @@ export type Log = {
 export type Sample = {
     hostname: string;
     port?: uint32;
-    /**
-     * @mapValueType uint32
-     */
-    values: { [name: string]: number };
+    values: { [name: string]: uint32 };
 };

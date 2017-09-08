@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 export class Generator {
     models: Model[] = [];
-    private numberTypes = ["double", "float", "uint32", "fixed32", "integer", "int32", "sint32", "sfixed32", "uint64", "fixed64", "int64", "sint64", "sfixed64"]
+    private numberTypes = ["double", "float", "uint32", "fixed32", "integer", "int32", "sint32", "sfixed32", "uint64", "fixed64", "int64", "sint64", "sfixed64"];
 
     constructor(public sourceFile: ts.SourceFile) {
         ts.forEachChild(sourceFile, node => {

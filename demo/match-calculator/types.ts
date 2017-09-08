@@ -13,12 +13,11 @@ export type Group = {
     matches: Match[];
     teams: Teams;
     /**
-     * @itemType integer
      * @itemMinimum 1
      * @uniqueItems
      * @minItems 1
      */
-    tops: number[];
+    tops: integer[];
 };
 
 type integer = number;

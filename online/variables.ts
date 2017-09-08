@@ -170,14 +170,13 @@ type ArrayType = {
     arrayType2: TypeLiteral[];
     arrayType3: { literal: number }[];
     /**
-     * @itemType uint32
      * @itemMultipleOf 100
      * @itemMinimum 100
      * @itemMaximum 200
      * @itemExclusiveMinimum 300
      * @itemExclusiveMaximum 400
      */
-    arrayType4: number[];
+    arrayType4: uint32[];
 };
 
 type MapType = {
