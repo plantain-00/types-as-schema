@@ -9,7 +9,6 @@ script:
   - npm run lint
   - npm run test
   - npm run demo
-  - npm run online
 env:
   - CXX=g++-4.8
 addons:

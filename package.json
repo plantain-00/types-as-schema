@@ -12,7 +12,6 @@
     "build": "clean-scripts build",
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
-    "online": "clean-scripts online",
     "fix": "clean-scripts fix",
     "release": "clean-scripts release",
     "prerender": "clean-scripts prerender"
