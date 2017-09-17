@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
-    "@types/jasmine": "2.5.54",
+    "@types/jasmine": "2.6.0",
     "@types/minimist": "1.2.0",
     "@types/node": "8.0.28",
     "clean-css-cli": "4.1.9",
@@ -43,14 +43,14 @@
     "no-unused-export": "1.2.6",
     "puppeteer": "0.10.2",
     "rev-static": "3.4.0",
-    "rimraf": "2.6.1",
+    "rimraf": "2.6.2",
     "standard": "10.0.3",
     "stylelint": "8.1.1",
     "stylelint-config-standard": "17.0.0",
     "tslint": "5.7.0",
-    "vue": "2.4.2",
+    "vue": "2.4.4",
     "vue-class-component": "5.0.2",
-    "webpack": "3.5.6"
+    "webpack": "3.6.0"
   },
   "dependencies": {
     "ajv": "5.2.2",
