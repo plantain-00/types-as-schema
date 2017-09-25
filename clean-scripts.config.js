@@ -15,7 +15,8 @@ module.exports = {
       ],
       css: [
         `lessc online/index.less > online/index.css`,
-        `cleancss -o online/index.bundle.css online/index.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`
+        `postcss online/index.css -o online/index.postcss.css`,
+        `cleancss -o online/index.bundle.css online/index.postcss.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`
       ],
       clean: `rimraf online/*.bundle-*.js online/*.bundle-*.css`
     },
