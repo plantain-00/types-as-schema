@@ -8,7 +8,6 @@ script:
   - npm run build
   - npm run lint
   - npm run test
-  - npm run demo
 env:
   - CXX=g++-4.8
 addons:
