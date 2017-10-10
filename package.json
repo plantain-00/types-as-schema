@@ -1,14 +1,9 @@
 {
   "name": "types-as-schema",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Genetate json scheme or protobuf file from types.",
   "main": "index.js",
   "scripts": {
-    "demo.default": "clean-scripts test[2].default",
-    "demo.logTool": "clean-scripts test[2].logTool",
-    "demo.matchCalculator": "clean-scripts test[2].matchCalculator",
-    "demo.baogame": "clean-scripts test[2].baogame",
-    "demo": "clean-scripts test[2]",
     "build": "clean-scripts build",
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",

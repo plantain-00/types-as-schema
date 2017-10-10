@@ -21,7 +21,13 @@ module.exports = {
       ],
       clean: `rimraf online/*.bundle-*.js online/*.bundle-*.css`
     },
-    `rev-static --config online/rev-static.config.js`
+    `rev-static --config online/rev-static.config.js`,
+    {
+      default: 'node ./dist/index.js demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto',
+      logTool: 'node ./dist/index.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto',
+      matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
+      baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json'
+    }
   ],
   lint: {
     ts: `tslint "src/**/*.ts" "online/**/*.ts"`,
@@ -32,12 +38,6 @@ module.exports = {
   test: [
     'tsc -p spec',
     'jasmine',
-    {
-      default: 'node ./dist/index.js demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto',
-      logTool: 'node ./dist/index.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto',
-      matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
-      baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json'
-    },
     async () => {
       const { stdout } = await execAsync('git status -s')
       if (stdout) {
