@@ -20,6 +20,6 @@ module.exports = {
   base: 'online',
   fileSize: 'online/file-size.json',
   context: {
-    prerender: fs.readFileSync('online/prerender.html')
+    prerender: fs.readFileSync('prerender/index.html')
   }
 }
