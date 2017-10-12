@@ -8,5 +8,14 @@ import * as puppeteer from "puppeteer";
     await page.waitFor(2000);
     await page.screenshot({ path: `screenshots/initial.png`, fullPage: true });
 
+    await page.click("button");
+    await page.waitFor(2000);
+    await page.screenshot({ path: `screenshots/protobuf.png`, fullPage: true });
+
+    // this is not supported by puppeteer v0.11
+    // await page.select("select", "cases.json");
+    // await page.waitFor(2000);
+    // await page.screenshot({ path: `screenshots/json.png`, fullPage: true });
+
     browser.close();
 })();
