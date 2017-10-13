@@ -4,6 +4,10 @@ const { Service } = require('clean-scripts')
 
 const execAsync = util.promisify(childProcess.exec)
 
+const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "screenshots/**/*.ts" "prerender/**/*.ts" "online/**/*.ts"`
+const jsFiles = `"*.config.js" "online/*.config.js"`
+const lessFiles = `"online/**/*.less"`
+
 module.exports = {
   build: [
     `rimraf dist/`,
@@ -30,10 +34,10 @@ module.exports = {
     }
   ],
   lint: {
-    ts: `tslint "src/**/*.ts" "online/**/*.ts"`,
-    js: `standard "**/*.config.js"`,
-    less: `stylelint "online/**/*.less"`,
-    export: `no-unused-export "src/**/*.ts" "online/**/*.ts"`
+    ts: `tslint ${tsFiles}`,
+    js: `standard ${jsFiles}`,
+    less: `stylelint ${lessFiles}`,
+    export: `no-unused-export ${tsFiles} ${lessFiles}`
   },
   test: [
     'tsc -p spec',
@@ -47,9 +51,9 @@ module.exports = {
     }
   ],
   fix: {
-    ts: `tslint --fix "src/**/*.ts" "online/**/*.ts"`,
-    js: `standard --fix "**/*.config.js"`,
-    less: `stylelint --fix "online/**/*.less"`
+    ts: `tslint --fix ${tsFiles}`,
+    js: `standard --fix ${jsFiles}`,
+    less: `stylelint --fix ${lessFiles}`
   },
   release: `clean-release`,
   watch: {
