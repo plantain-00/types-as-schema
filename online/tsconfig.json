@@ -19,6 +19,7 @@
         "importHelpers": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "newLine": "LF"
     }
 }
