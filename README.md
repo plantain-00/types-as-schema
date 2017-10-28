@@ -34,6 +34,13 @@ Genetate json scheme or protobuf file from types.
 
 `types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json`
 
+parameters | description
+--- | ---
+`--json` | directory for generated json files
+`--protobuf` | generated protobuf file
+`--debug` | generated file with debug information in it
+`--watch` or `-w` | watch mode
+
 #### protobuf and json schema
 
 + `@type uint32`: set `type = "uint32"`
