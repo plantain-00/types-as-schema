@@ -46,6 +46,7 @@
     "stylelint": "8.2.0",
     "stylelint-config-standard": "17.0.0",
     "tslint": "5.8.0",
+    "types-as-schema": "1.6.0",
     "vue": "2.5.2",
     "vue-class-component": "6.0.0",
     "webpack": "3.8.1"
