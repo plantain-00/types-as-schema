@@ -120,8 +120,8 @@ ${messages.join("\n\n")}
             }
         }
         return this.models.filter(m => (m.kind === "object" || m.kind === "array") && m.entry)
-            .map((m: ObjectModel | ArrayModel) => ({
-                entry: m.entry!,
+            .map(m => ({
+                entry: (m as ObjectModel | ArrayModel).entry!,
                 schema: {
                     $ref: `#/definitions/${m.name}`,
                     definitions: this.getReferencedDefinitions(m.name, definitions),

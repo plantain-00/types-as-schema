@@ -1,4 +1,5 @@
-const { Service, execAsync } = require('clean-scripts')
+const { Service, execAsync, executeScriptAsync } = require('clean-scripts')
+const { watch } = require('watch-then-execute')
 
 const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "screenshots/**/*.ts" "prerender/**/*.ts" "online/**/*.ts"`
 const jsFiles = `"*.config.js" "online/*.config.js"`
@@ -9,6 +10,11 @@ const tscSrcCommand = `tsc -p src`
 const tscOnlineCommand = `tsc -p online`
 const webpackCommand = `webpack --display-modules --config online/webpack.config.js`
 const revStaticCommand = `rev-static --config online/rev-static.config.js`
+const cssCommand = [
+  `lessc online/index.less > online/index.css`,
+  `postcss online/index.css -o online/index.postcss.css`,
+  `cleancss -o online/index.bundle.css online/index.postcss.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`
+]
 
 module.exports = {
   build: [
@@ -20,11 +26,7 @@ module.exports = {
         tscOnlineCommand,
         webpackCommand
       ],
-      css: [
-        `lessc online/index.less > online/index.css`,
-        `postcss online/index.css -o online/index.postcss.css`,
-        `cleancss -o online/index.bundle.css online/index.postcss.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`
-      ],
+      css: cssCommand,
       clean: `rimraf online/*.bundle-*.js online/*.bundle-*.css`
     },
     revStaticCommand,
@@ -63,7 +65,7 @@ module.exports = {
     src: `${tscSrcCommand} --watch`,
     online: `${tscOnlineCommand} --watch`,
     webpack: `${webpackCommand} --watch`,
-    less: `watch-then-execute ${lessFiles} --script "clean-scripts online[0].css"`,
+    less: () => watch(['online/**/*.less'], [], () => executeScriptAsync(cssCommand)),
     rev: `${revStaticCommand} --watch`
   },
   screenshot: [
@@ -75,7 +77,6 @@ module.exports = {
     new Service(`http-server -p 8000`),
     `tsc -p prerender`,
     `node prerender/index.js`,
-    `clean-scripts build[2]`,
-    `clean-scripts build[3]`
+    revStaticCommand
   ]
 }
