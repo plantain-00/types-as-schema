@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
+    "@commitlint/cli": "5.0.1",
+    "@commitlint/config-angular": "5.0.1",
     "@types/chokidar": "1.7.3",
     "@types/jasmine": "2.8.2",
     "@types/minimist": "1.2.0",
