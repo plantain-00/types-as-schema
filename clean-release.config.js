@@ -10,7 +10,7 @@ module.exports = {
   ],
   askVersion: true,
   postScript: [
-    'npm publish [dir] --access public',
+    'npm publish "[dir]" --access public',
     'git add package.json',
     'git commit -m "feat: publish v[version]"',
     'git tag v[version]',

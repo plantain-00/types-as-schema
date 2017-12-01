@@ -54,7 +54,6 @@ module.exports = {
     js: `standard --fix ${jsFiles}`,
     less: `stylelint --fix ${lessFiles}`
   },
-  release: `clean-release`,
   watch: {
     vue: `${templateCommand} --watch`,
     src: `${tscSrcCommand} --watch`,
