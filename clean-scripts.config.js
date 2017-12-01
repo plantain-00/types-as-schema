@@ -8,7 +8,7 @@ const lessFiles = `"online/**/*.less"`
 const templateCommand = `file2variable-cli online/index.template.html demo/cases.ts -o online/variables.ts --html-minify --base online`
 const tscSrcCommand = `tsc -p src`
 const tscOnlineCommand = `tsc -p online`
-const webpackCommand = `webpack --display-modules --config online/webpack.config.js`
+const webpackCommand = `webpack --config online/webpack.config.js`
 const revStaticCommand = `rev-static --config online/rev-static.config.js`
 const cssCommand = [
   `lessc online/index.less > online/index.css`,
