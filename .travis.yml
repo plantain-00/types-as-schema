@@ -6,7 +6,7 @@ before_install:
   - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
   - git fetch --unshallow || true
 install:
-  - yarn install --pure-lockfile
+  - yarn install --frozen-lockfile
 script:
   - npm run build
   - npm run lint
