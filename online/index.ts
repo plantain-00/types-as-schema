@@ -3,14 +3,15 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 import { Generator } from "../src/core";
-import { indexTemplateHtml, demoCasesTs } from "./variables";
+import { indexTemplateHtml, indexTemplateHtmlStatic, demoCasesTs } from "./variables";
 
 const localStorageKey = "types-as-schema:source";
 
 @Component({
-    template: indexTemplateHtml,
+    render: indexTemplateHtml,
+    staticRenderFns: indexTemplateHtmlStatic,
 })
-class App extends Vue {
+export class App extends Vue {
     protobuf = "";
     options: string[] = ["protobuf"];
     selectedOption = "protobuf";
