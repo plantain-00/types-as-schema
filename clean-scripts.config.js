@@ -5,7 +5,7 @@ const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "screenshots/**/*.ts" "prerender/*
 const jsFiles = `"*.config.js" "online/*.config.js"`
 const lessFiles = `"online/**/*.less"`
 
-const templateCommand = `file2variable-cli online/index.template.html demo/cases.ts -o online/variables.ts --html-minify --base online --vue --vue-type-name "App" --vue-type-path "./index"`
+const templateCommand = `file2variable-cli --config online/file2variable.config.js`
 const tscSrcCommand = `tsc -p src`
 const tscOnlineCommand = `tsc -p online`
 const webpackCommand = `webpack --config online/webpack.config.js`
