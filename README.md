@@ -1,3 +1,5 @@
+# types-as-schema
+
 [![Dependency Status](https://david-dm.org/plantain-00/types-as-schema.svg)](https://david-dm.org/plantain-00/types-as-schema)
 [![devDependency Status](https://david-dm.org/plantain-00/types-as-schema/dev-status.svg)](https://david-dm.org/plantain-00/types-as-schema#info=devDependencies)
 [![Build Status: Linux](https://travis-ci.org/plantain-00/types-as-schema.svg?branch=master)](https://travis-ci.org/plantain-00/types-as-schema)
@@ -5,10 +7,9 @@
 [![npm version](https://badge.fury.io/js/types-as-schema.svg)](https://badge.fury.io/js/types-as-schema)
 [![Downloads](https://img.shields.io/npm/dm/types-as-schema.svg)](https://www.npmjs.com/package/types-as-schema)
 
-# types-as-schema
 Genetate json scheme or protobuf file from types.
 
-#### supported types features
+## supported types features
 
 + type literal
 + interface
@@ -20,17 +21,17 @@ Genetate json scheme or protobuf file from types.
 + marked as more precise type
 + enum
 
-#### supported types features
+## unsupported types features
 
 + class
 + function
 + variable statement
 
-#### install
+## install
 
 `npm i types-as-schema -g`
 
-#### usage
+## usage
 
 `types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json`
 
@@ -41,16 +42,16 @@ parameters | description
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 
-#### protobuf and json schema
+## protobuf and json schema
 
 + `@type uint32`: set `type = "uint32"`
 + `@mapValueType uint32`: more detailed type of a map type value
 
-#### protobuf only
+## protobuf only
 
 + `@tag 1`: tag or id
 
-#### json schema only
+## json schema only
 
 entry:
 
@@ -97,7 +98,7 @@ string[]:
 + `@itemMaxLength 20`: set item `maxLength = 20`
 + `@itemPattern ^[A-z]{3}$`: set item `pattern = ^[A-z]{3}$`
 
-#### number type alias
+## number type alias
 
 ```ts
 type uint32 = number;
