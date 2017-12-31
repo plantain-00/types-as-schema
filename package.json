@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
-    "@commitlint/cli": "5.2.6",
+    "@commitlint/cli": "5.2.8",
     "@commitlint/config-angular": "5.1.1",
     "@types/chokidar": "1.7.4",
-    "@types/jasmine": "2.8.2",
+    "@types/jasmine": "2.8.3",
     "@types/minimist": "1.2.0",
     "@types/node": "8.5.2",
     "@types/puppeteer": "0.13.9",
@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "ajv": "5.5.2",
-    "chokidar": "1.7.0",
+    "chokidar": "2.0.0",
     "minimist": "1.2.0",
     "protobufjs": "6.8.3",
     "typescript": "2.6.1"
