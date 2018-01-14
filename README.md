@@ -29,7 +29,7 @@ Genetate json scheme or protobuf file from types.
 
 ## install
 
-`npm i types-as-schema -g`
+`yarn global add types-as-schema`
 
 ## usage
 
