@@ -47,6 +47,7 @@
     "stylelint": "8.4.0",
     "stylelint-config-standard": "18.0.0",
     "tslint": "5.8.0",
+    "tslint-config-standard": "7.0.0",
     "types-as-schema": "1.6.0",
     "vue": "2.5.13",
     "vue-class-component": "6.1.2",
