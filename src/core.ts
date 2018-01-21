@@ -579,14 +579,12 @@ ${messages.join('\n\n')}
       propertyType = memberType.type === 'string' ? 'string' : memberType.name
     } else if (memberType.kind === 'reference') {
       const model = this.models.find(m => m.kind === 'enum' && m.name === memberType.name)
-            // tslint:disable-next-line:prefer-conditional-expression
       if (model && model.kind === 'enum' && model.type === 'string') {
         propertyType = 'string'
       } else {
         propertyType = memberType.name
       }
     } else if (memberType.kind === 'number') {
-            // tslint:disable-next-line:prefer-conditional-expression
       if (memberType.type === 'number') {
         propertyType = 'double'
       } else if (memberType.type === 'integer') {

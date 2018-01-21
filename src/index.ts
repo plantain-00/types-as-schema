@@ -95,7 +95,6 @@ async function executeCommandLine () {
 }
 
 function printInConsole (message: any) {
-    // tslint:disable-next-line:no-console
   console.log(message)
 }
 
