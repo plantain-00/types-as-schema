@@ -25,10 +25,10 @@
     "@commitlint/cli": "6.0.2",
     "@commitlint/config-conventional": "6.0.2",
     "@types/chokidar": "1.7.4",
-    "@types/jasmine": "2.8.4",
+    "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
-    "@types/node": "9.3.0",
-    "@types/puppeteer": "0.13.9",
+    "@types/node": "9.4.0",
+    "@types/puppeteer": "1.0.0",
     "autoprefixer": "7.2.5",
     "clean-css-cli": "4.1.10",
     "clean-scripts": "1.7.0",
@@ -55,7 +55,7 @@
     "webpack": "3.10.0"
   },
   "dependencies": {
-    "ajv": "6.0.1",
+    "ajv": "6.1.0",
     "chokidar": "2.0.0",
     "minimist": "1.2.0",
     "protobufjs": "6.8.4",
