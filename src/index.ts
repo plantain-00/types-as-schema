@@ -51,7 +51,7 @@ async function executeCommandLine () {
 
     const sourceFile = program.getSourceFile(filePath)
 
-    const generator = new Generator(sourceFile)
+    const generator = new Generator(sourceFile!)
 
     if (debugPath) {
       fs.writeFileSync(debugPath, JSON.stringify(generator.models, null, '  '))

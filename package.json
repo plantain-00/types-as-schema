@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
-    "@commitlint/cli": "6.0.2",
-    "@commitlint/config-conventional": "6.0.2",
+    "@commitlint/cli": "6.1.0",
+    "@commitlint/config-conventional": "6.1.0",
     "@types/chokidar": "1.7.4",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
@@ -32,12 +32,12 @@
     "autoprefixer": "7.2.5",
     "clean-css-cli": "4.1.10",
     "clean-scripts": "1.7.0",
-    "file2variable-cli": "1.8.1",
+    "file2variable-cli": "1.8.3",
     "github-fork-ribbon-css": "0.2.1",
     "http-server": "0.11.1",
     "jasmine": "2.9.0",
     "less": "2.7.3",
-    "markdownlint-cli": "0.6.0",
+    "markdownlint-cli": "0.7.0",
     "no-unused-export": "1.4.5",
     "postcss-cli": "4.1.1",
     "puppeteer": "1.0.0",
@@ -55,11 +55,11 @@
     "webpack": "3.10.0"
   },
   "dependencies": {
-    "ajv": "6.1.0",
+    "ajv": "6.1.1",
     "chokidar": "2.0.0",
     "minimist": "1.2.0",
     "protobufjs": "6.8.4",
-    "typescript": "2.6.2"
+    "typescript": "2.7.1"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"

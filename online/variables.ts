@@ -3,7 +3,7 @@
  * It is not mean to be edited by hand
  */
 // tslint:disable
-import { App } from "./index";
+import { App } from "./index"
 
 export const demoCasesTs = `type TypeLiteral = {
     typeLiteralMember1: number;
@@ -157,7 +157,7 @@ type StringType = {
     /**
      * @minLength 10
      * @maxLength 20
-     * @pattern ^[A-z]{3}$
+     * @pattern ^[A-z]{3}\$
      */
     stringMember: string;
 };
@@ -166,7 +166,7 @@ type ArrayType = {
     /**
      * @itemMinLength 10
      * @itemMaxLength 20
-     * @itemPattern ^[A-z]{3}$
+     * @itemPattern ^[A-z]{3}\$
      */
     arrayType1: string[];
     /**
@@ -214,7 +214,7 @@ export type EntryType = {
     enum: Enum;
     stringNumber: StringType;
 };
-`;
+`
 // @ts-ignore
 export function indexTemplateHtml(this: App) {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.source),expression:"source"}],staticClass:"source",domProps:{"value":(_vm.source)},on:{"input":function($event){if($event.target.composing){ return; }_vm.source=$event.target.value}}}),_vm._v(" "),_c('div',{staticClass:"result"},[_c('button',{on:{"click":function($event){_vm.generate()}}},[_vm._v("generate")]),_vm._v(" "),_c('div',{staticClass:"options"},[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selectedOption),expression:"selectedOption"}],on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selectedOption=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.options),function(option){return _c('option',{key:option,domProps:{"value":option}},[_vm._v(_vm._s(option))])}))]),_vm._v(" "),(_vm.selectedOption === 'protobuf')?_c('pre',{staticClass:"protobuf"},[_vm._v(_vm._s(_vm.protobuf))]):_vm._e(),_vm._v(" "),(_vm.jsonSchema)?_c('pre',{staticClass:"json-schema"},[_vm._v(_vm._s(_vm.jsonSchema))]):_vm._e()])])}
 // @ts-ignore
