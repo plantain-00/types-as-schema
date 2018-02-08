@@ -1,4 +1,4 @@
-import * as minimist from 'minimist'
+import minimist from 'minimist'
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -7,7 +7,7 @@ import { Generator } from './core'
 import * as packageJson from '../package.json'
 
 import * as protobuf from 'protobufjs'
-import * as Ajv from 'ajv'
+import Ajv from 'ajv'
 
 const ajv = new Ajv()
 
