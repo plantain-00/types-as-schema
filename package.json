@@ -27,9 +27,9 @@
     "@types/chokidar": "1.7.5",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
-    "@types/node": "9.4.7",
+    "@types/node": "9.6.0",
     "@types/puppeteer": "1.2.0",
-    "autoprefixer": "8.1.0",
+    "autoprefixer": "8.2.0",
     "clean-css-cli": "4.1.11",
     "clean-scripts": "1.7.0",
     "file2variable-cli": "1.8.3",
@@ -37,7 +37,7 @@
     "http-server": "0.11.1",
     "jasmine": "3.1.0",
     "less": "3.0.1",
-    "markdownlint-cli": "0.7.1",
+    "markdownlint-cli": "0.8.1",
     "no-unused-export": "1.5.0",
     "postcss-cli": "5.0.0",
     "puppeteer": "1.2.0",
@@ -52,12 +52,12 @@
     "vue": "2.5.16",
     "vue-class-component": "6.2.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.1.1",
-    "webpack-cli": "2.0.12"
+    "webpack": "4.2.0",
+    "webpack-cli": "2.0.13"
   },
   "dependencies": {
-    "ajv": "6.2.1",
-    "chokidar": "2.0.2",
+    "ajv": "6.3.0",
+    "chokidar": "2.0.3",
     "minimist": "1.2.0",
     "protobufjs": "6.8.6",
     "typescript": "2.7.2"
