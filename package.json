@@ -27,7 +27,7 @@
     "@types/chokidar": "1.7.5",
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
-    "@types/node": "9.6.0",
+    "@types/node": "9.6.1",
     "@types/puppeteer": "1.2.0",
     "autoprefixer": "8.2.0",
     "clean-css-cli": "4.1.11",
@@ -52,15 +52,15 @@
     "vue": "2.5.16",
     "vue-class-component": "6.2.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.2.0",
+    "webpack": "4.4.1",
     "webpack-cli": "2.0.13"
   },
   "dependencies": {
-    "ajv": "6.3.0",
+    "ajv": "6.4.0",
     "chokidar": "2.0.3",
     "minimist": "1.2.0",
     "protobufjs": "6.8.6",
-    "typescript": "2.7.2"
+    "typescript": "2.8.1"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
