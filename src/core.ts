@@ -136,7 +136,22 @@ ${messages.join('\n\n')}
         const members = model.members.map(m => {
           const propertyType = this.getGraphqlSchemaProperty(m.type)
           if (propertyType) {
-            return `  ${m.name}: ${m.optional ? propertyType : propertyType + '!'}`
+            let parameterList = ''
+            if (m.parameters) {
+              const parameters: string[] = []
+              for (const parameter of m.parameters) {
+                const parameterPropertyType = this.getGraphqlSchemaProperty(parameter.type)
+                if (parameterPropertyType) {
+                  if (parameter.optional) {
+                    parameters.push(`${parameter.name}: ${parameterPropertyType}`)
+                  } else {
+                    parameters.push(`${parameter.name}: ${parameterPropertyType}!`)
+                  }
+                }
+              }
+              parameterList = `(${parameters.join(', ')})`
+            }
+            return `  ${m.name}${parameterList}: ${m.optional ? propertyType : propertyType + '!'}`
           }
           return undefined
         })
@@ -402,6 +417,18 @@ ${members.join('\n')}
             }
           } else if (propertyJsDoc.name === 'type') {
             this.overrideType(member.type, propertyJsDoc)
+          } else if (propertyJsDoc.name === 'param') {
+            if (propertyJsDoc.paramName && propertyJsDoc.type) {
+              if (!member.parameters) {
+                member.parameters = []
+              }
+              member.parameters.push({
+                name: propertyJsDoc.paramName,
+                type: propertyJsDoc.type,
+                optional: propertyJsDoc.optional
+              })
+            }
+            this.overrideType(member.type, propertyJsDoc)
           } else if (member.type.kind === 'array') {
             this.setJsonSchemaArray(propertyJsDoc, member.type)
           } else if (member.type.kind === 'number') {
@@ -570,9 +597,21 @@ ${members.join('\n')}
       for (const jsDoc of jsDocs) {
         if (jsDoc.tags) {
           for (const tag of jsDoc.tags) {
+            let type: Type | undefined
+            let paramName: string | undefined
+            let optional: boolean | undefined
+            if (tag.tagName.text === 'param') {
+              const typeExpression: ts.JSDocTypeExpression = (tag as any).typeExpression
+              type = this.getType(typeExpression.type)
+              paramName = ((tag as any).name as ts.Identifier).text
+              optional = (tag as any).isBracketed
+            }
             result.push({
               name: tag.tagName.text,
-              comment: tag.comment
+              type,
+              paramName,
+              comment: tag.comment,
+              optional
             })
           }
         }
@@ -890,6 +929,11 @@ type Member = {
   optional?: boolean;
   tag?: number;
   enum?: any[];
+  parameters?: {
+    name: string;
+    type: Type;
+    optional?: boolean;
+  }[];
 }
 
 type Model = EnumModel | ObjectModel | ArrayModel
@@ -918,7 +962,10 @@ type ArrayModel = ArrayType & {
 
 type JsDoc = {
   name: string;
+  type?: Type;
+  paramName?: string;
   comment: string | undefined;
+  optional?: boolean;
 }
 
 type Definition =

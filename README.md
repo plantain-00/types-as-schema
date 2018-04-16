@@ -99,6 +99,11 @@ string[]:
 + `@itemMaxLength 20`: set item `maxLength = 20`
 + `@itemPattern ^[A-z]{3}$`: set item `pattern = ^[A-z]{3}$`
 
+## graphql schema only
+
++ `@param {string} name`: set argument `name: String!`
++ `@param {string} [name]`: set argument `name: String`
+
 ## number type alias
 
 ```ts

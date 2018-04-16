@@ -193,6 +193,20 @@ type MapType = {
   mapType4: { [name: string]: uint32 };
 }
 
+type ID = any
+
+type Parameter = {
+  /**
+   * @param {string} name
+   * @param {number} age
+   */
+  member1: string
+  /**
+   * @param {string} [name]
+   */
+  member2: string
+}
+
 /**
  * @entry cases.json
  */
@@ -213,6 +227,8 @@ export type EntryType = {
   taggedField: TaggedField;
   enum: Enum;
   stringNumber: StringType;
+  id: ID;
+  parameter: Parameter;
 }
 `
 // @ts-ignore

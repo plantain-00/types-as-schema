@@ -60,6 +60,12 @@
         },
         "stringNumber": {
           "$ref": "#/definitions/StringType"
+        },
+        "id": {
+          "$ref": "#/definitions/ID"
+        },
+        "parameter": {
+          "$ref": "#/definitions/Parameter"
         }
       },
       "required": [
@@ -77,7 +83,9 @@
         "mapType",
         "taggedField",
         "enum",
-        "stringNumber"
+        "stringNumber",
+        "id",
+        "parameter"
       ],
       "additionalProperties": false
     },
@@ -552,6 +560,22 @@
       },
       "required": [
         "stringMember"
+      ],
+      "additionalProperties": false
+    },
+    "Parameter": {
+      "type": "object",
+      "properties": {
+        "member1": {
+          "type": "string"
+        },
+        "member2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "member1",
+        "member2"
       ],
       "additionalProperties": false
     }
