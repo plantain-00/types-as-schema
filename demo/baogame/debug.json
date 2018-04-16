@@ -1,0 +1,802 @@
+[
+  {
+    "kind": "enum",
+    "name": "ItemType",
+    "type": "uint32",
+    "members": [
+      {
+        "name": "power",
+        "value": 0
+      },
+      {
+        "name": "gun",
+        "value": 1
+      },
+      {
+        "name": "mine",
+        "value": 2
+      },
+      {
+        "name": "drug",
+        "value": 3
+      },
+      {
+        "name": "hide",
+        "value": 4
+      },
+      {
+        "name": "bomb",
+        "value": 5
+      },
+      {
+        "name": "doublejump",
+        "value": 6
+      },
+      {
+        "name": "flypack",
+        "value": 7
+      },
+      {
+        "name": "grenade",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "kind": "enum",
+    "name": "ProtocolKind",
+    "type": "uint32",
+    "members": [
+      {
+        "name": "tick",
+        "value": 0
+      },
+      {
+        "name": "initSuccess",
+        "value": 1
+      },
+      {
+        "name": "join",
+        "value": 2
+      },
+      {
+        "name": "joinSuccess",
+        "value": 3
+      },
+      {
+        "name": "control",
+        "value": 4
+      },
+      {
+        "name": "explode",
+        "value": 5
+      },
+      {
+        "name": "userDead",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "kind": "enum",
+    "name": "UserStatus",
+    "type": "uint32",
+    "members": [
+      {
+        "name": "dieing",
+        "value": 0
+      },
+      {
+        "name": "climbing",
+        "value": 1
+      },
+      {
+        "name": "rolling2",
+        "value": 2
+      },
+      {
+        "name": "standing",
+        "value": 3
+      },
+      {
+        "name": "rolling",
+        "value": 4
+      },
+      {
+        "name": "mining",
+        "value": 5
+      },
+      {
+        "name": "crawling",
+        "value": 6
+      },
+      {
+        "name": "falling",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "kind": "object",
+    "name": "Item",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "type",
+        "type": {
+          "kind": "reference",
+          "name": "ItemType"
+        }
+      },
+      {
+        "name": "dead",
+        "type": {
+          "kind": "boolean"
+        }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "Mine",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "dead",
+        "type": {
+          "kind": "boolean"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "Grenade",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "r",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "User",
+    "members": [
+      {
+        "name": "itemType",
+        "type": {
+          "kind": "reference",
+          "name": "ItemType"
+        },
+        "optional": true
+      },
+      {
+        "name": "itemCount",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "nearLadder",
+        "type": {
+          "kind": "reference",
+          "name": "Ladder"
+        },
+        "optional": true
+      },
+      {
+        "name": "faceing",
+        "type": {
+          "kind": "number",
+          "type": "int32"
+        }
+      },
+      {
+        "name": "fireing",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        },
+        "optional": true
+      },
+      {
+        "name": "grenadeing",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "danger",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "status",
+        "type": {
+          "kind": "reference",
+          "name": "UserStatus"
+        }
+      },
+      {
+        "name": "name",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "vy",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "score",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "dead",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "doubleJumping",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "flying",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 14,
+    "maxProperties": 17
+  },
+  {
+    "kind": "object",
+    "name": "Door",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "ItemGate",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "float"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Tick",
+    "members": [
+      {
+        "name": "users",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "User"
+          }
+        }
+      },
+      {
+        "name": "items",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Item"
+          }
+        }
+      },
+      {
+        "name": "mines",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Mine"
+          }
+        }
+      },
+      {
+        "name": "grenades",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Grenade"
+          }
+        }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "MapData",
+    "members": [
+      {
+        "name": "w",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "h",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "floors",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "number",
+            "type": "uint32"
+          }
+        }
+      },
+      {
+        "name": "ladders",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Ladder"
+          }
+        }
+      },
+      {
+        "name": "doors",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Door"
+          }
+        }
+      },
+      {
+        "name": "itemGates",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "ItemGate"
+          }
+        }
+      }
+    ],
+    "minProperties": 6,
+    "maxProperties": 6
+  },
+  {
+    "kind": "object",
+    "name": "InitSuccess",
+    "members": [
+      {
+        "name": "map",
+        "type": {
+          "kind": "reference",
+          "name": "MapData"
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1
+  },
+  {
+    "kind": "object",
+    "name": "Join",
+    "members": [
+      {
+        "name": "userName",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1
+  },
+  {
+    "kind": "object",
+    "name": "JoinSuccess",
+    "members": [
+      {
+        "name": "userId",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1
+  },
+  {
+    "kind": "object",
+    "name": "Control",
+    "members": [
+      {
+        "name": "leftDown",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "rightDown",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "upDown",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "downDown",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "itemDown",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "leftPress",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "rightPress",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "upPress",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "downPress",
+        "type": {
+          "kind": "boolean"
+        }
+      },
+      {
+        "name": "itemPress",
+        "type": {
+          "kind": "boolean"
+        }
+      }
+    ],
+    "minProperties": 10,
+    "maxProperties": 10
+  },
+  {
+    "kind": "object",
+    "name": "ControlProtocol",
+    "members": [
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "name": "ProtocolKind",
+          "type": "uint32",
+          "enums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "name": "control",
+        "type": {
+          "kind": "reference",
+          "name": "Control"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Explode",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "power",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "UserDead",
+    "members": [
+      {
+        "name": "user",
+        "type": {
+          "kind": "reference",
+          "name": "User"
+        }
+      },
+      {
+        "name": "killer",
+        "type": {
+          "kind": "reference",
+          "name": "User"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Protocol",
+    "members": [
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "name": "ProtocolKind",
+          "type": "uint32",
+          "enums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "name": "initSuccess",
+        "type": {
+          "kind": "reference",
+          "name": "InitSuccess"
+        },
+        "optional": true
+      },
+      {
+        "name": "join",
+        "type": {
+          "kind": "reference",
+          "name": "Join"
+        },
+        "optional": true
+      },
+      {
+        "name": "joinSuccess",
+        "type": {
+          "kind": "reference",
+          "name": "JoinSuccess"
+        },
+        "optional": true
+      },
+      {
+        "name": "control",
+        "type": {
+          "kind": "reference",
+          "name": "Control"
+        },
+        "optional": true
+      },
+      {
+        "name": "tick",
+        "type": {
+          "kind": "reference",
+          "name": "Tick"
+        },
+        "optional": true
+      },
+      {
+        "name": "explode",
+        "type": {
+          "kind": "reference",
+          "name": "Explode"
+        },
+        "optional": true
+      },
+      {
+        "name": "userDead",
+        "type": {
+          "kind": "reference",
+          "name": "UserDead"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "Ladder",
+    "members": [
+      {
+        "name": "x",
+        "type": {
+          "kind": "number",
+          "type": "float"
+        }
+      },
+      {
+        "name": "y1",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      },
+      {
+        "name": "y2",
+        "type": {
+          "kind": "number",
+          "type": "uint32"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  }
+]

@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/RequestProtocol",
+  "definitions": {
+    "RequestProtocol": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "search logs",
+            "search samples",
+            "resave failed logs"
+          ]
+        },
+        "searchLogs": {
+          "$ref": "#/definitions/SearchLogs"
+        },
+        "searchSamples": {
+          "$ref": "#/definitions/SearchSamples"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "maxProperties": 3
+    },
+    "SearchLogs": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "content",
+        "time",
+        "hostname",
+        "from",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "SearchSamples": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

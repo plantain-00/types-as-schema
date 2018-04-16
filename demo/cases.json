@@ -1,0 +1,559 @@
+{
+  "$ref": "#/definitions/EntryType",
+  "definitions": {
+    "EntryType": {
+      "type": "object",
+      "properties": {
+        "optionalMember": {
+          "type": "string"
+        },
+        "booleanMember": {
+          "type": "boolean"
+        },
+        "stringMember": {
+          "type": "string"
+        },
+        "numberType": {
+          "$ref": "#/definitions/NumberType"
+        },
+        "arrayType": {
+          "$ref": "#/definitions/ArrayType"
+        },
+        "typeLiteral": {
+          "type": "object",
+          "properties": {
+            "literal": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "literal"
+          ],
+          "additionalProperties": false
+        },
+        "referenceType": {
+          "$ref": "#/definitions/TypeLiteral"
+        },
+        "interfaceType": {
+          "$ref": "#/definitions/Interface"
+        },
+        "typeUnion": {
+          "$ref": "#/definitions/TypeUnion"
+        },
+        "interfaceExtends": {
+          "$ref": "#/definitions/InterfaceExtends"
+        },
+        "typeIntersection": {
+          "$ref": "#/definitions/TypeIntersection"
+        },
+        "typeUnionAndIntersection": {
+          "$ref": "#/definitions/TypeUnionAndIntersection"
+        },
+        "mapType": {
+          "$ref": "#/definitions/MapType"
+        },
+        "taggedField": {
+          "$ref": "#/definitions/TaggedField"
+        },
+        "enum": {
+          "$ref": "#/definitions/Enum"
+        },
+        "stringNumber": {
+          "$ref": "#/definitions/StringType"
+        }
+      },
+      "required": [
+        "booleanMember",
+        "stringMember",
+        "numberType",
+        "arrayType",
+        "typeLiteral",
+        "referenceType",
+        "interfaceType",
+        "typeUnion",
+        "interfaceExtends",
+        "typeIntersection",
+        "typeUnionAndIntersection",
+        "mapType",
+        "taggedField",
+        "enum",
+        "stringNumber"
+      ],
+      "additionalProperties": false
+    },
+    "NumberType": {
+      "type": "object",
+      "properties": {
+        "numberMember": {
+          "type": "number",
+          "minimum": 70,
+          "maximum": 90,
+          "multipleOf": 10,
+          "exclusiveMinimum": 70,
+          "exclusiveMaximum": 90
+        },
+        "integerMember": {
+          "type": "integer"
+        },
+        "uint32Member": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "int32Member": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "sint32Member": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "fixed32Member": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "sfixed32Member": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "uint64Member": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709552000
+        },
+        "int64Member": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "sint64Member": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "fixed64Member": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709552000
+        },
+        "sfixed64Member": {
+          "type": "integer",
+          "minimum": -9223372036854776000,
+          "maximum": 9223372036854776000
+        },
+        "floatMember": {
+          "type": "number"
+        },
+        "doubleMember": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "numberMember",
+        "integerMember",
+        "uint32Member",
+        "int32Member",
+        "sint32Member",
+        "fixed32Member",
+        "sfixed32Member",
+        "uint64Member",
+        "int64Member",
+        "sint64Member",
+        "fixed64Member",
+        "sfixed64Member",
+        "floatMember",
+        "doubleMember"
+      ],
+      "additionalProperties": false
+    },
+    "ArrayType": {
+      "type": "object",
+      "properties": {
+        "arrayType1": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[A-z]{3}$"
+          }
+        },
+        "arrayType2": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeLiteral"
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "arrayType3": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "arrayType4": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 200,
+            "multipleOf": 100,
+            "exclusiveMinimum": 300,
+            "exclusiveMaximum": 400
+          }
+        }
+      },
+      "required": [
+        "arrayType1",
+        "arrayType2",
+        "arrayType3",
+        "arrayType4"
+      ],
+      "additionalProperties": false
+    },
+    "TypeLiteral": {
+      "type": "object",
+      "properties": {
+        "typeLiteralMember1": {
+          "type": "number"
+        },
+        "typeLiteralMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeLiteralMember1",
+        "typeLiteralMember2"
+      ],
+      "additionalProperties": false
+    },
+    "Interface": {
+      "type": "object",
+      "properties": {
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "minProperties": 1,
+      "maxProperties": 1
+    },
+    "TypeUnion": {
+      "type": "object",
+      "properties": {
+        "typeUnionMember1": {
+          "$ref": "#/definitions/TypeUnion1"
+        },
+        "typeUnionMember2": {
+          "$ref": "#/definitions/TypeUnion2"
+        },
+        "typeUnionMember3": {
+          "$ref": "#/definitions/TypeUnion3"
+        }
+      },
+      "required": [
+        "typeUnionMember1",
+        "typeUnionMember2",
+        "typeUnionMember3"
+      ],
+      "additionalProperties": false
+    },
+    "TypeUnion1": {
+      "type": "object",
+      "properties": {
+        "typeLiteralMember1": {
+          "type": "number"
+        },
+        "typeLiteralMember2": {
+          "type": "string"
+        },
+        "typeUnionMember1": {
+          "type": "number"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
+    "TypeUnion2": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "enum member 1",
+            "enum member 2"
+          ]
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
+    "TypeUnion3": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2,
+      "maxProperties": 2
+    },
+    "InterfaceExtends": {
+      "type": "object",
+      "properties": {
+        "interfaceExtendsMember1": {
+          "type": "number"
+        },
+        "interfaceExtendsMember2": {
+          "type": "string"
+        },
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "interfaceExtendsMember1",
+        "interfaceExtendsMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeIntersection": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
+          "$ref": "#/definitions/TypeIntersection1"
+        },
+        "typeIntersectionMember2": {
+          "$ref": "#/definitions/TypeIntersection2"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeIntersection1": {
+      "type": "object",
+      "properties": {
+        "interfaceMember1": {
+          "type": "number"
+        },
+        "interfaceMember2": {
+          "type": "string"
+        },
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "typeIntersectionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeIntersection2": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "typeIntersectionMember2": {
+          "type": "string"
+        },
+        "typeIntersectionMember3": {
+          "type": "number"
+        },
+        "typeIntersectionMember4": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "typeIntersectionMember2",
+        "typeIntersectionMember3",
+        "typeIntersectionMember4"
+      ],
+      "additionalProperties": false
+    },
+    "TypeUnionAndIntersection": {
+      "type": "object",
+      "properties": {
+        "typeIntersectionMember1": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "typeUnionMember1": {
+          "type": "string"
+        },
+        "typeUnionMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "typeIntersectionMember1",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "minProperties": 3,
+      "maxProperties": 3
+    },
+    "MapType": {
+      "type": "object",
+      "properties": {
+        "mapType": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mapType2": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TypeLiteral"
+          }
+        },
+        "mapType3": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mapType4": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        }
+      },
+      "required": [
+        "mapType",
+        "mapType2",
+        "mapType3",
+        "mapType4"
+      ],
+      "additionalProperties": false
+    },
+    "TaggedField": {
+      "type": "object",
+      "properties": {
+        "taggedFieldMember1": {
+          "type": "number"
+        },
+        "taggedFieldMember2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "taggedFieldMember1",
+        "taggedFieldMember2"
+      ],
+      "additionalProperties": false
+    },
+    "Enum": {
+      "type": "object",
+      "properties": {
+        "stringEnum": {
+          "$ref": "#/definitions/StringEnum"
+        },
+        "numberEnum": {
+          "$ref": "#/definitions/NumberEnum"
+        },
+        "numberEnum2": {
+          "$ref": "#/definitions/NumberEnum2"
+        }
+      },
+      "required": [
+        "stringEnum",
+        "numberEnum",
+        "numberEnum2"
+      ],
+      "additionalProperties": false
+    },
+    "StringType": {
+      "type": "object",
+      "properties": {
+        "stringMember": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 20,
+          "pattern": "^[A-z]{3}$"
+        }
+      },
+      "required": [
+        "stringMember"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

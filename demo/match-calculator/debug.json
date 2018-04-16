@@ -1,0 +1,112 @@
+[
+  {
+    "kind": "array",
+    "name": "Groups",
+    "type": {
+      "kind": "reference",
+      "name": "Group"
+    },
+    "entry": "groups-schema.json",
+    "uniqueItems": true,
+    "minItems": 1
+  },
+  {
+    "kind": "object",
+    "name": "Group",
+    "members": [
+      {
+        "name": "matches",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Match"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      {
+        "name": "teams",
+        "type": {
+          "kind": "reference",
+          "name": "Teams"
+        }
+      },
+      {
+        "name": "tops",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "number",
+            "type": "integer",
+            "minimum": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
+    "name": "Match",
+    "members": [
+      {
+        "name": "a",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "b",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "possibilities",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "a",
+                "type": {
+                  "kind": "number",
+                  "type": "integer"
+                }
+              },
+              {
+                "name": "b",
+                "type": {
+                  "kind": "number",
+                  "type": "integer"
+                }
+              }
+            ],
+            "minProperties": 2,
+            "maxProperties": 2
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "array",
+    "name": "Teams",
+    "type": {
+      "kind": "string"
+    },
+    "entry": "teams-schema.json",
+    "uniqueItems": true,
+    "minItems": 1
+  }
+]

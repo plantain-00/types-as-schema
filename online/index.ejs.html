@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<%-inline.indexBundleCss %>
+<a class="github-fork-ribbon right-bottom" href="https://github.com/plantain-00/types-as-schema" title="Fork me on GitHub" target="_blank" rel="noopener">Fork me on GitHub</a>
+<div id="prerender-container">
+    <div id="container"><%-context.prerender %></div>
+</div>
+<script src="./<%=vendorBundleJs %>" crossOrigin="anonymous" integrity="<%=sri.vendorBundleJs %>"></script>
+<script src="./<%=indexBundleJs %>" crossOrigin="anonymous" integrity="<%=sri.indexBundleJs %>"></script>

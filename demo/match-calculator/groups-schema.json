@@ -1,0 +1,90 @@
+{
+  "$ref": "#/definitions/Groups",
+  "definitions": {
+    "Groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Group"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "Group": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Match"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "teams": {
+          "$ref": "#/definitions/Teams"
+        },
+        "tops": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "matches",
+        "teams",
+        "tops"
+      ],
+      "additionalProperties": false
+    },
+    "Match": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        },
+        "possibilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "integer"
+              },
+              "b": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "additionalProperties": false
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "possibilities"
+      ],
+      "additionalProperties": false
+    },
+    "Teams": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    }
+  }
+}
