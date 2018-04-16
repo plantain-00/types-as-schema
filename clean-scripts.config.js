@@ -1,4 +1,4 @@
-const { Service, checkGitStatus, executeScriptAsync } = require('clean-scripts')
+const { Service, executeScriptAsync } = require('clean-scripts')
 const { watch } = require('watch-then-execute')
 
 const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "screenshots/**/*.ts" "prerender/**/*.ts" "online/**/*.ts"`
@@ -47,8 +47,7 @@ module.exports = {
   },
   test: [
     'tsc -p spec',
-    'jasmine',
-    () => checkGitStatus()
+    'jasmine'
   ],
   fix: {
     ts: `tslint --fix ${tsFiles}`,
