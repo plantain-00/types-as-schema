@@ -713,6 +713,52 @@
   },
   {
     "kind": "object",
+    "name": "Parameter",
+    "members": [
+      {
+        "name": "member1",
+        "type": {
+          "kind": "string"
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "string"
+            },
+            "optional": false
+          },
+          {
+            "name": "age",
+            "type": {
+              "kind": "number",
+              "type": "number"
+            },
+            "optional": false
+          }
+        ]
+      },
+      {
+        "name": "member2",
+        "type": {
+          "kind": "string"
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "string"
+            },
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
     "name": "EntryType",
     "members": [
       {
@@ -834,10 +880,24 @@
           "kind": "reference",
           "name": "StringType"
         }
+      },
+      {
+        "name": "id",
+        "type": {
+          "kind": "reference",
+          "name": "ID"
+        }
+      },
+      {
+        "name": "parameter",
+        "type": {
+          "kind": "reference",
+          "name": "Parameter"
+        }
       }
     ],
-    "minProperties": 15,
-    "maxProperties": 16,
+    "minProperties": 17,
+    "maxProperties": 18,
     "entry": "cases.json"
   }
 ]

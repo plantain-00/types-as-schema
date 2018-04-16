@@ -126,6 +126,11 @@ message MapType {
     map<string, uint32> mapType4 = 4;
 }
 
+message Parameter {
+    string member1 = 1;
+    string member2 = 2;
+}
+
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
@@ -142,4 +147,6 @@ message EntryType {
     TaggedField taggedField = 14;
     Enum enum = 15;
     StringType stringNumber = 16;
+    ID id = 17;
+    Parameter parameter = 18;
 }

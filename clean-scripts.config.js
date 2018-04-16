@@ -33,7 +33,7 @@ module.exports = {
     {
       default: 'node ./dist/index.js demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto --graphql demo/cases.gql',
       logTool: 'node ./dist/index.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto --graphql demo/log-tool/protocol.gql',
-      matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --graphql demo/match-calculator/types.gql --debug demo/match-calculator/debug.json',
+      matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
       baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --graphql demo/baogame/protocol.gql --debug demo/baogame/debug.json'
     }
   ],

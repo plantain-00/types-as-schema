@@ -123,6 +123,11 @@ type MapType {
 
 }
 
+type Parameter {
+  member1(name: String!, age: Float!): String!
+  member2(name: String): String!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -139,4 +144,6 @@ type EntryType {
   taggedField: TaggedField!
   enum: Enum!
   stringNumber: StringType!
+  id: ID!
+  parameter: Parameter!
 }
