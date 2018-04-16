@@ -1,0 +1,107 @@
+enum RequestProtocolKind {
+  searchLogs
+  searchSamples
+  resaveFailedLogs
+}
+
+enum ProtocolKind {
+  flows
+  historySamples
+  searchLogsResult
+  searchSamplesResult
+  resaveFailedLogsResult
+}
+
+enum ResultKind {
+  success
+  fail
+}
+
+enum FlowKind {
+  log
+  sample
+}
+
+type RequestProtocol {
+  requestId: Int!
+  kind: RequestProtocolKind!
+  searchLogs: SearchLogs
+  searchSamples: SearchSamples
+}
+
+type SearchLogs {
+  content: String!
+  time: String!
+  hostname: String!
+  from: Int!
+  size: Int!
+}
+
+type SearchSamples {
+  from: String!
+  to: String!
+}
+
+type ResponseProtocol {
+  kind: ProtocolKind!
+  flows: Flows
+  historySamples: [SampleFrame]
+  searchLogsResult: SearchLogsResult
+  searchSamplesResult: SearchSamplesResult
+  resaveFailedLogsResult: ResaveFailedLogsResult
+}
+
+type Flows {
+  serverTime: String!
+  flows: [Flow]!
+}
+
+type SearchLogsResult {
+  requestId: Int!
+  kind: ResultKind!
+  total: Int
+  logs: [Log]
+  error: String
+}
+
+type SearchSamplesResult {
+  requestId: Int!
+  kind: ResultKind!
+  searchSampleResult: [SampleFrame]
+  error: String
+}
+
+type ResaveFailedLogsResult {
+  requestId: Int!
+  kind: ResultKind!
+  savedCount: Int
+  totalCount: Int
+  error: String
+}
+
+type SampleFrame {
+  time: String!
+  samples: [Sample]
+}
+
+type FlowProtocol {
+  flows: [Flow]!
+}
+
+type Flow {
+  kind: FlowKind!
+  log: Log
+  sample: Sample
+}
+
+type Log {
+  time: String!
+  content: String!
+  filepath: String!
+  hostname: String!
+}
+
+type Sample {
+  hostname: String!
+  port: Int
+}

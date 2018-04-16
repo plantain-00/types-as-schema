@@ -120,13 +120,37 @@ ${messages.join('\n\n')}
       }
     }
     return this.models.filter(m => (m.kind === 'object' || m.kind === 'array') && m.entry)
-            .map(m => ({
-              entry: (m as ObjectModel | ArrayModel).entry!,
-              schema: {
-                $ref: `#/definitions/${m.name}`,
-                definitions: this.getReferencedDefinitions(m.name, definitions)
-              }
-            }))
+      .map(m => ({
+        entry: (m as ObjectModel | ArrayModel).entry!,
+        schema: {
+          $ref: `#/definitions/${m.name}`,
+          definitions: this.getReferencedDefinitions(m.name, definitions)
+        }
+      }))
+  }
+
+  generateGraphqlSchema () {
+    const messages: string[] = []
+    for (const model of this.models) {
+      if (model.kind === 'object') {
+        const members = model.members.map(m => {
+          const propertyType = this.getGraphqlSchemaProperty(m.type)
+          if (propertyType) {
+            return `  ${m.name}: ${m.optional ? propertyType : propertyType + '!'}`
+          }
+          return undefined
+        })
+        messages.push(`type ${model.name} {
+${members.filter(m => m).join('\n')}
+}`)
+      } else if (model.kind === 'enum') {
+        const members = model.members.map(m => `  ${m.name}`)
+        messages.push(`enum ${model.name} {
+${members.join('\n')}
+}`)
+      }
+    }
+    return messages.join('\n\n') + '\n'
   }
 
   private handleSourceFile (node: ts.Node) {
@@ -598,6 +622,38 @@ ${messages.join('\n\n')}
       propertyType = 'bool'
     }
     return { modifier, propertyType }
+  }
+
+  private getGraphqlSchemaProperty (memberType: Type): string {
+    let propertyType = ''
+    if (memberType.kind === 'array') {
+      const elementPropertyType = this.getGraphqlSchemaProperty(memberType.type)
+      if (elementPropertyType) {
+        propertyType = `[${elementPropertyType}]`
+      }
+    } else if (memberType.kind === 'enum') {
+      propertyType = memberType.name
+    } else if (memberType.kind === 'reference') {
+      const model = this.models.find(m => m.kind === 'enum' && m.name === memberType.name)
+      if (model && model.kind === 'enum' && model.type === 'string') {
+        propertyType = 'String'
+      } else {
+        propertyType = memberType.name
+      }
+    } else if (memberType.kind === 'number') {
+      if (memberType.type === 'number'
+        || memberType.type === 'float'
+        || memberType.type === 'double') {
+        propertyType = 'Float'
+      } else {
+        propertyType = 'Int'
+      }
+    } else if (memberType.kind === 'string') {
+      propertyType = 'String'
+    } else if (memberType.kind === 'boolean') {
+      propertyType = 'Boolean'
+    }
+    return propertyType
   }
 
   private getReferencedDefinitions (typeName: string, definitions: { [name: string]: Definition }) {

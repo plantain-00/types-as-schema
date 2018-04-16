@@ -25,6 +25,11 @@ async function executeCommandLine () {
     throw new Error('expect the path of generated protobuf file')
   }
 
+  const graphqlPath = argv.graphql
+  if (graphqlPath && typeof graphqlPath !== 'string') {
+    throw new Error('expect the path of generated graphql schema file')
+  }
+
   const jsonPath = argv.json
   if (jsonPath && typeof jsonPath !== 'string') {
     throw new Error('expect the path of generated json file')
@@ -65,6 +70,11 @@ async function executeCommandLine () {
 ` + generator.generateProtobuf()
       protobuf.parse(protobufContent)
       fs.writeFileSync(protobufPath, protobufContent)
+    }
+
+    if (graphqlPath) {
+      const graphqlContent = generator.generateGraphqlSchema()
+      fs.writeFileSync(graphqlPath, graphqlContent)
     }
 
     if (jsonPath) {
