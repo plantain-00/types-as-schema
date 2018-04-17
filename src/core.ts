@@ -1,4 +1,4 @@
-import * as ts from 'typescript'
+import ts from 'typescript'
 
 export class Generator {
   models: Model[] = []
@@ -163,6 +163,51 @@ ${members.filter(m => m).join('\n')}
         messages.push(`enum ${model.name} {
 ${members.join('\n')}
 }`)
+      }
+    }
+    return messages.join('\n\n') + '\n'
+  }
+
+  generateReasonTypes () {
+    const messages: string[] = []
+    for (const model of this.models) {
+      if (model.kind === 'object') {
+        const members = model.members.map(m => {
+          const propertyType = this.getReasonTypesProperty(m.type)
+          if (propertyType) {
+            return `  ${m.name}: ${m.optional ? `option(${this.toLowerCase(propertyType)})` : this.toLowerCase(propertyType)}`
+          }
+          return undefined
+        })
+        messages.push(`type ${this.toLowerCase(model.name)} = {
+  .
+${members.filter(m => m).map(m => m + ',').join('\n')}
+};`)
+      } else if (model.kind === 'enum') {
+        const members = model.members.map(m => `  | ${this.toUpperCase(m.name)}`).join('\n')
+        messages.push(`type ${this.toLowerCase(model.name)} =\n${members};`)
+      }
+    }
+    return messages.join('\n\n') + '\n'
+  }
+
+  generateOcamlTypes () {
+    const messages: string[] = []
+    for (const model of this.models) {
+      if (model.kind === 'object') {
+        const members = model.members.map(m => {
+          const propertyType = this.getOcamlTypesProperty(m.type)
+          if (propertyType) {
+            return `  ${m.name}: ${m.optional ? this.toLowerCase(propertyType) + ' option' : this.toLowerCase(propertyType)}`
+          }
+          return undefined
+        })
+        messages.push(`type ${this.toLowerCase(model.name)} = {
+${members.filter(m => m).map(m => m + ';').join('\n')}
+}`)
+      } else if (model.kind === 'enum') {
+        const members = model.members.map(m => `  | ${this.toUpperCase(m.name)}`).join('\n')
+        messages.push(`type ${this.toLowerCase(model.name)} =\n${members}`)
       }
     }
     return messages.join('\n\n') + '\n'
@@ -695,6 +740,70 @@ ${members.join('\n')}
     return propertyType
   }
 
+  private getReasonTypesProperty (memberType: Type): string {
+    let propertyType = ''
+    if (memberType.kind === 'array') {
+      const elementPropertyType = this.getReasonTypesProperty(memberType.type)
+      if (elementPropertyType) {
+        propertyType = `list(${this.toLowerCase(elementPropertyType)})`
+      }
+    } else if (memberType.kind === 'enum') {
+      propertyType = memberType.name
+    } else if (memberType.kind === 'reference') {
+      const model = this.models.find(m => m.kind === 'enum' && m.name === memberType.name)
+      if (model && model.kind === 'enum' && model.type === 'string') {
+        propertyType = 'string'
+      } else {
+        propertyType = memberType.name
+      }
+    } else if (memberType.kind === 'number') {
+      if (memberType.type === 'number'
+        || memberType.type === 'float'
+        || memberType.type === 'double') {
+        propertyType = 'float'
+      } else {
+        propertyType = 'int'
+      }
+    } else if (memberType.kind === 'string') {
+      propertyType = 'string'
+    } else if (memberType.kind === 'boolean') {
+      propertyType = 'bool'
+    }
+    return propertyType
+  }
+
+  private getOcamlTypesProperty (memberType: Type): string {
+    let propertyType = ''
+    if (memberType.kind === 'array') {
+      const elementPropertyType = this.getOcamlTypesProperty(memberType.type)
+      if (elementPropertyType) {
+        propertyType = `${this.toLowerCase(elementPropertyType)} list`
+      }
+    } else if (memberType.kind === 'enum') {
+      propertyType = memberType.name
+    } else if (memberType.kind === 'reference') {
+      const model = this.models.find(m => m.kind === 'enum' && m.name === memberType.name)
+      if (model && model.kind === 'enum' && model.type === 'string') {
+        propertyType = 'string'
+      } else {
+        propertyType = memberType.name
+      }
+    } else if (memberType.kind === 'number') {
+      if (memberType.type === 'number'
+        || memberType.type === 'float'
+        || memberType.type === 'double') {
+        propertyType = 'float'
+      } else {
+        propertyType = 'int'
+      }
+    } else if (memberType.kind === 'string') {
+      propertyType = 'string'
+    } else if (memberType.kind === 'boolean') {
+      propertyType = 'bool'
+    }
+    return propertyType
+  }
+
   private getReferencedDefinitions (typeName: string, definitions: { [name: string]: Definition }) {
     const result: { [name: string]: Definition } = {}
     const definition = definitions[typeName]
@@ -853,6 +962,14 @@ ${members.join('\n')}
         type: memberType.kind
       }
     }
+  }
+
+  private toUpperCase (name: string) {
+    return name[0].toUpperCase() + name.substring(1)
+  }
+
+  private toLowerCase (name: string) {
+    return name[0].toLowerCase() + name.substring(1)
   }
 }
 
