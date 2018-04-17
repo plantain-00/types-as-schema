@@ -894,10 +894,20 @@
           "kind": "reference",
           "name": "Parameter"
         }
+      },
+      {
+        "name": "optionalArrayMember",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string"
+          }
+        },
+        "optional": true
       }
     ],
     "minProperties": 17,
-    "maxProperties": 18,
+    "maxProperties": 19,
     "entry": "cases.json"
   }
 ]

@@ -66,6 +66,12 @@
         },
         "parameter": {
           "$ref": "#/definitions/Parameter"
+        },
+        "optionalArrayMember": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [

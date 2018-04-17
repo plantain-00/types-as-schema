@@ -222,4 +222,5 @@ export type EntryType = {
   stringNumber: StringType;
   id: ID;
   parameter: Parameter;
+  optionalArrayMember?: string[];
 }
