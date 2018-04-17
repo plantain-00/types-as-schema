@@ -16,6 +16,8 @@ export class App extends Vue {
   options: string[] = ['protobuf']
   selectedOption = 'protobuf'
   graphqlSchema = ''
+  reasonTypes = ''
+  ocamlTypes = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -51,11 +53,17 @@ export class App extends Vue {
 
       this.graphqlSchema = generator.generateGraphqlSchema()
 
+      this.reasonTypes = generator.generateReasonTypes()
+
+      this.ocamlTypes = generator.generateOcamlTypes()
+
       this.options = ['protobuf']
       for (const schema of this.jsonSchemas) {
         this.options.push(schema.entry)
       }
       this.options.push('graphql schema')
+      this.options.push('reason types')
+      this.options.push('ocaml types')
     }
   }
 }
