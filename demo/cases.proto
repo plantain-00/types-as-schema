@@ -149,4 +149,5 @@ message EntryType {
     StringType stringNumber = 16;
     ID id = 17;
     Parameter parameter = 18;
+    repeated string optionalArrayMember = 19;
 }

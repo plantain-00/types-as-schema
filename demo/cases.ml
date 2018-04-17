@@ -143,4 +143,5 @@ type entryType = {
   stringNumber: stringType;
   id: iD;
   parameter: parameter;
+  optionalArrayMember: string list option;
 }

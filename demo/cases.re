@@ -162,4 +162,5 @@ type entryType = {
   stringNumber: stringType,
   id: iD,
   parameter: parameter,
+  optionalArrayMember: option(list(string)),
 };
