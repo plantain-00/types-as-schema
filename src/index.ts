@@ -1,5 +1,5 @@
 import minimist from 'minimist'
-import * as ts from 'typescript'
+import ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as chokidar from 'chokidar'
@@ -28,6 +28,16 @@ async function executeCommandLine () {
   const graphqlPath = argv.graphql
   if (graphqlPath && typeof graphqlPath !== 'string') {
     throw new Error('expect the path of generated graphql schema file')
+  }
+
+  const reasonPath = argv.reason
+  if (reasonPath && typeof reasonPath !== 'string') {
+    throw new Error('expect the path of generated reason types file')
+  }
+
+  const ocamlPath = argv.ocaml
+  if (ocamlPath && typeof ocamlPath !== 'string') {
+    throw new Error('expect the path of generated ocaml types file')
   }
 
   const jsonPath = argv.json
@@ -75,6 +85,16 @@ async function executeCommandLine () {
     if (graphqlPath) {
       const graphqlContent = generator.generateGraphqlSchema()
       fs.writeFileSync(graphqlPath, graphqlContent)
+    }
+
+    if (reasonPath) {
+      const reasonContent = generator.generateReasonTypes()
+      fs.writeFileSync(reasonPath, reasonContent)
+    }
+
+    if (ocamlPath) {
+      const ocamlContent = generator.generateOcamlTypes()
+      fs.writeFileSync(ocamlPath, ocamlContent)
     }
 
     if (jsonPath) {
