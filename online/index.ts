@@ -15,6 +15,7 @@ export class App extends Vue {
   protobuf = ''
   options: string[] = ['protobuf']
   selectedOption = 'protobuf'
+  graphqlSchema = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -48,10 +49,13 @@ export class App extends Vue {
         content: JSON.stringify(s.schema, null, '  ')
       }))
 
+      this.graphqlSchema = generator.generateGraphqlSchema()
+
       this.options = ['protobuf']
       for (const schema of this.jsonSchemas) {
         this.options.push(schema.entry)
       }
+      this.options.push('graphql schema')
     }
   }
 }
