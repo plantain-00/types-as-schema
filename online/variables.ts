@@ -40,10 +40,19 @@ type TypeUnion3 =
     kind: NumberEnum.enumMember2;
     typeUnionMember2: string;
   }
+type TypeUnion4 =
+  {
+    kind: 'foo';
+    typeUnionMember1: string;
+  } | {
+    kind: 'bar';
+    typeUnionMember2: string;
+  }
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
   typeUnionMember3: TypeUnion3;
+  typeUnionMember4: TypeUnion4;
 }
 
 interface InterfaceExtends extends Interface {
@@ -230,6 +239,8 @@ export type EntryType = {
   id: ID;
   parameter: Parameter;
   optionalArrayMember?: string[];
+  unionType: 'foo' | 'bar';
+  tupleType: [string, string];
 }
 `
 // @ts-ignore
