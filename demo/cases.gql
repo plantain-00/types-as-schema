@@ -42,10 +42,17 @@ type TypeUnion3 {
   typeUnionMember2: String
 }
 
+type TypeUnion4 {
+  kind: string!
+  typeUnionMember1: String
+  typeUnionMember2: String
+}
+
 type TypeUnion {
   typeUnionMember1: TypeUnion1!
   typeUnionMember2: TypeUnion2!
   typeUnionMember3: TypeUnion3!
+  typeUnionMember4: TypeUnion4!
 }
 
 type InterfaceExtends {
@@ -147,4 +154,6 @@ type EntryType {
   id: ID!
   parameter: Parameter!
   optionalArrayMember: [String]
+  unionType: string!
+  tupleType: [String]!
 }

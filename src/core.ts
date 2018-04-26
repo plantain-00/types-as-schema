@@ -367,8 +367,17 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
         } else {
           const childMembers = childMembersInfo.members
           for (const member of members) {
-            if (childMembers.every(m => m.name !== member.name)) {
+            const childMember = childMembers.find(m => m.name === member.name)
+            if (!childMember) {
               member.optional = true
+            } else {
+              if (childMember.type.kind === 'enum' && member.type.kind === 'enum') {
+                for (const typeEnum of childMember.type.enums) {
+                  if (member.type.enums.every(e => e !== typeEnum)) {
+                    member.type.enums.push(typeEnum)
+                  }
+                }
+              }
             }
           }
           for (const member of childMembers) {
@@ -627,6 +636,63 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
             type: enumModel.type,
             enums: enumModel.members.map(m => m.value)
           }
+        }
+      }
+    } else if (type.kind === ts.SyntaxKind.UnionType) {
+      const unionType = type as ts.UnionTypeNode
+      let enumType: 'string' | 'number' | undefined
+      const enums: any[] = []
+      for (const childType of unionType.types) {
+        if (childType.kind === ts.SyntaxKind.LiteralType) {
+          const literalType = childType as ts.LiteralTypeNode
+          if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
+            enumType = 'string'
+            enums.push((literalType.literal as ts.LiteralExpression).text)
+          } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+            enumType = 'number'
+            enums.push(+(literalType.literal as ts.LiteralExpression).text)
+          }
+        }
+      }
+      if (enumType) {
+        return {
+          kind: 'enum',
+          type: enumType,
+          name: enumType,
+          enums
+        }
+      }
+    } else if (type.kind === ts.SyntaxKind.TupleType) {
+      const tupleType = type as ts.TupleTypeNode
+      let arrayType: Type | undefined
+      for (const elementType of tupleType.elementTypes) {
+        arrayType = this.getType(elementType)
+      }
+      if (arrayType) {
+        return {
+          kind: 'array',
+          type: arrayType,
+          minItems: tupleType.elementTypes.length,
+          maxItems: tupleType.elementTypes.length
+        }
+      }
+    } else if (type.kind === ts.SyntaxKind.LiteralType) {
+      const literalType = type as ts.LiteralTypeNode
+      let enumType: 'string' | 'number' | undefined
+      const enums: any[] = []
+      if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
+        enumType = 'string'
+        enums.push((literalType.literal as ts.LiteralExpression).text)
+      } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+        enumType = 'number'
+        enums.push(+(literalType.literal as ts.LiteralExpression).text)
+      }
+      if (enumType) {
+        return {
+          kind: 'enum',
+          type: enumType,
+          name: enumType,
+          enums
         }
       }
     }

@@ -39,10 +39,17 @@ type typeUnion3 = {
   typeUnionMember2: string option;
 }
 
+type typeUnion4 = {
+  kind: string;
+  typeUnionMember1: string option;
+  typeUnionMember2: string option;
+}
+
 type typeUnion = {
   typeUnionMember1: typeUnion1;
   typeUnionMember2: typeUnion2;
   typeUnionMember3: typeUnion3;
+  typeUnionMember4: typeUnion4;
 }
 
 type interfaceExtends = {
@@ -144,4 +151,6 @@ type entryType = {
   id: iD;
   parameter: parameter;
   optionalArrayMember: string list option;
+  unionType: string;
+  tupleType: string list;
 }
