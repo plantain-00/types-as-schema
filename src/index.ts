@@ -100,7 +100,7 @@ async function executeCommandLine () {
     if (jsonPath) {
       const schemas = generator.generateJsonSchemas()
       for (const { entry, schema } of schemas) {
-        if (ajv.validateSchema(schema)) {
+        if (debugPath || ajv.validateSchema(schema)) {
           fs.writeFileSync(path.resolve(jsonPath, entry), JSON.stringify(schema, null, '  '))
         } else {
           printInConsole(`json schema verified fail for entry: ${entry}`)

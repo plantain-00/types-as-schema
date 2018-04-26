@@ -197,6 +197,40 @@
   },
   {
     "kind": "object",
+    "name": "TypeUnion4",
+    "members": [
+      {
+        "name": "kind",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "foo",
+            "bar"
+          ]
+        }
+      },
+      {
+        "name": "typeUnionMember1",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      },
+      {
+        "name": "typeUnionMember2",
+        "type": {
+          "kind": "string"
+        },
+        "optional": true
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
     "name": "TypeUnion",
     "members": [
       {
@@ -219,10 +253,17 @@
           "kind": "reference",
           "name": "TypeUnion3"
         }
+      },
+      {
+        "name": "typeUnionMember4",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion4"
+        }
       }
     ],
-    "minProperties": 3,
-    "maxProperties": 3
+    "minProperties": 4,
+    "maxProperties": 4
   },
   {
     "kind": "object",
@@ -904,10 +945,33 @@
           }
         },
         "optional": true
+      },
+      {
+        "name": "unionType",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "foo",
+            "bar"
+          ]
+        }
+      },
+      {
+        "name": "tupleType",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
       }
     ],
-    "minProperties": 17,
-    "maxProperties": 19,
+    "minProperties": 19,
+    "maxProperties": 21,
     "entry": "cases.json"
   }
 ]

@@ -44,11 +44,19 @@ type typeUnion3 = {
   typeUnionMember2: option(string),
 };
 
+type typeUnion4 = {
+  .
+  kind: string,
+  typeUnionMember1: option(string),
+  typeUnionMember2: option(string),
+};
+
 type typeUnion = {
   .
   typeUnionMember1: typeUnion1,
   typeUnionMember2: typeUnion2,
   typeUnionMember3: typeUnion3,
+  typeUnionMember4: typeUnion4,
 };
 
 type interfaceExtends = {
@@ -163,4 +171,6 @@ type entryType = {
   id: iD,
   parameter: parameter,
   optionalArrayMember: option(list(string)),
+  unionType: string,
+  tupleType: list(string),
 };

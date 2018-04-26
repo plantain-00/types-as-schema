@@ -43,10 +43,17 @@ message TypeUnion3 {
     string typeUnionMember2 = 3;
 }
 
+message TypeUnion4 {
+    string kind = 1;
+    string typeUnionMember1 = 2;
+    string typeUnionMember2 = 3;
+}
+
 message TypeUnion {
     TypeUnion1 typeUnionMember1 = 1;
     TypeUnion2 typeUnionMember2 = 2;
     TypeUnion3 typeUnionMember3 = 3;
+    TypeUnion4 typeUnionMember4 = 4;
 }
 
 message InterfaceExtends {
@@ -150,4 +157,6 @@ message EntryType {
     ID id = 17;
     Parameter parameter = 18;
     repeated string optionalArrayMember = 19;
+    string unionType = 20;
+    repeated string tupleType = 21;
 }
