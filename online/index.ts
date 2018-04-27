@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
-import { Generator } from '../src/core'
+import { Generator } from '../dist/core'
 import { indexTemplateHtml, indexTemplateHtmlStatic, demoCasesTs } from './variables'
 
 const localStorageKey = 'types-as-schema:source'
