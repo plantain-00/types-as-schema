@@ -53,6 +53,7 @@ type TypeUnion {
   typeUnionMember2: TypeUnion2!
   typeUnionMember3: TypeUnion3!
   typeUnionMember4: TypeUnion4!
+  typeUnionMember5: TypeUnion5!
 }
 
 type InterfaceExtends {
