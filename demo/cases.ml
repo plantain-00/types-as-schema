@@ -132,6 +132,12 @@ type parameter = {
   member2: string;
 }
 
+type defaultValue = {
+  stringMember: string;
+  numberMember: float;
+  booleanMember: bool;
+}
+
 type entryType = {
   optionalMember: string option;
   booleanMember: bool;
@@ -153,4 +159,5 @@ type entryType = {
   optionalArrayMember: string list option;
   unionType: string;
   tupleType: string list;
+  defaultType: defaultValue;
 }

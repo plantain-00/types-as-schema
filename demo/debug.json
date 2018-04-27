@@ -800,6 +800,36 @@
   },
   {
     "kind": "object",
+    "name": "DefaultValue",
+    "members": [
+      {
+        "name": "stringMember",
+        "type": {
+          "kind": "string",
+          "default": "foo"
+        }
+      },
+      {
+        "name": "numberMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "default": 123
+        }
+      },
+      {
+        "name": "booleanMember",
+        "type": {
+          "kind": "boolean",
+          "default": true
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
     "name": "EntryType",
     "members": [
       {
@@ -968,10 +998,17 @@
           "minItems": 2,
           "maxItems": 2
         }
+      },
+      {
+        "name": "defaultType",
+        "type": {
+          "kind": "reference",
+          "name": "DefaultValue"
+        }
       }
     ],
-    "minProperties": 19,
-    "maxProperties": 21,
+    "minProperties": 20,
+    "maxProperties": 22,
     "entry": "cases.json"
   }
 ]

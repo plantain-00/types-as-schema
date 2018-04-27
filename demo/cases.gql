@@ -135,6 +135,12 @@ type Parameter {
   member2(name: String): String!
 }
 
+type DefaultValue {
+  stringMember: String!
+  numberMember: Float!
+  booleanMember: Boolean!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -156,4 +162,5 @@ type EntryType {
   optionalArrayMember: [String]
   unionType: string!
   tupleType: [String]!
+  defaultType: DefaultValue!
 }
