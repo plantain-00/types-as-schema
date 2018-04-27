@@ -48,11 +48,13 @@ type TypeUnion4 =
     kind: 'bar';
     typeUnionMember2: string;
   }
+type TypeUnion5 = TypeLiteral | Interface
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
   typeUnionMember3: TypeUnion3;
   typeUnionMember4: TypeUnion4;
+  typeUnionMember5: TypeUnion5;
 }
 
 interface InterfaceExtends extends Interface {

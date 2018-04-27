@@ -230,6 +230,18 @@
     "maxProperties": 2
   },
   {
+    "kind": "union",
+    "name": "TypeUnion5",
+    "members": [
+      {
+        "name": "TypeLiteral"
+      },
+      {
+        "name": "Interface"
+      }
+    ]
+  },
+  {
     "kind": "object",
     "name": "TypeUnion",
     "members": [
@@ -260,10 +272,17 @@
           "kind": "reference",
           "name": "TypeUnion4"
         }
+      },
+      {
+        "name": "typeUnionMember5",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion5"
+        }
       }
     ],
-    "minProperties": 4,
-    "maxProperties": 4
+    "minProperties": 5,
+    "maxProperties": 5
   },
   {
     "kind": "object",

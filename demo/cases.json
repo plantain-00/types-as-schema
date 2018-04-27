@@ -305,13 +305,17 @@
         },
         "typeUnionMember4": {
           "$ref": "#/definitions/TypeUnion4"
+        },
+        "typeUnionMember5": {
+          "$ref": "#/definitions/TypeUnion5"
         }
       },
       "required": [
         "typeUnionMember1",
         "typeUnionMember2",
         "typeUnionMember3",
-        "typeUnionMember4"
+        "typeUnionMember4",
+        "typeUnionMember5"
       ],
       "additionalProperties": false
     },
@@ -407,6 +411,17 @@
       "additionalProperties": false,
       "minProperties": 2,
       "maxProperties": 2
+    },
+    "TypeUnion5": {
+      "type": "object",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TypeLiteral"
+        },
+        {
+          "$ref": "#/definitions/Interface"
+        }
+      ]
     },
     "InterfaceExtends": {
       "type": "object",

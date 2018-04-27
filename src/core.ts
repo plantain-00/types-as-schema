@@ -115,13 +115,13 @@ ${messages.join('\n\n')}
   generateJsonSchemas () {
     const definitions: { [name: string]: Definition } = {}
     for (const model of this.models) {
-      if ((model.kind === 'object' || model.kind === 'array')) {
+      if ((model.kind === 'object' || model.kind === 'array' || model.kind === 'union')) {
         definitions[model.name] = this.getJsonSchemaProperty(model)
       }
     }
-    return this.models.filter(m => (m.kind === 'object' || m.kind === 'array') && m.entry)
+    return this.models.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
       .map(m => ({
-        entry: (m as ObjectModel | ArrayModel).entry!,
+        entry: (m as ObjectModel | ArrayModel | UnionModel).entry!,
         schema: {
           $ref: `#/definitions/${m.name}`,
           definitions: this.getReferencedDefinitions(m.name, definitions)
@@ -232,8 +232,30 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
         }
         this.models.push(model)
       } else if (declaration.type.kind === ts.SyntaxKind.TypeLiteral
-                || declaration.type.kind === ts.SyntaxKind.UnionType
-                || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
+          || declaration.type.kind === ts.SyntaxKind.UnionType
+          || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
+        if (declaration.type.kind === ts.SyntaxKind.UnionType) {
+          const unionType = declaration.type as ts.UnionTypeNode
+          if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
+            const members: UnionMember[] = []
+            for (const type of unionType.types) {
+              const typeName = (type as ts.TypeReferenceNode).typeName
+              if (typeName.kind === ts.SyntaxKind.Identifier) {
+                members.push({
+                  name: (typeName as ts.Identifier).text
+                })
+              }
+            }
+            const model: Model = {
+              kind: 'union',
+              name: declaration.name.text,
+              members,
+              entry: entry ? entry.comment : undefined
+            }
+            this.models.push(model)
+            return
+          }
+        }
         const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type)
         const model: Model = {
           kind: 'object',
@@ -917,6 +939,14 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
           }
         }
       }
+      if (definition.anyOf) {
+        for (const reference of definition.anyOf) {
+          if (reference.type === undefined) {
+            const itemTypeName = reference.$ref.substring('#/definitions/'.length)
+            Object.assign(result, this.getReferencedDefinitions(itemTypeName, definitions))
+          }
+        }
+      }
     }
     return result
   }
@@ -975,7 +1005,7 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
     return definition
   }
 
-  private getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel): Definition {
+  private getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | UnionModel): Definition {
     if (memberType.kind === 'number') {
       return this.getNumberType(memberType)
     } else if (memberType.kind === 'boolean') {
@@ -1043,6 +1073,15 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
         maxLength: memberType.maxLength,
         pattern: memberType.pattern,
         default: memberType.default
+      }
+    } else if (memberType.kind === 'union') {
+      const types = memberType.members.map(m => ({
+        type: undefined,
+        $ref: `#/definitions/${m.name}`
+      }))
+      return {
+        type: 'object',
+        anyOf: types
       }
     } else {
       return {
@@ -1143,7 +1182,7 @@ type Member = {
   }[];
 }
 
-type Model = EnumModel | ObjectModel | ArrayModel
+type Model = EnumModel | ObjectModel | ArrayModel | UnionModel
 
 type EnumModel = {
   kind: 'enum';
@@ -1165,6 +1204,17 @@ type ObjectModel = ObjectType & {
 type ArrayModel = ArrayType & {
   name: string;
   entry: string | undefined;
+}
+
+type UnionModel = {
+  kind: 'union';
+  name: string;
+  members: UnionMember[];
+  entry: string | undefined;
+}
+
+type UnionMember = {
+  name: string;
 }
 
 type JsDoc = {
@@ -1194,7 +1244,8 @@ type Definition =
       properties?: { [name: string]: Definition },
       required?: string[],
       minProperties?: number,
-      maxProperties?: number
+      maxProperties?: number,
+      anyOf?: Definition[]
     } | {
       type: 'array',
       items: Definition,
