@@ -497,6 +497,8 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
                 member.type.exclusiveMaximum = +propertyJsDoc.comment
               } else if (propertyJsDoc.name === 'exclusiveMinimum') {
                 member.type.exclusiveMinimum = +propertyJsDoc.comment
+              } else if (propertyJsDoc.name === 'default') {
+                member.type.default = +propertyJsDoc.comment
               }
             }
           } else if (member.type.kind === 'string') {
@@ -507,6 +509,14 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
                 member.type.maxLength = +propertyJsDoc.comment
               } else if (propertyJsDoc.name === 'pattern') {
                 member.type.pattern = propertyJsDoc.comment
+              } else if (propertyJsDoc.name === 'default') {
+                member.type.default = propertyJsDoc.comment
+              }
+            }
+          } else if (member.type.kind === 'boolean') {
+            if (propertyJsDoc.comment) {
+              if (propertyJsDoc.name === 'default') {
+                member.type.default = propertyJsDoc.comment.toLowerCase() === 'true'
               }
             }
           } else if (member.type.kind === 'object') {
@@ -537,6 +547,8 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
           type.type.exclusiveMinimum = +jsDoc.comment
         } else if (jsDoc.name === 'itemExclusiveMaximum') {
           type.type.exclusiveMaximum = +jsDoc.comment
+        } else if (jsDoc.name === 'itemDefault') {
+          type.type.default = +jsDoc.comment
         }
       } else if (type.type.kind === 'string') {
         if (jsDoc.name === 'itemMinLength') {
@@ -545,6 +557,12 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
           type.type.maxLength = +jsDoc.comment
         } else if (jsDoc.name === 'itemPattern') {
           type.type.pattern = jsDoc.comment
+        } else if (jsDoc.name === 'itemDefault') {
+          type.type.default = jsDoc.comment
+        }
+      } else if (type.type.kind === 'boolean') {
+        if (jsDoc.name === 'itemDefault') {
+          type.type.default = jsDoc.comment.toLowerCase() === 'true'
         }
       }
     } else if (jsDoc.name === 'uniqueItems') {
@@ -951,7 +969,8 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
     Object.assign(definition, {
       multipleOf: numberType.multipleOf,
       exclusiveMinimum: numberType.exclusiveMinimum,
-      exclusiveMaximum: numberType.exclusiveMaximum
+      exclusiveMaximum: numberType.exclusiveMaximum,
+      default: numberType.default
     })
     return definition
   }
@@ -961,7 +980,8 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
       return this.getNumberType(memberType)
     } else if (memberType.kind === 'boolean') {
       return {
-        type: 'boolean'
+        type: 'boolean',
+        default: memberType.default
       }
     } else if (memberType.kind === 'map') {
       return {
@@ -1021,7 +1041,8 @@ ${members.filter(m => m).map(m => m + ';').join('\n')}
         type: memberType.kind,
         minLength: memberType.minLength,
         maxLength: memberType.maxLength,
-        pattern: memberType.pattern
+        pattern: memberType.pattern,
+        default: memberType.default
       }
     } else {
       return {
@@ -1087,6 +1108,7 @@ type NumberType = {
   exclusiveMinimum?: number;
   exclusiveMaximum?: number;
   multipleOf?: number;
+  default?: number;
 }
 
 type StringType = {
@@ -1094,10 +1116,12 @@ type StringType = {
   minLength?: number;
   maxLength?: number;
   pattern?: string;
+  default?: string;
 }
 
 type BooleanType = {
   kind: 'boolean';
+  default?: boolean;
 }
 
 type UnknownType = {
@@ -1160,8 +1184,10 @@ type Definition =
       exclusiveMaximum?: number;
       enum?: number[],
       multipleOf?: number;
+      default?: number;
     } | {
-      type: 'boolean'
+      type: 'boolean';
+      default?: boolean;
     } | {
       type: 'object',
       additionalProperties?: Definition | false,
@@ -1184,6 +1210,7 @@ type Definition =
       minLength?: number;
       maxLength?: number;
       pattern?: string;
+      default?: string;
     } | {
       type: 'unknown'
     }

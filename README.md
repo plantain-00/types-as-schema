@@ -67,12 +67,18 @@ number:
 + `@maximum 90`: set `maximum = 90`
 + `@exclusiveMinimum 70`: set `exclusiveMinimum = 70`
 + `@exclusiveMaximum 90`: set `exclusiveMaximum = 90`
++ `@default 10`: set `default = 10`
 
 string:
 
 + `@minLength 10`: set `minLength = 10`
 + `@maxLength 20`: set `maxLength = 20`
 + `@pattern ^[A-z]{3}$`: set `pattern = ^[A-z]{3}$`
++ `@default foo`: set `default = 'foo'`
+
+boolean:
+
++ `@default true`: set `default = true`
 
 object:
 
@@ -94,12 +100,18 @@ number[]:
 + `@itemMaximum 90`: set item `maximum = 90`
 + `@itemExclusiveMinimum 70`: set item `exclusiveMinimum = 70`
 + `@itemExclusiveMaximum 90`: set item `exclusiveMaximum = 90`
++ `@itemDefault 10`: set item `default = 10`
 
 string[]:
 
 + `@itemMinLength 10`: set item `minLength = 10`
 + `@itemMaxLength 20`: set item `maxLength = 20`
 + `@itemPattern ^[A-z]{3}$`: set item `pattern = ^[A-z]{3}$`
++ `@itemDefault foo`: set item `default = 'foo'`
+
+boolean[]:
+
++ `@itemDefault true`: set item `default = true`
 
 ## graphql schema only
 

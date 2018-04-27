@@ -216,6 +216,21 @@ type Parameter = {
   member2: string
 }
 
+type DefaultValue = {
+  /**
+   * @default foo
+   */
+  stringMember: string
+  /**
+   * @default 123
+   */
+  numberMember: number
+  /**
+   * @default true
+   */
+  booleanMember: boolean
+}
+
 /**
  * @entry cases.json
  */
@@ -241,6 +256,7 @@ export type EntryType = {
   optionalArrayMember?: string[];
   unionType: 'foo' | 'bar';
   tupleType: [string, string];
+  defaultType: DefaultValue;
 }
 `
 // @ts-ignore

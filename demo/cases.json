@@ -87,6 +87,9 @@
           },
           "minItems": 2,
           "maxItems": 2
+        },
+        "defaultType": {
+          "$ref": "#/definitions/DefaultValue"
         }
       },
       "required": [
@@ -108,7 +111,8 @@
         "id",
         "parameter",
         "unionType",
-        "tupleType"
+        "tupleType",
+        "defaultType"
       ],
       "additionalProperties": false
     },
@@ -627,6 +631,29 @@
       "required": [
         "member1",
         "member2"
+      ],
+      "additionalProperties": false
+    },
+    "DefaultValue": {
+      "type": "object",
+      "properties": {
+        "stringMember": {
+          "type": "string",
+          "default": "foo"
+        },
+        "numberMember": {
+          "type": "number",
+          "default": 123
+        },
+        "booleanMember": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "stringMember",
+        "numberMember",
+        "booleanMember"
       ],
       "additionalProperties": false
     }

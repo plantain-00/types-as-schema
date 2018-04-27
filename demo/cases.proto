@@ -138,6 +138,12 @@ message Parameter {
     string member2 = 2;
 }
 
+message DefaultValue {
+    string stringMember = 1;
+    double numberMember = 2;
+    bool booleanMember = 3;
+}
+
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
@@ -159,4 +165,5 @@ message EntryType {
     repeated string optionalArrayMember = 19;
     string unionType = 20;
     repeated string tupleType = 21;
+    DefaultValue defaultType = 22;
 }
