@@ -117,50 +117,35 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
   }
 }
 
-function getReferencedDefinitions (typeName: string, definitions: { [name: string]: Definition }) {
+function getReferencedDefinitions (typeName: string | Definition, definitions: { [name: string]: Definition }) {
   const result: { [name: string]: Definition } = {}
-  const definition = definitions[typeName]
+  const definition = typeof typeName === 'string' ? definitions[typeName] : typeName
   if (definition === undefined) {
     return result
   }
-  result[typeName] = definition
+  if (typeof typeName === 'string') {
+    result[typeName] = definition
+  }
   if (definition.type === 'array') {
-    if (definition.items.type === undefined) {
-      if (definition.items.$ref) {
-        const itemTypeName = definition.items.$ref.substring('#/definitions/'.length)
-        Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
-      }
-    }
+    Object.assign(result, getReferencedDefinitions(definition.items, definitions))
   } else if (definition.type === 'object') {
     if (definition.properties) {
       for (const propertyName in definition.properties) {
         if (definition.properties.hasOwnProperty(propertyName)) {
           const propertyDefinition = definition.properties[propertyName]
-          if (propertyDefinition.type === undefined) {
-            if (propertyDefinition.$ref) {
-              const itemTypeName = propertyDefinition.$ref.substring('#/definitions/'.length)
-              Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
-            }
-          } else if (propertyDefinition.type === 'array') {
-            if (propertyDefinition.items.type === undefined) {
-              if (propertyDefinition.items.$ref) {
-                const itemTypeName = propertyDefinition.items.$ref.substring('#/definitions/'.length)
-                Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
-              }
-            }
-          }
+          Object.assign(result, getReferencedDefinitions(propertyDefinition, definitions))
         }
       }
     }
     if (definition.anyOf) {
       for (const reference of definition.anyOf) {
-        if (reference.type === undefined) {
-          if (reference.$ref) {
-            const itemTypeName = reference.$ref.substring('#/definitions/'.length)
-            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
-          }
-        }
+        Object.assign(result, getReferencedDefinitions(reference, definitions))
       }
+    }
+  } else if (definition.type === undefined) {
+    if (definition.$ref) {
+      const itemTypeName = definition.$ref.substring('#/definitions/'.length)
+      Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
     }
   }
   return result
