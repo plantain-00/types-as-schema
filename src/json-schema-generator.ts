@@ -10,7 +10,11 @@ import {
 export function generateJsonSchemas (models: Model[]) {
   const definitions: { [name: string]: Definition } = {}
   for (const model of models) {
-    if ((model.kind === 'object' || model.kind === 'array' || model.kind === 'union')) {
+    if (model.kind === 'object'
+      || model.kind === 'array'
+      || model.kind === 'union'
+      || model.kind === 'string'
+      || model.kind === 'number') {
       definitions[model.name] = getJsonSchemaProperty(model)
     }
   }
@@ -99,7 +103,8 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       minLength: memberType.minLength,
       maxLength: memberType.maxLength,
       pattern: memberType.pattern,
-      default: memberType.default
+      default: memberType.default,
+      enum: memberType.enums
     }
   } else if (memberType.kind === 'union') {
     return {

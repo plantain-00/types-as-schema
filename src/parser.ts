@@ -104,15 +104,43 @@ export class Parser {
           || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
         if (declaration.type.kind === ts.SyntaxKind.UnionType) {
           const unionType = declaration.type as ts.UnionTypeNode
-          if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
-            const members: Type[] = []
-            for (const type of unionType.types) {
-              members.push(this.getType(type))
+          if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
+            let enumType: 'string' | 'number' | undefined
+            const enums: any[] = []
+            for (const childType of unionType.types) {
+              const literalType = childType as ts.LiteralTypeNode
+              if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
+                enumType = 'string'
+                enums.push((literalType.literal as ts.LiteralExpression).text)
+              } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+                enumType = 'number'
+                enums.push(+(literalType.literal as ts.LiteralExpression).text)
+              }
             }
+            if (enumType) {
+              if (enumType === 'string') {
+                const model: Model = {
+                  kind: enumType,
+                  name: declaration.name.text,
+                  enums
+                }
+                this.models.push(model)
+              } else {
+                const model: Model = {
+                  kind: enumType,
+                  type: enumType,
+                  name: declaration.name.text,
+                  enums
+                }
+                this.models.push(model)
+              }
+              return
+            }
+          } else if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
             const model: Model = {
               kind: 'union',
               name: declaration.name.text,
-              members,
+              members: unionType.types.map(u => this.getType(u)),
               entry: entry ? entry.comment : undefined
             }
             this.models.push(model)

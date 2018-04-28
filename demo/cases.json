@@ -320,6 +320,9 @@
             "foo",
             "bar"
           ]
+        },
+        "typeUnionMember8": {
+          "$ref": "#/definitions/TypeUnion8"
         }
       },
       "required": [
@@ -329,7 +332,8 @@
         "typeUnionMember4",
         "typeUnionMember5",
         "typeUnionMember6",
-        "typeUnionMember7"
+        "typeUnionMember7",
+        "typeUnionMember8"
       ],
       "additionalProperties": false
     },
@@ -434,6 +438,13 @@
         {
           "$ref": "#/definitions/Interface"
         }
+      ]
+    },
+    "TypeUnion8": {
+      "type": "string",
+      "enum": [
+        "foo",
+        "bar"
       ]
     },
     "InterfaceExtends": {
