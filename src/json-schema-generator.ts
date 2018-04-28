@@ -103,7 +103,7 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
     }
   } else if (memberType.kind === 'union') {
     return {
-      type: 'object',
+      type: undefined,
       anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
     }
   } else if (memberType.kind === 'null') {
@@ -242,7 +242,8 @@ type Definition =
   |
   {
     type: undefined,
-    $ref?: string
+    $ref?: string,
+    anyOf?: Definition[]
   }
   |
   {

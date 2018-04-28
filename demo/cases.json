@@ -305,7 +305,6 @@
           "$ref": "#/definitions/TypeUnion5"
         },
         "typeUnionMember6": {
-          "type": "object",
           "anyOf": [
             {
               "type": "string"
@@ -428,7 +427,6 @@
       "maxProperties": 2
     },
     "TypeUnion5": {
-      "type": "object",
       "anyOf": [
         {
           "$ref": "#/definitions/TypeLiteral"
