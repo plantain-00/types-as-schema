@@ -94,13 +94,13 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       default: memberType.default
     }
   } else if (memberType.kind === 'union') {
-    const types = memberType.members.map(m => ({
-      type: undefined,
-      $ref: `#/definitions/${m.name}`
-    }))
     return {
       type: 'object',
-      anyOf: types
+      anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
+    }
+  } else if (memberType.kind === 'null') {
+    return {
+      type: 'null'
     }
   } else {
     return {
@@ -259,4 +259,8 @@ type Definition =
     maxLength?: number;
     pattern?: string;
     default?: string;
+  }
+  |
+  {
+    type: 'null'
   }

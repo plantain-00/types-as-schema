@@ -234,9 +234,11 @@
     "name": "TypeUnion5",
     "members": [
       {
+        "kind": "reference",
         "name": "TypeLiteral"
       },
       {
+        "kind": "reference",
         "name": "Interface"
       }
     ]
@@ -279,10 +281,24 @@
           "kind": "reference",
           "name": "TypeUnion5"
         }
+      },
+      {
+        "name": "typeUnionMember6",
+        "type": {
+          "kind": "union",
+          "members": [
+            {
+              "kind": "string"
+            },
+            {
+              "kind": "null"
+            }
+          ]
+        }
       }
     ],
-    "minProperties": 5,
-    "maxProperties": 5
+    "minProperties": 6,
+    "maxProperties": 6
   },
   {
     "kind": "object",

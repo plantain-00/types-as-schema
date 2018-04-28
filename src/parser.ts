@@ -3,7 +3,6 @@ import {
   Member,
   Model,
   EnumModel,
-  UnionMember,
   Type,
   ArrayType,
   ObjectType
@@ -106,14 +105,9 @@ export class Parser {
         if (declaration.type.kind === ts.SyntaxKind.UnionType) {
           const unionType = declaration.type as ts.UnionTypeNode
           if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
-            const members: UnionMember[] = []
+            const members: Type[] = []
             for (const type of unionType.types) {
-              const typeName = (type as ts.TypeReferenceNode).typeName
-              if (typeName.kind === ts.SyntaxKind.Identifier) {
-                members.push({
-                  name: (typeName as ts.Identifier).text
-                })
-              }
+              members.push(this.getType(type))
             }
             const model: Model = {
               kind: 'union',
@@ -297,10 +291,10 @@ export class Parser {
       }
     } else if (type.kind === ts.SyntaxKind.UnionType) {
       const unionType = type as ts.UnionTypeNode
-      let enumType: 'string' | 'number' | undefined
-      const enums: any[] = []
-      for (const childType of unionType.types) {
-        if (childType.kind === ts.SyntaxKind.LiteralType) {
+      if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
+        let enumType: 'string' | 'number' | undefined
+        const enums: any[] = []
+        for (const childType of unionType.types) {
           const literalType = childType as ts.LiteralTypeNode
           if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
             enumType = 'string'
@@ -310,13 +304,18 @@ export class Parser {
             enums.push(+(literalType.literal as ts.LiteralExpression).text)
           }
         }
-      }
-      if (enumType) {
+        if (enumType) {
+          return {
+            kind: 'enum',
+            type: enumType,
+            name: enumType,
+            enums
+          }
+        }
+      } else {
         return {
-          kind: 'enum',
-          type: enumType,
-          name: enumType,
-          enums
+          kind: 'union',
+          members: unionType.types.map(u => this.getType(u))
         }
       }
     } else if (type.kind === ts.SyntaxKind.TupleType) {
@@ -351,6 +350,10 @@ export class Parser {
           name: enumType,
           enums
         }
+      }
+    } else if (type.kind === ts.SyntaxKind.NullKeyword) {
+      return {
+        kind: 'null'
       }
     }
     return {

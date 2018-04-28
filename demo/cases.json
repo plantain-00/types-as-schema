@@ -310,6 +310,17 @@
         },
         "typeUnionMember5": {
           "$ref": "#/definitions/TypeUnion5"
+        },
+        "typeUnionMember6": {
+          "type": "object",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -317,7 +328,8 @@
         "typeUnionMember2",
         "typeUnionMember3",
         "typeUnionMember4",
-        "typeUnionMember5"
+        "typeUnionMember5",
+        "typeUnionMember6"
       ],
       "additionalProperties": false
     },

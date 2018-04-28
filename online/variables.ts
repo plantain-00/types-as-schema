@@ -55,6 +55,7 @@ type TypeUnion = {
   typeUnionMember3: TypeUnion3;
   typeUnionMember4: TypeUnion4;
   typeUnionMember5: TypeUnion5;
+  typeUnionMember6: string | null;
 }
 
 interface InterfaceExtends extends Interface {
