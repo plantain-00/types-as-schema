@@ -354,7 +354,7 @@ export class Parser {
       }
     }
     return {
-      kind: 'unknown'
+      kind: undefined
     }
   }
 
@@ -483,7 +483,7 @@ export class Parser {
         const member: Member = {
           name: name.text,
           type: {
-            kind: 'unknown'
+            kind: undefined
           }
         }
         members.push(member)

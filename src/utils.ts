@@ -44,7 +44,7 @@ export type UnionMember = {
   name: string;
 }
 
-export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | UnknownType
+export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | AnyType
 
 /**
  * @public
@@ -106,8 +106,8 @@ export type BooleanType = {
 /**
  * @public
  */
-export type UnknownType = {
-  kind: 'unknown';
+export type AnyType = {
+  kind: undefined;
 }
 
 export type ObjectType = {

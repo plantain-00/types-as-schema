@@ -90,7 +90,8 @@
         },
         "defaultType": {
           "$ref": "#/definitions/DefaultValue"
-        }
+        },
+        "anyType": {}
       },
       "required": [
         "booleanMember",
@@ -112,7 +113,8 @@
         "parameter",
         "unionType",
         "tupleType",
-        "defaultType"
+        "defaultType",
+        "anyType"
       ],
       "additionalProperties": false
     },
@@ -572,13 +574,18 @@
             "minimum": 0,
             "maximum": 4294967295
           }
+        },
+        "mapType5": {
+          "type": "object",
+          "additionalProperties": {}
         }
       },
       "required": [
         "mapType",
         "mapType2",
         "mapType3",
-        "mapType4"
+        "mapType4",
+        "mapType5"
       ],
       "additionalProperties": false
     },

@@ -118,8 +118,10 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
   result[typeName] = definition
   if (definition.type === 'array') {
     if (definition.items.type === undefined) {
-      const itemTypeName = definition.items.$ref.substring('#/definitions/'.length)
-      Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+      if (definition.items.$ref) {
+        const itemTypeName = definition.items.$ref.substring('#/definitions/'.length)
+        Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+      }
     }
   } else if (definition.type === 'object') {
     if (definition.properties) {
@@ -127,12 +129,16 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
         if (definition.properties.hasOwnProperty(propertyName)) {
           const propertyDefinition = definition.properties[propertyName]
           if (propertyDefinition.type === undefined) {
-            const itemTypeName = propertyDefinition.$ref.substring('#/definitions/'.length)
-            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+            if (propertyDefinition.$ref) {
+              const itemTypeName = propertyDefinition.$ref.substring('#/definitions/'.length)
+              Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+            }
           } else if (propertyDefinition.type === 'array') {
             if (propertyDefinition.items.type === undefined) {
-              const itemTypeName = propertyDefinition.items.$ref.substring('#/definitions/'.length)
-              Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+              if (propertyDefinition.items.$ref) {
+                const itemTypeName = propertyDefinition.items.$ref.substring('#/definitions/'.length)
+                Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+              }
             }
           }
         }
@@ -141,8 +147,10 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
     if (definition.anyOf) {
       for (const reference of definition.anyOf) {
         if (reference.type === undefined) {
-          const itemTypeName = reference.$ref.substring('#/definitions/'.length)
-          Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+          if (reference.$ref) {
+            const itemTypeName = reference.$ref.substring('#/definitions/'.length)
+            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+          }
         }
       }
     }
@@ -241,7 +249,7 @@ type Definition =
   |
   {
     type: undefined,
-    $ref: string
+    $ref?: string
   }
   |
   {
@@ -251,8 +259,4 @@ type Definition =
     maxLength?: number;
     pattern?: string;
     default?: string;
-  }
-  |
-  {
-    type: 'unknown'
   }

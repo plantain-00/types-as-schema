@@ -202,6 +202,7 @@ type MapType = {
   mapType2: { [name: string]: TypeLiteral };
   mapType3: { [name: string]: { literal: number } };
   mapType4: { [name: string]: uint32 };
+  mapType5: { [name: string]: any };
 }
 
 type ID = any
@@ -259,6 +260,7 @@ export type EntryType = {
   unionType: 'foo' | 'bar';
   tupleType: [string, string];
   defaultType: DefaultValue;
+  anyType: any;
 }
 `
 // @ts-ignore

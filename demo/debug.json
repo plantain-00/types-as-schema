@@ -766,10 +766,20 @@
             "type": "uint32"
           }
         }
+      },
+      {
+        "name": "mapType5",
+        "type": {
+          "kind": "map",
+          "key": {
+            "kind": "string"
+          },
+          "value": {}
+        }
       }
     ],
-    "minProperties": 4,
-    "maxProperties": 4
+    "minProperties": 5,
+    "maxProperties": 5
   },
   {
     "kind": "object",
@@ -1024,10 +1034,14 @@
           "kind": "reference",
           "name": "DefaultValue"
         }
+      },
+      {
+        "name": "anyType",
+        "type": {}
       }
     ],
-    "minProperties": 20,
-    "maxProperties": 22,
+    "minProperties": 21,
+    "maxProperties": 23,
     "entry": "cases.json"
   }
 ]
