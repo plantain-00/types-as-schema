@@ -137,15 +137,15 @@ function getReferencedDefinitions (typeName: string | Definition, definitions: {
         }
       }
     }
-    if (definition.anyOf) {
-      for (const reference of definition.anyOf) {
-        Object.assign(result, getReferencedDefinitions(reference, definitions))
-      }
-    }
   } else if (definition.type === undefined) {
     if (definition.$ref) {
       const itemTypeName = definition.$ref.substring('#/definitions/'.length)
       Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+    }
+    if (definition.anyOf) {
+      for (const reference of definition.anyOf) {
+        Object.assign(result, getReferencedDefinitions(reference, definitions))
+      }
     }
   }
   return result
