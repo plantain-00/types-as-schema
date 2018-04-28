@@ -77,13 +77,21 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       }
       properties[member.name] = getJsonSchemaProperty(member.type)
     }
+    let additionalProperties: Definition | boolean | undefined
+    if (memberType.additionalProperties === undefined) {
+      additionalProperties = memberType.additionalProperties === undefined ? false : undefined
+    } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
+      additionalProperties = memberType.additionalProperties
+    } else {
+      additionalProperties = getJsonSchemaProperty(memberType.additionalProperties)
+    }
     return {
       type: 'object',
       properties,
       required,
-      additionalProperties: memberType.additionalProperties === undefined ? false : undefined,
+      additionalProperties,
       minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
-      maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
+      maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
     }
   } else if (memberType.kind === 'string') {
     return {
@@ -94,13 +102,13 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       default: memberType.default
     }
   } else if (memberType.kind === 'union') {
-    const types = memberType.members.map(m => ({
-      type: undefined,
-      $ref: `#/definitions/${m.name}`
-    }))
     return {
       type: 'object',
-      anyOf: types
+      anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
+    }
+  } else if (memberType.kind === 'null') {
+    return {
+      type: 'null'
     }
   } else {
     return {
@@ -118,8 +126,10 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
   result[typeName] = definition
   if (definition.type === 'array') {
     if (definition.items.type === undefined) {
-      const itemTypeName = definition.items.$ref.substring('#/definitions/'.length)
-      Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+      if (definition.items.$ref) {
+        const itemTypeName = definition.items.$ref.substring('#/definitions/'.length)
+        Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+      }
     }
   } else if (definition.type === 'object') {
     if (definition.properties) {
@@ -127,12 +137,16 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
         if (definition.properties.hasOwnProperty(propertyName)) {
           const propertyDefinition = definition.properties[propertyName]
           if (propertyDefinition.type === undefined) {
-            const itemTypeName = propertyDefinition.$ref.substring('#/definitions/'.length)
-            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+            if (propertyDefinition.$ref) {
+              const itemTypeName = propertyDefinition.$ref.substring('#/definitions/'.length)
+              Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+            }
           } else if (propertyDefinition.type === 'array') {
             if (propertyDefinition.items.type === undefined) {
-              const itemTypeName = propertyDefinition.items.$ref.substring('#/definitions/'.length)
-              Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+              if (propertyDefinition.items.$ref) {
+                const itemTypeName = propertyDefinition.items.$ref.substring('#/definitions/'.length)
+                Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+              }
             }
           }
         }
@@ -141,8 +155,10 @@ function getReferencedDefinitions (typeName: string, definitions: { [name: strin
     if (definition.anyOf) {
       for (const reference of definition.anyOf) {
         if (reference.type === undefined) {
-          const itemTypeName = reference.$ref.substring('#/definitions/'.length)
-          Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+          if (reference.$ref) {
+            const itemTypeName = reference.$ref.substring('#/definitions/'.length)
+            Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+          }
         }
       }
     }
@@ -223,7 +239,7 @@ type Definition =
   |
   {
     type: 'object',
-    additionalProperties?: Definition | false,
+    additionalProperties?: Definition | boolean,
     properties?: { [name: string]: Definition },
     required?: string[],
     minProperties?: number,
@@ -241,7 +257,7 @@ type Definition =
   |
   {
     type: undefined,
-    $ref: string
+    $ref?: string
   }
   |
   {
@@ -254,5 +270,5 @@ type Definition =
   }
   |
   {
-    type: 'unknown'
+    type: 'null'
   }

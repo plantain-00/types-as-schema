@@ -33,18 +33,14 @@ export type ArrayModel = ArrayType & {
   entry: string | undefined;
 }
 
-export type UnionModel = {
-  kind: 'union';
+export type UnionModel = UnionType & {
   name: string;
-  members: UnionMember[];
   entry: string | undefined;
 }
 
-export type UnionMember = {
-  name: string;
-}
-
-export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType | ObjectType | NumberType | BooleanType | UnknownType
+export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType
+  | ObjectType | NumberType | BooleanType | AnyType | NullType
+  | UnionType
 
 /**
  * @public
@@ -106,16 +102,16 @@ export type BooleanType = {
 /**
  * @public
  */
-export type UnknownType = {
-  kind: 'unknown';
+export type AnyType = {
+  kind: undefined;
 }
 
 export type ObjectType = {
   kind: 'object';
   members: Member[];
   minProperties: number;
-  maxProperties: number;
-  additionalProperties?: true;
+  maxProperties?: number;
+  additionalProperties?: boolean | Type;
 }
 
 export type ArrayType = {
@@ -124,6 +120,21 @@ export type ArrayType = {
   uniqueItems?: boolean;
   minItems?: number;
   maxItems?: number;
+}
+
+/**
+ * @public
+ */
+export type NullType = {
+  kind: 'null'
+}
+
+/**
+ * @public
+ */
+export type UnionType = {
+  kind: 'union';
+  members: Type[];
 }
 
 export type Member = {

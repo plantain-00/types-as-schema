@@ -3,7 +3,6 @@ import {
   Member,
   Model,
   EnumModel,
-  UnionMember,
   Type,
   ArrayType,
   ObjectType
@@ -106,14 +105,9 @@ export class Parser {
         if (declaration.type.kind === ts.SyntaxKind.UnionType) {
           const unionType = declaration.type as ts.UnionTypeNode
           if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
-            const members: UnionMember[] = []
+            const members: Type[] = []
             for (const type of unionType.types) {
-              const typeName = (type as ts.TypeReferenceNode).typeName
-              if (typeName.kind === ts.SyntaxKind.Identifier) {
-                members.push({
-                  name: (typeName as ts.Identifier).text
-                })
-              }
+              members.push(this.getType(type))
             }
             const model: Model = {
               kind: 'union',
@@ -125,13 +119,14 @@ export class Parser {
             return
           }
         }
-        const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type)
+        const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(declaration.type)
         const model: Model = {
           kind: 'object',
           name: declaration.name.text,
           members,
           minProperties,
-          maxProperties,
+          maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+          additionalProperties,
           entry: entry ? entry.comment : undefined
         }
         for (const jsDoc of jsDocs) {
@@ -147,7 +142,7 @@ export class Parser {
         return
       }
 
-      const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = this.getObjectMembers(declaration.members)
+      const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties, additionalProperties } = this.getObjectMembers(declaration.members)
       let minProperties = selfMinProperties
       let maxProperties = selfMaxProperties
 
@@ -181,7 +176,8 @@ export class Parser {
         name: declaration.name.text,
         members,
         minProperties,
-        maxProperties,
+        maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+        additionalProperties,
         entry: entry ? entry.comment : undefined
       }
 
@@ -252,12 +248,13 @@ export class Parser {
           }
         }
       } else {
-        const { members, minProperties, maxProperties } = this.getMembersInfo(literal)
+        const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(literal)
         return {
           kind: 'object',
           members,
           minProperties,
-          maxProperties
+          maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+          additionalProperties
         }
       }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
@@ -297,10 +294,10 @@ export class Parser {
       }
     } else if (type.kind === ts.SyntaxKind.UnionType) {
       const unionType = type as ts.UnionTypeNode
-      let enumType: 'string' | 'number' | undefined
-      const enums: any[] = []
-      for (const childType of unionType.types) {
-        if (childType.kind === ts.SyntaxKind.LiteralType) {
+      if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
+        let enumType: 'string' | 'number' | undefined
+        const enums: any[] = []
+        for (const childType of unionType.types) {
           const literalType = childType as ts.LiteralTypeNode
           if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
             enumType = 'string'
@@ -310,13 +307,18 @@ export class Parser {
             enums.push(+(literalType.literal as ts.LiteralExpression).text)
           }
         }
-      }
-      if (enumType) {
+        if (enumType) {
+          return {
+            kind: 'enum',
+            type: enumType,
+            name: enumType,
+            enums
+          }
+        }
+      } else {
         return {
-          kind: 'enum',
-          type: enumType,
-          name: enumType,
-          enums
+          kind: 'union',
+          members: unionType.types.map(u => this.getType(u))
         }
       }
     } else if (type.kind === ts.SyntaxKind.TupleType) {
@@ -352,9 +354,13 @@ export class Parser {
           enums
         }
       }
+    } else if (type.kind === ts.SyntaxKind.NullKeyword) {
+      return {
+        kind: 'null'
+      }
     }
     return {
-      kind: 'unknown'
+      kind: undefined
     }
   }
 
@@ -476,6 +482,7 @@ export class Parser {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
+    let additionalProperties: Type | undefined
     for (const element of elements) {
       if (element.kind === ts.SyntaxKind.PropertySignature) {
         const property = element as ts.PropertySignature
@@ -483,7 +490,7 @@ export class Parser {
         const member: Member = {
           name: name.text,
           type: {
-            kind: 'unknown'
+            kind: undefined
           }
         }
         members.push(member)
@@ -565,9 +572,14 @@ export class Parser {
             this.setJsonSchemaObject(propertyJsDoc, member.type)
           }
         }
+      } else if (element.kind === ts.SyntaxKind.IndexSignature) {
+        const indexSignature = element as ts.IndexSignatureDeclaration
+        if (indexSignature.type) {
+          additionalProperties = this.getType(indexSignature.type)
+        }
       }
     }
-    return { members, minProperties, maxProperties }
+    return { members, minProperties, maxProperties, additionalProperties }
   }
 
   private overrideType (type: Type, jsDoc: JsDoc | undefined) {
@@ -656,4 +668,5 @@ type MembersInfo = {
   members: Member[];
   minProperties: number;
   maxProperties: number;
+  additionalProperties?: Type;
 }

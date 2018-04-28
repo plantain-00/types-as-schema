@@ -234,9 +234,11 @@
     "name": "TypeUnion5",
     "members": [
       {
+        "kind": "reference",
         "name": "TypeLiteral"
       },
       {
+        "kind": "reference",
         "name": "Interface"
       }
     ]
@@ -279,10 +281,36 @@
           "kind": "reference",
           "name": "TypeUnion5"
         }
+      },
+      {
+        "name": "typeUnionMember6",
+        "type": {
+          "kind": "union",
+          "members": [
+            {
+              "kind": "string"
+            },
+            {
+              "kind": "null"
+            }
+          ]
+        }
+      },
+      {
+        "name": "typeUnionMember7",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "foo",
+            "bar"
+          ]
+        }
       }
     ],
-    "minProperties": 5,
-    "maxProperties": 5
+    "minProperties": 7,
+    "maxProperties": 7
   },
   {
     "kind": "object",
@@ -703,6 +731,22 @@
   },
   {
     "kind": "object",
+    "name": "MapType7",
+    "members": [
+      {
+        "name": "foo",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 1,
+    "additionalProperties": {
+      "kind": "string"
+    }
+  },
+  {
+    "kind": "object",
     "name": "MapType",
     "members": [
       {
@@ -766,10 +810,47 @@
             "type": "uint32"
           }
         }
+      },
+      {
+        "name": "mapType5",
+        "type": {
+          "kind": "map",
+          "key": {
+            "kind": "string"
+          },
+          "value": {}
+        }
+      },
+      {
+        "name": "mapType6",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "foo",
+              "type": {
+                "kind": "number",
+                "type": "number"
+              }
+            }
+          ],
+          "minProperties": 1,
+          "additionalProperties": {
+            "kind": "number",
+            "type": "number"
+          }
+        }
+      },
+      {
+        "name": "mapType7",
+        "type": {
+          "kind": "reference",
+          "name": "MapType7"
+        }
       }
     ],
-    "minProperties": 4,
-    "maxProperties": 4
+    "minProperties": 7,
+    "maxProperties": 7
   },
   {
     "kind": "object",
@@ -996,18 +1077,6 @@
         "optional": true
       },
       {
-        "name": "unionType",
-        "type": {
-          "kind": "enum",
-          "type": "string",
-          "name": "string",
-          "enums": [
-            "foo",
-            "bar"
-          ]
-        }
-      },
-      {
         "name": "tupleType",
         "type": {
           "kind": "array",
@@ -1024,6 +1093,10 @@
           "kind": "reference",
           "name": "DefaultValue"
         }
+      },
+      {
+        "name": "anyType",
+        "type": {}
       }
     ],
     "minProperties": 20,

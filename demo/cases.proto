@@ -55,6 +55,7 @@ message TypeUnion {
     TypeUnion3 typeUnionMember3 = 3;
     TypeUnion4 typeUnionMember4 = 4;
     TypeUnion5 typeUnionMember5 = 5;
+    string typeUnionMember7 = 7;
 }
 
 message InterfaceExtends {
@@ -128,10 +129,15 @@ message ArrayType {
     repeated uint32 arrayType4 = 4;
 }
 
+message MapType7 {
+    string foo = 1;
+}
+
 message MapType {
     map<string, double> mapType = 1;
     map<string, TypeLiteral> mapType2 = 2;
     map<string, uint32> mapType4 = 4;
+    MapType7 mapType7 = 7;
 }
 
 message Parameter {
@@ -164,7 +170,6 @@ message EntryType {
     ID id = 17;
     Parameter parameter = 18;
     repeated string optionalArrayMember = 19;
-    string unionType = 20;
-    repeated string tupleType = 21;
-    DefaultValue defaultType = 22;
+    repeated string tupleType = 20;
+    DefaultValue defaultType = 21;
 }

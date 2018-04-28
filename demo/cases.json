@@ -73,13 +73,6 @@
             "type": "string"
           }
         },
-        "unionType": {
-          "type": "string",
-          "enum": [
-            "foo",
-            "bar"
-          ]
-        },
         "tupleType": {
           "type": "array",
           "items": {
@@ -90,7 +83,8 @@
         },
         "defaultType": {
           "$ref": "#/definitions/DefaultValue"
-        }
+        },
+        "anyType": {}
       },
       "required": [
         "booleanMember",
@@ -110,9 +104,9 @@
         "stringNumber",
         "id",
         "parameter",
-        "unionType",
         "tupleType",
-        "defaultType"
+        "defaultType",
+        "anyType"
       ],
       "additionalProperties": false
     },
@@ -288,6 +282,7 @@
         }
       },
       "required": [],
+      "additionalProperties": true,
       "minProperties": 1,
       "maxProperties": 1
     },
@@ -308,6 +303,24 @@
         },
         "typeUnionMember5": {
           "$ref": "#/definitions/TypeUnion5"
+        },
+        "typeUnionMember6": {
+          "type": "object",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeUnionMember7": {
+          "type": "string",
+          "enum": [
+            "foo",
+            "bar"
+          ]
         }
       },
       "required": [
@@ -315,7 +328,9 @@
         "typeUnionMember2",
         "typeUnionMember3",
         "typeUnionMember4",
-        "typeUnionMember5"
+        "typeUnionMember5",
+        "typeUnionMember6",
+        "typeUnionMember7"
       ],
       "additionalProperties": false
     },
@@ -572,15 +587,53 @@
             "minimum": 0,
             "maximum": 4294967295
           }
+        },
+        "mapType5": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "mapType6": {
+          "type": "object",
+          "properties": {
+            "foo": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "foo"
+          ],
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mapType7": {
+          "$ref": "#/definitions/MapType7"
         }
       },
       "required": [
         "mapType",
         "mapType2",
         "mapType3",
-        "mapType4"
+        "mapType4",
+        "mapType5",
+        "mapType6",
+        "mapType7"
       ],
       "additionalProperties": false
+    },
+    "MapType7": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": {
+        "type": "string"
+      }
     },
     "TaggedField": {
       "type": "object",

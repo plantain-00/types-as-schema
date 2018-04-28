@@ -54,6 +54,7 @@ type TypeUnion {
   typeUnionMember3: TypeUnion3!
   typeUnionMember4: TypeUnion4!
   typeUnionMember5: TypeUnion5!
+  typeUnionMember7: string!
 }
 
 type InterfaceExtends {
@@ -127,8 +128,12 @@ type ArrayType {
   arrayType4: [Int]!
 }
 
-type MapType {
+type MapType7 {
+  foo: String!
+}
 
+type MapType {
+  mapType7: MapType7!
 }
 
 type Parameter {
@@ -161,7 +166,6 @@ type EntryType {
   id: ID!
   parameter: Parameter!
   optionalArrayMember: [String]
-  unionType: string!
   tupleType: [String]!
   defaultType: DefaultValue!
 }

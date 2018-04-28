@@ -48,6 +48,8 @@ type TypeUnion = {
   typeUnionMember3: TypeUnion3;
   typeUnionMember4: TypeUnion4;
   typeUnionMember5: TypeUnion5;
+  typeUnionMember6: string | null;
+  typeUnionMember7: 'foo' | 'bar';
 }
 
 interface InterfaceExtends extends Interface {
@@ -190,11 +192,22 @@ type ArrayType = {
   arrayType4: uint32[];
 }
 
+type MapType7 = {
+  foo: string
+  [name: string]: string
+}
+
 type MapType = {
   mapType: { [name: string]: number };
   mapType2: { [name: string]: TypeLiteral };
   mapType3: { [name: string]: { literal: number } };
   mapType4: { [name: string]: uint32 };
+  mapType5: { [name: string]: any };
+  mapType6: {
+    foo: number
+    [name: string]: number
+  };
+  mapType7: MapType7
 }
 
 type ID = any
@@ -249,7 +262,7 @@ export type EntryType = {
   id: ID;
   parameter: Parameter;
   optionalArrayMember?: string[];
-  unionType: 'foo' | 'bar';
   tupleType: [string, string];
   defaultType: DefaultValue;
+  anyType: any;
 }
