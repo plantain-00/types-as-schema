@@ -73,13 +73,6 @@
             "type": "string"
           }
         },
-        "unionType": {
-          "type": "string",
-          "enum": [
-            "foo",
-            "bar"
-          ]
-        },
         "tupleType": {
           "type": "array",
           "items": {
@@ -111,7 +104,6 @@
         "stringNumber",
         "id",
         "parameter",
-        "unionType",
         "tupleType",
         "defaultType",
         "anyType"
@@ -290,6 +282,7 @@
         }
       },
       "required": [],
+      "additionalProperties": true,
       "minProperties": 1,
       "maxProperties": 1
     },
@@ -321,6 +314,13 @@
               "type": "null"
             }
           ]
+        },
+        "typeUnionMember7": {
+          "type": "string",
+          "enum": [
+            "foo",
+            "bar"
+          ]
         }
       },
       "required": [
@@ -329,7 +329,8 @@
         "typeUnionMember3",
         "typeUnionMember4",
         "typeUnionMember5",
-        "typeUnionMember6"
+        "typeUnionMember6",
+        "typeUnionMember7"
       ],
       "additionalProperties": false
     },
@@ -590,6 +591,23 @@
         "mapType5": {
           "type": "object",
           "additionalProperties": {}
+        },
+        "mapType6": {
+          "type": "object",
+          "properties": {
+            "foo": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "foo"
+          ],
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "mapType7": {
+          "$ref": "#/definitions/MapType7"
         }
       },
       "required": [
@@ -597,9 +615,25 @@
         "mapType2",
         "mapType3",
         "mapType4",
-        "mapType5"
+        "mapType5",
+        "mapType6",
+        "mapType7"
       ],
       "additionalProperties": false
+    },
+    "MapType7": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": {
+        "type": "string"
+      }
     },
     "TaggedField": {
       "type": "object",

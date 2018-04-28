@@ -110,8 +110,8 @@ export type ObjectType = {
   kind: 'object';
   members: Member[];
   minProperties: number;
-  maxProperties: number;
-  additionalProperties?: true;
+  maxProperties?: number;
+  additionalProperties?: boolean | Type;
 }
 
 export type ArrayType = {

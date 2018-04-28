@@ -119,13 +119,14 @@ export class Parser {
             return
           }
         }
-        const { members, minProperties, maxProperties } = this.getMembersInfo(declaration.type)
+        const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(declaration.type)
         const model: Model = {
           kind: 'object',
           name: declaration.name.text,
           members,
           minProperties,
-          maxProperties,
+          maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+          additionalProperties,
           entry: entry ? entry.comment : undefined
         }
         for (const jsDoc of jsDocs) {
@@ -141,7 +142,7 @@ export class Parser {
         return
       }
 
-      const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties } = this.getObjectMembers(declaration.members)
+      const { members, minProperties: selfMinProperties, maxProperties: selfMaxProperties, additionalProperties } = this.getObjectMembers(declaration.members)
       let minProperties = selfMinProperties
       let maxProperties = selfMaxProperties
 
@@ -175,7 +176,8 @@ export class Parser {
         name: declaration.name.text,
         members,
         minProperties,
-        maxProperties,
+        maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+        additionalProperties,
         entry: entry ? entry.comment : undefined
       }
 
@@ -246,12 +248,13 @@ export class Parser {
           }
         }
       } else {
-        const { members, minProperties, maxProperties } = this.getMembersInfo(literal)
+        const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(literal)
         return {
           kind: 'object',
           members,
           minProperties,
-          maxProperties
+          maxProperties: additionalProperties === undefined ? maxProperties : undefined,
+          additionalProperties
         }
       }
     } else if (type.kind === ts.SyntaxKind.ArrayType) {
@@ -479,6 +482,7 @@ export class Parser {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
+    let additionalProperties: Type | undefined
     for (const element of elements) {
       if (element.kind === ts.SyntaxKind.PropertySignature) {
         const property = element as ts.PropertySignature
@@ -568,9 +572,14 @@ export class Parser {
             this.setJsonSchemaObject(propertyJsDoc, member.type)
           }
         }
+      } else if (element.kind === ts.SyntaxKind.IndexSignature) {
+        const indexSignature = element as ts.IndexSignatureDeclaration
+        if (indexSignature.type) {
+          additionalProperties = this.getType(indexSignature.type)
+        }
       }
     }
-    return { members, minProperties, maxProperties }
+    return { members, minProperties, maxProperties, additionalProperties }
   }
 
   private overrideType (type: Type, jsDoc: JsDoc | undefined) {
@@ -659,4 +668,5 @@ type MembersInfo = {
   members: Member[];
   minProperties: number;
   maxProperties: number;
+  additionalProperties?: Type;
 }

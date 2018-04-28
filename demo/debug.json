@@ -295,10 +295,22 @@
             }
           ]
         }
+      },
+      {
+        "name": "typeUnionMember7",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "foo",
+            "bar"
+          ]
+        }
       }
     ],
-    "minProperties": 6,
-    "maxProperties": 6
+    "minProperties": 7,
+    "maxProperties": 7
   },
   {
     "kind": "object",
@@ -719,6 +731,22 @@
   },
   {
     "kind": "object",
+    "name": "MapType7",
+    "members": [
+      {
+        "name": "foo",
+        "type": {
+          "kind": "string"
+        }
+      }
+    ],
+    "minProperties": 1,
+    "additionalProperties": {
+      "kind": "string"
+    }
+  },
+  {
+    "kind": "object",
     "name": "MapType",
     "members": [
       {
@@ -792,10 +820,37 @@
           },
           "value": {}
         }
+      },
+      {
+        "name": "mapType6",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "foo",
+              "type": {
+                "kind": "number",
+                "type": "number"
+              }
+            }
+          ],
+          "minProperties": 1,
+          "additionalProperties": {
+            "kind": "number",
+            "type": "number"
+          }
+        }
+      },
+      {
+        "name": "mapType7",
+        "type": {
+          "kind": "reference",
+          "name": "MapType7"
+        }
       }
     ],
-    "minProperties": 5,
-    "maxProperties": 5
+    "minProperties": 7,
+    "maxProperties": 7
   },
   {
     "kind": "object",
@@ -1022,18 +1077,6 @@
         "optional": true
       },
       {
-        "name": "unionType",
-        "type": {
-          "kind": "enum",
-          "type": "string",
-          "name": "string",
-          "enums": [
-            "foo",
-            "bar"
-          ]
-        }
-      },
-      {
         "name": "tupleType",
         "type": {
           "kind": "array",
@@ -1056,8 +1099,8 @@
         "type": {}
       }
     ],
-    "minProperties": 21,
-    "maxProperties": 23,
+    "minProperties": 20,
+    "maxProperties": 22,
     "entry": "cases.json"
   }
 ]

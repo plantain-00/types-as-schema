@@ -77,13 +77,21 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       }
       properties[member.name] = getJsonSchemaProperty(member.type)
     }
+    let additionalProperties: Definition | boolean | undefined
+    if (memberType.additionalProperties === undefined) {
+      additionalProperties = memberType.additionalProperties === undefined ? false : undefined
+    } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
+      additionalProperties = memberType.additionalProperties
+    } else {
+      additionalProperties = getJsonSchemaProperty(memberType.additionalProperties)
+    }
     return {
       type: 'object',
       properties,
       required,
-      additionalProperties: memberType.additionalProperties === undefined ? false : undefined,
+      additionalProperties,
       minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
-      maxProperties: memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
+      maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
     }
   } else if (memberType.kind === 'string') {
     return {
@@ -231,7 +239,7 @@ type Definition =
   |
   {
     type: 'object',
-    additionalProperties?: Definition | false,
+    additionalProperties?: Definition | boolean,
     properties?: { [name: string]: Definition },
     required?: string[],
     minProperties?: number,

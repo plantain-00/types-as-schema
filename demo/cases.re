@@ -58,6 +58,7 @@ type typeUnion = {
   typeUnionMember3: typeUnion3,
   typeUnionMember4: typeUnion4,
   typeUnionMember5: typeUnion5,
+  typeUnionMember7: string,
 };
 
 type interfaceExtends = {
@@ -141,9 +142,14 @@ type arrayType = {
   arrayType4: list(int),
 };
 
+type mapType7 = {
+  .
+  foo: string,
+};
+
 type mapType = {
   .
-
+  mapType7: mapType7,
 };
 
 type parameter = {
@@ -179,7 +185,6 @@ type entryType = {
   id: iD,
   parameter: parameter,
   optionalArrayMember: option(list(string)),
-  unionType: string,
   tupleType: list(string),
   defaultType: defaultValue,
 };
