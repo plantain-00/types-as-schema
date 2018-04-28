@@ -244,6 +244,14 @@
     ]
   },
   {
+    "kind": "string",
+    "name": "TypeUnion8",
+    "enums": [
+      "foo",
+      "bar"
+    ]
+  },
+  {
     "kind": "object",
     "name": "TypeUnion",
     "members": [
@@ -307,10 +315,17 @@
             "bar"
           ]
         }
+      },
+      {
+        "name": "typeUnionMember8",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion8"
+        }
       }
     ],
-    "minProperties": 7,
-    "maxProperties": 7
+    "minProperties": 8,
+    "maxProperties": 8
   },
   {
     "kind": "object",

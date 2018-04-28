@@ -52,6 +52,7 @@ type typeUnion = {
   typeUnionMember4: typeUnion4;
   typeUnionMember5: typeUnion5;
   typeUnionMember7: string;
+  typeUnionMember8: typeUnion8;
 }
 
 type interfaceExtends = {

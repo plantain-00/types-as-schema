@@ -56,6 +56,7 @@ message TypeUnion {
     TypeUnion4 typeUnionMember4 = 4;
     TypeUnion5 typeUnionMember5 = 5;
     string typeUnionMember7 = 7;
+    TypeUnion8 typeUnionMember8 = 8;
 }
 
 message InterfaceExtends {
