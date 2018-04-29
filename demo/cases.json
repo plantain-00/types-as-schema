@@ -665,12 +665,16 @@
         },
         "numberEnum2": {
           "$ref": "#/definitions/NumberEnum2"
+        },
+        "stringEnum2": {
+          "const": "foo"
         }
       },
       "required": [
         "stringEnum",
         "numberEnum",
-        "numberEnum2"
+        "numberEnum2",
+        "stringEnum2"
       ],
       "additionalProperties": false
     },

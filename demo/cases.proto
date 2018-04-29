@@ -101,6 +101,7 @@ message Enum {
     string stringEnum = 1;
     NumberEnum numberEnum = 2;
     NumberEnum2 numberEnum2 = 3;
+    string stringEnum2 = 4;
 }
 
 message NumberType {

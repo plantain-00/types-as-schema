@@ -50,23 +50,15 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       maxItems: memberType.maxItems
     }
   } else if (memberType.kind === 'enum') {
-    if (memberType.type === 'string') {
+    if (memberType.enums.length === 1) {
       return {
         type: undefined,
-        enum: memberType.enums
+        const: memberType.enums[0]
       }
-    } else {
-      const definition = getNumberType({
-        kind: 'number',
-        type: memberType.type
-      })
-      Object.assign(definition, {
-        enum: memberType.enums,
-        minimum: undefined,
-        maximum: undefined
-      })
-      delete definition.type
-      return definition
+    }
+    return {
+      type: undefined,
+      enum: memberType.enums
     }
   } else if (memberType.kind === 'reference') {
     return {
@@ -100,6 +92,12 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
     }
   } else if (memberType.kind === 'string') {
     if (memberType.enums) {
+      if (memberType.enums.length === 1) {
+        return {
+          type: undefined,
+          const: memberType.enums[0]
+        }
+      }
       return {
         type: undefined,
         enum: memberType.enums
@@ -254,7 +252,8 @@ type Definition =
     type: undefined,
     $ref?: string,
     anyOf?: Definition[]
-    enum?: string[]
+    enum?: any[]
+    const?: any
   }
   |
   {

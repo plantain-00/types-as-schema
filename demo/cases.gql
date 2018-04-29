@@ -100,6 +100,7 @@ type Enum {
   stringEnum: String!
   numberEnum: NumberEnum!
   numberEnum2: NumberEnum2!
+  stringEnum2: string!
 }
 
 type NumberType {

@@ -5,7 +5,6 @@
       "type": "object",
       "properties": {
         "kind": {
-          "type": "string",
           "enum": [
             "flows",
             "history samples",
@@ -62,7 +61,6 @@
       "type": "object",
       "properties": {
         "kind": {
-          "type": "string",
           "enum": [
             "log",
             "sample"
@@ -159,7 +157,6 @@
           "maximum": 4294967295
         },
         "kind": {
-          "type": "string",
           "enum": [
             "success",
             "fail"
@@ -197,7 +194,6 @@
           "maximum": 4294967295
         },
         "kind": {
-          "type": "string",
           "enum": [
             "success",
             "fail"
@@ -229,7 +225,6 @@
           "maximum": 4294967295
         },
         "kind": {
-          "type": "string",
           "enum": [
             "success",
             "fail"

@@ -117,6 +117,7 @@ export type Enum = {
   stringEnum: StringEnum;
   numberEnum: NumberEnum;
   numberEnum2: NumberEnum2;
+  stringEnum2: 'foo';
 }
 
 type integer = number
