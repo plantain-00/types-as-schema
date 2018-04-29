@@ -543,10 +543,21 @@
           "kind": "reference",
           "name": "NumberEnum2"
         }
+      },
+      {
+        "name": "stringEnum2",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "foo"
+          ]
+        }
       }
     ],
-    "minProperties": 3,
-    "maxProperties": 3
+    "minProperties": 4,
+    "maxProperties": 4
   },
   {
     "kind": "object",

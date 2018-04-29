@@ -50,22 +50,15 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       maxItems: memberType.maxItems
     }
   } else if (memberType.kind === 'enum') {
-    if (memberType.type === 'string') {
+    if (memberType.enums.length === 1) {
       return {
-        type: 'string',
-        enum: memberType.enums
+        type: undefined,
+        const: memberType.enums[0]
       }
-    } else {
-      const definition = getNumberType({
-        kind: 'number',
-        type: memberType.type
-      })
-      Object.assign(definition, {
-        enum: memberType.enums,
-        minimum: undefined,
-        maximum: undefined
-      })
-      return definition
+    }
+    return {
+      type: undefined,
+      enum: memberType.enums
     }
   } else if (memberType.kind === 'reference') {
     return {
@@ -98,13 +91,24 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
     }
   } else if (memberType.kind === 'string') {
+    if (memberType.enums) {
+      if (memberType.enums.length === 1) {
+        return {
+          type: undefined,
+          const: memberType.enums[0]
+        }
+      }
+      return {
+        type: undefined,
+        enum: memberType.enums
+      }
+    }
     return {
       type: memberType.kind,
       minLength: memberType.minLength,
       maxLength: memberType.maxLength,
       pattern: memberType.pattern,
-      default: memberType.default,
-      enum: memberType.enums
+      default: memberType.default
     }
   } else if (memberType.kind === 'union') {
     return {
@@ -217,7 +221,6 @@ type Definition =
     maximum?: number;
     exclusiveMinimum?: number;
     exclusiveMaximum?: number;
-    enum?: number[],
     multipleOf?: number;
     default?: number;
   }
@@ -249,11 +252,12 @@ type Definition =
     type: undefined,
     $ref?: string,
     anyOf?: Definition[]
+    enum?: any[]
+    const?: any
   }
   |
   {
     type: 'string',
-    enum?: string[],
     minLength?: number;
     maxLength?: number;
     pattern?: string;

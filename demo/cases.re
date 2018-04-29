@@ -111,6 +111,7 @@ type enum = {
   stringEnum: string,
   numberEnum: numberEnum,
   numberEnum2: numberEnum2,
+  stringEnum2: string,
 };
 
 type numberType = {
