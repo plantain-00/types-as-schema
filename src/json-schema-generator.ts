@@ -52,7 +52,7 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
   } else if (memberType.kind === 'enum') {
     if (memberType.type === 'string') {
       return {
-        type: 'string',
+        type: undefined,
         enum: memberType.enums
       }
     } else {
@@ -65,6 +65,7 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
         minimum: undefined,
         maximum: undefined
       })
+      delete definition.type
       return definition
     }
   } else if (memberType.kind === 'reference') {
@@ -98,13 +99,18 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
     }
   } else if (memberType.kind === 'string') {
+    if (memberType.enums) {
+      return {
+        type: undefined,
+        enum: memberType.enums
+      }
+    }
     return {
       type: memberType.kind,
       minLength: memberType.minLength,
       maxLength: memberType.maxLength,
       pattern: memberType.pattern,
-      default: memberType.default,
-      enum: memberType.enums
+      default: memberType.default
     }
   } else if (memberType.kind === 'union') {
     return {
@@ -217,7 +223,6 @@ type Definition =
     maximum?: number;
     exclusiveMinimum?: number;
     exclusiveMaximum?: number;
-    enum?: number[],
     multipleOf?: number;
     default?: number;
   }
@@ -249,11 +254,11 @@ type Definition =
     type: undefined,
     $ref?: string,
     anyOf?: Definition[]
+    enum?: string[]
   }
   |
   {
     type: 'string',
-    enum?: string[],
     minLength?: number;
     maxLength?: number;
     pattern?: string;
