@@ -3,6 +3,7 @@ import ts from 'typescript'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as chokidar from 'chokidar'
+import fse from 'fs-extra'
 import { Generator } from './core'
 import * as packageJson from '../package.json'
 
@@ -98,6 +99,7 @@ async function executeCommandLine () {
     }
 
     if (jsonPath) {
+      fse.ensureDirSync(jsonPath)
       const schemas = generator.generateJsonSchemas()
       for (const { entry, schema } of schemas) {
         if (debugPath || ajv.validateSchema(schema)) {
