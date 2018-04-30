@@ -153,13 +153,18 @@ message DefaultValue {
     bool booleanMember = 3;
 }
 
+message ReferenceType {
+    TypeLiteral typeReferenceMember1 = 1;
+    TypeReferenceMember2 typeReferenceMember2 = 2;
+}
+
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
     string stringMember = 3;
     NumberType numberType = 4;
     ArrayType arrayType = 5;
-    TypeLiteral referenceType = 7;
+    ReferenceType referenceType = 7;
     Interface interfaceType = 8;
     TypeUnion typeUnion = 9;
     InterfaceExtends interfaceExtends = 10;

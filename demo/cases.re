@@ -167,6 +167,12 @@ type defaultValue = {
   booleanMember: bool,
 };
 
+type referenceType = {
+  .
+  typeReferenceMember1: typeLiteral,
+  typeReferenceMember2: typeReferenceMember2,
+};
+
 type entryType = {
   .
   optionalMember: option(string),
@@ -174,7 +180,7 @@ type entryType = {
   stringMember: string,
   numberType: numberType,
   arrayType: arrayType,
-  referenceType: typeLiteral,
+  referenceType: referenceType,
   interfaceType: interface,
   typeUnion: typeUnion,
   interfaceExtends: interfaceExtends,

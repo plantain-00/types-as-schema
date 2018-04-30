@@ -242,6 +242,13 @@ type DefaultValue = {
   booleanMember: boolean
 }
 
+type TypeReferenceMember2 = TypeLiteral
+
+type ReferenceType = {
+  typeReferenceMember1: TypeLiteral
+  typeReferenceMember2: TypeReferenceMember2
+}
+
 /**
  * @entry cases.json
  */
@@ -252,7 +259,7 @@ export type EntryType = {
   numberType: NumberType;
   arrayType: ArrayType;
   typeLiteral: { literal: number };
-  referenceType: TypeLiteral;
+  referenceType: ReferenceType;
   interfaceType: Interface;
   typeUnion: TypeUnion;
   interfaceExtends: InterfaceExtends;

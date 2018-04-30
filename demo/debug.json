@@ -955,6 +955,33 @@
     "maxProperties": 3
   },
   {
+    "kind": "reference",
+    "newName": "TypeReferenceMember2",
+    "name": "TypeLiteral"
+  },
+  {
+    "kind": "object",
+    "name": "ReferenceType",
+    "members": [
+      {
+        "name": "typeReferenceMember1",
+        "type": {
+          "kind": "reference",
+          "name": "TypeLiteral"
+        }
+      },
+      {
+        "name": "typeReferenceMember2",
+        "type": {
+          "kind": "reference",
+          "name": "TypeReferenceMember2"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
     "kind": "object",
     "name": "EntryType",
     "members": [
@@ -1012,7 +1039,7 @@
         "name": "referenceType",
         "type": {
           "kind": "reference",
-          "name": "TypeLiteral"
+          "name": "ReferenceType"
         }
       },
       {

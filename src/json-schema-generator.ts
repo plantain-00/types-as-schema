@@ -18,6 +18,11 @@ export function generateJsonSchemas(models: Model[]) {
       || model.kind === 'string'
       || model.kind === 'number') {
       definitions[model.name] = getJsonSchemaProperty(model)
+    } else if (model.kind === 'reference') {
+      definitions[model.newName] = {
+        type: undefined,
+        $ref: `#/definitions/${model.name}`
+      }
     }
   }
   return models.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
