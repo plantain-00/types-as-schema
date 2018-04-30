@@ -21,14 +21,14 @@ export class App extends Vue {
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
-  set source (value: string) {
+  set source(value: string) {
     this.innerSource = value
     localStorage.setItem(localStorageKey, value)
   }
-  get source () {
+  get source() {
     return this.innerSource
   }
-  get jsonSchema () {
+  get jsonSchema() {
     if (this.selectedOption) {
       const schema = this.jsonSchemas.find(s => s.entry === this.selectedOption)
       if (schema) {
@@ -38,7 +38,7 @@ export class App extends Vue {
     return ''
   }
 
-  generate () {
+  generate() {
     if (this.source) {
       const sourceFile = ts.createSourceFile('', this.source, ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS)
 
