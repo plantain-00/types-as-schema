@@ -149,13 +149,18 @@ type DefaultValue {
   booleanMember: Boolean!
 }
 
+type ReferenceType {
+  typeReferenceMember1: TypeLiteral!
+  typeReferenceMember2: TypeReferenceMember2!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
   stringMember: String!
   numberType: NumberType!
   arrayType: ArrayType!
-  referenceType: TypeLiteral!
+  referenceType: ReferenceType!
   interfaceType: Interface!
   typeUnion: TypeUnion!
   interfaceExtends: InterfaceExtends!

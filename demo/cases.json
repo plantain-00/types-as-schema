@@ -32,7 +32,7 @@
           "additionalProperties": false
         },
         "referenceType": {
-          "$ref": "#/definitions/TypeLiteral"
+          "$ref": "#/definitions/ReferenceType"
         },
         "interfaceType": {
           "$ref": "#/definitions/Interface"
@@ -270,6 +270,25 @@
         "typeLiteralMember2"
       ],
       "additionalProperties": false
+    },
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "typeReferenceMember1": {
+          "$ref": "#/definitions/TypeLiteral"
+        },
+        "typeReferenceMember2": {
+          "$ref": "#/definitions/TypeReferenceMember2"
+        }
+      },
+      "required": [
+        "typeReferenceMember1",
+        "typeReferenceMember2"
+      ],
+      "additionalProperties": false
+    },
+    "TypeReferenceMember2": {
+      "$ref": "#/definitions/TypeLiteral"
     },
     "Interface": {
       "type": "object",

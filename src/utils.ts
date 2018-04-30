@@ -6,7 +6,7 @@ export function toLowerCase(name: string) {
   return name[0].toLowerCase() + name.substring(1)
 }
 
-export type Model = EnumModel | ObjectModel | ArrayModel | UnionModel | StringModel | NumberModel
+export type Model = EnumModel | ObjectModel | ArrayModel | UnionModel | StringModel | NumberModel | ReferenceModel
 
 export type EnumModel = {
   kind: 'enum';
@@ -50,6 +50,13 @@ export type StringModel = StringType & {
  */
 export type NumberModel = NumberType & {
   name: string;
+}
+
+/**
+ * @public
+ */
+export type ReferenceModel = ReferenceType & {
+  newName: string;
 }
 
 export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType

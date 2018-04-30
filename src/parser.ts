@@ -168,6 +168,14 @@ export class Parser {
       || declaration.type.kind === ts.SyntaxKind.UnionType
       || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
       this.handleTypeLiteralOrUnionTypeOrIntersectionType(declaration.type as ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode, declaration.name, jsDocs, entry)
+    } else if (declaration.type.kind === ts.SyntaxKind.TypeReference) {
+      const typeReference = declaration.type as ts.TypeReferenceNode
+      const model: Model = {
+        kind: 'reference',
+        newName: declaration.name.text,
+        name: (typeReference.typeName as ts.Identifier).text
+      }
+      this.models.push(model)
     }
   }
 
