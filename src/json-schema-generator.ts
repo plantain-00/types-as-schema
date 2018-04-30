@@ -4,10 +4,12 @@ import {
   ArrayModel,
   UnionModel,
   Model,
-  NumberType
+  NumberType,
+  ObjectType,
+  StringType
 } from './utils'
 
-export function generateJsonSchemas (models: Model[]) {
+export function generateJsonSchemas(models: Model[]) {
   const definitions: { [name: string]: Definition } = {}
   for (const model of models) {
     if (model.kind === 'object'
@@ -28,7 +30,7 @@ export function generateJsonSchemas (models: Model[]) {
     }))
 }
 
-function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | UnionModel): Definition {
+function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | UnionModel): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
@@ -66,50 +68,9 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
       $ref: `#/definitions/${memberType.name}`
     }
   } else if (memberType.kind === 'object') {
-    const properties: { [name: string]: Definition } = {}
-    const required: string[] = []
-    for (const member of memberType.members) {
-      if (!member.optional) {
-        required.push(member.name)
-      }
-      properties[member.name] = getJsonSchemaProperty(member.type)
-    }
-    let additionalProperties: Definition | boolean | undefined
-    if (memberType.additionalProperties === undefined) {
-      additionalProperties = memberType.additionalProperties === undefined ? false : undefined
-    } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
-      additionalProperties = memberType.additionalProperties
-    } else {
-      additionalProperties = getJsonSchemaProperty(memberType.additionalProperties)
-    }
-    return {
-      type: 'object',
-      properties,
-      required,
-      additionalProperties,
-      minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
-      maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
-    }
+    return getJsonSchemaPropertyOfObject(memberType)
   } else if (memberType.kind === 'string') {
-    if (memberType.enums) {
-      if (memberType.enums.length === 1) {
-        return {
-          type: undefined,
-          const: memberType.enums[0]
-        }
-      }
-      return {
-        type: undefined,
-        enum: memberType.enums
-      }
-    }
-    return {
-      type: memberType.kind,
-      minLength: memberType.minLength,
-      maxLength: memberType.maxLength,
-      pattern: memberType.pattern,
-      default: memberType.default
-    }
+    return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
     return {
       type: undefined,
@@ -126,7 +87,56 @@ function getJsonSchemaProperty (memberType: Type | ObjectModel | ArrayModel | Un
   }
 }
 
-function getReferencedDefinitions (typeName: string | Definition, definitions: { [name: string]: Definition }) {
+function getJsonSchemaPropertyOfString(memberType: StringType) {
+  if (memberType.enums) {
+    if (memberType.enums.length === 1) {
+      return {
+        type: undefined,
+        const: memberType.enums[0]
+      }
+    }
+    return {
+      type: undefined,
+      enum: memberType.enums
+    }
+  }
+  return {
+    type: memberType.kind,
+    minLength: memberType.minLength,
+    maxLength: memberType.maxLength,
+    pattern: memberType.pattern,
+    default: memberType.default
+  }
+}
+
+function getJsonSchemaPropertyOfObject(memberType: ObjectModel | ObjectType): Definition {
+  const properties: { [name: string]: Definition } = {}
+  const required: string[] = []
+  for (const member of memberType.members) {
+    if (!member.optional) {
+      required.push(member.name)
+    }
+    properties[member.name] = getJsonSchemaProperty(member.type)
+  }
+  let additionalProperties: Definition | boolean | undefined
+  if (memberType.additionalProperties === undefined) {
+    additionalProperties = memberType.additionalProperties === undefined ? false : undefined
+  } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
+    additionalProperties = memberType.additionalProperties
+  } else {
+    additionalProperties = getJsonSchemaProperty(memberType.additionalProperties)
+  }
+  return {
+    type: 'object',
+    properties,
+    required,
+    additionalProperties,
+    minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
+    maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
+  }
+}
+
+function getReferencedDefinitions(typeName: string | Definition, definitions: { [name: string]: Definition }) {
   const result: { [name: string]: Definition } = {}
   const definition = typeof typeName === 'string' ? definitions[typeName] : typeName
   if (definition === undefined) {
@@ -147,20 +157,26 @@ function getReferencedDefinitions (typeName: string | Definition, definitions: {
       }
     }
   } else if (definition.type === undefined) {
-    if (definition.$ref) {
-      const itemTypeName = definition.$ref.substring('#/definitions/'.length)
-      Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
-    }
-    if (definition.anyOf) {
-      for (const reference of definition.anyOf) {
-        Object.assign(result, getReferencedDefinitions(reference, definitions))
-      }
+    Object.assign(result, getJsonSchemaPropertyOfUndefined(definition, definitions))
+  }
+  return result
+}
+
+function getJsonSchemaPropertyOfUndefined(definition: UndefinedDefinition, definitions: { [name: string]: Definition }) {
+  const result: { [name: string]: Definition } = {}
+  if (definition.$ref) {
+    const itemTypeName = definition.$ref.substring('#/definitions/'.length)
+    Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+  }
+  if (definition.anyOf) {
+    for (const reference of definition.anyOf) {
+      Object.assign(result, getReferencedDefinitions(reference, definitions))
     }
   }
   return result
 }
 
-function getNumberType (numberType: NumberType): Definition {
+function getNumberType(numberType: NumberType): Definition {
   let definition: Definition
   if (numberType.type === 'double' || numberType.type === 'float') {
     definition = {
@@ -169,29 +185,13 @@ function getNumberType (numberType: NumberType): Definition {
       maximum: numberType.maximum
     }
   } else if (numberType.type === 'uint32' || numberType.type === 'fixed32') {
-    definition = {
-      type: 'integer',
-      minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-      maximum: numberType.maximum !== undefined ? numberType.maximum : 4294967295
-    }
+    definition = getUInt32Type(numberType)
   } else if (numberType.type === 'int32' || numberType.type === 'sint32' || numberType.type === 'sfixed32') {
-    definition = {
-      type: 'integer',
-      minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
-      maximum: numberType.maximum !== undefined ? numberType.maximum : 2147483647
-    }
+    definition = getInt32Type(numberType)
   } else if (numberType.type === 'uint64' || numberType.type === 'fixed64') {
-    definition = {
-      type: 'integer',
-      minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-      maximum: numberType.maximum !== undefined ? numberType.maximum : 18446744073709551615
-    }
+    definition = getUint64Type(numberType)
   } else if (numberType.type === 'int64' || numberType.type === 'sint64' || numberType.type === 'sfixed64') {
-    definition = {
-      type: 'integer',
-      minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
-      maximum: numberType.maximum !== undefined ? numberType.maximum : 9223372036854775807
-    }
+    definition = getInt64Type(numberType)
   } else if (numberType.type === 'number' || numberType.type === 'integer') {
     definition = {
       type: numberType.type,
@@ -214,56 +214,111 @@ function getNumberType (numberType: NumberType): Definition {
   return definition
 }
 
-type Definition =
-  {
-    type: 'number' | 'integer',
-    minimum?: number;
-    maximum?: number;
-    exclusiveMinimum?: number;
-    exclusiveMaximum?: number;
-    multipleOf?: number;
-    default?: number;
+function getUInt32Type(numberType: NumberType): NumberDefinition {
+  return {
+    type: 'integer',
+    minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
+    maximum: numberType.maximum !== undefined ? numberType.maximum : 4294967295
   }
-  |
-  {
-    type: 'boolean';
-    default?: boolean;
+}
+
+function getInt32Type(numberType: NumberType): NumberDefinition {
+  return {
+    type: 'integer',
+    minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
+    maximum: numberType.maximum !== undefined ? numberType.maximum : 2147483647
   }
-  |
-  {
-    type: 'object',
-    additionalProperties?: Definition | boolean,
-    properties?: { [name: string]: Definition },
-    required?: string[],
-    minProperties?: number,
-    maxProperties?: number,
-    anyOf?: Definition[]
+}
+
+function getUint64Type(numberType: NumberType): NumberDefinition {
+  return {
+    type: 'integer',
+    minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
+    maximum: numberType.maximum !== undefined ? numberType.maximum : 18446744073709551615
   }
-  |
-  {
-    type: 'array',
-    items: Definition,
-    uniqueItems?: boolean,
-    minItems?: number,
-    maxItems?: number
+}
+
+function getInt64Type(numberType: NumberType): NumberDefinition {
+  return {
+    type: 'integer',
+    minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
+    maximum: numberType.maximum !== undefined ? numberType.maximum : 9223372036854775807
   }
-  |
-  {
-    type: undefined,
-    $ref?: string,
-    anyOf?: Definition[]
-    enum?: any[]
-    const?: any
-  }
-  |
-  {
-    type: 'string',
-    minLength?: number;
-    maxLength?: number;
-    pattern?: string;
-    default?: string;
-  }
-  |
-  {
-    type: 'null'
-  }
+}
+
+/**
+ * @public
+ */
+export type Definition =
+  | NumberDefinition
+  | BooleanDefinition
+  | ObjectDefinition
+  | ArrayDefinition
+  | UndefinedDefinition
+  | StringDefinition
+  | NullDefinition
+
+/**
+ * @public
+ */
+export type NumberDefinition = {
+  type: 'number' | 'integer',
+  minimum?: number;
+  maximum?: number;
+  exclusiveMinimum?: number;
+  exclusiveMaximum?: number;
+  multipleOf?: number;
+  default?: number;
+}
+
+/**
+ * @public
+ */
+export type BooleanDefinition = {
+  type: 'boolean';
+  default?: boolean;
+}
+
+export type ObjectDefinition = {
+  type: 'object',
+  additionalProperties?: Definition | boolean,
+  properties?: { [name: string]: Definition },
+  required?: string[],
+  minProperties?: number,
+  maxProperties?: number,
+  anyOf?: Definition[]
+}
+
+export type ArrayDefinition = {
+  type: 'array',
+  items: Definition,
+  uniqueItems?: boolean,
+  minItems?: number,
+  maxItems?: number
+}
+
+export type UndefinedDefinition = {
+  type: undefined,
+  $ref?: string,
+  anyOf?: Definition[]
+  enum?: any[]
+  const?: any
+}
+
+/**
+ * @public
+ */
+export type StringDefinition = {
+  type: 'string',
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+  default?: string;
+}
+
+/**
+ * @public
+ */
+export type NullDefinition = {
+  type: 'null'
+}

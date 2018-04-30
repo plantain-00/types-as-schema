@@ -1,6 +1,6 @@
-import { Model, Type, toLowerCase, toUpperCase } from './utils'
+import { Model, Type, toLowerCase, toUpperCase, ReferenceType } from './utils'
 
-export function generateReasonTypes (models: Model[]) {
+export function generateReasonTypes(models: Model[]) {
   const messages: string[] = []
   for (const model of models) {
     if (model.kind === 'object') {
@@ -23,7 +23,7 @@ ${members.filter(m => m).map(m => m + ',').join('\n')}
   return messages.join('\n\n') + '\n'
 }
 
-function getReasonTypesProperty (models: Model[], memberType: Type): string {
+function getReasonTypesProperty(models: Model[], memberType: Type): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
     const elementPropertyType = getReasonTypesProperty(models, memberType.type)
@@ -33,12 +33,7 @@ function getReasonTypesProperty (models: Model[], memberType: Type): string {
   } else if (memberType.kind === 'enum') {
     propertyType = memberType.name
   } else if (memberType.kind === 'reference') {
-    const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
-    if (model && model.kind === 'enum' && model.type === 'string') {
-      propertyType = 'string'
-    } else {
-      propertyType = memberType.name
-    }
+    propertyType = getReasonTypesPropertyOfReference(models, memberType)
   } else if (memberType.kind === 'number') {
     if (memberType.type === 'number'
       || memberType.type === 'float'
@@ -53,4 +48,12 @@ function getReasonTypesProperty (models: Model[], memberType: Type): string {
     propertyType = 'bool'
   }
   return propertyType
+}
+
+function getReasonTypesPropertyOfReference(models: Model[], memberType: ReferenceType): string {
+  const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
+  if (model && model.kind === 'enum' && model.type === 'string') {
+    return 'string'
+  }
+  return memberType.name
 }
