@@ -54,7 +54,8 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
       items: getJsonSchemaProperty(memberType.type),
       uniqueItems: memberType.uniqueItems,
       minItems: memberType.minItems,
-      maxItems: memberType.maxItems
+      maxItems: memberType.maxItems,
+      default: memberType.default
     }
   } else if (memberType.kind === 'enum') {
     if (memberType.enums.length === 1) {
@@ -70,7 +71,8 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
   } else if (memberType.kind === 'reference') {
     return {
       type: undefined,
-      $ref: `#/definitions/${memberType.name}`
+      $ref: `#/definitions/${memberType.name}`,
+      default: memberType.default
     }
   } else if (memberType.kind === 'object') {
     return getJsonSchemaPropertyOfObject(memberType)
@@ -137,7 +139,8 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectModel | ObjectType): De
     required,
     additionalProperties,
     minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
-    maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined
+    maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
+    default: memberType.default
   }
 }
 
@@ -291,7 +294,8 @@ export type ObjectDefinition = {
   required?: string[],
   minProperties?: number,
   maxProperties?: number,
-  anyOf?: Definition[]
+  anyOf?: Definition[],
+  default?: any
 }
 
 export type ArrayDefinition = {
@@ -299,7 +303,8 @@ export type ArrayDefinition = {
   items: Definition,
   uniqueItems?: boolean,
   minItems?: number,
-  maxItems?: number
+  maxItems?: number,
+  default?: any[]
 }
 
 export type UndefinedDefinition = {
@@ -308,6 +313,7 @@ export type UndefinedDefinition = {
   anyOf?: Definition[]
   enum?: any[]
   const?: any
+  default?: any
 }
 
 /**

@@ -144,6 +144,10 @@ type defaultValue = {
   stringMember: string;
   numberMember: float;
   booleanMember: bool;
+  stringMember2: string;
+  stringMember3: string;
+  numberMember1: int;
+  objectMember2: typeLiteral;
 }
 
 type referenceType = {

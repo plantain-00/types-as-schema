@@ -247,6 +247,30 @@ type DefaultValue = {
    * @default true
    */
   booleanMember: boolean
+  /**
+   * @default 'foo bar'
+   */
+  stringMember2: string
+  /**
+   * @default ''
+   */
+  stringMember3: string
+  /**
+   * @default []
+   */
+  arrayMember: any[]
+  /**
+   * @default {}
+   */
+  objectMember: { foo: string }
+  /**
+   * @default 123
+   */
+  numberMember1: integer
+  /**
+   * @default {}
+   */
+  objectMember2: TypeLiteral
 }
 
 type TypeReferenceMember2 = TypeLiteral

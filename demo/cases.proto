@@ -151,6 +151,10 @@ message DefaultValue {
     string stringMember = 1;
     double numberMember = 2;
     bool booleanMember = 3;
+    string stringMember2 = 4;
+    string stringMember3 = 5;
+    int32 numberMember1 = 8;
+    TypeLiteral objectMember2 = 9;
 }
 
 message ReferenceType {
