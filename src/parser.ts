@@ -407,6 +407,23 @@ export class Parser {
     }
   }
 
+  private getTypeOfArrayTypeReference(reference: ts.TypeReferenceNode): Type {
+    if (reference.typeArguments && reference.typeArguments.length === 1) {
+      const typeArgument = reference.typeArguments[0]
+      return {
+        kind: 'array',
+        type: this.getType(typeArgument)
+      }
+    } else {
+      return {
+        kind: 'array',
+        type: {
+          kind: undefined
+        }
+      }
+    }
+  }
+
   private getTypeOfTypeReference(reference: ts.TypeReferenceNode): Type {
     if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
       if (numberTypes.includes(reference.typeName.text)) {
@@ -415,6 +432,9 @@ export class Parser {
           type: reference.typeName.text
         }
       } else {
+        if (reference.typeName.text === 'Array') {
+          return this.getTypeOfArrayTypeReference(reference)
+        }
         return {
           kind: 'reference',
           name: reference.typeName.text

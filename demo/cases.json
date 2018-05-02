@@ -245,13 +245,98 @@
             "exclusiveMinimum": 300,
             "exclusiveMaximum": 400
           }
+        },
+        "arrayType5": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "arrayType6": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "arrayType7": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/TypeLiteral"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "arrayType8": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "literal": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "literal"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
         "arrayType1",
         "arrayType2",
         "arrayType3",
-        "arrayType4"
+        "arrayType4",
+        "arrayType5",
+        "arrayType6",
+        "arrayType7",
+        "arrayType8"
       ],
       "additionalProperties": false
     },

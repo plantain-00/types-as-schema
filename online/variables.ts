@@ -200,6 +200,10 @@ type ArrayType = {
    * @itemExclusiveMaximum 400
    */
   arrayType4: uint32[];
+  arrayType5: { literal: number | string }[];
+  arrayType6: { literal: number | null }[];
+  arrayType7: { literal: TypeLiteral | null }[];
+  arrayType8: Array<{ literal: number }>;
 }
 
 type MapType7 = {

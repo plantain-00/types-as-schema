@@ -750,10 +750,114 @@
             "exclusiveMaximum": 400
           }
         }
+      },
+      {
+        "name": "arrayType5",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "union",
+                  "members": [
+                    {
+                      "kind": "number",
+                      "type": "number"
+                    },
+                    {
+                      "kind": "string"
+                    }
+                  ]
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1
+          }
+        }
+      },
+      {
+        "name": "arrayType6",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "union",
+                  "members": [
+                    {
+                      "kind": "number",
+                      "type": "number"
+                    },
+                    {
+                      "kind": "null"
+                    }
+                  ]
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1
+          }
+        }
+      },
+      {
+        "name": "arrayType7",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "union",
+                  "members": [
+                    {
+                      "kind": "reference",
+                      "name": "TypeLiteral"
+                    },
+                    {
+                      "kind": "null"
+                    }
+                  ]
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1
+          }
+        }
+      },
+      {
+        "name": "arrayType8",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "number",
+                  "type": "number"
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1
+          }
+        }
       }
     ],
-    "minProperties": 4,
-    "maxProperties": 4
+    "minProperties": 8,
+    "maxProperties": 8
   },
   {
     "kind": "object",
