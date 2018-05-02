@@ -737,6 +737,10 @@ export class Parser {
     if (propertyJsDoc.comment) {
       if (propertyJsDoc.name === 'default') {
         type.default = this.getJsDocComment(propertyJsDoc.comment).toLowerCase() === 'true'
+      } else if (propertyJsDoc.name === 'title') {
+        type.title = propertyJsDoc.comment
+      } else if (propertyJsDoc.name === 'description') {
+        type.description = propertyJsDoc.comment
       }
     }
   }
@@ -762,6 +766,10 @@ export class Parser {
         type.pattern = propertyJsDoc.comment
       } else if (propertyJsDoc.name === 'default') {
         type.default = this.getJsDocComment(propertyJsDoc.comment)
+      } else if (propertyJsDoc.name === 'title') {
+        type.title = propertyJsDoc.comment
+      } else if (propertyJsDoc.name === 'description') {
+        type.description = propertyJsDoc.comment
       }
     }
   }
@@ -780,6 +788,10 @@ export class Parser {
         type.exclusiveMinimum = +propertyJsDoc.comment
       } else if (propertyJsDoc.name === 'default') {
         type.default = +this.getJsDocComment(propertyJsDoc.comment)
+      } else if (propertyJsDoc.name === 'title') {
+        type.title = propertyJsDoc.comment
+      } else if (propertyJsDoc.name === 'description') {
+        type.description = propertyJsDoc.comment
       }
     }
   }
@@ -820,6 +832,10 @@ export class Parser {
       }
     } else if (jsDoc.name === 'uniqueItems') {
       type.uniqueItems = true
+    } else if (jsDoc.name === 'title') {
+      type.title = jsDoc.comment
+    } else if (jsDoc.name === 'description') {
+      type.description = jsDoc.comment
     }
   }
 
@@ -863,6 +879,10 @@ export class Parser {
         type.maxProperties = +jsDoc.comment
       } else if (jsDoc.name === 'default') {
         type.default = JSON.parse(this.getJsDocComment(jsDoc.comment))
+      } else if (jsDoc.name === 'title') {
+        type.title = jsDoc.comment
+      } else if (jsDoc.name === 'description') {
+        type.description = jsDoc.comment
       }
     } else {
       if (jsDoc.name === 'additionalProperties') {

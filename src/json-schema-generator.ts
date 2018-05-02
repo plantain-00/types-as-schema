@@ -41,7 +41,9 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
   } else if (memberType.kind === 'boolean') {
     return {
       type: 'boolean',
-      default: memberType.default
+      default: memberType.default,
+      title: memberType.title,
+      description: memberType.description
     }
   } else if (memberType.kind === 'map') {
     return {
@@ -55,7 +57,9 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
       uniqueItems: memberType.uniqueItems,
       minItems: memberType.minItems,
       maxItems: memberType.maxItems,
-      default: memberType.default
+      default: memberType.default,
+      title: memberType.title,
+      description: memberType.description
     }
   } else if (memberType.kind === 'enum') {
     if (memberType.enums.length === 1) {
@@ -112,7 +116,9 @@ function getJsonSchemaPropertyOfString(memberType: StringType) {
     minLength: memberType.minLength,
     maxLength: memberType.maxLength,
     pattern: memberType.pattern,
-    default: memberType.default
+    default: memberType.default,
+    title: memberType.title,
+    description: memberType.description
   }
 }
 
@@ -140,7 +146,9 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectModel | ObjectType): De
     additionalProperties,
     minProperties: memberType.minProperties > memberType.members.filter(m => !m.optional).length ? memberType.minProperties : undefined,
     maxProperties: memberType.maxProperties && memberType.maxProperties < memberType.members.length ? memberType.maxProperties : undefined,
-    default: memberType.default
+    default: memberType.default,
+    title: memberType.title,
+    description: memberType.description
   }
 }
 
@@ -217,7 +225,9 @@ function getNumberType(numberType: NumberType): Definition {
     multipleOf: numberType.multipleOf,
     exclusiveMinimum: numberType.exclusiveMinimum,
     exclusiveMaximum: numberType.exclusiveMaximum,
-    default: numberType.default
+    default: numberType.default,
+    title: numberType.title,
+    description: numberType.description
   })
   return definition
 }
@@ -277,6 +287,8 @@ export type NumberDefinition = {
   exclusiveMaximum?: number;
   multipleOf?: number;
   default?: number;
+  title?: string;
+  description?: string;
 }
 
 /**
@@ -285,6 +297,8 @@ export type NumberDefinition = {
 export type BooleanDefinition = {
   type: 'boolean';
   default?: boolean;
+  title?: string;
+  description?: string;
 }
 
 export type ObjectDefinition = {
@@ -296,6 +310,8 @@ export type ObjectDefinition = {
   maxProperties?: number,
   anyOf?: Definition[],
   default?: any
+  title?: string;
+  description?: string;
 }
 
 export type ArrayDefinition = {
@@ -305,6 +321,8 @@ export type ArrayDefinition = {
   minItems?: number,
   maxItems?: number,
   default?: any[]
+  title?: string;
+  description?: string;
 }
 
 export type UndefinedDefinition = {
@@ -325,6 +343,8 @@ export type StringDefinition = {
   maxLength?: number;
   pattern?: string;
   default?: string;
+  title?: string;
+  description?: string;
 }
 
 /**

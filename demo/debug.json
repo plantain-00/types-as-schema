@@ -665,10 +665,19 @@
           "kind": "number",
           "type": "double"
         }
+      },
+      {
+        "name": "titleMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "title": "foo",
+          "description": "bar"
+        }
       }
     ],
-    "minProperties": 14,
-    "maxProperties": 14
+    "minProperties": 15,
+    "maxProperties": 15
   },
   {
     "kind": "object",

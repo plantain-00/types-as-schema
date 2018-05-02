@@ -115,6 +115,7 @@ type numberType = {
   sfixed64Member: int;
   floatMember: float;
   doubleMember: float;
+  titleMember: float;
 }
 
 type stringType = {

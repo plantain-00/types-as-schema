@@ -119,6 +119,7 @@ message NumberType {
     sfixed64 sfixed64Member = 12;
     float floatMember = 13;
     double doubleMember = 14;
+    double titleMember = 15;
 }
 
 message StringType {

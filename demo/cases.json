@@ -179,6 +179,11 @@
         },
         "doubleMember": {
           "type": "number"
+        },
+        "titleMember": {
+          "type": "number",
+          "title": "foo",
+          "description": "bar"
         }
       },
       "required": [
@@ -195,7 +200,8 @@
         "fixed64Member",
         "sfixed64Member",
         "floatMember",
-        "doubleMember"
+        "doubleMember",
+        "titleMember"
       ],
       "additionalProperties": false
     },

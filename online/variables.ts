@@ -167,6 +167,12 @@ type NumberType = {
 
   floatMember: float;
   doubleMember: double;
+
+  /**
+   * @title foo
+   * @description bar
+   */
+  titleMember: number;
 }
 
 type StringType = {
