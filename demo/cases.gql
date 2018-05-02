@@ -147,6 +147,10 @@ type DefaultValue {
   stringMember: String!
   numberMember: Float!
   booleanMember: Boolean!
+  stringMember2: String!
+  stringMember3: String!
+  numberMember1: Int!
+  objectMember2: TypeLiteral!
 }
 
 type ReferenceType {

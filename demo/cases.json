@@ -742,12 +742,52 @@
         "booleanMember": {
           "type": "boolean",
           "default": true
+        },
+        "stringMember2": {
+          "type": "string",
+          "default": "foo bar"
+        },
+        "stringMember3": {
+          "type": "string",
+          "default": ""
+        },
+        "arrayMember": {
+          "type": "array",
+          "items": {},
+          "default": []
+        },
+        "objectMember": {
+          "type": "object",
+          "properties": {
+            "foo": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "foo"
+          ],
+          "additionalProperties": false,
+          "default": {}
+        },
+        "numberMember1": {
+          "type": "integer",
+          "default": 123
+        },
+        "objectMember2": {
+          "$ref": "#/definitions/TypeLiteral",
+          "default": {}
         }
       },
       "required": [
         "stringMember",
         "numberMember",
-        "booleanMember"
+        "booleanMember",
+        "stringMember2",
+        "stringMember3",
+        "arrayMember",
+        "objectMember",
+        "numberMember1",
+        "objectMember2"
       ],
       "additionalProperties": false
     }

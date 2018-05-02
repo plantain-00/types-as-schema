@@ -88,6 +88,7 @@ export type EnumType = {
 export type ReferenceType = {
   kind: 'reference';
   name: string;
+  default?: any;
 }
 
 export type NumberType = {
@@ -135,6 +136,7 @@ export type ObjectType = {
   minProperties: number;
   maxProperties?: number;
   additionalProperties?: boolean | Type;
+  default?: any;
 }
 
 export type ArrayType = {
@@ -143,6 +145,7 @@ export type ArrayType = {
   uniqueItems?: boolean;
   minItems?: number;
   maxItems?: number;
+  default?: any[]
 }
 
 /**

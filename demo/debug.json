@@ -949,10 +949,65 @@
           "kind": "boolean",
           "default": true
         }
+      },
+      {
+        "name": "stringMember2",
+        "type": {
+          "kind": "string",
+          "default": "foo bar"
+        }
+      },
+      {
+        "name": "stringMember3",
+        "type": {
+          "kind": "string",
+          "default": ""
+        }
+      },
+      {
+        "name": "arrayMember",
+        "type": {
+          "kind": "array",
+          "type": {},
+          "default": []
+        }
+      },
+      {
+        "name": "objectMember",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "foo",
+              "type": {
+                "kind": "string"
+              }
+            }
+          ],
+          "minProperties": 1,
+          "maxProperties": 1,
+          "default": {}
+        }
+      },
+      {
+        "name": "numberMember1",
+        "type": {
+          "kind": "number",
+          "type": "integer",
+          "default": 123
+        }
+      },
+      {
+        "name": "objectMember2",
+        "type": {
+          "kind": "reference",
+          "name": "TypeLiteral",
+          "default": {}
+        }
       }
     ],
-    "minProperties": 3,
-    "maxProperties": 3
+    "minProperties": 9,
+    "maxProperties": 9
   },
   {
     "kind": "reference",

@@ -8,7 +8,8 @@ import {
   ObjectType,
   NumberType,
   StringType,
-  BooleanType
+  BooleanType,
+  ReferenceType
 } from './utils'
 
 export class Parser {
@@ -670,10 +671,18 @@ export class Parser {
         this.setJsonSchemaBoolean(propertyJsDoc, member.type)
       } else if (member.type.kind === 'object') {
         this.setJsonSchemaObject(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'reference') {
+        this.setJsonSchemaReference(propertyJsDoc, member.type)
       }
     }
 
     return member
+  }
+
+  private setJsonSchemaReference(propertyJsDoc: JsDoc, type: ReferenceType) {
+    if (propertyJsDoc.comment) {
+      type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
+    }
   }
 
   private setJsonSchemaTag(propertyJsDoc: JsDoc, member: Member) {
@@ -707,9 +716,20 @@ export class Parser {
   private setJsonSchemaBoolean(propertyJsDoc: JsDoc, type: BooleanType) {
     if (propertyJsDoc.comment) {
       if (propertyJsDoc.name === 'default') {
-        type.default = propertyJsDoc.comment.toLowerCase() === 'true'
+        type.default = this.getJsDocComment(propertyJsDoc.comment).toLowerCase() === 'true'
       }
     }
+  }
+
+  private getJsDocComment(comment: string) {
+    if (comment.length >= 2) {
+      if ((comment.startsWith(`'`) && comment.endsWith(`'`))
+        || (comment.startsWith(`"`) && comment.endsWith(`"`))
+        || (comment.startsWith('`') && comment.endsWith('`'))) {
+        return comment.substring(1, comment.length - 1)
+      }
+    }
+    return comment
   }
 
   private setJsonSchemaString(propertyJsDoc: JsDoc, type: StringType) {
@@ -721,7 +741,7 @@ export class Parser {
       } else if (propertyJsDoc.name === 'pattern') {
         type.pattern = propertyJsDoc.comment
       } else if (propertyJsDoc.name === 'default') {
-        type.default = propertyJsDoc.comment
+        type.default = this.getJsDocComment(propertyJsDoc.comment)
       }
     }
   }
@@ -739,7 +759,7 @@ export class Parser {
       } else if (propertyJsDoc.name === 'exclusiveMinimum') {
         type.exclusiveMinimum = +propertyJsDoc.comment
       } else if (propertyJsDoc.name === 'default') {
-        type.default = +propertyJsDoc.comment
+        type.default = +this.getJsDocComment(propertyJsDoc.comment)
       }
     }
   }
@@ -773,8 +793,10 @@ export class Parser {
         this.setJsonSchemaStringArray(jsDoc, type.type)
       } else if (type.type.kind === 'boolean') {
         if (jsDoc.name === 'itemDefault') {
-          type.type.default = jsDoc.comment.toLowerCase() === 'true'
+          type.type.default = this.getJsDocComment(jsDoc.comment).toLowerCase() === 'true'
         }
+      } else if (jsDoc.name === 'default') {
+        type.default = JSON.parse(this.getJsDocComment(jsDoc.comment))
       }
     } else if (jsDoc.name === 'uniqueItems') {
       type.uniqueItems = true
@@ -794,7 +816,7 @@ export class Parser {
       } else if (jsDoc.name === 'itemExclusiveMaximum') {
         type.exclusiveMaximum = +jsDoc.comment
       } else if (jsDoc.name === 'itemDefault') {
-        type.default = +jsDoc.comment
+        type.default = +this.getJsDocComment(jsDoc.comment)
       }
     }
   }
@@ -808,7 +830,7 @@ export class Parser {
       } else if (jsDoc.name === 'itemPattern') {
         type.pattern = jsDoc.comment
       } else if (jsDoc.name === 'itemDefault') {
-        type.default = jsDoc.comment
+        type.default = this.getJsDocComment(jsDoc.comment)
       }
     }
   }
@@ -819,6 +841,8 @@ export class Parser {
         type.minProperties = +jsDoc.comment
       } else if (jsDoc.name === 'maxProperties') {
         type.maxProperties = +jsDoc.comment
+      } else if (jsDoc.name === 'default') {
+        type.default = JSON.parse(this.getJsDocComment(jsDoc.comment))
       }
     } else {
       if (jsDoc.name === 'additionalProperties') {
