@@ -1,6 +1,6 @@
 {
   "name": "types-as-schema",
-  "version": "1.11.3",
+  "version": "1.12.0",
   "description": "Genetate json scheme or protobuf file from types.",
   "main": "index.js",
   "scripts": {
