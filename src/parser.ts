@@ -108,9 +108,13 @@ export class Parser {
       return
     }
 
-    let { members, minProperties, maxProperties, additionalProperties } = this.getObjectMembers(declaration.members);
+    let { members, minProperties, maxProperties, additionalProperties } = this.getObjectMembers(declaration.members)
 
-    ({ minProperties, maxProperties } = this.handleHeritageClauses(declaration, members, minProperties, maxProperties))
+    let additionalPropertiesFromHeritageClauses: Type | undefined | boolean
+    ({ minProperties, maxProperties, additionalProperties: additionalPropertiesFromHeritageClauses } = this.handleHeritageClauses(declaration, members, minProperties, maxProperties))
+    if (additionalPropertiesFromHeritageClauses) {
+      additionalProperties = additionalPropertiesFromHeritageClauses
+    }
 
     const model: Model = {
       kind: 'object',
@@ -130,25 +134,28 @@ export class Parser {
   }
 
   private handleHeritageClauses(declaration: ts.InterfaceDeclaration, members: Member[], minProperties: number, maxProperties: number) {
+    let additionalProperties: Type | undefined | boolean
     if (declaration.heritageClauses) {
       for (const clause of declaration.heritageClauses) {
         if (clause.kind === ts.SyntaxKind.HeritageClause) {
           for (const type of clause.types) {
             if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
-              ({ minProperties, maxProperties } = this.handleExpressionWithTypeArguments(type.expression as ts.Identifier, members, minProperties, maxProperties))
+              ({ minProperties, maxProperties, additionalProperties } = this.handleExpressionWithTypeArguments(type.expression as ts.Identifier, members, minProperties, maxProperties))
             }
           }
         }
       }
     }
-    return { minProperties, maxProperties }
+    return { minProperties, maxProperties, additionalProperties }
   }
 
   private handleExpressionWithTypeArguments(declaration: ts.Identifier, members: Member[], minProperties: number, maxProperties: number) {
     const interfaceName = declaration.text
     this.preHandleType(interfaceName)
+    let additionalProperties: Type | undefined | boolean
     const clauseModel = this.models.find(m => m.kind === 'object' && m.name === interfaceName)
     if (clauseModel && clauseModel.kind === 'object') {
+      additionalProperties = clauseModel.additionalProperties
       for (const member of clauseModel.members) {
         if (members.every(m => m.name !== member.name)) {
           members.push(member)
@@ -159,7 +166,7 @@ export class Parser {
         }
       }
     }
-    return { minProperties, maxProperties }
+    return { minProperties, maxProperties, additionalProperties }
   }
 
   private handleTypeAliasDeclaration(declaration: ts.TypeAliasDeclaration, jsDocs: JsDoc[], entry: JsDoc | undefined) {
@@ -634,7 +641,7 @@ export class Parser {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
-    let additionalProperties: Type | undefined
+    let additionalProperties: Type | undefined | boolean
     for (const element of elements) {
       if (element.kind === ts.SyntaxKind.PropertySignature) {
         const property = element as ts.PropertySignature
@@ -906,5 +913,5 @@ type MembersInfo = {
   members: Member[];
   minProperties: number;
   maxProperties: number;
-  additionalProperties?: Type;
+  additionalProperties?: Type | boolean;
 }

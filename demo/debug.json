@@ -87,7 +87,7 @@
     ],
     "minProperties": 1,
     "maxProperties": 1,
-    "additionalProperties": true
+    "additionalProperties": {}
   },
   {
     "kind": "object",
@@ -361,7 +361,7 @@
       }
     ],
     "minProperties": 2,
-    "maxProperties": 4
+    "additionalProperties": {}
   },
   {
     "kind": "object",
@@ -1322,6 +1322,7 @@
     ],
     "minProperties": 20,
     "maxProperties": 22,
+    "additionalProperties": true,
     "entry": "cases.json"
   }
 ]
