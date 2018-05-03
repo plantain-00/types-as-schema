@@ -101,6 +101,8 @@ export type NumberType = {
   multipleOf?: number;
   default?: number;
   enums?: string[];
+  title?: string;
+  description?: string;
 }
 
 /**
@@ -113,6 +115,8 @@ export type StringType = {
   pattern?: string;
   default?: string;
   enums?: string[];
+  title?: string;
+  description?: string;
 }
 
 /**
@@ -121,6 +125,8 @@ export type StringType = {
 export type BooleanType = {
   kind: 'boolean';
   default?: boolean;
+  title?: string;
+  description?: string;
 }
 
 /**
@@ -137,6 +143,8 @@ export type ObjectType = {
   maxProperties?: number;
   additionalProperties?: boolean | Type;
   default?: any;
+  title?: string;
+  description?: string;
 }
 
 export type ArrayType = {
@@ -146,6 +154,8 @@ export type ArrayType = {
   minItems?: number;
   maxItems?: number;
   default?: any[]
+  title?: string;
+  description?: string;
 }
 
 /**

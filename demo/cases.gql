@@ -118,6 +118,7 @@ type NumberType {
   sfixed64Member: Int!
   floatMember: Float!
   doubleMember: Float!
+  titleMember: Float!
 }
 
 type StringType {

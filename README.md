@@ -60,6 +60,11 @@ entry:
 
 + `@entry request-protocol.json`: the entry file name
 
+common:
+
++ `@title foo`: set `title = 'foo'`
++ `@description bar`: set `description = 'bar'`
+
 number:
 
 + `@multipleOf 10`: set `multipleOf = 10`

@@ -6,11 +6,12 @@ type TypeLiteral = {
 /**
  * @minProperties 1
  * @maxProperties 1
- * @additionalProperties
  */
 interface Interface {
   interfaceMember1?: number
   interfaceMember2?: string
+
+  [name: string]: any
 }
 
 type TypeUnion1 = TypeLiteral | {
@@ -160,6 +161,12 @@ type NumberType = {
 
   floatMember: float;
   doubleMember: double;
+
+  /**
+   * @title foo
+   * @description bar
+   */
+  titleMember: number;
 }
 
 type StringType = {
@@ -279,6 +286,7 @@ type ReferenceType = {
 
 /**
  * @entry cases.json
+ * @additionalProperties
  */
 export type EntryType = {
   optionalMember?: string;

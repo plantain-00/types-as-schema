@@ -87,7 +87,7 @@
     ],
     "minProperties": 1,
     "maxProperties": 1,
-    "additionalProperties": true
+    "additionalProperties": {}
   },
   {
     "kind": "object",
@@ -361,7 +361,7 @@
       }
     ],
     "minProperties": 2,
-    "maxProperties": 4
+    "additionalProperties": {}
   },
   {
     "kind": "object",
@@ -665,10 +665,19 @@
           "kind": "number",
           "type": "double"
         }
+      },
+      {
+        "name": "titleMember",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "title": "foo",
+          "description": "bar"
+        }
       }
     ],
-    "minProperties": 14,
-    "maxProperties": 14
+    "minProperties": 15,
+    "maxProperties": 15
   },
   {
     "kind": "object",
@@ -1313,6 +1322,7 @@
     ],
     "minProperties": 20,
     "maxProperties": 22,
+    "additionalProperties": true,
     "entry": "cases.json"
   }
 ]
