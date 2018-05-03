@@ -43,7 +43,7 @@ type TypeUnion4 =
     typeUnionMember2: string;
   }
 type TypeUnion5 = TypeLiteral | Interface
-type TypeUnion8 = 'foo' | 'bar'
+type TypeUnion8 = 'foo' | 'bar' | null
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
