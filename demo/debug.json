@@ -248,7 +248,8 @@
     "name": "TypeUnion8",
     "enums": [
       "foo",
-      "bar"
+      "bar",
+      null
     ]
   },
   {

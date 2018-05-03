@@ -549,7 +549,8 @@
     "TypeUnion8": {
       "enum": [
         "foo",
-        "bar"
+        "bar",
+        null
       ]
     },
     "InterfaceExtends": {

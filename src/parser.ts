@@ -194,7 +194,7 @@ export class Parser {
     entry: JsDoc | undefined) {
     if (declarationType.kind === ts.SyntaxKind.UnionType) {
       const unionType = declarationType
-      if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
+      if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType || u.kind === ts.SyntaxKind.NullKeyword)) {
         this.handleUnionTypeOfLiteralType(unionType, declarationName)
         return
       } else if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
@@ -228,13 +228,17 @@ export class Parser {
     let enumType: 'string' | 'number' | undefined
     const enums: any[] = []
     for (const childType of unionType.types) {
-      const literalType = childType as ts.LiteralTypeNode
-      if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
-        enumType = 'string'
-        enums.push(literalType.literal.text)
-      } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
-        enumType = 'number'
-        enums.push(+literalType.literal.text)
+      if (childType.kind === ts.SyntaxKind.LiteralType) {
+        const literalType = childType as ts.LiteralTypeNode
+        if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
+          enumType = 'string'
+          enums.push(literalType.literal.text)
+        } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+          enumType = 'number'
+          enums.push(+literalType.literal.text)
+        }
+      } else if (childType.kind === ts.SyntaxKind.NullKeyword) {
+        enums.push(null)
       }
     }
     if (enumType) {
