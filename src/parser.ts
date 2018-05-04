@@ -1,8 +1,8 @@
 import ts from 'typescript'
 import {
   Member,
-  Model,
-  EnumModel,
+  TypeDeclaration,
+  EnumDeclaration,
   Type,
   ArrayType,
   ObjectType,
@@ -10,12 +10,16 @@ import {
   StringType,
   BooleanType,
   ReferenceType,
-  NumberModel,
-  StringModel
+  NumberDeclaration,
+  StringDeclaration,
+  ReferenceDeclaration,
+  UnionDeclaration,
+  ObjectDeclaration,
+  ArrayDeclaration
 } from './utils'
 
 export class Parser {
-  models: Model[] = []
+  declarations: TypeDeclaration[] = []
 
   constructor(private sourceFile: ts.SourceFile) {
     ts.forEachChild(sourceFile, node => {
@@ -36,7 +40,7 @@ export class Parser {
       if (firstMember.initializer) {
         this.handleEnumDeclarationInitializer(declaration, members, firstMember.initializer)
       } else {
-        const enumType: EnumModel = {
+        const enumType: EnumDeclaration = {
           kind: 'enum',
           name: declaration.name.text,
           type: 'uint32',
@@ -61,13 +65,13 @@ export class Parser {
             lastIndex++
           }
         }
-        this.models.push(enumType)
+        this.declarations.push(enumType)
       }
     }
   }
 
   private handleEnumDeclarationInitializer(declaration: ts.EnumDeclaration, members: ts.NodeArray<ts.EnumMember>, initializer: ts.Expression) {
-    const enumType: EnumModel = {
+    const enumType: EnumDeclaration = {
       kind: 'enum',
       name: declaration.name.text,
       type: initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : 'uint32',
@@ -91,7 +95,7 @@ export class Parser {
         }
       }
     }
-    this.models.push(enumType)
+    this.declarations.push(enumType)
   }
 
   private handleSourceFile(node: ts.Node) {
@@ -105,8 +109,8 @@ export class Parser {
   }
 
   private handleInterfaceDeclaration(declaration: ts.InterfaceDeclaration, jsDocs: JsDoc[], entry: JsDoc | undefined) {
-    // if the node is pre-handled, then it should be in `models` already, so don't continue
-    if (this.models.some(m => m.name === declaration.name.text)) {
+    // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
+    if (this.declarations.some(m => m.name === declaration.name.text)) {
       return
     }
 
@@ -118,7 +122,7 @@ export class Parser {
       additionalProperties = additionalPropertiesFromHeritageClauses
     }
 
-    const model: Model = {
+    const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
       name: declaration.name.text,
       members,
@@ -129,10 +133,10 @@ export class Parser {
     }
 
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaObject(jsDoc, model)
+      this.setJsonSchemaObject(jsDoc, objectDeclaration)
     }
 
-    this.models.push(model)
+    this.declarations.push(objectDeclaration)
   }
 
   private handleHeritageClauses(declaration: ts.InterfaceDeclaration, members: Member[], minProperties: number, maxProperties: number) {
@@ -155,10 +159,10 @@ export class Parser {
     const interfaceName = declaration.text
     this.preHandleType(interfaceName)
     let additionalProperties: Type | undefined | boolean
-    const clauseModel = this.models.find(m => m.kind === 'object' && m.name === interfaceName)
-    if (clauseModel && clauseModel.kind === 'object') {
-      additionalProperties = clauseModel.additionalProperties
-      for (const member of clauseModel.members) {
+    const clauseDeclaration = this.declarations.find(m => m.kind === 'object' && m.name === interfaceName)
+    if (clauseDeclaration && clauseDeclaration.kind === 'object') {
+      additionalProperties = clauseDeclaration.additionalProperties
+      for (const member of clauseDeclaration.members) {
         if (members.every(m => m.name !== member.name)) {
           members.push(member)
           maxProperties++
@@ -180,12 +184,12 @@ export class Parser {
       this.handleTypeLiteralOrUnionTypeOrIntersectionType(declaration.type as ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode, declaration.name, jsDocs, entry)
     } else if (declaration.type.kind === ts.SyntaxKind.TypeReference) {
       const typeReference = declaration.type as ts.TypeReferenceNode
-      const model: Model = {
+      const referenceDeclaration: ReferenceDeclaration = {
         kind: 'reference',
         newName: declaration.name.text,
         name: (typeReference.typeName as ts.Identifier).text
       }
-      this.models.push(model)
+      this.declarations.push(referenceDeclaration)
     }
   }
 
@@ -200,18 +204,18 @@ export class Parser {
         this.handleUnionTypeOfLiteralType(unionType, declarationName)
         return
       } else if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
-        const model: Model = {
+        const unionDeclaration: UnionDeclaration = {
           kind: 'union',
           name: declarationName.text,
           members: unionType.types.map(u => this.getType(u)),
           entry: entry ? entry.comment : undefined
         }
-        this.models.push(model)
+        this.declarations.push(unionDeclaration)
         return
       }
     }
     const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(declarationType)
-    const model: Model = {
+    const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
       name: declarationName.text,
       members,
@@ -221,9 +225,9 @@ export class Parser {
       entry: entry ? entry.comment : undefined
     }
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaObject(jsDoc, model)
+      this.setJsonSchemaObject(jsDoc, objectDeclaration)
     }
-    this.models.push(model)
+    this.declarations.push(objectDeclaration)
   }
 
   private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier) {
@@ -244,44 +248,44 @@ export class Parser {
     }
     if (enumType) {
       if (enumType === 'string') {
-        const model: StringModel = {
-          kind: enumType,
+        const stringDeclaration: StringDeclaration = {
+          kind: 'string',
           name: declarationName.text,
           enums
         }
-        this.models.push(model)
+        this.declarations.push(stringDeclaration)
       } else if (enumType === 'number') {
-        const model: NumberModel = {
-          kind: enumType,
+        const numberDeclaration: NumberDeclaration = {
+          kind: 'number',
           type: enumType,
           name: declarationName.text,
           enums
         }
-        this.models.push(model)
+        this.declarations.push(numberDeclaration)
       } else if (enumType === 'boolean') {
-        const model: Model = {
+        const unionDeclaration: UnionDeclaration = {
           kind: 'union',
           name: declarationName.text,
           members: unionType.types.map(e => this.getType(e)),
           entry: undefined
         }
-        this.models.push(model)
+        this.declarations.push(unionDeclaration)
       }
     }
   }
 
   private handleArrayTypeInTypeAliasDeclaration(arrayType: ts.ArrayTypeNode, declarationName: ts.Identifier, jsDocs: JsDoc[], entry: JsDoc | undefined) {
     const type = this.getType(arrayType.elementType)
-    const model: Model = {
+    const arrayDeclaration: ArrayDeclaration = {
       kind: 'array',
       name: declarationName.text,
       type,
       entry: entry ? entry.comment : undefined
     }
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaArray(jsDoc, model)
+      this.setJsonSchemaArray(jsDoc, arrayDeclaration)
     }
-    this.models.push(model)
+    this.declarations.push(arrayDeclaration)
   }
 
   private getJsDocs(node: ts.Node) {
@@ -491,13 +495,13 @@ export class Parser {
       }
     } else if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
       const enumName = (reference.typeName.left as ts.Identifier).text
-      const enumModel = this.models.find(m => m.kind === 'enum' && m.name === enumName) as EnumModel | undefined
-      if (enumModel) {
+      const enumDeclaration = this.declarations.find(m => m.kind === 'enum' && m.name === enumName) as EnumDeclaration | undefined
+      if (enumDeclaration) {
         return {
           kind: 'enum',
-          name: enumModel.name,
-          type: enumModel.type,
-          enums: enumModel.members.map(m => m.value)
+          name: enumDeclaration.name,
+          type: enumDeclaration.type,
+          enums: enumDeclaration.members.map(m => m.value)
         }
       }
     }
@@ -637,9 +641,9 @@ export class Parser {
     let maxProperties = 0
     const referenceName = (node.typeName as ts.Identifier).text
     this.preHandleType(referenceName)
-    const model = this.models.find(m => m.kind === 'object' && m.name === referenceName)
-    if (model && model.kind === 'object') {
-      for (const member of model.members) {
+    const objectDeclaration = this.declarations.find(m => m.kind === 'object' && m.name === referenceName)
+    if (objectDeclaration && objectDeclaration.kind === 'object') {
+      for (const member of objectDeclaration.members) {
         if (members.every(m => m.name !== member.name)) {
           members.push(JSON.parse(JSON.stringify(member)))
           maxProperties++
@@ -653,8 +657,8 @@ export class Parser {
   }
 
   private preHandleType(typeName: string) {
-    // if the node is pre-handled, then it should be in `models` already, so don't continue
-    if (this.models.some(m => m.name === typeName)) {
+    // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
+    if (this.declarations.some(m => m.name === typeName)) {
       return
     }
 

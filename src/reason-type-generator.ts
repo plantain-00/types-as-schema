@@ -1,39 +1,39 @@
-import { Model, Type, toLowerCase, toUpperCase, ReferenceType } from './utils'
+import { TypeDeclaration, Type, toLowerCase, toUpperCase, ReferenceType } from './utils'
 
-export function generateReasonTypes(models: Model[]) {
+export function generateReasonTypes(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
-  for (const model of models) {
-    if (model.kind === 'object') {
-      const members = model.members.map(m => {
-        const propertyType = getReasonTypesProperty(models, m.type)
+  for (const typeDeclaration of typeDeclarations) {
+    if (typeDeclaration.kind === 'object') {
+      const members = typeDeclaration.members.map(m => {
+        const propertyType = getReasonTypesProperty(typeDeclarations, m.type)
         if (propertyType) {
           return `  ${m.name}: ${m.optional ? `option(${toLowerCase(propertyType)})` : toLowerCase(propertyType)}`
         }
         return undefined
       })
-      messages.push(`type ${toLowerCase(model.name)} = {
+      messages.push(`type ${toLowerCase(typeDeclaration.name)} = {
   .
 ${members.filter(m => m).map(m => m + ',').join('\n')}
 };`)
-    } else if (model.kind === 'enum') {
-      const members = model.members.map(m => `  | ${toUpperCase(m.name)}`).join('\n')
-      messages.push(`type ${toLowerCase(model.name)} =\n${members};`)
+    } else if (typeDeclaration.kind === 'enum') {
+      const members = typeDeclaration.members.map(m => `  | ${toUpperCase(m.name)}`).join('\n')
+      messages.push(`type ${toLowerCase(typeDeclaration.name)} =\n${members};`)
     }
   }
   return messages.join('\n\n') + '\n'
 }
 
-function getReasonTypesProperty(models: Model[], memberType: Type): string {
+function getReasonTypesProperty(typeDeclarations: TypeDeclaration[], memberType: Type): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
-    const elementPropertyType = getReasonTypesProperty(models, memberType.type)
+    const elementPropertyType = getReasonTypesProperty(typeDeclarations, memberType.type)
     if (elementPropertyType) {
       propertyType = `list(${toLowerCase(elementPropertyType)})`
     }
   } else if (memberType.kind === 'enum') {
     propertyType = memberType.name
   } else if (memberType.kind === 'reference') {
-    propertyType = getReasonTypesPropertyOfReference(models, memberType)
+    propertyType = getReasonTypesPropertyOfReference(typeDeclarations, memberType)
   } else if (memberType.kind === 'number') {
     if (memberType.type === 'number'
       || memberType.type === 'float'
@@ -50,9 +50,9 @@ function getReasonTypesProperty(models: Model[], memberType: Type): string {
   return propertyType
 }
 
-function getReasonTypesPropertyOfReference(models: Model[], memberType: ReferenceType): string {
-  const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
-  if (model && model.kind === 'enum' && model.type === 'string') {
+function getReasonTypesPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType): string {
+  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
+  if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'string'
   }
   return memberType.name

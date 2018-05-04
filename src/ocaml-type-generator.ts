@@ -1,38 +1,38 @@
-import { Type, Model, toLowerCase, toUpperCase, ReferenceType } from './utils'
+import { Type, TypeDeclaration, toLowerCase, toUpperCase, ReferenceType } from './utils'
 
-export function generateOcamlTypes(models: Model[]) {
+export function generateOcamlTypes(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
-  for (const model of models) {
-    if (model.kind === 'object') {
-      const members = model.members.map(m => {
-        const propertyType = getOcamlTypesProperty(models, m.type)
+  for (const typeDeclaration of typeDeclarations) {
+    if (typeDeclaration.kind === 'object') {
+      const members = typeDeclaration.members.map(m => {
+        const propertyType = getOcamlTypesProperty(typeDeclarations, m.type)
         if (propertyType) {
           return `  ${m.name}: ${m.optional ? toLowerCase(propertyType) + ' option' : toLowerCase(propertyType)}`
         }
         return undefined
       })
-      messages.push(`type ${toLowerCase(model.name)} = {
+      messages.push(`type ${toLowerCase(typeDeclaration.name)} = {
 ${members.filter(m => m).map(m => m + ';').join('\n')}
 }`)
-    } else if (model.kind === 'enum') {
-      const members = model.members.map(m => `  | ${toUpperCase(m.name)}`).join('\n')
-      messages.push(`type ${toLowerCase(model.name)} =\n${members}`)
+    } else if (typeDeclaration.kind === 'enum') {
+      const members = typeDeclaration.members.map(m => `  | ${toUpperCase(m.name)}`).join('\n')
+      messages.push(`type ${toLowerCase(typeDeclaration.name)} =\n${members}`)
     }
   }
   return messages.join('\n\n') + '\n'
 }
 
-function getOcamlTypesProperty(models: Model[], memberType: Type): string {
+function getOcamlTypesProperty(typeDeclarations: TypeDeclaration[], memberType: Type): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
-    const elementPropertyType = getOcamlTypesProperty(models, memberType.type)
+    const elementPropertyType = getOcamlTypesProperty(typeDeclarations, memberType.type)
     if (elementPropertyType) {
       propertyType = `${toLowerCase(elementPropertyType)} list`
     }
   } else if (memberType.kind === 'enum') {
     propertyType = memberType.name
   } else if (memberType.kind === 'reference') {
-    propertyType = getOcamlTypesPropertyOfReference(models, memberType)
+    propertyType = getOcamlTypesPropertyOfReference(typeDeclarations, memberType)
   } else if (memberType.kind === 'number') {
     if (memberType.type === 'number'
       || memberType.type === 'float'
@@ -49,9 +49,9 @@ function getOcamlTypesProperty(models: Model[], memberType: Type): string {
   return propertyType
 }
 
-function getOcamlTypesPropertyOfReference(models: Model[], memberType: ReferenceType) {
-  const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
-  if (model && model.kind === 'enum' && model.type === 'string') {
+function getOcamlTypesPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType) {
+  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
+  if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'string'
   } return memberType.name
 }

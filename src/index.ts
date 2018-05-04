@@ -56,7 +56,7 @@ async function executeCommandLine() {
     const generator = new Generator(sourceFile!)
 
     if (debugPath) {
-      fs.writeFileSync(debugPath, JSON.stringify(generator.models, null, '  '))
+      fs.writeFileSync(debugPath, JSON.stringify(generator.declarations, null, '  '))
     }
 
     if (protobufPath) {
@@ -165,7 +165,7 @@ function showToolVersion() {
 }
 
 executeCommandLine().then(() => {
-  printInConsole('convert types to protobuf or json schema success.')
+  printInConsole('types-as-schema success.')
 }, error => {
   printInConsole(error)
   process.exit(1)
