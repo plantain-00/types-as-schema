@@ -1,14 +1,14 @@
-import { Model, Type, ReferenceType, ObjectModel, Member, MemberParameter } from './utils'
+import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter } from './utils'
 
-export function generateGraphqlSchema(models: Model[]) {
+export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   const messages: string[] = []
-  for (const model of models) {
-    if (model.kind === 'object') {
-      const message = generateGraphqlSchemaOfObject(models, model)
+  for (const typeDeclaration of declarations) {
+    if (typeDeclaration.kind === 'object') {
+      const message = generateGraphqlSchemaOfObject(declarations, typeDeclaration)
       messages.push(message)
-    } else if (model.kind === 'enum') {
-      const members = model.members.map(m => `  ${m.name}`)
-      messages.push(`enum ${model.name} {
+    } else if (typeDeclaration.kind === 'enum') {
+      const members = typeDeclaration.members.map(m => `  ${m.name}`)
+      messages.push(`enum ${typeDeclaration.name} {
 ${members.join('\n')}
 }`)
     }
@@ -16,29 +16,29 @@ ${members.join('\n')}
   return messages.join('\n\n') + '\n'
 }
 
-function generateGraphqlSchemaOfObject(models: Model[], model: ObjectModel) {
-  const members = model.members.map(m => generateGraphqlSchemaOfObjectMember(models, m))
-  return `type ${model.name} {
+function generateGraphqlSchemaOfObject(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration) {
+  const members = objectDeclaration.members.map(m => generateGraphqlSchemaOfObjectMember(typeDeclarations, m))
+  return `type ${objectDeclaration.name} {
 ${members.filter(m => m).join('\n')}
 }`
 }
 
-function generateGraphqlSchemaOfObjectMember(models: Model[], member: Member) {
-  const propertyType = getGraphqlSchemaProperty(models, member.type)
+function generateGraphqlSchemaOfObjectMember(typeDeclarations: TypeDeclaration[], member: Member) {
+  const propertyType = getGraphqlSchemaProperty(typeDeclarations, member.type)
   if (propertyType) {
     let parameterList = ''
     if (member.parameters) {
-      parameterList = generateGraphqlSchemaOfParameters(models, member.parameters)
+      parameterList = generateGraphqlSchemaOfParameters(typeDeclarations, member.parameters)
     }
     return `  ${member.name}${parameterList}: ${member.optional ? propertyType : propertyType + '!'}`
   }
   return undefined
 }
 
-function generateGraphqlSchemaOfParameters(models: Model[], memberParameters: MemberParameter[]) {
+function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], memberParameters: MemberParameter[]) {
   const parameters: string[] = []
   for (const parameter of memberParameters) {
-    const parameterPropertyType = getGraphqlSchemaProperty(models, parameter.type)
+    const parameterPropertyType = getGraphqlSchemaProperty(typeDeclarations, parameter.type)
     if (parameterPropertyType) {
       if (parameter.optional) {
         parameters.push(`${parameter.name}: ${parameterPropertyType}`)
@@ -50,17 +50,17 @@ function generateGraphqlSchemaOfParameters(models: Model[], memberParameters: Me
   return `(${parameters.join(', ')})`
 }
 
-function getGraphqlSchemaProperty(models: Model[], memberType: Type): string {
+function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberType: Type): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
-    const elementPropertyType = getGraphqlSchemaProperty(models, memberType.type)
+    const elementPropertyType = getGraphqlSchemaProperty(typeDeclarations, memberType.type)
     if (elementPropertyType) {
       propertyType = `[${elementPropertyType}]`
     }
   } else if (memberType.kind === 'enum') {
     propertyType = memberType.name
   } else if (memberType.kind === 'reference') {
-    propertyType = getGraphqlSchemaPropertyOfReference(models, memberType)
+    propertyType = getGraphqlSchemaPropertyOfReference(typeDeclarations, memberType)
   } else if (memberType.kind === 'number') {
     if (memberType.type === 'number'
       || memberType.type === 'float'
@@ -77,9 +77,9 @@ function getGraphqlSchemaProperty(models: Model[], memberType: Type): string {
   return propertyType
 }
 
-function getGraphqlSchemaPropertyOfReference(models: Model[], memberType: ReferenceType) {
-  const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
-  if (model && model.kind === 'enum' && model.type === 'string') {
+function getGraphqlSchemaPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType) {
+  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
+  if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'String'
   }
   return memberType.name

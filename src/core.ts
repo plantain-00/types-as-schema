@@ -5,34 +5,34 @@ import { generateJsonSchemas, ArrayDefinition, ObjectDefinition, UndefinedDefini
 import { generateGraphqlSchema } from './graphql-schema-generator'
 import { generateReasonTypes } from './reason-type-generator'
 import { generateOcamlTypes } from './ocaml-type-generator'
-import { Model } from './utils'
+import { TypeDeclaration } from './utils'
 
 export class Generator {
-  models: Model[] = []
+  declarations: TypeDeclaration[] = []
 
   constructor(public sourceFile: ts.SourceFile) {
     const parser = new Parser(sourceFile)
-    this.models = parser.models
+    this.declarations = parser.declarations
   }
 
   generateProtobuf() {
-    return generateProtobuf(this.models)
+    return generateProtobuf(this.declarations)
   }
 
   generateJsonSchemas() {
-    return generateJsonSchemas(this.models)
+    return generateJsonSchemas(this.declarations)
   }
 
   generateGraphqlSchema() {
-    return generateGraphqlSchema(this.models)
+    return generateGraphqlSchema(this.declarations)
   }
 
   generateReasonTypes() {
-    return generateReasonTypes(this.models)
+    return generateReasonTypes(this.declarations)
   }
 
   generateOcamlTypes() {
-    return generateOcamlTypes(this.models)
+    return generateOcamlTypes(this.declarations)
   }
 }
 

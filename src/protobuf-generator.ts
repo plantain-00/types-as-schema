@@ -1,13 +1,13 @@
-import { Model, Type, ReferenceType, MapType, ObjectModel, EnumModel } from './utils'
+import { TypeDeclaration, Type, ReferenceType, MapType, ObjectDeclaration, EnumDeclaration } from './utils'
 
-export function generateProtobuf(models: Model[]) {
+export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
-  for (const model of models) {
-    if (model.kind === 'object') {
-      const message = generateProtobufOfObject(models, model)
+  for (const typeDeclaration of typeDeclarations) {
+    if (typeDeclaration.kind === 'object') {
+      const message = generateProtobufOfObject(typeDeclarations, typeDeclaration)
       messages.push(message)
-    } else if (model.kind === 'enum') {
-      const message = generateProtobufOfEnum(models, model)
+    } else if (typeDeclaration.kind === 'enum') {
+      const message = generateProtobufOfEnum(typeDeclarations, typeDeclaration)
       if (message) {
         messages.push(message)
       }
@@ -19,50 +19,50 @@ ${messages.join('\n\n')}
 `
 }
 
-function generateProtobufOfObject(models: Model[], model: ObjectModel) {
+function generateProtobufOfObject(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration) {
   const members: string[] = []
-  let lastTag = model.members.reduce((p, c) => c.tag ? Math.max(p, c.tag) : p, 0)
-  for (const member of model.members) {
+  let lastTag = objectDeclaration.members.reduce((p, c) => c.tag ? Math.max(p, c.tag) : p, 0)
+  for (const member of objectDeclaration.members) {
     if (!member.tag) {
       lastTag++
     }
-    const { modifier, propertyType } = getProtobufProperty(models, member.type)
+    const { modifier, propertyType } = getProtobufProperty(typeDeclarations, member.type)
     if (propertyType) {
       members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`)
     }
   }
-  return `message ${model.name} {
+  return `message ${objectDeclaration.name} {
 ${members.join('\n')}
 }`
 }
 
-function generateProtobufOfEnum(models: Model[], model: EnumModel) {
+function generateProtobufOfEnum(typeDeclarations: TypeDeclaration[], enumDeclaration: EnumDeclaration) {
   const members: string[] = []
-  for (const member of model.members) {
+  for (const member of enumDeclaration.members) {
     if (typeof member.value === 'number') {
       members.push(`    ${member.name} = ${member.value};`)
     }
   }
   if (members.length > 0) {
-    return `enum ${model.name} {
+    return `enum ${enumDeclaration.name} {
 ${members.join('\n')}
 }`
   }
   return undefined
 }
 
-function getProtobufProperty(models: Model[], memberType: Type): { modifier: string, propertyType: string } {
+function getProtobufProperty(typeDeclarations: TypeDeclaration[], memberType: Type): { modifier: string, propertyType: string } {
   let modifier = ''
   let propertyType = ''
   if (memberType.kind === 'map') {
-    propertyType = getProtobufPropertyOfMap(models, memberType)
+    propertyType = getProtobufPropertyOfMap(typeDeclarations, memberType)
   } else if (memberType.kind === 'array') {
     modifier = 'repeated ';
-    ({ propertyType } = getProtobufProperty(models, memberType.type))
+    ({ propertyType } = getProtobufProperty(typeDeclarations, memberType.type))
   } else if (memberType.kind === 'enum') {
     propertyType = memberType.type === 'string' ? 'string' : memberType.name
   } else if (memberType.kind === 'reference') {
-    propertyType = getProtobufPropertyOfReference(models, memberType)
+    propertyType = getProtobufPropertyOfReference(typeDeclarations, memberType)
   } else if (memberType.kind === 'number') {
     if (memberType.type === 'number') {
       propertyType = 'double'
@@ -79,18 +79,18 @@ function getProtobufProperty(models: Model[], memberType: Type): { modifier: str
   return { modifier, propertyType }
 }
 
-function getProtobufPropertyOfReference(models: Model[], memberType: ReferenceType) {
-  const model = models.find(m => m.kind === 'enum' && m.name === memberType.name)
-  if (model && model.kind === 'enum' && model.type === 'string') {
+function getProtobufPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType) {
+  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
+  if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'string'
   }
   return memberType.name
 }
 
-function getProtobufPropertyOfMap(models: Model[], memberType: MapType) {
+function getProtobufPropertyOfMap(typeDeclarations: TypeDeclaration[], memberType: MapType) {
   let valueType = ''
   if (memberType.value.kind === 'number') {
-    ({ propertyType: valueType } = getProtobufProperty(models, memberType.value))
+    ({ propertyType: valueType } = getProtobufProperty(typeDeclarations, memberType.value))
   } else if (memberType.value.kind === 'reference') {
     valueType = memberType.value.name
   }

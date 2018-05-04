@@ -1,33 +1,33 @@
 import {
   Type,
-  ObjectModel,
-  ArrayModel,
-  UnionModel,
-  Model,
+  ObjectDeclaration,
+  ArrayDeclaration,
+  UnionDeclaration,
+  TypeDeclaration,
   NumberType,
   ObjectType,
   StringType
 } from './utils'
 
-export function generateJsonSchemas(models: Model[]) {
+export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
   const definitions: { [name: string]: Definition } = {}
-  for (const model of models) {
-    if (model.kind === 'object'
-      || model.kind === 'array'
-      || model.kind === 'union'
-      || model.kind === 'string'
-      || model.kind === 'number') {
-      definitions[model.name] = getJsonSchemaProperty(model)
-    } else if (model.kind === 'reference') {
-      definitions[model.newName] = {
+  for (const typeDeclaration of typeDeclarations) {
+    if (typeDeclaration.kind === 'object'
+      || typeDeclaration.kind === 'array'
+      || typeDeclaration.kind === 'union'
+      || typeDeclaration.kind === 'string'
+      || typeDeclaration.kind === 'number') {
+      definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration)
+    } else if (typeDeclaration.kind === 'reference') {
+      definitions[typeDeclaration.newName] = {
         type: undefined,
-        $ref: `#/definitions/${model.name}`
+        $ref: `#/definitions/${typeDeclaration.name}`
       }
     }
   }
-  return models.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
+  return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
     .map(m => ({
-      entry: (m as ObjectModel | ArrayModel | UnionModel).entry!,
+      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
       schema: {
         $ref: `#/definitions/${m.name}`,
         definitions: getReferencedDefinitions(m.name, definitions)
@@ -35,7 +35,7 @@ export function generateJsonSchemas(models: Model[]) {
     }))
 }
 
-function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | UnionModel): Definition {
+function getJsonSchemaProperty(memberType: Type | ObjectDeclaration | ArrayDeclaration | UnionDeclaration): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
@@ -83,7 +83,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
   } else if (memberType.kind === 'string') {
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
-    return getJsonSchemaPropertyOfUnion(memberType as UnionModel)
+    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration)
   } else if (memberType.kind === 'null') {
     return {
       type: 'null'
@@ -95,7 +95,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
   }
 }
 
-function getJsonSchemaPropertyOfUnion(memberType: UnionModel) {
+function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration): Definition {
   if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
     let enums: any[] = []
     for (const member of memberType.members) {
@@ -116,7 +116,7 @@ function getJsonSchemaPropertyOfUnion(memberType: UnionModel) {
   }
 }
 
-function getJsonSchemaPropertyOfString(memberType: StringType) {
+function getJsonSchemaPropertyOfString(memberType: StringType): Definition {
   if (memberType.enums) {
     if (memberType.enums.length === 1) {
       return {
@@ -140,7 +140,7 @@ function getJsonSchemaPropertyOfString(memberType: StringType) {
   }
 }
 
-function getJsonSchemaPropertyOfObject(memberType: ObjectModel | ObjectType): Definition {
+function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectType): ObjectDefinition {
   const properties: { [name: string]: Definition } = {}
   const required: string[] = []
   for (const member of memberType.members) {
@@ -210,7 +210,7 @@ function getJsonSchemaPropertyOfUndefined(definition: UndefinedDefinition, defin
   return result
 }
 
-function getNumberType(numberType: NumberType): Definition {
+function getNumberType(numberType: NumberType): NumberDefinition {
   let definition: Definition
   if (numberType.type === 'double' || numberType.type === 'float') {
     definition = {

@@ -6,9 +6,16 @@ export function toLowerCase(name: string) {
   return name[0].toLowerCase() + name.substring(1)
 }
 
-export type Model = EnumModel | ObjectModel | ArrayModel | UnionModel | StringModel | NumberModel | ReferenceModel
+export type TypeDeclaration =
+  | EnumDeclaration
+  | ObjectDeclaration
+  | ArrayDeclaration
+  | UnionDeclaration
+  | StringDeclaration
+  | NumberDeclaration
+  | ReferenceDeclaration
 
-export type EnumModel = {
+export type EnumDeclaration = {
   kind: 'enum';
   name: string;
   type: string;
@@ -23,33 +30,30 @@ export type EnumMember = {
   value: string | number;
 }
 
-export type ObjectModel = ObjectType & {
+export type ObjectDeclaration = ObjectType & {
   name: string;
   entry: string | undefined;
 }
 
-export type ArrayModel = ArrayType & {
+export type ArrayDeclaration = ArrayType & {
   name: string;
   entry: string | undefined;
 }
 
-export type UnionModel = UnionType & {
+export type UnionDeclaration = UnionType & {
   name: string;
   entry: string | undefined;
 }
 
-export type StringModel = StringType & {
+export type StringDeclaration = StringType & {
   name: string;
 }
 
-export type NumberModel = NumberType & {
+export type NumberDeclaration = NumberType & {
   name: string;
 }
 
-/**
- * @public
- */
-export type ReferenceModel = ReferenceType & {
+export type ReferenceDeclaration = ReferenceType & {
   newName: string;
 }
 
@@ -57,9 +61,6 @@ export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType
   | ObjectType | NumberType | BooleanType | AnyType | NullType
   | UnionType
 
-/**
- * @public
- */
 export type MapType = {
   kind: 'map';
   key: Type;
@@ -76,9 +77,6 @@ export type EnumType = {
   enums: any[];
 }
 
-/**
- * @public
- */
 export type ReferenceType = {
   kind: 'reference';
   name: string;
@@ -99,9 +97,6 @@ export type NumberType = {
   description?: string;
 }
 
-/**
- * @public
- */
 export type StringType = {
   kind: 'string';
   minLength?: number;
@@ -113,9 +108,6 @@ export type StringType = {
   description?: string;
 }
 
-/**
- * @public
- */
 export type BooleanType = {
   kind: 'boolean';
   default?: boolean;
