@@ -244,12 +244,36 @@
     ]
   },
   {
-    "kind": "string",
+    "kind": "union",
     "name": "TypeUnion8",
-    "enums": [
-      "foo",
-      "bar",
-      null
+    "members": [
+      {
+        "kind": "enum",
+        "type": "string",
+        "name": "string",
+        "enums": [
+          "foo"
+        ]
+      },
+      {
+        "kind": "enum",
+        "type": "string",
+        "name": "string",
+        "enums": [
+          "bar"
+        ]
+      },
+      {
+        "kind": "null"
+      },
+      {
+        "kind": "enum",
+        "type": "boolean",
+        "name": "boolean",
+        "enums": [
+          false
+        ]
+      }
     ]
   },
   {
@@ -301,6 +325,14 @@
             },
             {
               "kind": "null"
+            },
+            {
+              "kind": "enum",
+              "type": "boolean",
+              "name": "boolean",
+              "enums": [
+                false
+              ]
             }
           ]
         }
