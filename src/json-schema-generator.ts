@@ -83,10 +83,7 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
   } else if (memberType.kind === 'string') {
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
-    return {
-      type: undefined,
-      anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
-    }
+    return getJsonSchemaPropertyOfUnion(memberType as UnionModel)
   } else if (memberType.kind === 'null') {
     return {
       type: 'null'
@@ -95,6 +92,27 @@ function getJsonSchemaProperty(memberType: Type | ObjectModel | ArrayModel | Uni
     return {
       type: memberType.kind
     }
+  }
+}
+
+function getJsonSchemaPropertyOfUnion(memberType: UnionModel) {
+  if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
+    let enums: any[] = []
+    for (const member of memberType.members) {
+      if (member.kind === 'enum') {
+        enums = enums.concat(member.enums)
+      } else if (member.kind === 'null') {
+        enums.push(null)
+      }
+    }
+    return {
+      type: undefined,
+      enum: enums
+    }
+  }
+  return {
+    type: undefined,
+    anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
   }
 }
 

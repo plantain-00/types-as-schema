@@ -38,16 +38,10 @@ export type UnionModel = UnionType & {
   entry: string | undefined;
 }
 
-/**
- * @public
- */
 export type StringModel = StringType & {
   name: string;
 }
 
-/**
- * @public
- */
 export type NumberModel = NumberType & {
   name: string;
 }

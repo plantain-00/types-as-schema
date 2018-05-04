@@ -50,14 +50,14 @@ type TypeUnion4 =
     typeUnionMember2: string;
   }
 type TypeUnion5 = TypeLiteral | Interface
-type TypeUnion8 = 'foo' | 'bar' | null
+type TypeUnion8 = 'foo' | 'bar' | null | false
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
   typeUnionMember3: TypeUnion3;
   typeUnionMember4: TypeUnion4;
   typeUnionMember5: TypeUnion5;
-  typeUnionMember6: string | null;
+  typeUnionMember6: string | null | false;
   typeUnionMember7: 'foo' | 'bar';
   typeUnionMember8: TypeUnion8;
 }

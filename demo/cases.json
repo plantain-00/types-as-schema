@@ -421,6 +421,9 @@
             },
             {
               "type": "null"
+            },
+            {
+              "const": false
             }
           ]
         },
@@ -550,7 +553,8 @@
       "enum": [
         "foo",
         "bar",
-        null
+        null,
+        false
       ]
     },
     "InterfaceExtends": {

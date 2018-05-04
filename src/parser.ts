@@ -9,7 +9,9 @@ import {
   NumberType,
   StringType,
   BooleanType,
-  ReferenceType
+  ReferenceType,
+  NumberModel,
+  StringModel
 } from './utils'
 
 export class Parser {
@@ -225,17 +227,16 @@ export class Parser {
   }
 
   private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier) {
-    let enumType: 'string' | 'number' | undefined
+    let enumType: 'string' | 'number' | 'boolean' | undefined
     const enums: any[] = []
     for (const childType of unionType.types) {
       if (childType.kind === ts.SyntaxKind.LiteralType) {
-        const literalType = childType as ts.LiteralTypeNode
-        if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
-          enumType = 'string'
-          enums.push(literalType.literal.text)
-        } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
-          enumType = 'number'
-          enums.push(+literalType.literal.text)
+        const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
+        if (type !== undefined) {
+          enumType = type
+        }
+        if (value !== undefined) {
+          enums.push(value)
         }
       } else if (childType.kind === ts.SyntaxKind.NullKeyword) {
         enums.push(null)
@@ -243,18 +244,26 @@ export class Parser {
     }
     if (enumType) {
       if (enumType === 'string') {
-        const model: Model = {
+        const model: StringModel = {
           kind: enumType,
           name: declarationName.text,
           enums
         }
         this.models.push(model)
-      } else {
-        const model: Model = {
+      } else if (enumType === 'number') {
+        const model: NumberModel = {
           kind: enumType,
           type: enumType,
           name: declarationName.text,
           enums
+        }
+        this.models.push(model)
+      } else if (enumType === 'boolean') {
+        const model: Model = {
+          kind: 'union',
+          name: declarationName.text,
+          members: unionType.types.map(e => this.getType(e)),
+          entry: undefined
         }
         this.models.push(model)
       }
@@ -362,15 +371,45 @@ export class Parser {
     }
   }
 
-  private getTypeOfLiteralType(literalType: ts.LiteralTypeNode): Type {
-    let enumType: 'string' | 'number' | undefined
-    const enums: any[] = []
+  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type: 'string' | 'number' | 'boolean' | undefined, value: any } {
     if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
-      enumType = 'string'
-      enums.push(literalType.literal.text)
-    } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
-      enumType = 'number'
-      enums.push(+literalType.literal.text)
+      return {
+        type: 'string',
+        value: literalType.literal.text
+      }
+    }
+    if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+      return {
+        type: 'number',
+        value: +literalType.literal.text
+      }
+    }
+    if (literalType.literal.kind === ts.SyntaxKind.TrueKeyword) {
+      return {
+        type: 'boolean',
+        value: true
+      }
+    } else if (literalType.literal.kind === ts.SyntaxKind.FalseKeyword) {
+      return {
+        type: 'boolean',
+        value: false
+      }
+    }
+    return {
+      type: undefined,
+      value: undefined
+    }
+  }
+
+  private getTypeOfLiteralType(literalType: ts.LiteralTypeNode): Type {
+    let enumType: 'string' | 'number' | 'boolean' | undefined
+    const enums: any[] = []
+    const { type, value } = this.getEnumOfLiteralType(literalType)
+    if (type !== undefined) {
+      enumType = type
+    }
+    if (value !== undefined) {
+      enums.push(value)
     }
     if (enumType) {
       return {
@@ -387,16 +426,15 @@ export class Parser {
 
   private getTypeOfUnionType(unionType: ts.UnionTypeNode): Type {
     if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
-      let enumType: 'string' | 'number' | undefined
+      let enumType: 'string' | 'number' | 'boolean' | undefined
       const enums: any[] = []
       for (const childType of unionType.types) {
-        const literalType = childType as ts.LiteralTypeNode
-        if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
-          enumType = 'string'
-          enums.push(literalType.literal.text)
-        } else if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
-          enumType = 'number'
-          enums.push(+literalType.literal.text)
+        const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
+        if (type !== undefined) {
+          enumType = type
+        }
+        if (value !== undefined) {
+          enums.push(value)
         }
       }
       if (enumType) {
