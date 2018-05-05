@@ -26,6 +26,7 @@ async function executeCommandLine() {
     graphqlPath,
     reasonPath,
     ocamlPath,
+    rustPath,
     jsonPath,
     debugPath,
     filePaths,
@@ -84,6 +85,11 @@ async function executeCommandLine() {
       fs.writeFileSync(ocamlPath, ocamlContent)
     }
 
+    if (rustPath) {
+      const rustContent = generator.generateRustTypes()
+      fs.writeFileSync(rustPath, rustContent)
+    }
+
     if (jsonPath) {
       generateJsonSchemas(generator)
     }
@@ -101,36 +107,22 @@ async function executeCommandLine() {
   }
 }
 
+function parseParameter(argv: minimist.ParsedArgs, name: string) {
+  const result = argv[name]
+  if (result && typeof result !== 'string') {
+    throw new Error(`expect the path of generated ${name} file`)
+  }
+  return result
+}
+
 function parseParameters(argv: minimist.ParsedArgs) {
-  const protobufPath = argv.protobuf
-  if (protobufPath && typeof protobufPath !== 'string') {
-    throw new Error('expect the path of generated protobuf file')
-  }
-
-  const graphqlPath = argv.graphql
-  if (graphqlPath && typeof graphqlPath !== 'string') {
-    throw new Error('expect the path of generated graphql schema file')
-  }
-
-  const reasonPath = argv.reason
-  if (reasonPath && typeof reasonPath !== 'string') {
-    throw new Error('expect the path of generated reason types file')
-  }
-
-  const ocamlPath = argv.ocaml
-  if (ocamlPath && typeof ocamlPath !== 'string') {
-    throw new Error('expect the path of generated ocaml types file')
-  }
-
-  const jsonPath = argv.json
-  if (jsonPath && typeof jsonPath !== 'string') {
-    throw new Error('expect the path of generated json file')
-  }
-
-  const debugPath = argv.debug
-  if (debugPath && typeof debugPath !== 'string') {
-    throw new Error('expect the path of generated debug file')
-  }
+  const protobufPath = parseParameter(argv, 'protobuf')
+  const graphqlPath = parseParameter(argv, 'graphql')
+  const reasonPath = parseParameter(argv, 'reason')
+  const ocamlPath = parseParameter(argv, 'ocaml')
+  const rustPath = parseParameter(argv, 'rust')
+  const jsonPath = parseParameter(argv, 'json')
+  const debugPath = parseParameter(argv, 'debug')
 
   const filePaths = argv._
   if (filePaths.length === 0) {
@@ -148,6 +140,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
     graphqlPath,
     reasonPath,
     ocamlPath,
+    rustPath,
     jsonPath,
     debugPath,
     filePaths,

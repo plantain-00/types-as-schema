@@ -7,7 +7,7 @@
 [![npm version](https://badge.fury.io/js/types-as-schema.svg)](https://badge.fury.io/js/types-as-schema)
 [![Downloads](https://img.shields.io/npm/dm/types-as-schema.svg)](https://www.npmjs.com/package/types-as-schema)
 
-Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml types from typescript types.
+Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml/rust types from typescript types.
 
 ## supported types features
 
@@ -33,7 +33,7 @@ Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml types fro
 
 ## usage
 
-`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --reason demo/types.re --ocaml demo/types.ml --debug demo/debug.json`
+`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --reason demo/types.re --ocaml demo/types.ml --rust demo/types.rs --debug demo/debug.json`
 
 parameters | description
 --- | ---
@@ -42,6 +42,7 @@ parameters | description
 `--graphql` | generated graphql schema file
 `--reason` | generated reason types file
 `--ocaml` | generated ocaml types file
+`--rust` | generated rust types file
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 

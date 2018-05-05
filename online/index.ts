@@ -18,6 +18,7 @@ export class App extends Vue {
   graphqlSchema = ''
   reasonTypes = ''
   ocamlTypes = ''
+  rustTypes = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -45,25 +46,27 @@ export class App extends Vue {
       const generator = new Generator(sourceFile)
 
       this.protobuf = generator.generateProtobuf()
+      this.options = ['protobuf']
 
       this.jsonSchemas = generator.generateJsonSchemas().map(s => ({
         entry: s.entry,
         content: JSON.stringify(s.schema, null, '  ')
       }))
-
-      this.graphqlSchema = generator.generateGraphqlSchema()
-
-      this.reasonTypes = generator.generateReasonTypes()
-
-      this.ocamlTypes = generator.generateOcamlTypes()
-
-      this.options = ['protobuf']
       for (const schema of this.jsonSchemas) {
         this.options.push(schema.entry)
       }
+
+      this.graphqlSchema = generator.generateGraphqlSchema()
       this.options.push('graphql schema')
+
+      this.reasonTypes = generator.generateReasonTypes()
       this.options.push('reason types')
+
+      this.ocamlTypes = generator.generateOcamlTypes()
       this.options.push('ocaml types')
+
+      this.rustTypes = generator.generateRustTypes()
+      this.options.push('rust types')
     }
   }
 }

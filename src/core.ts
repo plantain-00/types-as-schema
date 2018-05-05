@@ -5,6 +5,7 @@ import { generateJsonSchemas, ArrayDefinition, ObjectDefinition, UndefinedDefini
 import { generateGraphqlSchema } from './graphql-schema-generator'
 import { generateReasonTypes } from './reason-type-generator'
 import { generateOcamlTypes } from './ocaml-type-generator'
+import { generateRustTypes } from './rust-type-generator'
 import { TypeDeclaration } from './utils'
 
 export class Generator {
@@ -33,6 +34,10 @@ export class Generator {
 
   generateOcamlTypes() {
     return generateOcamlTypes(this.declarations)
+  }
+
+  generateRustTypes() {
+    return generateRustTypes(this.declarations)
   }
 }
 
