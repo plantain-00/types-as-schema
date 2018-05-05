@@ -53,5 +53,6 @@ function getOcamlTypesPropertyOfReference(typeDeclarations: TypeDeclaration[], m
   const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
   if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'string'
-  } return memberType.name
+  }
+  return memberType.name
 }
