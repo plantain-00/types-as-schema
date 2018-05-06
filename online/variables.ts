@@ -291,6 +291,31 @@ type ReferenceType = {
   typeReferenceMember2: TypeReferenceMember2
 }
 
+class ClassType1 {
+  classMember1: string
+  classMember2: number
+}
+
+class ClassType2 extends ClassType1 {
+  classMember3: string
+  classMember4: number
+}
+
+class ClassType3 {
+  classMember1 = 'foo'
+  classMember2 = 123
+  classMember3 = false
+  classMember4: string = 'foo'
+  classMember5 = ['foo']
+  classMember6 = { a: 1 }
+}
+
+type ClassType = {
+  classType1: ClassType1;
+  classType2: ClassType2;
+  classType3: ClassType3;
+}
+
 /**
  * @entry cases.json
  * @additionalProperties
@@ -318,6 +343,7 @@ export type EntryType = {
   tupleType: [string, string];
   defaultType: DefaultValue;
   anyType: any;
+  classType: ClassType;
 }
 `
 // @ts-ignore

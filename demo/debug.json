@@ -1184,6 +1184,158 @@
   },
   {
     "kind": "object",
+    "name": "ClassType1",
+    "members": [
+      {
+        "name": "classMember1",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "classMember2",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2
+  },
+  {
+    "kind": "object",
+    "name": "ClassType2",
+    "members": [
+      {
+        "name": "classMember3",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "classMember4",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      },
+      {
+        "name": "classMember1",
+        "type": {
+          "kind": "string"
+        }
+      },
+      {
+        "name": "classMember2",
+        "type": {
+          "kind": "number",
+          "type": "number"
+        }
+      }
+    ],
+    "minProperties": 4,
+    "maxProperties": 4
+  },
+  {
+    "kind": "object",
+    "name": "ClassType3",
+    "members": [
+      {
+        "name": "classMember1",
+        "type": {
+          "kind": "string",
+          "default": "foo"
+        }
+      },
+      {
+        "name": "classMember2",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "default": 123
+        }
+      },
+      {
+        "name": "classMember3",
+        "type": {
+          "kind": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "classMember4",
+        "type": {
+          "kind": "string",
+          "default": "foo"
+        }
+      },
+      {
+        "name": "classMember5",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string"
+          },
+          "default": [
+            "foo"
+          ]
+        }
+      },
+      {
+        "name": "classMember6",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "a",
+              "type": {
+                "kind": "number",
+                "type": "number"
+              }
+            }
+          ],
+          "minProperties": 1,
+          "default": {
+            "a": 1
+          }
+        }
+      }
+    ],
+    "minProperties": 6,
+    "maxProperties": 6
+  },
+  {
+    "kind": "object",
+    "name": "ClassType",
+    "members": [
+      {
+        "name": "classType1",
+        "type": {
+          "kind": "reference",
+          "name": "ClassType1"
+        }
+      },
+      {
+        "name": "classType2",
+        "type": {
+          "kind": "reference",
+          "name": "ClassType2"
+        }
+      },
+      {
+        "name": "classType3",
+        "type": {
+          "kind": "reference",
+          "name": "ClassType3"
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3
+  },
+  {
+    "kind": "object",
     "name": "EntryType",
     "members": [
       {
@@ -1351,10 +1503,17 @@
       {
         "name": "anyType",
         "type": {}
+      },
+      {
+        "name": "classType",
+        "type": {
+          "kind": "reference",
+          "name": "ClassType"
+        }
       }
     ],
-    "minProperties": 20,
-    "maxProperties": 22,
+    "minProperties": 21,
+    "maxProperties": 23,
     "additionalProperties": true,
     "entry": "cases.json"
   }

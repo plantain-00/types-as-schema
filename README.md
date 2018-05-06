@@ -20,11 +20,12 @@ Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml/rust type
 + tagged field
 + marked as more precise type
 + enum
++ class
++ class extends
 
 ## unsupported types features
 
-+ class
-+ function
++ function / method
 + variable statement
 
 ## install

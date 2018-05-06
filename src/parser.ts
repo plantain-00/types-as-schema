@@ -15,7 +15,8 @@ import {
   ReferenceDeclaration,
   UnionDeclaration,
   ObjectDeclaration,
-  ArrayDeclaration
+  ArrayDeclaration,
+  Expression
 } from './utils'
 
 export class Parser {
@@ -48,18 +49,16 @@ export class Parser {
         }
         let lastIndex = 0
         for (const member of members) {
-          const name = member.name as ts.Identifier
-          if (member.initializer && member.initializer.kind === ts.SyntaxKind.NumericLiteral) {
-            const initializer = member.initializer as ts.NumericLiteral
-            const value = +initializer.text
+          if (member.initializer) {
+            const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier)
             enumType.members.push({
-              name: name.text,
+              name,
               value
             })
             lastIndex = value + 1
           } else {
             enumType.members.push({
-              name: name.text,
+              name: (member.name as ts.Identifier).text,
               value: lastIndex
             })
             lastIndex++
@@ -79,20 +78,11 @@ export class Parser {
     }
     for (const member of members) {
       if (member.initializer) {
-        const name = member.name as ts.Identifier
-        if (member.initializer.kind === ts.SyntaxKind.StringLiteral) {
-          const initializer = member.initializer as ts.StringLiteral
-          enumType.members.push({
-            name: name.text,
-            value: initializer.text
-          })
-        } else if (member.initializer.kind === ts.SyntaxKind.NumericLiteral) {
-          const initializer = member.initializer as ts.NumericLiteral
-          enumType.members.push({
-            name: name.text,
-            value: +initializer.text
-          })
-        }
+        const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier)
+        enumType.members.push({
+          name,
+          value
+        })
       }
     }
     this.declarations.push(enumType)
@@ -103,14 +93,14 @@ export class Parser {
     const entry = jsDocs.find(jsDoc => jsDoc.name === 'entry')
     if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
       this.handleTypeAliasDeclaration(node as ts.TypeAliasDeclaration, jsDocs, entry)
-    } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
-      this.handleInterfaceDeclaration(node as ts.InterfaceDeclaration, jsDocs, entry)
+    } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration) {
+      this.handleInterfaceOrClassDeclaration(node as ts.InterfaceDeclaration, jsDocs, entry)
     }
   }
 
-  private handleInterfaceDeclaration(declaration: ts.InterfaceDeclaration, jsDocs: JsDoc[], entry: JsDoc | undefined) {
+  private handleInterfaceOrClassDeclaration(declaration: ts.InterfaceDeclaration | ts.ClassDeclaration, jsDocs: JsDoc[], entry: JsDoc | undefined) {
     // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
-    if (this.declarations.some(m => m.name === declaration.name.text)) {
+    if (this.declarations.some(m => m.name === declaration.name!.text)) {
       return
     }
 
@@ -124,7 +114,7 @@ export class Parser {
 
     const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
-      name: declaration.name.text,
+      name: declaration.name!.text,
       members,
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
@@ -133,13 +123,13 @@ export class Parser {
     }
 
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaObject(jsDoc, objectDeclaration)
+      this.setJsDocObject(jsDoc, objectDeclaration)
     }
 
     this.declarations.push(objectDeclaration)
   }
 
-  private handleHeritageClauses(declaration: ts.InterfaceDeclaration, members: Member[], minProperties: number, maxProperties: number) {
+  private handleHeritageClauses(declaration: ts.InterfaceDeclaration | ts.ClassDeclaration, members: Member[], minProperties: number, maxProperties: number) {
     let additionalProperties: Type | undefined | boolean
     if (declaration.heritageClauses) {
       for (const clause of declaration.heritageClauses) {
@@ -203,7 +193,8 @@ export class Parser {
       if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType || u.kind === ts.SyntaxKind.NullKeyword)) {
         this.handleUnionTypeOfLiteralType(unionType, declarationName)
         return
-      } else if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
+      }
+      if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
         const unionDeclaration: UnionDeclaration = {
           kind: 'union',
           name: declarationName.text,
@@ -225,7 +216,7 @@ export class Parser {
       entry: entry ? entry.comment : undefined
     }
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaObject(jsDoc, objectDeclaration)
+      this.setJsDocObject(jsDoc, objectDeclaration)
     }
     this.declarations.push(objectDeclaration)
   }
@@ -283,7 +274,7 @@ export class Parser {
       entry: entry ? entry.comment : undefined
     }
     for (const jsDoc of jsDocs) {
-      this.setJsonSchemaArray(jsDoc, arrayDeclaration)
+      this.setJsDocArray(jsDoc, arrayDeclaration)
     }
     this.declarations.push(arrayDeclaration)
   }
@@ -327,29 +318,44 @@ export class Parser {
       return {
         kind: 'string'
       }
-    } else if (type.kind === ts.SyntaxKind.NumberKeyword) {
+    }
+    if (type.kind === ts.SyntaxKind.NumberKeyword) {
       return {
         kind: 'number',
         type: 'number'
       }
-    } else if (type.kind === ts.SyntaxKind.BooleanKeyword) {
+    }
+    if (type.kind === ts.SyntaxKind.BooleanKeyword) {
       return {
         kind: 'boolean'
       }
-    } else if (type.kind === ts.SyntaxKind.TypeLiteral) {
+    }
+    if (type.kind === ts.SyntaxKind.TypeLiteral) {
       return this.getTypeOfTypeLiteral(type as ts.TypeLiteralNode)
-    } else if (type.kind === ts.SyntaxKind.ArrayType) {
+    }
+    if (type.kind === ts.SyntaxKind.ArrayType) {
       const array = type as ts.ArrayTypeNode
       const elementType = this.getType(array.elementType)
       return {
         kind: 'array',
         type: elementType
       }
-    } else if (type.kind === ts.SyntaxKind.TypeReference) {
+    }
+    if (type.kind === ts.SyntaxKind.TypeReference) {
       return this.getTypeOfTypeReference(type as ts.TypeReferenceNode)
-    } else if (type.kind === ts.SyntaxKind.UnionType) {
+    }
+    if (type.kind === ts.SyntaxKind.UnionType) {
       return this.getTypeOfUnionType(type as ts.UnionTypeNode)
-    } else if (type.kind === ts.SyntaxKind.TupleType) {
+    }
+    if (type.kind === ts.SyntaxKind.LiteralType) {
+      return this.getTypeOfLiteralType(type as ts.LiteralTypeNode)
+    }
+    if (type.kind === ts.SyntaxKind.NullKeyword) {
+      return {
+        kind: 'null'
+      }
+    }
+    if (type.kind === ts.SyntaxKind.TupleType) {
       const tupleType = type as ts.TupleTypeNode
       let arrayType: Type | undefined
       for (const elementType of tupleType.elementTypes) {
@@ -362,12 +368,6 @@ export class Parser {
           minItems: tupleType.elementTypes.length,
           maxItems: tupleType.elementTypes.length
         }
-      }
-    } else if (type.kind === ts.SyntaxKind.LiteralType) {
-      return this.getTypeOfLiteralType(type as ts.LiteralTypeNode)
-    } else if (type.kind === ts.SyntaxKind.NullKeyword) {
-      return {
-        kind: 'null'
       }
     }
     return {
@@ -393,7 +393,8 @@ export class Parser {
         type: 'boolean',
         value: true
       }
-    } else if (literalType.literal.kind === ts.SyntaxKind.FalseKeyword) {
+    }
+    if (literalType.literal.kind === ts.SyntaxKind.FalseKeyword) {
       return {
         type: 'boolean',
         value: false
@@ -484,16 +485,16 @@ export class Parser {
           kind: 'number',
           type: reference.typeName.text
         }
-      } else {
-        if (reference.typeName.text === 'Array') {
-          return this.getTypeOfArrayTypeReference(reference)
-        }
-        return {
-          kind: 'reference',
-          name: reference.typeName.text
-        }
       }
-    } else if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
+      if (reference.typeName.text === 'Array') {
+        return this.getTypeOfArrayTypeReference(reference)
+      }
+      return {
+        kind: 'reference',
+        name: reference.typeName.text
+      }
+    }
+    if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
       const enumName = (reference.typeName.left as ts.Identifier).text
       const enumDeclaration = this.declarations.find(m => m.kind === 'enum' && m.name === enumName) as EnumDeclaration | undefined
       if (enumDeclaration) {
@@ -542,13 +543,17 @@ export class Parser {
     if (node.kind === ts.SyntaxKind.TypeLiteral) {
       const typeLiteral = node as ts.TypeLiteralNode
       return this.getObjectMembers(typeLiteral.members)
-    } else if (node.kind === ts.SyntaxKind.UnionType) {
+    }
+    if (node.kind === ts.SyntaxKind.UnionType) {
       return this.getMembersInfoOfUnionType(node as ts.UnionTypeNode)
-    } else if (node.kind === ts.SyntaxKind.IntersectionType) {
+    }
+    if (node.kind === ts.SyntaxKind.IntersectionType) {
       return this.getMembersInfoOfIntersectionType(node as ts.IntersectionTypeNode)
-    } else if (node.kind === ts.SyntaxKind.ParenthesizedType) {
+    }
+    if (node.kind === ts.SyntaxKind.ParenthesizedType) {
       return this.getMembersInfoOfParenthesizedType(node as ts.ParenthesizedTypeNode)
-    } else if (node.kind === ts.SyntaxKind.TypeReference) {
+    }
+    if (node.kind === ts.SyntaxKind.TypeReference) {
       return this.getMembersInfoOfTypeReference(node as ts.TypeReferenceNode)
     }
     return { members: [], minProperties: 0, maxProperties: 0 }
@@ -683,15 +688,15 @@ export class Parser {
     })
   }
 
-  private getObjectMembers(elements: ts.NodeArray<ts.TypeElement>): MembersInfo {
+  private getObjectMembers(elements: ts.NodeArray<ts.TypeElement | ts.ClassElement>): MembersInfo {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
     let additionalProperties: Type | undefined | boolean
     for (const element of elements) {
-      if (element.kind === ts.SyntaxKind.PropertySignature) {
-        const property = element as ts.PropertySignature
-        const member = this.getObjectMemberOfPropertySignature(property)
+      if (element.kind === ts.SyntaxKind.PropertySignature || element.kind === ts.SyntaxKind.PropertyDeclaration) {
+        const property = element as ts.PropertySignature | ts.PropertyDeclaration
+        const member = this.getObjectMemberOfProperty(property)
         members.push(member)
         if (!property.questionToken) {
           minProperties++
@@ -707,7 +712,90 @@ export class Parser {
     return { members, minProperties, maxProperties, additionalProperties }
   }
 
-  private getObjectMemberOfPropertySignature(property: ts.PropertySignature) {
+  private getExpression(expression: ts.Expression, name: ts.Identifier): Expression {
+    const { type, value } = this.getTypeAndValueOfExpression(expression)
+    return {
+      name: name.text,
+      type,
+      value
+    }
+  }
+
+  private getTypeAndValueOfExpression(expression: ts.Expression): { type: Type, value: any } {
+    if (expression.kind === ts.SyntaxKind.StringLiteral) {
+      return {
+        type: {
+          kind: 'string'
+        },
+        value: (expression as ts.StringLiteral).text
+      }
+    }
+    if (expression.kind === ts.SyntaxKind.NumericLiteral) {
+      return {
+        type: {
+          kind: 'number',
+          type: 'number'
+        },
+        value: +(expression as ts.NumericLiteral).text
+      }
+    }
+    if (expression.kind === ts.SyntaxKind.FalseKeyword || expression.kind === ts.SyntaxKind.TrueKeyword) {
+      return {
+        type: {
+          kind: 'boolean'
+        },
+        value: expression.kind === ts.SyntaxKind.TrueKeyword
+      }
+    } else if (expression.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+      const arrayLiteral = expression as ts.ArrayLiteralExpression
+      let elementsType: Type = {
+        kind: undefined
+      }
+      const elementsValues = []
+      for (const element of arrayLiteral.elements) {
+        const { type, value } = this.getTypeAndValueOfExpression(element)
+        elementsType = type
+        elementsValues.push(value)
+      }
+      return {
+        type: {
+          kind: 'array',
+          type: elementsType
+        },
+        value: elementsValues
+      }
+    } else if (expression.kind === ts.SyntaxKind.ObjectLiteralExpression) {
+      const arrayLiteral = expression as ts.ObjectLiteralExpression
+      const members: Member[] = []
+      const value: any = {}
+      for (const property of arrayLiteral.properties) {
+        if (property.kind === ts.SyntaxKind.PropertyAssignment) {
+          const expression = this.getExpression(property.initializer, property.name as ts.Identifier)
+          members.push({
+            name: expression.name,
+            type: expression.type
+          })
+          value[expression.name] = expression.value
+        }
+      }
+      return {
+        type: {
+          kind: 'object',
+          members,
+          minProperties: members.length
+        },
+        value
+      }
+    }
+    return {
+      type: {
+        kind: undefined
+      },
+      value: undefined
+    }
+  }
+
+  private getObjectMemberOfProperty(property: ts.PropertySignature | ts.PropertyDeclaration) {
     const name = property.name as ts.Identifier
     const member: Member = {
       name: name.text,
@@ -720,51 +808,66 @@ export class Parser {
       member.optional = true
     }
 
+    let defaultValue: any
+    if (property.initializer) {
+      const { type, value } = this.getTypeAndValueOfExpression(property.initializer)
+      member.type = type
+      defaultValue = value
+    }
+
     if (property.type) {
       member.type = this.getType(property.type)
     }
 
-    const propertyJsDocs = this.getJsDocs(property)
-    for (const propertyJsDoc of propertyJsDocs) {
-      if (propertyJsDoc.name === 'tag') {
-        this.setJsonSchemaTag(propertyJsDoc, member)
-      } else if (propertyJsDoc.name === 'mapValueType') {
-        this.setJsonSchemaMapValue(propertyJsDoc, member.type)
-      } else if (propertyJsDoc.name === 'type') {
-        this.overrideType(member.type, propertyJsDoc)
-      } else if (propertyJsDoc.name === 'param') {
-        this.setJsonSchemaParam(propertyJsDoc, member)
-      } else if (member.type.kind === 'array') {
-        this.setJsonSchemaArray(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'number') {
-        this.setJsonSchemaNumber(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'string') {
-        this.setJsonSchemaString(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'boolean') {
-        this.setJsonSchemaBoolean(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'object') {
-        this.setJsonSchemaObject(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'reference') {
-        this.setJsonSchemaReference(propertyJsDoc, member.type)
-      }
+    if (defaultValue !== undefined) {
+      (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
     }
+
+    this.setPropertyJsDoc(property, member)
 
     return member
   }
 
-  private setJsonSchemaReference(propertyJsDoc: JsDoc, type: ReferenceType) {
+  private setPropertyJsDoc(property: ts.PropertySignature | ts.PropertyDeclaration, member: Member) {
+    const propertyJsDocs = this.getJsDocs(property)
+    for (const propertyJsDoc of propertyJsDocs) {
+      if (propertyJsDoc.name === 'tag') {
+        this.setJsDocTag(propertyJsDoc, member)
+      } else if (propertyJsDoc.name === 'mapValueType') {
+        this.setJsDocMapValue(propertyJsDoc, member.type)
+      } else if (propertyJsDoc.name === 'type') {
+        this.overrideType(member.type, propertyJsDoc)
+      } else if (propertyJsDoc.name === 'param') {
+        this.setJsDocParam(propertyJsDoc, member)
+      } else if (member.type.kind === 'array') {
+        this.setJsDocArray(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'number') {
+        this.setJsDocNumber(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'string') {
+        this.setJsDocString(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'boolean') {
+        this.setJsDocBoolean(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'object') {
+        this.setJsDocObject(propertyJsDoc, member.type)
+      } else if (member.type.kind === 'reference') {
+        this.setJsDocReference(propertyJsDoc, member.type)
+      }
+    }
+  }
+
+  private setJsDocReference(propertyJsDoc: JsDoc, type: ReferenceType) {
     if (propertyJsDoc.comment) {
       type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
     }
   }
 
-  private setJsonSchemaTag(propertyJsDoc: JsDoc, member: Member) {
+  private setJsDocTag(propertyJsDoc: JsDoc, member: Member) {
     if (propertyJsDoc.comment) {
       member.tag = +propertyJsDoc.comment
     }
   }
 
-  private setJsonSchemaMapValue(propertyJsDoc: JsDoc, type: Type) {
+  private setJsDocMapValue(propertyJsDoc: JsDoc, type: Type) {
     if (propertyJsDoc.comment && type.kind === 'map') {
       if (type.value.kind === 'number') {
         type.value.type = propertyJsDoc.comment
@@ -772,7 +875,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaParam(propertyJsDoc: JsDoc, member: Member) {
+  private setJsDocParam(propertyJsDoc: JsDoc, member: Member) {
     if (propertyJsDoc.paramName && propertyJsDoc.type) {
       if (!member.parameters) {
         member.parameters = []
@@ -786,7 +889,7 @@ export class Parser {
     this.overrideType(member.type, propertyJsDoc)
   }
 
-  private setJsonSchemaBoolean(propertyJsDoc: JsDoc, type: BooleanType) {
+  private setJsDocBoolean(propertyJsDoc: JsDoc, type: BooleanType) {
     if (propertyJsDoc.comment) {
       if (propertyJsDoc.name === 'default') {
         type.default = this.getJsDocComment(propertyJsDoc.comment).toLowerCase() === 'true'
@@ -809,7 +912,7 @@ export class Parser {
     return comment
   }
 
-  private setJsonSchemaString(propertyJsDoc: JsDoc, type: StringType) {
+  private setJsDocString(propertyJsDoc: JsDoc, type: StringType) {
     if (propertyJsDoc.comment) {
       if (propertyJsDoc.name === 'minLength') {
         type.minLength = +propertyJsDoc.comment
@@ -827,7 +930,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaNumber(propertyJsDoc: JsDoc, type: NumberType) {
+  private setJsDocNumber(propertyJsDoc: JsDoc, type: NumberType) {
     if (propertyJsDoc.comment) {
       if (propertyJsDoc.name === 'multipleOf') {
         type.multipleOf = +propertyJsDoc.comment
@@ -864,7 +967,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaArray(jsDoc: JsDoc, type: ArrayType) {
+  private setJsDocArray(jsDoc: JsDoc, type: ArrayType) {
     if (jsDoc.comment) {
       if (jsDoc.name === 'minItems') {
         type.minItems = +jsDoc.comment
@@ -873,9 +976,9 @@ export class Parser {
       } else if (jsDoc.name === 'itemType') {
         this.overrideType(type, jsDoc)
       } else if (type.type.kind === 'number') {
-        this.setJsonSchemaNumberArray(jsDoc, type.type)
+        this.setJsDocNumberArray(jsDoc, type.type)
       } else if (type.type.kind === 'string') {
-        this.setJsonSchemaStringArray(jsDoc, type.type)
+        this.setJsDocStringArray(jsDoc, type.type)
       } else if (type.type.kind === 'boolean') {
         if (jsDoc.name === 'itemDefault') {
           type.type.default = this.getJsDocComment(jsDoc.comment).toLowerCase() === 'true'
@@ -892,7 +995,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaNumberArray(jsDoc: JsDoc, type: NumberType) {
+  private setJsDocNumberArray(jsDoc: JsDoc, type: NumberType) {
     if (jsDoc.comment) {
       if (jsDoc.name === 'itemMultipleOf') {
         type.multipleOf = +jsDoc.comment
@@ -910,7 +1013,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaStringArray(jsDoc: JsDoc, type: StringType) {
+  private setJsDocStringArray(jsDoc: JsDoc, type: StringType) {
     if (jsDoc.comment) {
       if (jsDoc.name === 'itemMinLength') {
         type.minLength = +jsDoc.comment
@@ -924,7 +1027,7 @@ export class Parser {
     }
   }
 
-  private setJsonSchemaObject(jsDoc: JsDoc, type: ObjectType) {
+  private setJsDocObject(jsDoc: JsDoc, type: ObjectType) {
     if (jsDoc.comment) {
       if (jsDoc.name === 'minProperties') {
         type.minProperties = +jsDoc.comment
