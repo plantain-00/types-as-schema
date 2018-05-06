@@ -178,6 +178,36 @@ type referenceType = {
   typeReferenceMember2: typeReferenceMember2,
 };
 
+type classType1 = {
+  .
+  classMember1: string,
+  classMember2: float,
+};
+
+type classType2 = {
+  .
+  classMember3: string,
+  classMember4: float,
+  classMember1: string,
+  classMember2: float,
+};
+
+type classType3 = {
+  .
+  classMember1: string,
+  classMember2: float,
+  classMember3: bool,
+  classMember4: string,
+  classMember5: list(string),
+};
+
+type classType = {
+  .
+  classType1: classType1,
+  classType2: classType2,
+  classType3: classType3,
+};
+
 type entryType = {
   .
   optionalMember: option(string),
@@ -200,4 +230,5 @@ type entryType = {
   optionalArrayMember: option(list(string)),
   tupleType: list(string),
   defaultType: defaultValue,
+  classType: classType,
 };

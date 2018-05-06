@@ -159,6 +159,32 @@ type ReferenceType {
   typeReferenceMember2: TypeReferenceMember2!
 }
 
+type ClassType1 {
+  classMember1: String!
+  classMember2: Float!
+}
+
+type ClassType2 {
+  classMember3: String!
+  classMember4: Float!
+  classMember1: String!
+  classMember2: Float!
+}
+
+type ClassType3 {
+  classMember1: String!
+  classMember2: Float!
+  classMember3: Boolean!
+  classMember4: String!
+  classMember5: [String]!
+}
+
+type ClassType {
+  classType1: ClassType1!
+  classType2: ClassType2!
+  classType3: ClassType3!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -180,4 +206,5 @@ type EntryType {
   optionalArrayMember: [String]
   tupleType: [String]!
   defaultType: DefaultValue!
+  classType: ClassType!
 }

@@ -84,7 +84,10 @@
         "defaultType": {
           "$ref": "#/definitions/DefaultValue"
         },
-        "anyType": {}
+        "anyType": {},
+        "classType": {
+          "$ref": "#/definitions/ClassType"
+        }
       },
       "required": [
         "booleanMember",
@@ -106,7 +109,8 @@
         "parameter",
         "tupleType",
         "defaultType",
-        "anyType"
+        "anyType",
+        "classType"
       ],
       "additionalProperties": true
     },
@@ -884,6 +888,120 @@
         "objectMember",
         "numberMember1",
         "objectMember2"
+      ],
+      "additionalProperties": false
+    },
+    "ClassType": {
+      "type": "object",
+      "properties": {
+        "classType1": {
+          "$ref": "#/definitions/ClassType1"
+        },
+        "classType2": {
+          "$ref": "#/definitions/ClassType2"
+        },
+        "classType3": {
+          "$ref": "#/definitions/ClassType3"
+        }
+      },
+      "required": [
+        "classType1",
+        "classType2",
+        "classType3"
+      ],
+      "additionalProperties": false
+    },
+    "ClassType1": {
+      "type": "object",
+      "properties": {
+        "classMember1": {
+          "type": "string"
+        },
+        "classMember2": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "classMember1",
+        "classMember2"
+      ],
+      "additionalProperties": false
+    },
+    "ClassType2": {
+      "type": "object",
+      "properties": {
+        "classMember3": {
+          "type": "string"
+        },
+        "classMember4": {
+          "type": "number"
+        },
+        "classMember1": {
+          "type": "string"
+        },
+        "classMember2": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "classMember3",
+        "classMember4",
+        "classMember1",
+        "classMember2"
+      ],
+      "additionalProperties": false
+    },
+    "ClassType3": {
+      "type": "object",
+      "properties": {
+        "classMember1": {
+          "type": "string",
+          "default": "foo"
+        },
+        "classMember2": {
+          "type": "number",
+          "default": 123
+        },
+        "classMember3": {
+          "type": "boolean",
+          "default": false
+        },
+        "classMember4": {
+          "type": "string",
+          "default": "foo"
+        },
+        "classMember5": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "foo"
+          ]
+        },
+        "classMember6": {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a"
+          ],
+          "additionalProperties": false,
+          "default": {
+            "a": 1
+          }
+        }
+      },
+      "required": [
+        "classMember1",
+        "classMember2",
+        "classMember3",
+        "classMember4",
+        "classMember5",
+        "classMember6"
       ],
       "additionalProperties": false
     }

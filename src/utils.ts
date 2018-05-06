@@ -173,3 +173,9 @@ export type MemberParameter = {
   type: Type;
   optional?: boolean;
 }
+
+export type Expression = {
+  name: string;
+  type: Type;
+  value: any;
+}

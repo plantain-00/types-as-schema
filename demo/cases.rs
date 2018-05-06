@@ -231,6 +231,36 @@ pub struct ReferenceType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct ClassType1 {
+  #[serde(rename = "classMember1")] pub class_member_1: String,
+  #[serde(rename = "classMember2")] pub class_member_2: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ClassType2 {
+  #[serde(rename = "classMember3")] pub class_member_3: String,
+  #[serde(rename = "classMember4")] pub class_member_4: f32,
+  #[serde(rename = "classMember1")] pub class_member_1: String,
+  #[serde(rename = "classMember2")] pub class_member_2: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ClassType3 {
+  #[serde(rename = "classMember1")] pub class_member_1: String,
+  #[serde(rename = "classMember2")] pub class_member_2: f32,
+  #[serde(rename = "classMember3")] pub class_member_3: bool,
+  #[serde(rename = "classMember4")] pub class_member_4: String,
+  #[serde(rename = "classMember5")] pub class_member_5: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ClassType {
+  #[serde(rename = "classType1")] pub class_type_1: ClassType1,
+  #[serde(rename = "classType2")] pub class_type_2: ClassType2,
+  #[serde(rename = "classType3")] pub class_type_3: ClassType3,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct EntryType {
   #[serde(rename = "optionalMember")] pub optional_member: Option<String>,
   #[serde(rename = "booleanMember")] pub boolean_member: bool,
@@ -252,4 +282,5 @@ pub struct EntryType {
   #[serde(rename = "optionalArrayMember")] pub optional_array_member: Option<Vec<String>>,
   #[serde(rename = "tupleType")] pub tuple_type: Vec<String>,
   #[serde(rename = "defaultType")] pub default_type: DefaultValue,
+  #[serde(rename = "classType")] pub class_type: ClassType,
 }
