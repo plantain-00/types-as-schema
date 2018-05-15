@@ -47,7 +47,8 @@ module.exports = {
   },
   test: [
     'tsc -p spec',
-    'jasmine'
+    'jasmine',
+    'clean-release --config clean-run.config.js'
   ],
   fix: {
     ts: `tslint --fix ${tsFiles}`,
