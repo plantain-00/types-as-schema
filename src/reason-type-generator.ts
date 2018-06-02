@@ -7,7 +7,8 @@ export function generateReasonTypes(typeDeclarations: TypeDeclaration[]) {
       const members = typeDeclaration.members.map(m => {
         const propertyType = getReasonTypesProperty(typeDeclarations, m.type)
         if (propertyType) {
-          return `  ${m.name}: ${m.optional ? `option(${toLowerCase(propertyType)})` : toLowerCase(propertyType)}`
+          const type = m.optional ? `option(${toLowerCase(propertyType)})` : toLowerCase(propertyType)
+          return `  ${m.name}: ${type}`
         }
         return undefined
       })

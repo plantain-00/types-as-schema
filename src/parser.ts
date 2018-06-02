@@ -222,7 +222,7 @@ export class Parser {
   }
 
   private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier) {
-    let enumType: 'string' | 'number' | 'boolean' | undefined
+    let enumType: EnumValueType | undefined
     const enums: any[] = []
     for (const childType of unionType.types) {
       if (childType.kind === ts.SyntaxKind.LiteralType) {
@@ -375,7 +375,7 @@ export class Parser {
     }
   }
 
-  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type: 'string' | 'number' | 'boolean' | undefined, value: any } {
+  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type: EnumValueType | undefined, value: any } {
     if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
       return {
         type: 'string',
@@ -407,7 +407,7 @@ export class Parser {
   }
 
   private getTypeOfLiteralType(literalType: ts.LiteralTypeNode): Type {
-    let enumType: 'string' | 'number' | 'boolean' | undefined
+    let enumType: EnumValueType | undefined
     const enums: any[] = []
     const { type, value } = this.getEnumOfLiteralType(literalType)
     if (type !== undefined) {
@@ -431,7 +431,7 @@ export class Parser {
 
   private getTypeOfUnionType(unionType: ts.UnionTypeNode): Type {
     if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
-      let enumType: 'string' | 'number' | 'boolean' | undefined
+      let enumType: EnumValueType | undefined
       const enums: any[] = []
       for (const childType of unionType.types) {
         const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
@@ -820,6 +820,7 @@ export class Parser {
     }
 
     if (defaultValue !== undefined) {
+      // tslint:disable-next-line:max-union-size
       (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
     }
 
@@ -1064,3 +1065,5 @@ type MembersInfo = {
   maxProperties: number;
   additionalProperties?: Type | boolean;
 }
+
+type EnumValueType = 'string' | 'number' | 'boolean'
