@@ -35,7 +35,7 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
     }))
 }
 
-function getJsonSchemaProperty(memberType: Type | ObjectDeclaration | ArrayDeclaration | UnionDeclaration): Definition {
+function getJsonSchemaProperty(memberType: Type): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
@@ -219,13 +219,13 @@ function getNumberType(numberType: NumberType): NumberDefinition {
       maximum: numberType.maximum
     }
   } else if (numberType.type === 'uint32' || numberType.type === 'fixed32') {
-    definition = getUInt32Type(numberType)
+    definition = getIntegerType(numberType, 0, 4294967295)
   } else if (numberType.type === 'int32' || numberType.type === 'sint32' || numberType.type === 'sfixed32') {
-    definition = getInt32Type(numberType)
+    definition = getIntegerType(numberType, -2147483648, 2147483647)
   } else if (numberType.type === 'uint64' || numberType.type === 'fixed64') {
-    definition = getUint64Type(numberType)
+    definition = getIntegerType(numberType, 0, 18446744073709551615)
   } else if (numberType.type === 'int64' || numberType.type === 'sint64' || numberType.type === 'sfixed64') {
-    definition = getInt64Type(numberType)
+    definition = getIntegerType(numberType, -9223372036854775808, 9223372036854775807)
   } else if (numberType.type === 'number' || numberType.type === 'integer') {
     definition = {
       type: numberType.type,
@@ -250,35 +250,11 @@ function getNumberType(numberType: NumberType): NumberDefinition {
   return definition
 }
 
-function getUInt32Type(numberType: NumberType): NumberDefinition {
+function getIntegerType(numberType: NumberType, minimum: number, maximum: number): NumberDefinition {
   return {
     type: 'integer',
-    minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-    maximum: numberType.maximum !== undefined ? numberType.maximum : 4294967295
-  }
-}
-
-function getInt32Type(numberType: NumberType): NumberDefinition {
-  return {
-    type: 'integer',
-    minimum: numberType.minimum !== undefined ? numberType.minimum : -2147483648,
-    maximum: numberType.maximum !== undefined ? numberType.maximum : 2147483647
-  }
-}
-
-function getUint64Type(numberType: NumberType): NumberDefinition {
-  return {
-    type: 'integer',
-    minimum: numberType.minimum !== undefined ? numberType.minimum : 0,
-    maximum: numberType.maximum !== undefined ? numberType.maximum : 18446744073709551615
-  }
-}
-
-function getInt64Type(numberType: NumberType): NumberDefinition {
-  return {
-    type: 'integer',
-    minimum: numberType.minimum !== undefined ? numberType.minimum : -9223372036854775808,
-    maximum: numberType.maximum !== undefined ? numberType.maximum : 9223372036854775807
+    minimum: numberType.minimum !== undefined ? numberType.minimum : minimum,
+    maximum: numberType.maximum !== undefined ? numberType.maximum : maximum
   }
 }
 
