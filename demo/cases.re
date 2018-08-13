@@ -208,6 +208,11 @@ type classType = {
   classType3: classType3,
 };
 
+type circular = {
+  .
+  children: list(circular),
+};
+
 type entryType = {
   .
   optionalMember: option(string),
@@ -231,4 +236,5 @@ type entryType = {
   tupleType: list(string),
   defaultType: defaultValue,
   classType: classType,
+  circular: circular,
 };

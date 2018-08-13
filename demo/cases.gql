@@ -185,6 +185,10 @@ type ClassType {
   classType3: ClassType3!
 }
 
+type Circular {
+  children: [Circular]!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -207,4 +211,5 @@ type EntryType {
   tupleType: [String]!
   defaultType: DefaultValue!
   classType: ClassType!
+  circular: Circular!
 }

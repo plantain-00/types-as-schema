@@ -1336,6 +1336,24 @@
   },
   {
     "kind": "object",
+    "name": "Circular",
+    "members": [
+      {
+        "name": "children",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "reference",
+            "name": "Circular"
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1
+  },
+  {
+    "kind": "object",
     "name": "EntryType",
     "members": [
       {
@@ -1510,10 +1528,17 @@
           "kind": "reference",
           "name": "ClassType"
         }
+      },
+      {
+        "name": "circular",
+        "type": {
+          "kind": "reference",
+          "name": "Circular"
+        }
       }
     ],
-    "minProperties": 21,
-    "maxProperties": 23,
+    "minProperties": 22,
+    "maxProperties": 24,
     "additionalProperties": true,
     "entry": "cases.json"
   }

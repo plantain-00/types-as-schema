@@ -87,6 +87,9 @@
         "anyType": {},
         "classType": {
           "$ref": "#/definitions/ClassType"
+        },
+        "circular": {
+          "$ref": "#/definitions/Circular"
         }
       },
       "required": [
@@ -110,7 +113,8 @@
         "tupleType",
         "defaultType",
         "anyType",
-        "classType"
+        "classType",
+        "circular"
       ],
       "additionalProperties": true
     },
@@ -1002,6 +1006,21 @@
         "classMember4",
         "classMember5",
         "classMember6"
+      ],
+      "additionalProperties": false
+    },
+    "Circular": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Circular"
+          }
+        }
+      },
+      "required": [
+        "children"
       ],
       "additionalProperties": false
     }

@@ -30,7 +30,7 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
       entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
       schema: {
         $ref: `#/definitions/${m.name}`,
-        definitions: getReferencedDefinitions(m.name, definitions)
+        definitions: getReferencedDefinitions(m.name, definitions, [])
       }
     }))
 }
@@ -170,7 +170,12 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectTyp
   }
 }
 
-function getReferencedDefinitions(typeName: string | Definition, definitions: { [name: string]: Definition }) {
+// tslint:disable-next-line:cognitive-complexity
+function getReferencedDefinitions(
+  typeName: string | Definition,
+  definitions: { [name: string]: Definition },
+  dependents: string[]
+) {
   const result: { [name: string]: Definition } = {}
   const definition = typeof typeName === 'string' ? definitions[typeName] : typeName
   if (definition === undefined) {
@@ -178,33 +183,44 @@ function getReferencedDefinitions(typeName: string | Definition, definitions: { 
   }
   if (typeof typeName === 'string') {
     result[typeName] = definition
+    if (dependents.includes(typeName)) {
+      return result
+    }
+    dependents.push(typeName)
   }
   if (definition.type === 'array') {
-    Object.assign(result, getReferencedDefinitions(definition.items, definitions))
+    Object.assign(result, getReferencedDefinitions(definition.items, definitions, dependents))
   } else if (definition.type === 'object') {
     if (definition.properties) {
       for (const propertyName in definition.properties) {
         if (definition.properties.hasOwnProperty(propertyName)) {
           const propertyDefinition = definition.properties[propertyName]
-          Object.assign(result, getReferencedDefinitions(propertyDefinition, definitions))
+          Object.assign(result, getReferencedDefinitions(propertyDefinition, definitions, dependents))
         }
       }
     }
   } else if (definition.type === undefined) {
-    Object.assign(result, getJsonSchemaPropertyOfUndefined(definition, definitions))
+    Object.assign(result, getJsonSchemaPropertyOfUndefined(definition, definitions, dependents))
+  }
+  if (typeof typeName === 'string') {
+    dependents.pop()
   }
   return result
 }
 
-function getJsonSchemaPropertyOfUndefined(definition: UndefinedDefinition, definitions: { [name: string]: Definition }) {
+function getJsonSchemaPropertyOfUndefined(
+  definition: UndefinedDefinition,
+  definitions: { [name: string]: Definition },
+  dependents: string[]
+) {
   const result: { [name: string]: Definition } = {}
   if (definition.$ref) {
     const itemTypeName = definition.$ref.substring('#/definitions/'.length)
-    Object.assign(result, getReferencedDefinitions(itemTypeName, definitions))
+    Object.assign(result, getReferencedDefinitions(itemTypeName, definitions, dependents))
   }
   if (definition.anyOf) {
     for (const reference of definition.anyOf) {
-      Object.assign(result, getReferencedDefinitions(reference, definitions))
+      Object.assign(result, getReferencedDefinitions(reference, definitions, dependents))
     }
   }
   return result

@@ -189,6 +189,10 @@ message ClassType {
     ClassType3 classType3 = 3;
 }
 
+message Circular {
+    repeated Circular children = 1;
+}
+
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
@@ -211,4 +215,5 @@ message EntryType {
     repeated string tupleType = 20;
     DefaultValue defaultType = 21;
     ClassType classType = 23;
+    Circular circular = 24;
 }
