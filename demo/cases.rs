@@ -261,6 +261,11 @@ pub struct ClassType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct Circular {
+  pub children: Vec<Circular>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct EntryType {
   #[serde(rename = "optionalMember")] pub optional_member: Option<String>,
   #[serde(rename = "booleanMember")] pub boolean_member: bool,
@@ -283,4 +288,5 @@ pub struct EntryType {
   #[serde(rename = "tupleType")] pub tuple_type: Vec<String>,
   #[serde(rename = "defaultType")] pub default_type: DefaultValue,
   #[serde(rename = "classType")] pub class_type: ClassType,
+  pub circular: Circular,
 }

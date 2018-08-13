@@ -182,6 +182,10 @@ type classType = {
   classType3: classType3;
 }
 
+type circular = {
+  children: circular list;
+}
+
 type entryType = {
   optionalMember: string option;
   booleanMember: bool;
@@ -204,4 +208,5 @@ type entryType = {
   tupleType: string list;
   defaultType: defaultValue;
   classType: classType;
+  circular: circular;
 }

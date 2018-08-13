@@ -309,6 +309,10 @@ type ClassType = {
   classType3: ClassType3;
 }
 
+type Circular = {
+  children: Circular[]
+}
+
 /**
  * @entry cases.json
  * @additionalProperties
@@ -337,4 +341,5 @@ export type EntryType = {
   defaultType: DefaultValue;
   anyType: any;
   classType: ClassType;
+  circular: Circular;
 }
