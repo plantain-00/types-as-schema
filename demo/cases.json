@@ -90,6 +90,9 @@
         },
         "circular": {
           "$ref": "#/definitions/Circular"
+        },
+        "outerType": {
+          "$ref": "#/definitions/OuterType"
         }
       },
       "required": [
@@ -114,7 +117,8 @@
         "defaultType",
         "anyType",
         "classType",
-        "circular"
+        "circular",
+        "outerType"
       ],
       "additionalProperties": true
     },

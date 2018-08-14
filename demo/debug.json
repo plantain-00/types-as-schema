@@ -1535,10 +1535,17 @@
           "kind": "reference",
           "name": "Circular"
         }
+      },
+      {
+        "name": "outerType",
+        "type": {
+          "kind": "reference",
+          "name": "OuterType"
+        }
       }
     ],
-    "minProperties": 22,
-    "maxProperties": 24,
+    "minProperties": 23,
+    "maxProperties": 25,
     "additionalProperties": true,
     "entry": "cases.json"
   }

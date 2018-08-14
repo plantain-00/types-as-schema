@@ -216,4 +216,5 @@ message EntryType {
     DefaultValue defaultType = 21;
     ClassType classType = 23;
     Circular circular = 24;
+    OuterType outerType = 25;
 }

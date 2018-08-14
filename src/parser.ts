@@ -20,18 +20,26 @@ import {
 } from './utils'
 
 export class Parser {
-  declarations: TypeDeclaration[] = []
+  private declarations: TypeDeclaration[] = []
 
-  constructor(private sourceFile: ts.SourceFile) {
-    ts.forEachChild(sourceFile, node => {
-      if (node.kind === ts.SyntaxKind.EnumDeclaration) {
-        this.preHandleEnumDeclaration(node as ts.EnumDeclaration)
-      }
-    })
+  constructor(private sourceFiles: ts.SourceFile[]) { }
 
-    ts.forEachChild(sourceFile, node => {
-      this.handleSourceFile(node)
-    })
+  parse() {
+    for (const sourceFile of this.sourceFiles) {
+      ts.forEachChild(sourceFile, node => {
+        if (node.kind === ts.SyntaxKind.EnumDeclaration) {
+          this.preHandleEnumDeclaration(node as ts.EnumDeclaration)
+        }
+      })
+    }
+
+    for (const sourceFile of this.sourceFiles) {
+      ts.forEachChild(sourceFile, node => {
+        this.handleSourceFile(node)
+      })
+    }
+
+    return this.declarations
   }
 
   private preHandleEnumDeclaration(declaration: ts.EnumDeclaration) {
@@ -661,6 +669,7 @@ export class Parser {
     return { members, minProperties, maxProperties }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private preHandleType(typeName: string) {
     // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
     if (this.declarations.some(m => m.name === typeName)) {
@@ -668,24 +677,29 @@ export class Parser {
     }
 
     let findIt = false
-    ts.forEachChild(this.sourceFile, node => {
+    for (const sourceFile of this.sourceFiles) {
       if (findIt) {
         return
       }
-      if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
-        const declaration = node as ts.InterfaceDeclaration
-        if (declaration.name.text === typeName) {
-          findIt = true
-          this.handleSourceFile(node)
+      ts.forEachChild(sourceFile, node => {
+        if (findIt) {
+          return
         }
-      } else if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-        const declaration = node as ts.TypeAliasDeclaration
-        if (declaration.name.text === typeName) {
-          findIt = true
-          this.handleSourceFile(node)
+        if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
+          const declaration = node as ts.InterfaceDeclaration
+          if (declaration.name.text === typeName) {
+            findIt = true
+            this.handleSourceFile(node)
+          }
+        } else if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+          const declaration = node as ts.TypeAliasDeclaration
+          if (declaration.name.text === typeName) {
+            findIt = true
+            this.handleSourceFile(node)
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   private getObjectMembers(elements: ts.NodeArray<ts.TypeElement | ts.ClassElement>): MembersInfo {

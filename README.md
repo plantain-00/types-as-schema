@@ -22,6 +22,7 @@ Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml/rust type
 + enum
 + class
 + class extends
++ muitiple files
 
 ## unsupported types features
 

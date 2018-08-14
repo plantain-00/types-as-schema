@@ -30,7 +30,6 @@ async function executeCommandLine() {
     jsonPath,
     debugPath,
     filePaths,
-    filePath,
     watchMode
   } = parseParameters(argv)
 
@@ -52,9 +51,9 @@ async function executeCommandLine() {
   function run() {
     const program = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext })
 
-    const sourceFile = program.getSourceFile(filePath)
+    const sourceFiles = filePaths.map(filePath => program.getSourceFile(filePath)!)
 
-    const generator = new Generator(sourceFile!)
+    const generator = new Generator(sourceFiles)
 
     if (debugPath) {
       fs.writeFileSync(debugPath, JSON.stringify(generator.declarations, null, '  '))
@@ -96,7 +95,7 @@ async function executeCommandLine() {
   }
 
   if (watchMode) {
-    chokidar.watch(filePath).on('all', (type: string, file: string) => {
+    chokidar.watch(filePaths).on('all', (type: string, file: string) => {
       printInConsole(`Detecting ${type}: ${file}`)
       if (type === 'add' || type === 'change') {
         run()
@@ -125,13 +124,10 @@ function parseParameters(argv: minimist.ParsedArgs) {
   const debugPath = parseParameter(argv, 'debug')
 
   const filePaths = argv._
+
   if (filePaths.length === 0) {
     throw new Error('expect the path of types file')
   }
-  if (filePaths.length > 1) {
-    throw new Error('expect only one path of types file')
-  }
-  const filePath = filePaths[0]
 
   const watchMode: boolean = argv.w || argv.watch
 
@@ -144,7 +140,6 @@ function parseParameters(argv: minimist.ParsedArgs) {
     jsonPath,
     debugPath,
     filePaths,
-    filePath,
     watchMode
   }
 }

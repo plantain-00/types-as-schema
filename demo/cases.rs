@@ -289,4 +289,5 @@ pub struct EntryType {
   #[serde(rename = "defaultType")] pub default_type: DefaultValue,
   #[serde(rename = "classType")] pub class_type: ClassType,
   pub circular: Circular,
+  #[serde(rename = "outerType")] pub outer_type: OuterType,
 }

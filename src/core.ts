@@ -11,9 +11,9 @@ import { TypeDeclaration } from './utils'
 export class Generator {
   declarations: TypeDeclaration[] = []
 
-  constructor(public sourceFile: ts.SourceFile) {
-    const parser = new Parser(sourceFile)
-    this.declarations = parser.declarations
+  constructor(public sourceFiles: ts.SourceFile[]) {
+    const parser = new Parser(sourceFiles)
+    this.declarations = parser.parse()
   }
 
   generateProtobuf() {

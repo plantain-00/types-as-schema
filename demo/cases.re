@@ -237,4 +237,5 @@ type entryType = {
   defaultType: defaultValue,
   classType: classType,
   circular: circular,
+  outerType: outerType,
 };

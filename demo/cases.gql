@@ -212,4 +212,5 @@ type EntryType {
   defaultType: DefaultValue!
   classType: ClassType!
   circular: Circular!
+  outerType: OuterType!
 }
