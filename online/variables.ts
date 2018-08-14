@@ -320,6 +320,8 @@ type Circular = {
   children: Circular[]
 }
 
+import { OuterType } from './case2'
+
 /**
  * @entry cases.json
  * @additionalProperties
@@ -349,6 +351,7 @@ export type EntryType = {
   anyType: any;
   classType: ClassType;
   circular: Circular;
+  outerType: OuterType;
 }
 `
 // @ts-ignore

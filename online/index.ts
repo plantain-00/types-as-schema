@@ -1,4 +1,4 @@
-import * as ts from 'typescript'
+import ts from 'typescript'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
@@ -43,7 +43,7 @@ export class App extends Vue {
     if (this.source) {
       const sourceFile = ts.createSourceFile('', this.source, ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS)
 
-      const generator = new Generator(sourceFile)
+      const generator = new Generator([sourceFile])
 
       this.protobuf = generator.generateProtobuf()
       this.options = ['protobuf']
