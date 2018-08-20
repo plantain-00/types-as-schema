@@ -1,4 +1,4 @@
-import { TypeDeclaration, Type, ReferenceType, MapType, ObjectDeclaration, EnumDeclaration } from './utils'
+import { TypeDeclaration, Type, ReferenceType, MapType, ObjectDeclaration, EnumDeclaration, warn } from './utils'
 
 export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
@@ -7,7 +7,7 @@ export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
       const message = generateProtobufOfObject(typeDeclarations, typeDeclaration)
       messages.push(message)
     } else if (typeDeclaration.kind === 'enum') {
-      const message = generateProtobufOfEnum(typeDeclarations, typeDeclaration)
+      const message = generateProtobufOfEnum(typeDeclaration)
       if (message) {
         messages.push(message)
       }
@@ -29,6 +29,8 @@ function generateProtobufOfObject(typeDeclarations: TypeDeclaration[], objectDec
     const { modifier, propertyType } = getProtobufProperty(typeDeclarations, member.type)
     if (propertyType) {
       members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`)
+    } else {
+      warn(member.type.position, 'protobuf generator')
     }
   }
   return `message ${objectDeclaration.name} {
@@ -36,7 +38,7 @@ ${members.join('\n')}
 }`
 }
 
-function generateProtobufOfEnum(typeDeclarations: TypeDeclaration[], enumDeclaration: EnumDeclaration) {
+function generateProtobufOfEnum(enumDeclaration: EnumDeclaration) {
   const members: string[] = []
   for (const member of enumDeclaration.members) {
     if (typeof member.value === 'number') {

@@ -16,7 +16,12 @@
         "name": "resaveFailedLogs",
         "value": "resave failed logs"
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 19,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -43,7 +48,12 @@
         "name": "resaveFailedLogsResult",
         "value": "resave failed logs result"
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 59,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -58,7 +68,12 @@
         "name": "fail",
         "value": "fail"
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 110,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -73,7 +88,12 @@
         "name": "sample",
         "value": "sample"
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 136,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -83,7 +103,12 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 4,
+            "character": 13
+          }
         }
       },
       {
@@ -96,14 +121,24 @@
             "search logs",
             "search samples",
             "resave failed logs"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 7,
+            "character": 12
+          }
         }
       },
       {
         "name": "searchLogs",
         "type": {
           "kind": "reference",
-          "name": "SearchLogs"
+          "name": "SearchLogs",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 8,
+            "character": 18
+          }
         },
         "optional": true
       },
@@ -111,14 +146,24 @@
         "name": "searchSamples",
         "type": {
           "kind": "reference",
-          "name": "SearchSamples"
+          "name": "SearchSamples",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 11,
+            "character": 21
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
     "maxProperties": 3,
-    "entry": "request-protocol.json"
+    "entry": "request-protocol.json",
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 3,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -127,38 +172,68 @@
       {
         "name": "content",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 26,
+            "character": 11
+          }
         }
       },
       {
         "name": "time",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 27,
+            "character": 8
+          }
         }
       },
       {
         "name": "hostname",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 28,
+            "character": 12
+          }
         }
       },
       {
         "name": "from",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 29,
+            "character": 8
+          }
         }
       },
       {
         "name": "size",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 30,
+            "character": 8
+          }
         }
       }
     ],
     "minProperties": 5,
-    "maxProperties": 5
+    "maxProperties": 5,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 25,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -167,18 +242,33 @@
       {
         "name": "from",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 34,
+            "character": 8
+          }
         }
       },
       {
         "name": "to",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 35,
+            "character": 6
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 33,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -196,14 +286,24 @@
             "search logs result",
             "search samples result",
             "resave failed logs result"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 43,
+            "character": 10
+          }
         }
       },
       {
         "name": "flows",
         "type": {
           "kind": "reference",
-          "name": "Flows"
+          "name": "Flows",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 44,
+            "character": 11
+          }
         },
         "optional": true
       },
@@ -213,7 +313,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "SampleFrame"
+            "name": "SampleFrame",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 47,
+              "character": 21
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 47,
+            "character": 21
           }
         },
         "optional": true
@@ -222,7 +332,12 @@
         "name": "searchLogsResult",
         "type": {
           "kind": "reference",
-          "name": "SearchLogsResult"
+          "name": "SearchLogsResult",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 50,
+            "character": 22
+          }
         },
         "optional": true
       },
@@ -230,7 +345,12 @@
         "name": "searchSamplesResult",
         "type": {
           "kind": "reference",
-          "name": "SearchSamplesResult"
+          "name": "SearchSamplesResult",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 53,
+            "character": 25
+          }
         },
         "optional": true
       },
@@ -238,14 +358,24 @@
         "name": "resaveFailedLogsResult",
         "type": {
           "kind": "reference",
-          "name": "ResaveFailedLogsResult"
+          "name": "ResaveFailedLogsResult",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 56,
+            "character": 28
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 1,
     "maxProperties": 2,
-    "entry": "response-protocol.json"
+    "entry": "response-protocol.json",
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 41,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -254,7 +384,12 @@
       {
         "name": "serverTime",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 68,
+            "character": 14
+          }
         }
       },
       {
@@ -263,13 +398,28 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Flow"
+            "name": "Flow",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 69,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 69,
+            "character": 9
           }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 67,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -279,7 +429,12 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 73,
+            "character": 13
+          }
         }
       },
       {
@@ -291,14 +446,24 @@
           "enums": [
             "success",
             "fail"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 76,
+            "character": 12
+          }
         }
       },
       {
         "name": "total",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 77,
+            "character": 13
+          }
         },
         "optional": true
       },
@@ -308,7 +473,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Log"
+            "name": "Log",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 78,
+              "character": 13
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 78,
+            "character": 13
           }
         },
         "optional": true
@@ -316,13 +491,23 @@
       {
         "name": "error",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 81,
+            "character": 13
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 3,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 72,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -332,7 +517,12 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 86,
+            "character": 13
+          }
         }
       },
       {
@@ -344,7 +534,12 @@
           "enums": [
             "success",
             "fail"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 89,
+            "character": 12
+          }
         }
       },
       {
@@ -353,7 +548,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "SampleFrame"
+            "name": "SampleFrame",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 90,
+              "character": 27
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 90,
+            "character": 27
           }
         },
         "optional": true
@@ -361,13 +566,23 @@
       {
         "name": "error",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 93,
+            "character": 13
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 85,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -377,7 +592,12 @@
         "name": "requestId",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 98,
+            "character": 13
+          }
         }
       },
       {
@@ -389,14 +609,24 @@
           "enums": [
             "success",
             "fail"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 101,
+            "character": 12
+          }
         }
       },
       {
         "name": "savedCount",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 102,
+            "character": 18
+          }
         },
         "optional": true
       },
@@ -404,20 +634,35 @@
         "name": "totalCount",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 103,
+            "character": 18
+          }
         },
         "optional": true
       },
       {
         "name": "error",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 106,
+            "character": 13
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 3,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 97,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -426,7 +671,12 @@
       {
         "name": "time",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 116,
+            "character": 8
+          }
         }
       },
       {
@@ -435,14 +685,29 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Sample"
+            "name": "Sample",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 117,
+              "character": 12
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 117,
+            "character": 12
           }
         },
         "optional": true
       }
     ],
     "minProperties": 1,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 115,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -454,14 +719,29 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Flow"
+            "name": "Flow",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 124,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 124,
+            "character": 9
           }
         }
       }
     ],
     "minProperties": 1,
     "maxProperties": 1,
-    "entry": "flow-protocol.json"
+    "entry": "flow-protocol.json",
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 123,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -476,14 +756,24 @@
           "enums": [
             "log",
             "sample"
-          ]
+          ],
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 129,
+            "character": 10
+          }
         }
       },
       {
         "name": "log",
         "type": {
           "kind": "reference",
-          "name": "Log"
+          "name": "Log",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 130,
+            "character": 9
+          }
         },
         "optional": true
       },
@@ -491,13 +781,23 @@
         "name": "sample",
         "type": {
           "kind": "reference",
-          "name": "Sample"
+          "name": "Sample",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 133,
+            "character": 12
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 127,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -506,30 +806,55 @@
       {
         "name": "time",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 142,
+            "character": 8
+          }
         }
       },
       {
         "name": "content",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 143,
+            "character": 11
+          }
         }
       },
       {
         "name": "filepath",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 144,
+            "character": 12
+          }
         }
       },
       {
         "name": "hostname",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 145,
+            "character": 12
+          }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 141,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -538,14 +863,24 @@
       {
         "name": "hostname",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 149,
+            "character": 12
+          }
         }
       },
       {
         "name": "port",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 150,
+            "character": 9
+          }
         },
         "optional": true
       },
@@ -554,16 +889,36 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 151,
+              "character": 19
+            }
           },
           "value": {
             "kind": "number",
-            "type": "uint32"
+            "type": "uint32",
+            "position": {
+              "file": "demo/log-tool/types.ts",
+              "line": 151,
+              "character": 28
+            }
+          },
+          "position": {
+            "file": "demo/log-tool/types.ts",
+            "line": 151,
+            "character": 19
           }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 148,
+      "character": 12
+    }
   }
 ]

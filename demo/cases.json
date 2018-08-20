@@ -599,11 +599,13 @@
         },
         "typeIntersectionMember2": {
           "$ref": "#/definitions/TypeIntersection2"
-        }
+        },
+        "typeIntersectionMember3": {}
       },
       "required": [
         "typeIntersectionMember1",
-        "typeIntersectionMember2"
+        "typeIntersectionMember2",
+        "typeIntersectionMember3"
       ],
       "additionalProperties": false
     },

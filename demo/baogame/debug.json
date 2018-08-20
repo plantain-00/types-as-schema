@@ -40,7 +40,12 @@
         "name": "grenade",
         "value": 8
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 10,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -75,7 +80,12 @@
         "name": "userDead",
         "value": 6
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 77,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -114,7 +124,12 @@
         "name": "falling",
         "value": 7
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 180,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -124,32 +139,57 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 27,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 28,
+            "character": 5
+          }
         }
       },
       {
         "name": "type",
         "type": {
           "kind": "reference",
-          "name": "ItemType"
+          "name": "ItemType",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 29,
+            "character": 8
+          }
         }
       },
       {
         "name": "dead",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 30,
+            "character": 8
+          }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 26,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -159,25 +199,45 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 34,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 35,
+            "character": 5
+          }
         }
       },
       {
         "name": "dead",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 36,
+            "character": 8
+          }
         }
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 33,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -187,26 +247,46 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 40,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 41,
+            "character": 5
+          }
         }
       },
       {
         "name": "r",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 42,
+            "character": 5
+          }
         }
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 39,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -216,7 +296,12 @@
         "name": "itemType",
         "type": {
           "kind": "reference",
-          "name": "ItemType"
+          "name": "ItemType",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 48,
+            "character": 13
+          }
         },
         "optional": true
       },
@@ -224,14 +309,24 @@
         "name": "itemCount",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 49,
+            "character": 13
+          }
         }
       },
       {
         "name": "nearLadder",
         "type": {
           "kind": "reference",
-          "name": "Ladder"
+          "name": "Ladder",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 50,
+            "character": 15
+          }
         },
         "optional": true
       },
@@ -239,14 +334,24 @@
         "name": "faceing",
         "type": {
           "kind": "number",
-          "type": "int32"
+          "type": "int32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 51,
+            "character": 11
+          }
         }
       },
       {
         "name": "fireing",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 52,
+            "character": 12
+          }
         },
         "optional": true
       },
@@ -254,85 +359,150 @@
         "name": "grenadeing",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 53,
+            "character": 14
+          }
         }
       },
       {
         "name": "danger",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 54,
+            "character": 10
+          }
         }
       },
       {
         "name": "status",
         "type": {
           "kind": "reference",
-          "name": "UserStatus"
+          "name": "UserStatus",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 55,
+            "character": 10
+          }
         }
       },
       {
         "name": "name",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 56,
+            "character": 8
+          }
         }
       },
       {
         "name": "id",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 57,
+            "character": 6
+          }
         }
       },
       {
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 58,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 59,
+            "character": 5
+          }
         }
       },
       {
         "name": "vy",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 60,
+            "character": 6
+          }
         }
       },
       {
         "name": "score",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 61,
+            "character": 9
+          }
         }
       },
       {
         "name": "dead",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 62,
+            "character": 8
+          }
         }
       },
       {
         "name": "doubleJumping",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 63,
+            "character": 17
+          }
         }
       },
       {
         "name": "flying",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 64,
+            "character": 10
+          }
         }
       }
     ],
     "minProperties": 14,
-    "maxProperties": 17
+    "maxProperties": 17,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 47,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -342,19 +512,34 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 68,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 69,
+            "character": 5
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 67,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -364,19 +549,34 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 73,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "float"
+          "type": "float",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 74,
+            "character": 5
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 72,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -388,7 +588,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "User"
+            "name": "User",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 88,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 88,
+            "character": 9
           }
         }
       },
@@ -398,7 +608,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Item"
+            "name": "Item",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 89,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 89,
+            "character": 9
           }
         }
       },
@@ -408,7 +628,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Mine"
+            "name": "Mine",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 90,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 90,
+            "character": 9
           }
         }
       },
@@ -418,13 +648,28 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Grenade"
+            "name": "Grenade",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 91,
+              "character": 12
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 91,
+            "character": 12
           }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 87,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -434,14 +679,24 @@
         "name": "w",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 95,
+            "character": 5
+          }
         }
       },
       {
         "name": "h",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 96,
+            "character": 5
+          }
         }
       },
       {
@@ -450,7 +705,17 @@
           "kind": "array",
           "type": {
             "kind": "number",
-            "type": "uint32"
+            "type": "uint32",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 97,
+              "character": 10
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 97,
+            "character": 10
           }
         }
       },
@@ -460,7 +725,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Ladder"
+            "name": "Ladder",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 98,
+              "character": 11
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 98,
+            "character": 11
           }
         }
       },
@@ -470,7 +745,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Door"
+            "name": "Door",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 99,
+              "character": 9
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 99,
+            "character": 9
           }
         }
       },
@@ -480,13 +765,28 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "ItemGate"
+            "name": "ItemGate",
+            "position": {
+              "file": "demo/baogame/common.ts",
+              "line": 100,
+              "character": 13
+            }
+          },
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 100,
+            "character": 13
           }
         }
       }
     ],
     "minProperties": 6,
-    "maxProperties": 6
+    "maxProperties": 6,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 94,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -496,12 +796,22 @@
         "name": "map",
         "type": {
           "kind": "reference",
-          "name": "MapData"
+          "name": "MapData",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 104,
+            "character": 7
+          }
         }
       }
     ],
     "minProperties": 1,
-    "maxProperties": 1
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 103,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -510,12 +820,22 @@
       {
         "name": "userName",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 108,
+            "character": 12
+          }
         }
       }
     ],
     "minProperties": 1,
-    "maxProperties": 1
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 107,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -525,12 +845,22 @@
         "name": "userId",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 112,
+            "character": 10
+          }
         }
       }
     ],
     "minProperties": 1,
-    "maxProperties": 1
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 111,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -540,70 +870,125 @@
         "name": "leftDown",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 116,
+            "character": 12
+          }
         }
       },
       {
         "name": "rightDown",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 117,
+            "character": 13
+          }
         }
       },
       {
         "name": "upDown",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 118,
+            "character": 10
+          }
         }
       },
       {
         "name": "downDown",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 119,
+            "character": 12
+          }
         }
       },
       {
         "name": "itemDown",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 120,
+            "character": 12
+          }
         }
       },
       {
         "name": "leftPress",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 121,
+            "character": 13
+          }
         }
       },
       {
         "name": "rightPress",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 122,
+            "character": 14
+          }
         }
       },
       {
         "name": "upPress",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 123,
+            "character": 11
+          }
         }
       },
       {
         "name": "downPress",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 124,
+            "character": 13
+          }
         }
       },
       {
         "name": "itemPress",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 125,
+            "character": 13
+          }
         }
       }
     ],
     "minProperties": 10,
-    "maxProperties": 10
+    "maxProperties": 10,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 115,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -623,19 +1008,34 @@
             4,
             5,
             6
-          ]
+          ],
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 129,
+            "character": 8
+          }
         }
       },
       {
         "name": "control",
         "type": {
           "kind": "reference",
-          "name": "Control"
+          "name": "Control",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 130,
+            "character": 11
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 128,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -645,26 +1045,46 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 134,
+            "character": 5
+          }
         }
       },
       {
         "name": "y",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 135,
+            "character": 5
+          }
         }
       },
       {
         "name": "power",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 136,
+            "character": 9
+          }
         }
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 133,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -674,20 +1094,35 @@
         "name": "user",
         "type": {
           "kind": "reference",
-          "name": "User"
+          "name": "User",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 140,
+            "character": 8
+          }
         }
       },
       {
         "name": "killer",
         "type": {
           "kind": "reference",
-          "name": "User"
+          "name": "User",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 141,
+            "character": 11
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 1,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 139,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -707,14 +1142,24 @@
             4,
             5,
             6
-          ]
+          ],
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 146,
+            "character": 10
+          }
         }
       },
       {
         "name": "initSuccess",
         "type": {
           "kind": "reference",
-          "name": "InitSuccess"
+          "name": "InitSuccess",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 147,
+            "character": 17
+          }
         },
         "optional": true
       },
@@ -722,7 +1167,12 @@
         "name": "join",
         "type": {
           "kind": "reference",
-          "name": "Join"
+          "name": "Join",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 152,
+            "character": 10
+          }
         },
         "optional": true
       },
@@ -730,7 +1180,12 @@
         "name": "joinSuccess",
         "type": {
           "kind": "reference",
-          "name": "JoinSuccess"
+          "name": "JoinSuccess",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 157,
+            "character": 17
+          }
         },
         "optional": true
       },
@@ -738,7 +1193,12 @@
         "name": "control",
         "type": {
           "kind": "reference",
-          "name": "Control"
+          "name": "Control",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 162,
+            "character": 13
+          }
         },
         "optional": true
       },
@@ -746,7 +1206,12 @@
         "name": "tick",
         "type": {
           "kind": "reference",
-          "name": "Tick"
+          "name": "Tick",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 167,
+            "character": 10
+          }
         },
         "optional": true
       },
@@ -754,7 +1219,12 @@
         "name": "explode",
         "type": {
           "kind": "reference",
-          "name": "Explode"
+          "name": "Explode",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 172,
+            "character": 13
+          }
         },
         "optional": true
       },
@@ -762,13 +1232,23 @@
         "name": "userDead",
         "type": {
           "kind": "reference",
-          "name": "UserDead"
+          "name": "UserDead",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 177,
+            "character": 14
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 144,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -778,25 +1258,45 @@
         "name": "x",
         "type": {
           "kind": "number",
-          "type": "float"
+          "type": "float",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 194,
+            "character": 5
+          }
         }
       },
       {
         "name": "y1",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 195,
+            "character": 6
+          }
         }
       },
       {
         "name": "y2",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/baogame/common.ts",
+            "line": 196,
+            "character": 6
+          }
         }
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 193,
+      "character": 12
+    }
   }
 ]

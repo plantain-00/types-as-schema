@@ -1,9 +1,22 @@
+import ts from 'typescript'
+
 export function toUpperCase(name: string) {
   return name[0].toUpperCase() + name.substring(1)
 }
 
 export function toLowerCase(name: string) {
   return name[0].toLowerCase() + name.substring(1)
+}
+
+export function warn(position: PositionValue, stage: string) {
+  console.warn(`Warning for ${stage}: ${position.file}:${position.line + 1}:${position.character + 1}`)
+}
+
+export function getPosition(typeNode: ts.Node, sourceFile: ts.SourceFile) {
+  return {
+    file: sourceFile.fileName,
+    ...ts.getLineAndCharacterOfPosition(sourceFile, typeNode.getStart(sourceFile))
+  }
 }
 
 export type TypeDeclaration =
@@ -20,6 +33,16 @@ export type EnumDeclaration = {
   name: string;
   type: string;
   members: EnumMember[];
+} & Position
+
+type Position = {
+  position: PositionValue
+}
+
+type PositionValue = {
+  file: string
+  line: number
+  character: number
 }
 
 /**
@@ -65,7 +88,7 @@ export type MapType = {
   kind: 'map';
   key: Type;
   value: Type;
-}
+} & Position
 
 /**
  * @public
@@ -75,13 +98,13 @@ export type EnumType = {
   type: string;
   name: string;
   enums: any[];
-}
+} & Position
 
 export type ReferenceType = {
   kind: 'reference';
   name: string;
   default?: any;
-}
+} & Position
 
 export type NumberType = {
   kind: 'number';
@@ -95,7 +118,7 @@ export type NumberType = {
   enums?: string[];
   title?: string;
   description?: string;
-}
+} & Position
 
 export type StringType = {
   kind: 'string';
@@ -106,21 +129,21 @@ export type StringType = {
   enums?: string[];
   title?: string;
   description?: string;
-}
+} & Position
 
 export type BooleanType = {
   kind: 'boolean';
   default?: boolean;
   title?: string;
   description?: string;
-}
+} & Position
 
 /**
  * @public
  */
 export type AnyType = {
   kind: undefined;
-}
+} & Position
 
 export type ObjectType = {
   kind: 'object';
@@ -131,7 +154,7 @@ export type ObjectType = {
   default?: any;
   title?: string;
   description?: string;
-}
+} & Position
 
 export type ArrayType = {
   kind: 'array';
@@ -142,14 +165,14 @@ export type ArrayType = {
   default?: any[]
   title?: string;
   description?: string;
-}
+} & Position
 
 /**
  * @public
  */
 export type NullType = {
   kind: 'null'
-}
+} & Position
 
 /**
  * @public
@@ -157,7 +180,7 @@ export type NullType = {
 export type UnionType = {
   kind: 'union';
   members: Type[];
-}
+} & Position
 
 export type Member = {
   name: string;
