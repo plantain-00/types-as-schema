@@ -76,6 +76,7 @@ type TypeIntersection2 =
 type TypeIntersection = {
   typeIntersectionMember1: TypeIntersection1;
   typeIntersectionMember2: TypeIntersection2;
+  typeIntersectionMember3: TypeLiteral & Interface;
 }
 
 type TypeUnionAndIntersection =

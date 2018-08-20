@@ -4,9 +4,19 @@
     "name": "Groups",
     "type": {
       "kind": "reference",
-      "name": "Group"
+      "name": "Group",
+      "position": {
+        "file": "demo/match-calculator/types.ts",
+        "line": 5,
+        "character": 21
+      }
     },
     "entry": "groups-schema.json",
+    "position": {
+      "file": "demo/match-calculator/types.ts",
+      "line": 5,
+      "character": 12
+    },
     "uniqueItems": true,
     "minItems": 1
   },
@@ -20,7 +30,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Match"
+            "name": "Match",
+            "position": {
+              "file": "demo/match-calculator/types.ts",
+              "line": 12,
+              "character": 11
+            }
+          },
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 12,
+            "character": 11
           },
           "uniqueItems": true,
           "minItems": 1
@@ -30,7 +50,12 @@
         "name": "teams",
         "type": {
           "kind": "reference",
-          "name": "Teams"
+          "name": "Teams",
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 13,
+            "character": 9
+          }
         }
       },
       {
@@ -40,7 +65,17 @@
           "type": {
             "kind": "number",
             "type": "integer",
+            "position": {
+              "file": "demo/match-calculator/types.ts",
+              "line": 19,
+              "character": 8
+            },
             "minimum": 1
+          },
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 19,
+            "character": 8
           },
           "uniqueItems": true,
           "minItems": 1
@@ -48,7 +83,12 @@
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/match-calculator/types.ts",
+      "line": 7,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -57,13 +97,23 @@
       {
         "name": "a",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 25,
+            "character": 5
+          }
         }
       },
       {
         "name": "b",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 26,
+            "character": 5
+          }
         }
       },
       {
@@ -77,19 +127,39 @@
                 "name": "a",
                 "type": {
                   "kind": "number",
-                  "type": "integer"
+                  "type": "integer",
+                  "position": {
+                    "file": "demo/match-calculator/types.ts",
+                    "line": 32,
+                    "character": 7
+                  }
                 }
               },
               {
                 "name": "b",
                 "type": {
                   "kind": "number",
-                  "type": "integer"
+                  "type": "integer",
+                  "position": {
+                    "file": "demo/match-calculator/types.ts",
+                    "line": 33,
+                    "character": 7
+                  }
                 }
               }
             ],
             "minProperties": 2,
-            "maxProperties": 2
+            "maxProperties": 2,
+            "position": {
+              "file": "demo/match-calculator/types.ts",
+              "line": 31,
+              "character": 17
+            }
+          },
+          "position": {
+            "file": "demo/match-calculator/types.ts",
+            "line": 31,
+            "character": 17
           },
           "uniqueItems": true,
           "minItems": 1
@@ -97,15 +167,30 @@
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/match-calculator/types.ts",
+      "line": 24,
+      "character": 12
+    }
   },
   {
     "kind": "array",
     "name": "Teams",
     "type": {
-      "kind": "string"
+      "kind": "string",
+      "position": {
+        "file": "demo/match-calculator/types.ts",
+        "line": 42,
+        "character": 20
+      }
     },
     "entry": "teams-schema.json",
+    "position": {
+      "file": "demo/match-calculator/types.ts",
+      "line": 42,
+      "character": 12
+    },
     "uniqueItems": true,
     "minItems": 1
   }

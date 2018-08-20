@@ -12,7 +12,12 @@
         "name": "enumMember2",
         "value": "enum member 2"
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 105,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -27,7 +32,12 @@
         "name": "enumMember2",
         "value": 1
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 109,
+      "character": 0
+    }
   },
   {
     "kind": "enum",
@@ -42,7 +52,12 @@
         "name": "enumMember2",
         "value": 4
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 113,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -52,18 +67,33 @@
         "name": "typeLiteralMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 1,
+            "character": 22
+          }
         }
       },
       {
         "name": "typeLiteralMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 2,
+            "character": 22
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 0,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -73,21 +103,42 @@
         "name": "interfaceMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 10,
+            "character": 21
+          }
         },
         "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 11,
+            "character": 21
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 1,
     "maxProperties": 1,
-    "additionalProperties": {}
+    "additionalProperties": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 13,
+        "character": 18
+      }
+    },
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 9,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -97,14 +148,24 @@
         "name": "typeLiteralMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 1,
+            "character": 22
+          }
         },
         "optional": true
       },
       {
         "name": "typeLiteralMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 2,
+            "character": 22
+          }
         },
         "optional": true
       },
@@ -112,20 +173,35 @@
         "name": "typeUnionMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 17,
+            "character": 20
+          }
         },
         "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 18,
+            "character": 20
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 16,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -140,26 +216,46 @@
           "enums": [
             "enum member 1",
             "enum member 2"
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 22,
+            "character": 10
+          }
         }
       },
       {
         "name": "typeUnionMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 23,
+            "character": 22
+          }
         },
         "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 26,
+            "character": 22
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 20,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -174,26 +270,46 @@
           "enums": [
             0,
             1
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 30,
+            "character": 10
+          }
         }
       },
       {
         "name": "typeUnionMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 31,
+            "character": 22
+          }
         },
         "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 34,
+            "character": 22
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 28,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -208,26 +324,46 @@
           "enums": [
             "foo",
             "bar"
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 38,
+            "character": 10
+          }
         }
       },
       {
         "name": "typeUnionMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 39,
+            "character": 22
+          }
         },
         "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 42,
+            "character": 22
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 36,
+      "character": 5
+    }
   },
   {
     "kind": "union",
@@ -235,13 +371,28 @@
     "members": [
       {
         "kind": "reference",
-        "name": "TypeLiteral"
+        "name": "TypeLiteral",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 44,
+          "character": 18
+        }
       },
       {
         "kind": "reference",
-        "name": "Interface"
+        "name": "Interface",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 44,
+          "character": 32
+        }
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 44,
+      "character": 5
+    }
   },
   {
     "kind": "union",
@@ -253,7 +404,12 @@
         "name": "string",
         "enums": [
           "foo"
-        ]
+        ],
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 45,
+          "character": 18
+        }
       },
       {
         "kind": "enum",
@@ -261,10 +417,20 @@
         "name": "string",
         "enums": [
           "bar"
-        ]
+        ],
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 45,
+          "character": 26
+        }
       },
       {
-        "kind": "null"
+        "kind": "null",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 45,
+          "character": 34
+        }
       },
       {
         "kind": "enum",
@@ -272,9 +438,19 @@
         "name": "boolean",
         "enums": [
           false
-        ]
+        ],
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 45,
+          "character": 41
+        }
       }
-    ]
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 45,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -284,35 +460,60 @@
         "name": "typeUnionMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion1"
+          "name": "TypeUnion1",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 47,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion2"
+          "name": "TypeUnion2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 48,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionMember3",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion3"
+          "name": "TypeUnion3",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 49,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionMember4",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion4"
+          "name": "TypeUnion4",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 50,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionMember5",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion5"
+          "name": "TypeUnion5",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 51,
+            "character": 20
+          }
         }
       },
       {
@@ -321,10 +522,20 @@
           "kind": "union",
           "members": [
             {
-              "kind": "string"
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 52,
+                "character": 20
+              }
             },
             {
-              "kind": "null"
+              "kind": "null",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 52,
+                "character": 29
+              }
             },
             {
               "kind": "enum",
@@ -332,9 +543,19 @@
               "name": "boolean",
               "enums": [
                 false
-              ]
+              ],
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 52,
+                "character": 36
+              }
             }
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 52,
+            "character": 20
+          }
         }
       },
       {
@@ -346,19 +567,34 @@
           "enums": [
             "foo",
             "bar"
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 53,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionMember8",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion8"
+          "name": "TypeUnion8",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 54,
+            "character": 20
+          }
         }
       }
     ],
     "minProperties": 8,
-    "maxProperties": 8
+    "maxProperties": 8,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 46,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -368,33 +604,64 @@
         "name": "interfaceExtendsMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 58,
+            "character": 27
+          }
         }
       },
       {
         "name": "interfaceExtendsMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 59,
+            "character": 27
+          }
         }
       },
       {
         "name": "interfaceMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 10,
+            "character": 21
+          }
         },
         "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 11,
+            "character": 21
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 2,
-    "additionalProperties": {}
+    "additionalProperties": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 13,
+        "character": 18
+      }
+    },
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 57,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -404,14 +671,24 @@
         "name": "interfaceMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 10,
+            "character": 21
+          }
         },
         "optional": true
       },
       {
         "name": "interfaceMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 11,
+            "character": 21
+          }
         },
         "optional": true
       },
@@ -419,18 +696,33 @@
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 63,
+            "character": 27
+          }
         }
       },
       {
         "name": "typeIntersectionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 64,
+            "character": 27
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 62,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -440,31 +732,56 @@
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 68,
+            "character": 29
+          }
         }
       },
       {
         "name": "typeIntersectionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 69,
+            "character": 29
+          }
         }
       },
       {
         "name": "typeIntersectionMember3",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 71,
+            "character": 29
+          }
         }
       },
       {
         "name": "typeIntersectionMember4",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 72,
+            "character": 29
+          }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 66,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -474,19 +791,44 @@
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection1"
+          "name": "TypeIntersection1",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 76,
+            "character": 27
+          }
         }
       },
       {
         "name": "typeIntersectionMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection2"
+          "name": "TypeIntersection2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 77,
+            "character": 27
+          }
+        }
+      },
+      {
+        "name": "typeIntersectionMember3",
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 78,
+            "character": 27
+          }
         }
       }
     ],
-    "minProperties": 2,
-    "maxProperties": 2
+    "minProperties": 3,
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 75,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -496,7 +838,12 @@
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 83,
+            "character": 29
+          }
         }
       },
       {
@@ -508,26 +855,46 @@
           "enums": [
             0,
             1
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 86,
+            "character": 12
+          }
         }
       },
       {
         "name": "typeUnionMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 87,
+            "character": 24
+          }
         },
         "optional": true
       },
       {
         "name": "typeUnionMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 90,
+            "character": 24
+          }
         },
         "optional": true
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 81,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -537,20 +904,35 @@
         "name": "taggedFieldMember1",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 98,
+            "character": 22
+          }
         },
         "tag": 2
       },
       {
         "name": "taggedFieldMember2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 102,
+            "character": 22
+          }
         },
         "tag": 3
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 94,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -560,21 +942,36 @@
         "name": "stringEnum",
         "type": {
           "kind": "reference",
-          "name": "StringEnum"
+          "name": "StringEnum",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 118,
+            "character": 14
+          }
         }
       },
       {
         "name": "numberEnum",
         "type": {
           "kind": "reference",
-          "name": "NumberEnum"
+          "name": "NumberEnum",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 119,
+            "character": 14
+          }
         }
       },
       {
         "name": "numberEnum2",
         "type": {
           "kind": "reference",
-          "name": "NumberEnum2"
+          "name": "NumberEnum2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 120,
+            "character": 15
+          }
         }
       },
       {
@@ -585,12 +982,22 @@
           "name": "string",
           "enums": [
             "foo"
-          ]
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 121,
+            "character": 15
+          }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 117,
+      "character": 12
+    }
   },
   {
     "kind": "object",
@@ -601,6 +1008,11 @@
         "type": {
           "kind": "number",
           "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 146,
+            "character": 16
+          },
           "multipleOf": 10,
           "minimum": 70,
           "maximum": 90,
@@ -612,91 +1024,156 @@
         "name": "integerMember",
         "type": {
           "kind": "number",
-          "type": "integer"
+          "type": "integer",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 148,
+            "character": 17
+          }
         }
       },
       {
         "name": "uint32Member",
         "type": {
           "kind": "number",
-          "type": "uint32"
+          "type": "uint32",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 150,
+            "character": 16
+          }
         }
       },
       {
         "name": "int32Member",
         "type": {
           "kind": "number",
-          "type": "int32"
+          "type": "int32",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 151,
+            "character": 15
+          }
         }
       },
       {
         "name": "sint32Member",
         "type": {
           "kind": "number",
-          "type": "sint32"
+          "type": "sint32",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 152,
+            "character": 16
+          }
         }
       },
       {
         "name": "fixed32Member",
         "type": {
           "kind": "number",
-          "type": "fixed32"
+          "type": "fixed32",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 153,
+            "character": 17
+          }
         }
       },
       {
         "name": "sfixed32Member",
         "type": {
           "kind": "number",
-          "type": "sfixed32"
+          "type": "sfixed32",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 154,
+            "character": 18
+          }
         }
       },
       {
         "name": "uint64Member",
         "type": {
           "kind": "number",
-          "type": "uint64"
+          "type": "uint64",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 156,
+            "character": 16
+          }
         }
       },
       {
         "name": "int64Member",
         "type": {
           "kind": "number",
-          "type": "int64"
+          "type": "int64",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 157,
+            "character": 15
+          }
         }
       },
       {
         "name": "sint64Member",
         "type": {
           "kind": "number",
-          "type": "sint64"
+          "type": "sint64",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 158,
+            "character": 16
+          }
         }
       },
       {
         "name": "fixed64Member",
         "type": {
           "kind": "number",
-          "type": "fixed64"
+          "type": "fixed64",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 159,
+            "character": 17
+          }
         }
       },
       {
         "name": "sfixed64Member",
         "type": {
           "kind": "number",
-          "type": "sfixed64"
+          "type": "sfixed64",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 160,
+            "character": 18
+          }
         }
       },
       {
         "name": "floatMember",
         "type": {
           "kind": "number",
-          "type": "float"
+          "type": "float",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 162,
+            "character": 15
+          }
         }
       },
       {
         "name": "doubleMember",
         "type": {
           "kind": "number",
-          "type": "double"
+          "type": "double",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 163,
+            "character": 16
+          }
         }
       },
       {
@@ -704,13 +1181,23 @@
         "type": {
           "kind": "number",
           "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 169,
+            "character": 15
+          },
           "title": "foo",
           "description": "bar"
         }
       }
     ],
     "minProperties": 15,
-    "maxProperties": 15
+    "maxProperties": 15,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 138,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -720,6 +1207,11 @@
         "name": "stringMember",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 178,
+            "character": 16
+          },
           "minLength": 10,
           "maxLength": 20,
           "pattern": "^[A-z]{3}$"
@@ -727,7 +1219,12 @@
       }
     ],
     "minProperties": 1,
-    "maxProperties": 1
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 172,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -739,9 +1236,19 @@
           "kind": "array",
           "type": {
             "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 187,
+              "character": 14
+            },
             "minLength": 10,
             "maxLength": 20,
             "pattern": "^[A-z]{3}$"
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 187,
+            "character": 14
           }
         }
       },
@@ -751,7 +1258,17 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "TypeLiteral"
+            "name": "TypeLiteral",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 193,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 193,
+            "character": 14
           },
           "uniqueItems": true,
           "minItems": 1,
@@ -769,12 +1286,27 @@
                 "name": "literal",
                 "type": {
                   "kind": "number",
-                  "type": "number"
+                  "type": "number",
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 194,
+                    "character": 25
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 194,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 194,
+            "character": 14
           }
         }
       },
@@ -785,11 +1317,21 @@
           "type": {
             "kind": "number",
             "type": "uint32",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 202,
+              "character": 14
+            },
             "multipleOf": 100,
             "minimum": 100,
             "maximum": 200,
             "exclusiveMinimum": 300,
             "exclusiveMaximum": 400
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 202,
+            "character": 14
           }
         }
       },
@@ -807,17 +1349,42 @@
                   "members": [
                     {
                       "kind": "number",
-                      "type": "number"
+                      "type": "number",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 203,
+                        "character": 25
+                      }
                     },
                     {
-                      "kind": "string"
+                      "kind": "string",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 203,
+                        "character": 34
+                      }
                     }
-                  ]
+                  ],
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 203,
+                    "character": 25
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 203,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 203,
+            "character": 14
           }
         }
       },
@@ -835,17 +1402,42 @@
                   "members": [
                     {
                       "kind": "number",
-                      "type": "number"
+                      "type": "number",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 204,
+                        "character": 25
+                      }
                     },
                     {
-                      "kind": "null"
+                      "kind": "null",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 204,
+                        "character": 34
+                      }
                     }
-                  ]
+                  ],
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 204,
+                    "character": 25
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 204,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 204,
+            "character": 14
           }
         }
       },
@@ -863,17 +1455,42 @@
                   "members": [
                     {
                       "kind": "reference",
-                      "name": "TypeLiteral"
+                      "name": "TypeLiteral",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 205,
+                        "character": 25
+                      }
                     },
                     {
-                      "kind": "null"
+                      "kind": "null",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 205,
+                        "character": 39
+                      }
                     }
-                  ]
+                  ],
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 205,
+                    "character": 25
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 205,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 205,
+            "character": 14
           }
         }
       },
@@ -888,18 +1505,38 @@
                 "name": "literal",
                 "type": {
                   "kind": "number",
-                  "type": "number"
+                  "type": "number",
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 206,
+                    "character": 31
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 206,
+              "character": 20
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 206,
+            "character": 20
           }
         }
       }
     ],
     "minProperties": 8,
-    "maxProperties": 8
+    "maxProperties": 8,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 181,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -908,13 +1545,28 @@
       {
         "name": "foo",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 210,
+            "character": 7
+          }
         }
       }
     ],
     "minProperties": 1,
     "additionalProperties": {
-      "kind": "string"
+      "kind": "string",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 211,
+        "character": 18
+      }
+    },
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 209,
+      "character": 5
     }
   },
   {
@@ -926,11 +1578,26 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 215,
+              "character": 20
+            }
           },
           "value": {
             "kind": "number",
-            "type": "number"
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 215,
+              "character": 29
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 215,
+            "character": 20
           }
         }
       },
@@ -939,11 +1606,26 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 216,
+              "character": 21
+            }
           },
           "value": {
             "kind": "reference",
-            "name": "TypeLiteral"
+            "name": "TypeLiteral",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 216,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 216,
+            "character": 21
           }
         }
       },
@@ -952,7 +1634,12 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 217,
+              "character": 21
+            }
           },
           "value": {
             "kind": "object",
@@ -961,12 +1648,27 @@
                 "name": "literal",
                 "type": {
                   "kind": "number",
-                  "type": "number"
+                  "type": "number",
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 217,
+                    "character": 41
+                  }
                 }
               }
             ],
             "minProperties": 1,
-            "maxProperties": 1
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 217,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 217,
+            "character": 21
           }
         }
       },
@@ -975,11 +1677,26 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 218,
+              "character": 21
+            }
           },
           "value": {
             "kind": "number",
-            "type": "uint32"
+            "type": "uint32",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 218,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 218,
+            "character": 21
           }
         }
       },
@@ -988,9 +1705,25 @@
         "type": {
           "kind": "map",
           "key": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 219,
+              "character": 21
+            }
           },
-          "value": {}
+          "value": {
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 219,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 219,
+            "character": 21
+          }
         }
       },
       {
@@ -1002,14 +1735,29 @@
               "name": "foo",
               "type": {
                 "kind": "number",
-                "type": "number"
+                "type": "number",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 221,
+                  "character": 9
+                }
               }
             }
           ],
           "minProperties": 1,
           "additionalProperties": {
             "kind": "number",
-            "type": "number"
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 222,
+              "character": 20
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 220,
+            "character": 12
           }
         }
       },
@@ -1017,12 +1765,22 @@
         "name": "mapType7",
         "type": {
           "kind": "reference",
-          "name": "MapType7"
+          "name": "MapType7",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 224,
+            "character": 12
+          }
         }
       }
     ],
     "minProperties": 7,
-    "maxProperties": 7
+    "maxProperties": 7,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 214,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -1031,13 +1789,23 @@
       {
         "name": "member1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 234,
+            "character": 11
+          }
         },
         "parameters": [
           {
             "name": "name",
             "type": {
-              "kind": "string"
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 231,
+                "character": 13
+              }
             },
             "optional": false
           },
@@ -1045,7 +1813,12 @@
             "name": "age",
             "type": {
               "kind": "number",
-              "type": "number"
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 232,
+                "character": 13
+              }
             },
             "optional": false
           }
@@ -1054,13 +1827,23 @@
       {
         "name": "member2",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 238,
+            "character": 11
+          }
         },
         "parameters": [
           {
             "name": "name",
             "type": {
-              "kind": "string"
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 236,
+                "character": 13
+              }
             },
             "optional": true
           }
@@ -1068,7 +1851,12 @@
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 229,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -1078,6 +1866,11 @@
         "name": "stringMember",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 245,
+            "character": 16
+          },
           "default": "foo"
         }
       },
@@ -1086,6 +1879,11 @@
         "type": {
           "kind": "number",
           "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 249,
+            "character": 16
+          },
           "default": 123
         }
       },
@@ -1093,6 +1891,11 @@
         "name": "booleanMember",
         "type": {
           "kind": "boolean",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 253,
+            "character": 17
+          },
           "default": true
         }
       },
@@ -1100,6 +1903,11 @@
         "name": "stringMember2",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 257,
+            "character": 17
+          },
           "default": "foo bar"
         }
       },
@@ -1107,6 +1915,11 @@
         "name": "stringMember3",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 261,
+            "character": 17
+          },
           "default": ""
         }
       },
@@ -1114,7 +1927,18 @@
         "name": "arrayMember",
         "type": {
           "kind": "array",
-          "type": {},
+          "type": {
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 265,
+              "character": 15
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 265,
+            "character": 15
+          },
           "default": []
         }
       },
@@ -1126,12 +1950,22 @@
             {
               "name": "foo",
               "type": {
-                "kind": "string"
+                "kind": "string",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 269,
+                  "character": 23
+                }
               }
             }
           ],
           "minProperties": 1,
           "maxProperties": 1,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 269,
+            "character": 16
+          },
           "default": {}
         }
       },
@@ -1140,6 +1974,11 @@
         "type": {
           "kind": "number",
           "type": "integer",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 273,
+            "character": 17
+          },
           "default": 123
         }
       },
@@ -1148,17 +1987,32 @@
         "type": {
           "kind": "reference",
           "name": "TypeLiteral",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 277,
+            "character": 17
+          },
           "default": {}
         }
       }
     ],
     "minProperties": 9,
-    "maxProperties": 9
+    "maxProperties": 9,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 241,
+      "character": 5
+    }
   },
   {
     "kind": "reference",
     "newName": "TypeReferenceMember2",
-    "name": "TypeLiteral"
+    "name": "TypeLiteral",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 280,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -1168,19 +2022,34 @@
         "name": "typeReferenceMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeLiteral"
+          "name": "TypeLiteral",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 283,
+            "character": 24
+          }
         }
       },
       {
         "name": "typeReferenceMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeReferenceMember2"
+          "name": "TypeReferenceMember2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 284,
+            "character": 24
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 282,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -1189,19 +2058,34 @@
       {
         "name": "classMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 288,
+            "character": 16
+          }
         }
       },
       {
         "name": "classMember2",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 289,
+            "character": 16
+          }
         }
       }
     ],
     "minProperties": 2,
-    "maxProperties": 2
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 287,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -1210,32 +2094,57 @@
       {
         "name": "classMember3",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 293,
+            "character": 16
+          }
         }
       },
       {
         "name": "classMember4",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 294,
+            "character": 16
+          }
         }
       },
       {
         "name": "classMember1",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 288,
+            "character": 16
+          }
         }
       },
       {
         "name": "classMember2",
         "type": {
           "kind": "number",
-          "type": "number"
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 289,
+            "character": 16
+          }
         }
       }
     ],
     "minProperties": 4,
-    "maxProperties": 4
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 292,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -1245,6 +2154,11 @@
         "name": "classMember1",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 298,
+            "character": 17
+          },
           "default": "foo"
         }
       },
@@ -1253,6 +2167,11 @@
         "type": {
           "kind": "number",
           "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 299,
+            "character": 17
+          },
           "default": 123
         }
       },
@@ -1260,6 +2179,11 @@
         "name": "classMember3",
         "type": {
           "kind": "boolean",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 300,
+            "character": 17
+          },
           "default": false
         }
       },
@@ -1267,6 +2191,11 @@
         "name": "classMember4",
         "type": {
           "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 301,
+            "character": 16
+          },
           "default": "foo"
         }
       },
@@ -1275,7 +2204,17 @@
         "type": {
           "kind": "array",
           "type": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 302,
+              "character": 18
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 302,
+            "character": 17
           },
           "default": [
             "foo"
@@ -1291,11 +2230,21 @@
               "name": "a",
               "type": {
                 "kind": "number",
-                "type": "number"
+                "type": "number",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 303,
+                  "character": 22
+                }
               }
             }
           ],
           "minProperties": 1,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 303,
+            "character": 17
+          },
           "default": {
             "a": 1
           }
@@ -1303,7 +2252,12 @@
       }
     ],
     "minProperties": 6,
-    "maxProperties": 6
+    "maxProperties": 6,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 297,
+      "character": 0
+    }
   },
   {
     "kind": "object",
@@ -1313,26 +2267,46 @@
         "name": "classType1",
         "type": {
           "kind": "reference",
-          "name": "ClassType1"
+          "name": "ClassType1",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 307,
+            "character": 14
+          }
         }
       },
       {
         "name": "classType2",
         "type": {
           "kind": "reference",
-          "name": "ClassType2"
+          "name": "ClassType2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 308,
+            "character": 14
+          }
         }
       },
       {
         "name": "classType3",
         "type": {
           "kind": "reference",
-          "name": "ClassType3"
+          "name": "ClassType3",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 309,
+            "character": 14
+          }
         }
       }
     ],
     "minProperties": 3,
-    "maxProperties": 3
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 306,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -1344,13 +2318,28 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Circular"
+            "name": "Circular",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 313,
+              "character": 12
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 313,
+            "character": 12
           }
         }
       }
     ],
     "minProperties": 1,
-    "maxProperties": 1
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 312,
+      "character": 5
+    }
   },
   {
     "kind": "object",
@@ -1359,34 +2348,59 @@
       {
         "name": "optionalMember",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 323,
+            "character": 19
+          }
         },
         "optional": true
       },
       {
         "name": "booleanMember",
         "type": {
-          "kind": "boolean"
+          "kind": "boolean",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 324,
+            "character": 17
+          }
         }
       },
       {
         "name": "stringMember",
         "type": {
-          "kind": "string"
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 325,
+            "character": 16
+          }
         }
       },
       {
         "name": "numberType",
         "type": {
           "kind": "reference",
-          "name": "NumberType"
+          "name": "NumberType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 326,
+            "character": 14
+          }
         }
       },
       {
         "name": "arrayType",
         "type": {
           "kind": "reference",
-          "name": "ArrayType"
+          "name": "ArrayType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 327,
+            "character": 13
+          }
         }
       },
       {
@@ -1398,96 +2412,166 @@
               "name": "literal",
               "type": {
                 "kind": "number",
-                "type": "number"
+                "type": "number",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 328,
+                  "character": 26
+                }
               }
             }
           ],
           "minProperties": 1,
-          "maxProperties": 1
+          "maxProperties": 1,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 328,
+            "character": 15
+          }
         }
       },
       {
         "name": "referenceType",
         "type": {
           "kind": "reference",
-          "name": "ReferenceType"
+          "name": "ReferenceType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 329,
+            "character": 17
+          }
         }
       },
       {
         "name": "interfaceType",
         "type": {
           "kind": "reference",
-          "name": "Interface"
+          "name": "Interface",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 330,
+            "character": 17
+          }
         }
       },
       {
         "name": "typeUnion",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion"
+          "name": "TypeUnion",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 331,
+            "character": 13
+          }
         }
       },
       {
         "name": "interfaceExtends",
         "type": {
           "kind": "reference",
-          "name": "InterfaceExtends"
+          "name": "InterfaceExtends",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 332,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeIntersection",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection"
+          "name": "TypeIntersection",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 333,
+            "character": 20
+          }
         }
       },
       {
         "name": "typeUnionAndIntersection",
         "type": {
           "kind": "reference",
-          "name": "TypeUnionAndIntersection"
+          "name": "TypeUnionAndIntersection",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 334,
+            "character": 28
+          }
         }
       },
       {
         "name": "mapType",
         "type": {
           "kind": "reference",
-          "name": "MapType"
+          "name": "MapType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 335,
+            "character": 11
+          }
         }
       },
       {
         "name": "taggedField",
         "type": {
           "kind": "reference",
-          "name": "TaggedField"
+          "name": "TaggedField",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 336,
+            "character": 15
+          }
         }
       },
       {
         "name": "enum",
         "type": {
           "kind": "reference",
-          "name": "Enum"
+          "name": "Enum",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 337,
+            "character": 8
+          }
         }
       },
       {
         "name": "stringNumber",
         "type": {
           "kind": "reference",
-          "name": "StringType"
+          "name": "StringType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 338,
+            "character": 16
+          }
         }
       },
       {
         "name": "id",
         "type": {
           "kind": "reference",
-          "name": "ID"
+          "name": "ID",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 339,
+            "character": 6
+          }
         }
       },
       {
         "name": "parameter",
         "type": {
           "kind": "reference",
-          "name": "Parameter"
+          "name": "Parameter",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 340,
+            "character": 13
+          }
         }
       },
       {
@@ -1495,7 +2579,17 @@
         "type": {
           "kind": "array",
           "type": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 341,
+              "character": 24
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 341,
+            "character": 24
           }
         },
         "optional": true
@@ -1505,48 +2599,89 @@
         "type": {
           "kind": "array",
           "type": {
-            "kind": "string"
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 342,
+              "character": 22
+            }
           },
           "minItems": 2,
-          "maxItems": 2
+          "maxItems": 2,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 342,
+            "character": 13
+          }
         }
       },
       {
         "name": "defaultType",
         "type": {
           "kind": "reference",
-          "name": "DefaultValue"
+          "name": "DefaultValue",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 343,
+            "character": 15
+          }
         }
       },
       {
         "name": "anyType",
-        "type": {}
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 344,
+            "character": 11
+          }
+        }
       },
       {
         "name": "classType",
         "type": {
           "kind": "reference",
-          "name": "ClassType"
+          "name": "ClassType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 345,
+            "character": 13
+          }
         }
       },
       {
         "name": "circular",
         "type": {
           "kind": "reference",
-          "name": "Circular"
+          "name": "Circular",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 346,
+            "character": 12
+          }
         }
       },
       {
         "name": "outerType",
         "type": {
           "kind": "reference",
-          "name": "OuterType"
+          "name": "OuterType",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 347,
+            "character": 13
+          }
         }
       }
     ],
     "minProperties": 23,
     "maxProperties": 25,
     "additionalProperties": true,
-    "entry": "cases.json"
+    "entry": "cases.json",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 322,
+      "character": 12
+    }
   }
 ]
