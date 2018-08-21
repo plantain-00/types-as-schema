@@ -6,8 +6,7 @@ import {
   TypeDeclaration,
   NumberType,
   ObjectType,
-  StringType,
-  warn
+  StringType
 } from './utils'
 
 export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
@@ -90,7 +89,6 @@ function getJsonSchemaProperty(memberType: Type): Definition {
       type: 'null'
     }
   } else {
-    warn(memberType.position, 'json schema generator')
     return {
       type: memberType.kind
     }

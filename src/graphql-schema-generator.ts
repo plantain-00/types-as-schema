@@ -1,4 +1,4 @@
-import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter, warn } from './utils'
+import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter } from './utils'
 
 export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   const messages: string[] = []
@@ -73,8 +73,6 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
     propertyType = 'String'
   } else if (memberType.kind === 'boolean') {
     propertyType = 'Boolean'
-  } else {
-    warn(memberType.position, 'graphql schema generator')
   }
   return propertyType
 }
