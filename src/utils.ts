@@ -55,17 +55,17 @@ export type EnumMember = {
 
 export type ObjectDeclaration = ObjectType & {
   name: string;
-  entry: string | undefined;
+  entry?: string;
 }
 
 export type ArrayDeclaration = ArrayType & {
   name: string;
-  entry: string | undefined;
+  entry?: string;
 }
 
 export type UnionDeclaration = UnionType & {
   name: string;
-  entry: string | undefined;
+  entry?: string;
 }
 
 export type StringDeclaration = StringType & {

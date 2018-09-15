@@ -29,7 +29,7 @@
     "@types/jasmine": "2.8.8",
     "@types/minimist": "1.2.0",
     "@types/node": "10.9.4",
-    "@types/puppeteer": "1.6.3",
+    "@types/puppeteer": "1.6.4",
     "autoprefixer": "9.1.5",
     "clean-css-cli": "4.2.1",
     "clean-release": "2.6.0",
@@ -50,12 +50,12 @@
     "stylelint-config-standard": "18.2.0",
     "tslint": "5.11.0",
     "tslint-config-standard": "8.0.1",
-    "tslint-sonarts": "1.7.0",
+    "tslint-sonarts": "1.8.0",
     "types-as-schema": "1.6.0",
     "vue": "2.5.17",
     "vue-class-component": "6.2.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.17.2",
+    "webpack": "4.19.0",
     "webpack-cli": "3.1.0"
   },
   "dependencies": {
