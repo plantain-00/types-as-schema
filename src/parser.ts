@@ -469,7 +469,7 @@ export class Parser {
     }
   }
 
-  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type: EnumValueType | undefined, value: any } {
+  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: any } {
     if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
       return {
         type: 'string',
@@ -995,10 +995,8 @@ export class Parser {
   }
 
   private setJsDocMapValue(propertyJsDoc: JsDoc, type: Type) {
-    if (propertyJsDoc.comment && type.kind === 'map') {
-      if (type.value.kind === 'number') {
-        type.value.type = propertyJsDoc.comment
-      }
+    if (propertyJsDoc.comment && type.kind === 'map' && type.value.kind === 'number') {
+      type.value.type = propertyJsDoc.comment
     }
   }
 
@@ -1029,12 +1027,11 @@ export class Parser {
   }
 
   private getJsDocComment(comment: string) {
-    if (comment.length >= 2) {
-      if ((comment.startsWith(`'`) && comment.endsWith(`'`))
-        || (comment.startsWith(`"`) && comment.endsWith(`"`))
-        || (comment.startsWith('`') && comment.endsWith('`'))) {
-        return comment.substring(1, comment.length - 1)
-      }
+    if (comment.length >= 2
+      && ((comment.startsWith(`'`) && comment.endsWith(`'`))
+      || (comment.startsWith(`"`) && comment.endsWith(`"`))
+      || (comment.startsWith('`') && comment.endsWith('`')))) {
+      return comment.substring(1, comment.length - 1)
     }
     return comment
   }
@@ -1083,13 +1080,11 @@ export class Parser {
     if (jsDoc && jsDoc.comment) {
       if (type.kind === 'number') {
         type.type = jsDoc.comment
-      } else if (type.kind === 'array') {
-        if (type.type.kind === 'number') {
-          type.type = {
-            kind: type.type.kind,
-            type: jsDoc.comment,
-            position: type.type.position
-          }
+      } else if (type.kind === 'array' && type.type.kind === 'number') {
+        type.type = {
+          kind: type.type.kind,
+          type: jsDoc.comment,
+          position: type.type.position
         }
       }
     }
@@ -1182,7 +1177,7 @@ type JsDoc = {
   name: string;
   type?: Type;
   paramName?: string;
-  comment: string | undefined;
+  comment?: string;
   optional?: boolean;
 }
 
