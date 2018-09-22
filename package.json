@@ -28,11 +28,11 @@
     "@types/fs-extra": "5.0.4",
     "@types/jasmine": "2.8.8",
     "@types/minimist": "1.2.0",
-    "@types/node": "10.9.4",
+    "@types/node": "10.10.2",
     "@types/puppeteer": "1.6.4",
     "autoprefixer": "9.1.5",
     "clean-css-cli": "4.2.1",
-    "clean-release": "2.6.0",
+    "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
     "file2variable-cli": "1.8.5",
     "github-fork-ribbon-css": "0.2.1",
@@ -55,7 +55,7 @@
     "vue": "2.5.17",
     "vue-class-component": "6.2.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.19.0",
+    "webpack": "4.19.1",
     "webpack-cli": "3.1.0"
   },
   "dependencies": {
