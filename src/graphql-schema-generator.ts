@@ -58,7 +58,11 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
       propertyType = `[${elementPropertyType}]`
     }
   } else if (memberType.kind === 'enum') {
-    propertyType = memberType.name
+    if (memberType.name === 'string') {
+      propertyType = 'String'
+    } else {
+      propertyType = memberType.name
+    }
   } else if (memberType.kind === 'reference') {
     propertyType = getGraphqlSchemaPropertyOfReference(typeDeclarations, memberType)
   } else if (memberType.kind === 'number') {
