@@ -110,6 +110,7 @@ pub struct TypeUnion {
   #[serde(rename = "typeUnionMember5")] pub type_union_member_5: TypeUnion5,
   #[serde(rename = "typeUnionMember7")] pub type_union_member_7: String,
   #[serde(rename = "typeUnionMember8")] pub type_union_member_8: TypeUnion8,
+  #[serde(rename = "typeUnionMember9")] pub type_union_member_9: TypeUnion9,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

@@ -48,6 +48,13 @@ type TypeUnion4 {
   typeUnionMember2: String
 }
 
+union TypeUnion5 = TypeLiteral | Interface
+
+enum TypeUnion9 {
+  foo
+  bar
+}
+
 type TypeUnion {
   typeUnionMember1: TypeUnion1!
   typeUnionMember2: TypeUnion2!
@@ -56,6 +63,7 @@ type TypeUnion {
   typeUnionMember5: TypeUnion5!
   typeUnionMember7: String!
   typeUnionMember8: TypeUnion8!
+  typeUnionMember9: TypeUnion9!
 }
 
 type InterfaceExtends {
@@ -136,6 +144,11 @@ type MapType7 {
 }
 
 type MapType {
+  mapType: JSON!
+  mapType2: JSON!
+  mapType3: JSON!
+  mapType4: JSON!
+  mapType5: JSON!
   mapType7: MapType7!
 }
 

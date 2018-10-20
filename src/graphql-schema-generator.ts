@@ -1,4 +1,4 @@
-import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter } from './utils'
+import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter, warn } from './utils'
 
 export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   const messages: string[] = []
@@ -8,6 +8,18 @@ export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
       messages.push(message)
     } else if (typeDeclaration.kind === 'enum') {
       const members = typeDeclaration.members.map(m => `  ${m.name}`)
+      messages.push(`enum ${typeDeclaration.name} {
+${members.join('\n')}
+}`)
+    } else if (typeDeclaration.kind === 'union') {
+      if (typeDeclaration.members.every(m => m.kind === 'reference')) {
+        const members = (typeDeclaration.members as ReferenceType[]).map(m => m.name)
+        messages.push(`union ${typeDeclaration.name} = ${members.join(' | ')}`)
+      } else {
+        warn(typeDeclaration.position, 'grapql schema generator')
+      }
+    } else if (typeDeclaration.kind === 'string' && typeDeclaration.enums) {
+      const members = typeDeclaration.enums.map(m => `  ${m}`)
       messages.push(`enum ${typeDeclaration.name} {
 ${members.join('\n')}
 }`)
@@ -50,6 +62,7 @@ function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], 
   return `(${parameters.join(', ')})`
 }
 
+// tslint:disable-next-line:cognitive-complexity
 function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberType: Type): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
@@ -77,6 +90,9 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
     propertyType = 'String'
   } else if (memberType.kind === 'boolean') {
     propertyType = 'Boolean'
+  } else if (memberType.kind === 'map') {
+    warn(memberType.position, 'grapql schema generator')
+    propertyType = 'JSON'
   }
   return propertyType
 }

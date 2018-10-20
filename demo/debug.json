@@ -15,7 +15,7 @@
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 105,
+      "line": 107,
       "character": 0
     }
   },
@@ -35,7 +35,7 @@
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 109,
+      "line": 111,
       "character": 0
     }
   },
@@ -55,7 +55,7 @@
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 113,
+      "line": 115,
       "character": 0
     }
   },
@@ -453,6 +453,19 @@
     }
   },
   {
+    "kind": "string",
+    "name": "TypeUnion9",
+    "enums": [
+      "foo",
+      "bar"
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 46,
+      "character": 5
+    }
+  },
+  {
     "kind": "object",
     "name": "TypeUnion",
     "members": [
@@ -463,7 +476,7 @@
           "name": "TypeUnion1",
           "position": {
             "file": "demo/cases.ts",
-            "line": 47,
+            "line": 48,
             "character": 20
           }
         }
@@ -475,7 +488,7 @@
           "name": "TypeUnion2",
           "position": {
             "file": "demo/cases.ts",
-            "line": 48,
+            "line": 49,
             "character": 20
           }
         }
@@ -487,7 +500,7 @@
           "name": "TypeUnion3",
           "position": {
             "file": "demo/cases.ts",
-            "line": 49,
+            "line": 50,
             "character": 20
           }
         }
@@ -499,7 +512,7 @@
           "name": "TypeUnion4",
           "position": {
             "file": "demo/cases.ts",
-            "line": 50,
+            "line": 51,
             "character": 20
           }
         }
@@ -511,7 +524,7 @@
           "name": "TypeUnion5",
           "position": {
             "file": "demo/cases.ts",
-            "line": 51,
+            "line": 52,
             "character": 20
           }
         }
@@ -525,7 +538,7 @@
               "kind": "string",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 52,
+                "line": 53,
                 "character": 20
               }
             },
@@ -533,7 +546,7 @@
               "kind": "null",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 52,
+                "line": 53,
                 "character": 29
               }
             },
@@ -546,14 +559,14 @@
               ],
               "position": {
                 "file": "demo/cases.ts",
-                "line": 52,
+                "line": 53,
                 "character": 36
               }
             }
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 52,
+            "line": 53,
             "character": 20
           }
         }
@@ -570,7 +583,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 53,
+            "line": 54,
             "character": 20
           }
         }
@@ -582,17 +595,29 @@
           "name": "TypeUnion8",
           "position": {
             "file": "demo/cases.ts",
-            "line": 54,
+            "line": 55,
+            "character": 20
+          }
+        }
+      },
+      {
+        "name": "typeUnionMember9",
+        "type": {
+          "kind": "reference",
+          "name": "TypeUnion9",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 56,
             "character": 20
           }
         }
       }
     ],
-    "minProperties": 8,
-    "maxProperties": 8,
+    "minProperties": 9,
+    "maxProperties": 9,
     "position": {
       "file": "demo/cases.ts",
-      "line": 46,
+      "line": 47,
       "character": 5
     }
   },
@@ -607,7 +632,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 58,
+            "line": 60,
             "character": 27
           }
         }
@@ -618,7 +643,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 59,
+            "line": 61,
             "character": 27
           }
         }
@@ -659,7 +684,7 @@
     },
     "position": {
       "file": "demo/cases.ts",
-      "line": 57,
+      "line": 59,
       "character": 0
     }
   },
@@ -699,7 +724,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 63,
+            "line": 65,
             "character": 27
           }
         }
@@ -710,7 +735,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 64,
+            "line": 66,
             "character": 27
           }
         }
@@ -720,7 +745,7 @@
     "maxProperties": 4,
     "position": {
       "file": "demo/cases.ts",
-      "line": 62,
+      "line": 64,
       "character": 5
     }
   },
@@ -735,7 +760,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 68,
+            "line": 70,
             "character": 29
           }
         }
@@ -746,7 +771,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 69,
+            "line": 71,
             "character": 29
           }
         }
@@ -758,7 +783,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 71,
+            "line": 73,
             "character": 29
           }
         }
@@ -769,7 +794,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 72,
+            "line": 74,
             "character": 29
           }
         }
@@ -779,7 +804,7 @@
     "maxProperties": 4,
     "position": {
       "file": "demo/cases.ts",
-      "line": 66,
+      "line": 68,
       "character": 5
     }
   },
@@ -794,7 +819,7 @@
           "name": "TypeIntersection1",
           "position": {
             "file": "demo/cases.ts",
-            "line": 76,
+            "line": 78,
             "character": 27
           }
         }
@@ -806,7 +831,7 @@
           "name": "TypeIntersection2",
           "position": {
             "file": "demo/cases.ts",
-            "line": 77,
+            "line": 79,
             "character": 27
           }
         }
@@ -816,7 +841,7 @@
         "type": {
           "position": {
             "file": "demo/cases.ts",
-            "line": 78,
+            "line": 80,
             "character": 27
           }
         }
@@ -826,7 +851,7 @@
     "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
-      "line": 75,
+      "line": 77,
       "character": 5
     }
   },
@@ -841,7 +866,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 83,
+            "line": 85,
             "character": 29
           }
         }
@@ -858,7 +883,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 86,
+            "line": 88,
             "character": 12
           }
         }
@@ -869,7 +894,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 87,
+            "line": 89,
             "character": 24
           }
         },
@@ -881,7 +906,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 90,
+            "line": 92,
             "character": 24
           }
         },
@@ -892,7 +917,7 @@
     "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
-      "line": 81,
+      "line": 83,
       "character": 5
     }
   },
@@ -907,7 +932,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 98,
+            "line": 100,
             "character": 22
           }
         },
@@ -919,7 +944,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 102,
+            "line": 104,
             "character": 22
           }
         },
@@ -930,7 +955,7 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 94,
+      "line": 96,
       "character": 12
     }
   },
@@ -945,7 +970,7 @@
           "name": "StringEnum",
           "position": {
             "file": "demo/cases.ts",
-            "line": 118,
+            "line": 120,
             "character": 14
           }
         }
@@ -957,7 +982,7 @@
           "name": "NumberEnum",
           "position": {
             "file": "demo/cases.ts",
-            "line": 119,
+            "line": 121,
             "character": 14
           }
         }
@@ -969,7 +994,7 @@
           "name": "NumberEnum2",
           "position": {
             "file": "demo/cases.ts",
-            "line": 120,
+            "line": 122,
             "character": 15
           }
         }
@@ -985,7 +1010,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 121,
+            "line": 123,
             "character": 15
           }
         }
@@ -995,7 +1020,7 @@
     "maxProperties": 4,
     "position": {
       "file": "demo/cases.ts",
-      "line": 117,
+      "line": 119,
       "character": 12
     }
   },
@@ -1010,7 +1035,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 146,
+            "line": 148,
             "character": 16
           },
           "multipleOf": 10,
@@ -1027,7 +1052,7 @@
           "type": "integer",
           "position": {
             "file": "demo/cases.ts",
-            "line": 148,
+            "line": 150,
             "character": 17
           }
         }
@@ -1039,7 +1064,7 @@
           "type": "uint32",
           "position": {
             "file": "demo/cases.ts",
-            "line": 150,
+            "line": 152,
             "character": 16
           }
         }
@@ -1051,7 +1076,7 @@
           "type": "int32",
           "position": {
             "file": "demo/cases.ts",
-            "line": 151,
+            "line": 153,
             "character": 15
           }
         }
@@ -1063,7 +1088,7 @@
           "type": "sint32",
           "position": {
             "file": "demo/cases.ts",
-            "line": 152,
+            "line": 154,
             "character": 16
           }
         }
@@ -1075,7 +1100,7 @@
           "type": "fixed32",
           "position": {
             "file": "demo/cases.ts",
-            "line": 153,
+            "line": 155,
             "character": 17
           }
         }
@@ -1087,7 +1112,7 @@
           "type": "sfixed32",
           "position": {
             "file": "demo/cases.ts",
-            "line": 154,
+            "line": 156,
             "character": 18
           }
         }
@@ -1099,7 +1124,7 @@
           "type": "uint64",
           "position": {
             "file": "demo/cases.ts",
-            "line": 156,
+            "line": 158,
             "character": 16
           }
         }
@@ -1111,7 +1136,7 @@
           "type": "int64",
           "position": {
             "file": "demo/cases.ts",
-            "line": 157,
+            "line": 159,
             "character": 15
           }
         }
@@ -1123,7 +1148,7 @@
           "type": "sint64",
           "position": {
             "file": "demo/cases.ts",
-            "line": 158,
+            "line": 160,
             "character": 16
           }
         }
@@ -1135,7 +1160,7 @@
           "type": "fixed64",
           "position": {
             "file": "demo/cases.ts",
-            "line": 159,
+            "line": 161,
             "character": 17
           }
         }
@@ -1147,7 +1172,7 @@
           "type": "sfixed64",
           "position": {
             "file": "demo/cases.ts",
-            "line": 160,
+            "line": 162,
             "character": 18
           }
         }
@@ -1159,7 +1184,7 @@
           "type": "float",
           "position": {
             "file": "demo/cases.ts",
-            "line": 162,
+            "line": 164,
             "character": 15
           }
         }
@@ -1171,7 +1196,7 @@
           "type": "double",
           "position": {
             "file": "demo/cases.ts",
-            "line": 163,
+            "line": 165,
             "character": 16
           }
         }
@@ -1183,7 +1208,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 169,
+            "line": 171,
             "character": 15
           },
           "title": "foo",
@@ -1195,7 +1220,7 @@
     "maxProperties": 15,
     "position": {
       "file": "demo/cases.ts",
-      "line": 138,
+      "line": 140,
       "character": 5
     }
   },
@@ -1209,7 +1234,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 178,
+            "line": 180,
             "character": 16
           },
           "minLength": 10,
@@ -1222,7 +1247,7 @@
     "maxProperties": 1,
     "position": {
       "file": "demo/cases.ts",
-      "line": 172,
+      "line": 174,
       "character": 5
     }
   },
@@ -1238,7 +1263,7 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 187,
+              "line": 189,
               "character": 14
             },
             "minLength": 10,
@@ -1247,7 +1272,7 @@
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 187,
+            "line": 189,
             "character": 14
           }
         }
@@ -1261,13 +1286,13 @@
             "name": "TypeLiteral",
             "position": {
               "file": "demo/cases.ts",
-              "line": 193,
+              "line": 195,
               "character": 14
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 193,
+            "line": 195,
             "character": 14
           },
           "uniqueItems": true,
@@ -1289,7 +1314,7 @@
                   "type": "number",
                   "position": {
                     "file": "demo/cases.ts",
-                    "line": 194,
+                    "line": 196,
                     "character": 25
                   }
                 }
@@ -1299,13 +1324,13 @@
             "maxProperties": 1,
             "position": {
               "file": "demo/cases.ts",
-              "line": 194,
+              "line": 196,
               "character": 14
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 194,
+            "line": 196,
             "character": 14
           }
         }
@@ -1319,7 +1344,7 @@
             "type": "uint32",
             "position": {
               "file": "demo/cases.ts",
-              "line": 202,
+              "line": 204,
               "character": 14
             },
             "multipleOf": 100,
@@ -1330,7 +1355,7 @@
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 202,
+            "line": 204,
             "character": 14
           }
         }
@@ -1352,7 +1377,7 @@
                       "type": "number",
                       "position": {
                         "file": "demo/cases.ts",
-                        "line": 203,
+                        "line": 205,
                         "character": 25
                       }
                     },
@@ -1360,114 +1385,8 @@
                       "kind": "string",
                       "position": {
                         "file": "demo/cases.ts",
-                        "line": 203,
-                        "character": 34
-                      }
-                    }
-                  ],
-                  "position": {
-                    "file": "demo/cases.ts",
-                    "line": 203,
-                    "character": 25
-                  }
-                }
-              }
-            ],
-            "minProperties": 1,
-            "maxProperties": 1,
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 203,
-              "character": 14
-            }
-          },
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 203,
-            "character": 14
-          }
-        }
-      },
-      {
-        "name": "arrayType6",
-        "type": {
-          "kind": "array",
-          "type": {
-            "kind": "object",
-            "members": [
-              {
-                "name": "literal",
-                "type": {
-                  "kind": "union",
-                  "members": [
-                    {
-                      "kind": "number",
-                      "type": "number",
-                      "position": {
-                        "file": "demo/cases.ts",
-                        "line": 204,
-                        "character": 25
-                      }
-                    },
-                    {
-                      "kind": "null",
-                      "position": {
-                        "file": "demo/cases.ts",
-                        "line": 204,
-                        "character": 34
-                      }
-                    }
-                  ],
-                  "position": {
-                    "file": "demo/cases.ts",
-                    "line": 204,
-                    "character": 25
-                  }
-                }
-              }
-            ],
-            "minProperties": 1,
-            "maxProperties": 1,
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 204,
-              "character": 14
-            }
-          },
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 204,
-            "character": 14
-          }
-        }
-      },
-      {
-        "name": "arrayType7",
-        "type": {
-          "kind": "array",
-          "type": {
-            "kind": "object",
-            "members": [
-              {
-                "name": "literal",
-                "type": {
-                  "kind": "union",
-                  "members": [
-                    {
-                      "kind": "reference",
-                      "name": "TypeLiteral",
-                      "position": {
-                        "file": "demo/cases.ts",
                         "line": 205,
-                        "character": 25
-                      }
-                    },
-                    {
-                      "kind": "null",
-                      "position": {
-                        "file": "demo/cases.ts",
-                        "line": 205,
-                        "character": 39
+                        "character": 34
                       }
                     }
                   ],
@@ -1495,6 +1414,112 @@
         }
       },
       {
+        "name": "arrayType6",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "union",
+                  "members": [
+                    {
+                      "kind": "number",
+                      "type": "number",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 206,
+                        "character": 25
+                      }
+                    },
+                    {
+                      "kind": "null",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 206,
+                        "character": 34
+                      }
+                    }
+                  ],
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 206,
+                    "character": 25
+                  }
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 206,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 206,
+            "character": 14
+          }
+        }
+      },
+      {
+        "name": "arrayType7",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "union",
+                  "members": [
+                    {
+                      "kind": "reference",
+                      "name": "TypeLiteral",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 207,
+                        "character": 25
+                      }
+                    },
+                    {
+                      "kind": "null",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 207,
+                        "character": 39
+                      }
+                    }
+                  ],
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 207,
+                    "character": 25
+                  }
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1,
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 207,
+              "character": 14
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 207,
+            "character": 14
+          }
+        }
+      },
+      {
         "name": "arrayType8",
         "type": {
           "kind": "array",
@@ -1508,7 +1533,7 @@
                   "type": "number",
                   "position": {
                     "file": "demo/cases.ts",
-                    "line": 206,
+                    "line": 208,
                     "character": 31
                   }
                 }
@@ -1518,13 +1543,13 @@
             "maxProperties": 1,
             "position": {
               "file": "demo/cases.ts",
-              "line": 206,
+              "line": 208,
               "character": 20
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 206,
+            "line": 208,
             "character": 20
           }
         }
@@ -1534,7 +1559,7 @@
     "maxProperties": 8,
     "position": {
       "file": "demo/cases.ts",
-      "line": 181,
+      "line": 183,
       "character": 5
     }
   },
@@ -1548,7 +1573,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 210,
+            "line": 212,
             "character": 7
           }
         }
@@ -1559,13 +1584,13 @@
       "kind": "string",
       "position": {
         "file": "demo/cases.ts",
-        "line": 211,
+        "line": 213,
         "character": 18
       }
     },
     "position": {
       "file": "demo/cases.ts",
-      "line": 209,
+      "line": 211,
       "character": 5
     }
   },
@@ -1581,7 +1606,7 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 215,
+              "line": 217,
               "character": 20
             }
           },
@@ -1590,13 +1615,13 @@
             "type": "number",
             "position": {
               "file": "demo/cases.ts",
-              "line": 215,
+              "line": 217,
               "character": 29
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 215,
+            "line": 217,
             "character": 20
           }
         }
@@ -1609,84 +1634,13 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 216,
+              "line": 218,
               "character": 21
             }
           },
           "value": {
             "kind": "reference",
             "name": "TypeLiteral",
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 216,
-              "character": 30
-            }
-          },
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 216,
-            "character": 21
-          }
-        }
-      },
-      {
-        "name": "mapType3",
-        "type": {
-          "kind": "map",
-          "key": {
-            "kind": "string",
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 217,
-              "character": 21
-            }
-          },
-          "value": {
-            "kind": "object",
-            "members": [
-              {
-                "name": "literal",
-                "type": {
-                  "kind": "number",
-                  "type": "number",
-                  "position": {
-                    "file": "demo/cases.ts",
-                    "line": 217,
-                    "character": 41
-                  }
-                }
-              }
-            ],
-            "minProperties": 1,
-            "maxProperties": 1,
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 217,
-              "character": 30
-            }
-          },
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 217,
-            "character": 21
-          }
-        }
-      },
-      {
-        "name": "mapType4",
-        "type": {
-          "kind": "map",
-          "key": {
-            "kind": "string",
-            "position": {
-              "file": "demo/cases.ts",
-              "line": 218,
-              "character": 21
-            }
-          },
-          "value": {
-            "kind": "number",
-            "type": "uint32",
             "position": {
               "file": "demo/cases.ts",
               "line": 218,
@@ -1701,7 +1655,7 @@
         }
       },
       {
-        "name": "mapType5",
+        "name": "mapType3",
         "type": {
           "kind": "map",
           "key": {
@@ -1713,6 +1667,23 @@
             }
           },
           "value": {
+            "kind": "object",
+            "members": [
+              {
+                "name": "literal",
+                "type": {
+                  "kind": "number",
+                  "type": "number",
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 219,
+                    "character": 41
+                  }
+                }
+              }
+            ],
+            "minProperties": 1,
+            "maxProperties": 1,
             "position": {
               "file": "demo/cases.ts",
               "line": 219,
@@ -1722,6 +1693,60 @@
           "position": {
             "file": "demo/cases.ts",
             "line": 219,
+            "character": 21
+          }
+        }
+      },
+      {
+        "name": "mapType4",
+        "type": {
+          "kind": "map",
+          "key": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 220,
+              "character": 21
+            }
+          },
+          "value": {
+            "kind": "number",
+            "type": "uint32",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 220,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 220,
+            "character": 21
+          }
+        }
+      },
+      {
+        "name": "mapType5",
+        "type": {
+          "kind": "map",
+          "key": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 221,
+              "character": 21
+            }
+          },
+          "value": {
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 221,
+              "character": 30
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 221,
             "character": 21
           }
         }
@@ -1738,7 +1763,7 @@
                 "type": "number",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 221,
+                  "line": 223,
                   "character": 9
                 }
               }
@@ -1750,13 +1775,13 @@
             "type": "number",
             "position": {
               "file": "demo/cases.ts",
-              "line": 222,
+              "line": 224,
               "character": 20
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 220,
+            "line": 222,
             "character": 12
           }
         }
@@ -1768,7 +1793,7 @@
           "name": "MapType7",
           "position": {
             "file": "demo/cases.ts",
-            "line": 224,
+            "line": 226,
             "character": 12
           }
         }
@@ -1778,7 +1803,7 @@
     "maxProperties": 7,
     "position": {
       "file": "demo/cases.ts",
-      "line": 214,
+      "line": 216,
       "character": 5
     }
   },
@@ -1792,7 +1817,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 234,
+            "line": 236,
             "character": 11
           }
         },
@@ -1803,7 +1828,7 @@
               "kind": "string",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 231,
+                "line": 233,
                 "character": 13
               }
             },
@@ -1816,7 +1841,7 @@
               "type": "number",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 232,
+                "line": 234,
                 "character": 13
               }
             },
@@ -1830,7 +1855,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 238,
+            "line": 240,
             "character": 11
           }
         },
@@ -1841,7 +1866,7 @@
               "kind": "string",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 236,
+                "line": 238,
                 "character": 13
               }
             },
@@ -1854,7 +1879,7 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 229,
+      "line": 231,
       "character": 5
     }
   },
@@ -1868,7 +1893,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 245,
+            "line": 247,
             "character": 16
           },
           "default": "foo"
@@ -1881,7 +1906,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 249,
+            "line": 251,
             "character": 16
           },
           "default": 123
@@ -1893,7 +1918,7 @@
           "kind": "boolean",
           "position": {
             "file": "demo/cases.ts",
-            "line": 253,
+            "line": 255,
             "character": 17
           },
           "default": true
@@ -1905,7 +1930,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 257,
+            "line": 259,
             "character": 17
           },
           "default": "foo bar"
@@ -1917,7 +1942,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 261,
+            "line": 263,
             "character": 17
           },
           "default": ""
@@ -1930,13 +1955,13 @@
           "type": {
             "position": {
               "file": "demo/cases.ts",
-              "line": 265,
+              "line": 267,
               "character": 15
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 265,
+            "line": 267,
             "character": 15
           },
           "default": []
@@ -1953,7 +1978,7 @@
                 "kind": "string",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 269,
+                  "line": 271,
                   "character": 23
                 }
               }
@@ -1963,7 +1988,7 @@
           "maxProperties": 1,
           "position": {
             "file": "demo/cases.ts",
-            "line": 269,
+            "line": 271,
             "character": 16
           },
           "default": {}
@@ -1976,7 +2001,7 @@
           "type": "integer",
           "position": {
             "file": "demo/cases.ts",
-            "line": 273,
+            "line": 275,
             "character": 17
           },
           "default": 123
@@ -1989,7 +2014,7 @@
           "name": "TypeLiteral",
           "position": {
             "file": "demo/cases.ts",
-            "line": 277,
+            "line": 279,
             "character": 17
           },
           "default": {}
@@ -2000,7 +2025,7 @@
     "maxProperties": 9,
     "position": {
       "file": "demo/cases.ts",
-      "line": 241,
+      "line": 243,
       "character": 5
     }
   },
@@ -2010,7 +2035,7 @@
     "name": "TypeLiteral",
     "position": {
       "file": "demo/cases.ts",
-      "line": 280,
+      "line": 282,
       "character": 0
     }
   },
@@ -2025,7 +2050,7 @@
           "name": "TypeLiteral",
           "position": {
             "file": "demo/cases.ts",
-            "line": 283,
+            "line": 285,
             "character": 24
           }
         }
@@ -2037,7 +2062,7 @@
           "name": "TypeReferenceMember2",
           "position": {
             "file": "demo/cases.ts",
-            "line": 284,
+            "line": 286,
             "character": 24
           }
         }
@@ -2047,7 +2072,7 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 282,
+      "line": 284,
       "character": 5
     }
   },
@@ -2061,7 +2086,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 288,
+            "line": 290,
             "character": 16
           }
         }
@@ -2073,7 +2098,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 289,
+            "line": 291,
             "character": 16
           }
         }
@@ -2083,7 +2108,7 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 287,
+      "line": 289,
       "character": 0
     }
   },
@@ -2097,7 +2122,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 293,
+            "line": 295,
             "character": 16
           }
         }
@@ -2109,7 +2134,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 294,
+            "line": 296,
             "character": 16
           }
         }
@@ -2120,7 +2145,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 288,
+            "line": 290,
             "character": 16
           }
         }
@@ -2132,7 +2157,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 289,
+            "line": 291,
             "character": 16
           }
         }
@@ -2142,7 +2167,7 @@
     "maxProperties": 4,
     "position": {
       "file": "demo/cases.ts",
-      "line": 292,
+      "line": 294,
       "character": 0
     }
   },
@@ -2156,7 +2181,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 298,
+            "line": 300,
             "character": 17
           },
           "default": "foo"
@@ -2169,7 +2194,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 299,
+            "line": 301,
             "character": 17
           },
           "default": 123
@@ -2181,7 +2206,7 @@
           "kind": "boolean",
           "position": {
             "file": "demo/cases.ts",
-            "line": 300,
+            "line": 302,
             "character": 17
           },
           "default": false
@@ -2193,7 +2218,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 301,
+            "line": 303,
             "character": 16
           },
           "default": "foo"
@@ -2207,13 +2232,13 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 302,
+              "line": 304,
               "character": 18
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 302,
+            "line": 304,
             "character": 17
           },
           "default": [
@@ -2233,7 +2258,7 @@
                 "type": "number",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 303,
+                  "line": 305,
                   "character": 22
                 }
               }
@@ -2242,7 +2267,7 @@
           "minProperties": 1,
           "position": {
             "file": "demo/cases.ts",
-            "line": 303,
+            "line": 305,
             "character": 17
           },
           "default": {
@@ -2255,7 +2280,7 @@
     "maxProperties": 6,
     "position": {
       "file": "demo/cases.ts",
-      "line": 297,
+      "line": 299,
       "character": 0
     }
   },
@@ -2270,7 +2295,7 @@
           "name": "ClassType1",
           "position": {
             "file": "demo/cases.ts",
-            "line": 307,
+            "line": 309,
             "character": 14
           }
         }
@@ -2282,7 +2307,7 @@
           "name": "ClassType2",
           "position": {
             "file": "demo/cases.ts",
-            "line": 308,
+            "line": 310,
             "character": 14
           }
         }
@@ -2294,7 +2319,7 @@
           "name": "ClassType3",
           "position": {
             "file": "demo/cases.ts",
-            "line": 309,
+            "line": 311,
             "character": 14
           }
         }
@@ -2304,7 +2329,7 @@
     "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
-      "line": 306,
+      "line": 308,
       "character": 5
     }
   },
@@ -2321,13 +2346,13 @@
             "name": "Circular",
             "position": {
               "file": "demo/cases.ts",
-              "line": 313,
+              "line": 315,
               "character": 12
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 313,
+            "line": 315,
             "character": 12
           }
         }
@@ -2337,7 +2362,7 @@
     "maxProperties": 1,
     "position": {
       "file": "demo/cases.ts",
-      "line": 312,
+      "line": 314,
       "character": 5
     }
   },
@@ -2351,7 +2376,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 323,
+            "line": 325,
             "character": 19
           }
         },
@@ -2363,7 +2388,7 @@
           "kind": "boolean",
           "position": {
             "file": "demo/cases.ts",
-            "line": 324,
+            "line": 326,
             "character": 17
           }
         }
@@ -2374,7 +2399,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 325,
+            "line": 327,
             "character": 16
           }
         }
@@ -2386,7 +2411,7 @@
           "name": "NumberType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 326,
+            "line": 328,
             "character": 14
           }
         }
@@ -2398,7 +2423,7 @@
           "name": "ArrayType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 327,
+            "line": 329,
             "character": 13
           }
         }
@@ -2415,7 +2440,7 @@
                 "type": "number",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 328,
+                  "line": 330,
                   "character": 26
                 }
               }
@@ -2425,7 +2450,7 @@
           "maxProperties": 1,
           "position": {
             "file": "demo/cases.ts",
-            "line": 328,
+            "line": 330,
             "character": 15
           }
         }
@@ -2437,7 +2462,7 @@
           "name": "ReferenceType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 329,
+            "line": 331,
             "character": 17
           }
         }
@@ -2449,7 +2474,7 @@
           "name": "Interface",
           "position": {
             "file": "demo/cases.ts",
-            "line": 330,
+            "line": 332,
             "character": 17
           }
         }
@@ -2461,7 +2486,7 @@
           "name": "TypeUnion",
           "position": {
             "file": "demo/cases.ts",
-            "line": 331,
+            "line": 333,
             "character": 13
           }
         }
@@ -2473,7 +2498,7 @@
           "name": "InterfaceExtends",
           "position": {
             "file": "demo/cases.ts",
-            "line": 332,
+            "line": 334,
             "character": 20
           }
         }
@@ -2485,7 +2510,7 @@
           "name": "TypeIntersection",
           "position": {
             "file": "demo/cases.ts",
-            "line": 333,
+            "line": 335,
             "character": 20
           }
         }
@@ -2497,7 +2522,7 @@
           "name": "TypeUnionAndIntersection",
           "position": {
             "file": "demo/cases.ts",
-            "line": 334,
+            "line": 336,
             "character": 28
           }
         }
@@ -2509,7 +2534,7 @@
           "name": "MapType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 335,
+            "line": 337,
             "character": 11
           }
         }
@@ -2521,7 +2546,7 @@
           "name": "TaggedField",
           "position": {
             "file": "demo/cases.ts",
-            "line": 336,
+            "line": 338,
             "character": 15
           }
         }
@@ -2533,7 +2558,7 @@
           "name": "Enum",
           "position": {
             "file": "demo/cases.ts",
-            "line": 337,
+            "line": 339,
             "character": 8
           }
         }
@@ -2545,7 +2570,7 @@
           "name": "StringType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 338,
+            "line": 340,
             "character": 16
           }
         }
@@ -2557,7 +2582,7 @@
           "name": "ID",
           "position": {
             "file": "demo/cases.ts",
-            "line": 339,
+            "line": 341,
             "character": 6
           }
         }
@@ -2569,7 +2594,7 @@
           "name": "Parameter",
           "position": {
             "file": "demo/cases.ts",
-            "line": 340,
+            "line": 342,
             "character": 13
           }
         }
@@ -2582,13 +2607,13 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 341,
+              "line": 343,
               "character": 24
             }
           },
           "position": {
             "file": "demo/cases.ts",
-            "line": 341,
+            "line": 343,
             "character": 24
           }
         },
@@ -2602,7 +2627,7 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 342,
+              "line": 344,
               "character": 22
             }
           },
@@ -2610,7 +2635,7 @@
           "maxItems": 2,
           "position": {
             "file": "demo/cases.ts",
-            "line": 342,
+            "line": 344,
             "character": 13
           }
         }
@@ -2622,7 +2647,7 @@
           "name": "DefaultValue",
           "position": {
             "file": "demo/cases.ts",
-            "line": 343,
+            "line": 345,
             "character": 15
           }
         }
@@ -2632,7 +2657,7 @@
         "type": {
           "position": {
             "file": "demo/cases.ts",
-            "line": 344,
+            "line": 346,
             "character": 11
           }
         }
@@ -2644,7 +2669,7 @@
           "name": "ClassType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 345,
+            "line": 347,
             "character": 13
           }
         }
@@ -2656,7 +2681,7 @@
           "name": "Circular",
           "position": {
             "file": "demo/cases.ts",
-            "line": 346,
+            "line": 348,
             "character": 12
           }
         }
@@ -2668,7 +2693,7 @@
           "name": "OuterType",
           "position": {
             "file": "demo/cases.ts",
-            "line": 347,
+            "line": 349,
             "character": 13
           }
         }
@@ -2680,7 +2705,7 @@
     "entry": "cases.json",
     "position": {
       "file": "demo/cases.ts",
-      "line": 322,
+      "line": 324,
       "character": 12
     }
   }

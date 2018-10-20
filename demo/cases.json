@@ -447,6 +447,9 @@
         },
         "typeUnionMember8": {
           "$ref": "#/definitions/TypeUnion8"
+        },
+        "typeUnionMember9": {
+          "$ref": "#/definitions/TypeUnion9"
         }
       },
       "required": [
@@ -457,7 +460,8 @@
         "typeUnionMember5",
         "typeUnionMember6",
         "typeUnionMember7",
-        "typeUnionMember8"
+        "typeUnionMember8",
+        "typeUnionMember9"
       ],
       "additionalProperties": false
     },
@@ -567,6 +571,12 @@
         "bar",
         null,
         false
+      ]
+    },
+    "TypeUnion9": {
+      "enum": [
+        "foo",
+        "bar"
       ]
     },
     "InterfaceExtends": {
