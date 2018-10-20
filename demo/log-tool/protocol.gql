@@ -104,4 +104,5 @@ type Log {
 type Sample {
   hostname: String!
   port: Int
+  values: JSON!
 }

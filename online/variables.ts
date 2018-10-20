@@ -51,6 +51,7 @@ type TypeUnion4 =
   }
 type TypeUnion5 = TypeLiteral | Interface
 type TypeUnion8 = 'foo' | 'bar' | null | false
+type TypeUnion9 = 'foo' | 'bar'
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
@@ -60,6 +61,7 @@ type TypeUnion = {
   typeUnionMember6: string | null | false;
   typeUnionMember7: 'foo' | 'bar';
   typeUnionMember8: TypeUnion8;
+  typeUnionMember9: TypeUnion9;
 }
 
 interface InterfaceExtends extends Interface {
