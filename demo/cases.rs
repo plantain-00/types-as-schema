@@ -202,8 +202,14 @@ pub struct MapType7 {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct MapType8 {
+
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct MapType {
   #[serde(rename = "mapType7")] pub map_type_7: MapType7,
+  #[serde(rename = "mapType8")] pub map_type_8: MapType8,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

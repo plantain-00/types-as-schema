@@ -5,7 +5,9 @@ export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object') {
       const message = generateGraphqlSchemaOfObject(declarations, typeDeclaration)
-      messages.push(message)
+      if (message) {
+        messages.push(message)
+      }
     } else if (typeDeclaration.kind === 'enum') {
       const members = typeDeclaration.members.map(m => `  ${m.name}`)
       messages.push(`enum ${typeDeclaration.name} {
@@ -29,6 +31,9 @@ ${members.join('\n')}
 }
 
 function generateGraphqlSchemaOfObject(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration) {
+  if (objectDeclaration.members.length === 0) {
+    return undefined
+  }
   const members = objectDeclaration.members.map(m => generateGraphqlSchemaOfObjectMember(typeDeclarations, m))
   return `type ${objectDeclaration.name} {
 ${members.filter(m => m).join('\n')}
@@ -98,9 +103,14 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
 }
 
 function getGraphqlSchemaPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType) {
-  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
-  if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
-    return 'String'
+  const typeDeclaration = typeDeclarations.find(m => m.name === memberType.name)
+  if (typeDeclaration) {
+    if (typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
+      return 'String'
+    }
+    if (typeDeclaration.kind === 'object' && typeDeclaration.members.length === 0) {
+      return 'JSON'
+    }
   }
   return memberType.name
 }

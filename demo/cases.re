@@ -151,9 +151,15 @@ type mapType7 = {
   foo: string,
 };
 
+type mapType8 = {
+  .
+
+};
+
 type mapType = {
   .
   mapType7: mapType7,
+  mapType8: mapType8,
 };
 
 type parameter = {

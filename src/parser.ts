@@ -121,7 +121,7 @@ export class Parser {
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
-    // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
+    // if the node is pre-handled, then it should be in `declarations` already, so don't continue
     if (this.declarations.some(m => m.name === declaration.name!.text)) {
       return
     }
@@ -179,8 +179,7 @@ export class Parser {
                 type.expression as ts.Identifier,
                 members,
                 minProperties,
-                maxProperties,
-                sourceFile
+                maxProperties
               ))
             }
           }
@@ -194,11 +193,10 @@ export class Parser {
     declaration: ts.Identifier,
     members: Member[],
     minProperties: number,
-    maxProperties: number,
-    sourceFile: ts.SourceFile
+    maxProperties: number
   ) {
     const interfaceName = declaration.text
-    this.preHandleType(interfaceName, sourceFile)
+    this.preHandleType(interfaceName)
     let additionalProperties: Type | undefined | boolean
     const clauseDeclaration = this.declarations.find(m => m.kind === 'object' && m.name === interfaceName)
     if (clauseDeclaration && clauseDeclaration.kind === 'object') {
@@ -662,7 +660,7 @@ export class Parser {
       return this.getMembersInfoOfParenthesizedType(node as ts.ParenthesizedTypeNode, sourceFile)
     }
     if (node.kind === ts.SyntaxKind.TypeReference) {
-      return this.getMembersInfoOfTypeReference(node as ts.TypeReferenceNode, sourceFile)
+      return this.getMembersInfoOfTypeReference(node as ts.TypeReferenceNode)
     }
     return { members: [], minProperties: 0, maxProperties: 0 }
   }
@@ -748,12 +746,12 @@ export class Parser {
     return { members, minProperties, maxProperties }
   }
 
-  private getMembersInfoOfTypeReference(node: ts.TypeReferenceNode, sourceFile: ts.SourceFile): MembersInfo {
+  private getMembersInfoOfTypeReference(node: ts.TypeReferenceNode): MembersInfo {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
     const referenceName = (node.typeName as ts.Identifier).text
-    this.preHandleType(referenceName, sourceFile)
+    this.preHandleType(referenceName)
     const objectDeclaration = this.declarations.find(m => m.kind === 'object' && m.name === referenceName)
     if (objectDeclaration && objectDeclaration.kind === 'object') {
       for (const member of objectDeclaration.members) {
@@ -770,8 +768,8 @@ export class Parser {
   }
 
   // tslint:disable-next-line:cognitive-complexity
-  private preHandleType(typeName: string, sourceFile: ts.SourceFile) {
-    // if the node is pre-handled, then it should be in `typeDeclarations` already, so don't continue
+  private preHandleType(typeName: string) {
+    // if the node is pre-handled, then it should be in `declarations` already, so don't continue
     if (this.declarations.some(m => m.name === typeName)) {
       return
     }

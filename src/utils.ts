@@ -1,4 +1,5 @@
 import ts from 'typescript'
+import * as path from 'path'
 
 export function toUpperCase(name: string) {
   return name[0].toUpperCase() + name.substring(1)
@@ -14,7 +15,7 @@ export function warn(position: PositionValue, stage: string) {
 
 export function getPosition(typeNode: ts.Node, sourceFile: ts.SourceFile) {
   return {
-    file: sourceFile.fileName,
+    file: path.relative(process.cwd(), sourceFile.fileName),
     ...ts.getLineAndCharacterOfPosition(sourceFile, typeNode.getStart(sourceFile))
   }
 }

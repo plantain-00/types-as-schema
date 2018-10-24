@@ -221,6 +221,10 @@ type MapType7 = {
   [name: string]: string
 }
 
+type MapType8 = {
+  [name: string]: string
+}
+
 type MapType = {
   mapType: { [name: string]: number };
   mapType2: { [name: string]: TypeLiteral };
@@ -232,6 +236,7 @@ type MapType = {
     [name: string]: number
   };
   mapType7: MapType7
+  mapType8: MapType8
 }
 
 type ID = any
