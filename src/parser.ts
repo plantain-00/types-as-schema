@@ -244,7 +244,7 @@ export class Parser {
         kind: 'reference',
         newName: declaration.name.text,
         name: (typeReference.typeName as ts.Identifier).text,
-        position: getPosition(declaration,sourceFile)
+        position: getPosition(declaration, sourceFile)
       }
       this.declarations.push(referenceDeclaration)
     }
@@ -808,7 +808,7 @@ export class Parser {
     for (const element of elements) {
       if (element.kind === ts.SyntaxKind.PropertySignature || element.kind === ts.SyntaxKind.PropertyDeclaration) {
         const property = element as ts.PropertySignature | ts.PropertyDeclaration
-        const member = this.getObjectMemberOfProperty(property, sourceFile)
+        const member = this.getObjectMemberOfPropertyOrMethod(property, sourceFile)
         members.push(member)
         if (!property.questionToken) {
           minProperties++
@@ -819,6 +819,10 @@ export class Parser {
         if (indexSignature.type) {
           additionalProperties = this.getType(indexSignature.type, sourceFile)
         }
+      } else if (element.kind === ts.SyntaxKind.MethodSignature || element.kind === ts.SyntaxKind.MethodDeclaration) {
+        const methodSignature = element as ts.MethodSignature | ts.MethodDeclaration
+        const member = this.getObjectMemberOfPropertyOrMethod(methodSignature, sourceFile)
+        members.push(member)
       }
     }
     return { members, minProperties, maxProperties, additionalProperties }
@@ -914,7 +918,11 @@ export class Parser {
     }
   }
 
-  private getObjectMemberOfProperty(property: ts.PropertySignature | ts.PropertyDeclaration, sourceFile: ts.SourceFile) {
+  private getObjectMemberOfPropertyOrMethod(
+    // tslint:disable-next-line:max-union-size
+    property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration,
+    sourceFile: ts.SourceFile
+  ) {
     const name = property.name as ts.Identifier
     const member: Member = {
       name: name.text,
@@ -929,7 +937,8 @@ export class Parser {
     }
 
     let defaultValue: any
-    if (property.initializer) {
+    if ((property.kind === ts.SyntaxKind.PropertySignature || property.kind === ts.SyntaxKind.PropertyDeclaration)
+      && property.initializer) {
       const { type, value } = this.getTypeAndValueOfExpression(property.initializer, sourceFile)
       member.type = type
       defaultValue = value
@@ -944,7 +953,23 @@ export class Parser {
       (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
     }
 
-    this.setPropertyJsDoc(property, member, sourceFile)
+    if (property.kind === ts.SyntaxKind.PropertySignature || property.kind === ts.SyntaxKind.PropertyDeclaration) {
+      this.setPropertyJsDoc(property, member, sourceFile)
+    }
+
+    if (property.kind === ts.SyntaxKind.MethodSignature || property.kind === ts.SyntaxKind.MethodDeclaration) {
+      member.parameters = []
+      for (const parameter of property.parameters) {
+        member.parameters.push({
+          name: (parameter.name as ts.Identifier).text,
+          type: parameter.type ? this.getType(parameter.type, sourceFile) : {
+            kind: undefined,
+            position: getPosition(parameter, sourceFile)
+          },
+          optional: !!parameter.questionToken
+        })
+      }
+    }
 
     return member
   }
@@ -1027,8 +1052,8 @@ export class Parser {
   private getJsDocComment(comment: string) {
     if (comment.length >= 2
       && ((comment.startsWith(`'`) && comment.endsWith(`'`))
-      || (comment.startsWith(`"`) && comment.endsWith(`"`))
-      || (comment.startsWith('`') && comment.endsWith('`')))) {
+        || (comment.startsWith(`"`) && comment.endsWith(`"`))
+        || (comment.startsWith('`') && comment.endsWith('`')))) {
       return comment.substring(1, comment.length - 1)
     }
     return comment

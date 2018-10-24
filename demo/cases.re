@@ -246,3 +246,41 @@ type entryType = {
   circular: circular,
   outerType: outerType,
 };
+
+type mutation = {
+  .
+  create: mutationResult,
+};
+
+type createInput = {
+  .
+  member1: string,
+  member2: float,
+  member3: createInputMember3,
+};
+
+type mutationResult = {
+  .
+  result: bool,
+};
+
+type query = {
+  .
+  user: getResult,
+};
+
+type getResult = {
+  .
+  result: result,
+};
+
+type result = {
+  .
+  member1: string,
+  member2: string,
+};
+
+type createInputMember3 = {
+  .
+  member1: string,
+};

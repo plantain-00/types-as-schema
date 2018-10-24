@@ -229,3 +229,34 @@ type EntryType {
   circular: Circular!
   outerType: OuterType!
 }
+
+type Mutation {
+  create(input: CreateInput!): MutationResult!
+}
+
+input CreateInput {
+  member1: String!
+  member2: Float!
+  member3: CreateInputMember3!
+}
+
+type MutationResult {
+  result: Boolean!
+}
+
+type Query {
+  user(id: String!): GetResult!
+}
+
+type GetResult {
+  result: Result!
+}
+
+type Result {
+  member1: String!
+  member2(input: String!): String!
+}
+
+input CreateInputMember3 {
+  member1: String!
+}

@@ -23,10 +23,10 @@ Genetate json scheme, protobuf file, graphQL schema and reasonml/ocaml/rust type
 + class
 + class extends
 + muitiple files
++ function / method
 
 ## unsupported types features
 
-+ function / method
 + variable statement
 
 ## install

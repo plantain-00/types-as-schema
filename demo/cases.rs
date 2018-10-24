@@ -298,3 +298,41 @@ pub struct EntryType {
   pub circular: Circular,
   #[serde(rename = "outerType")] pub outer_type: OuterType,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Mutation {
+  pub create: MutationResult,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateInput {
+  #[serde(rename = "member1")] pub member_1: String,
+  #[serde(rename = "member2")] pub member_2: f32,
+  #[serde(rename = "member3")] pub member_3: CreateInputMember3,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct MutationResult {
+  pub result: bool,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Query {
+  pub user: GetResult,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct GetResult {
+  pub result: Result,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Result {
+  #[serde(rename = "member1")] pub member_1: String,
+  #[serde(rename = "member2")] pub member_2: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateInputMember3 {
+  #[serde(rename = "member1")] pub member_1: String,
+}

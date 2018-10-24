@@ -224,3 +224,34 @@ message EntryType {
     Circular circular = 24;
     OuterType outerType = 25;
 }
+
+message Mutation {
+    MutationResult create = 1;
+}
+
+message CreateInput {
+    string member1 = 1;
+    double member2 = 2;
+    CreateInputMember3 member3 = 3;
+}
+
+message MutationResult {
+    bool result = 1;
+}
+
+message Query {
+    GetResult user = 1;
+}
+
+message GetResult {
+    Result result = 1;
+}
+
+message Result {
+    string member1 = 1;
+    string member2 = 2;
+}
+
+message CreateInputMember3 {
+    string member1 = 1;
+}

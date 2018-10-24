@@ -3,10 +3,15 @@ import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, Member
 const stageName = 'grapql schema generator'
 
 export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
+  const inputTypeSet = new Set<TypeDeclaration>()
+  for (const typeDeclaration of declarations) {
+    collectInputTypeSet(typeDeclaration, declarations, inputTypeSet, false)
+  }
+
   const messages: string[] = []
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object') {
-      const message = generateGraphqlSchemaOfObject(declarations, typeDeclaration)
+      const message = generateGraphqlSchemaOfObject(declarations, typeDeclaration, inputTypeSet)
       if (message) {
         messages.push(message)
       }
@@ -32,12 +37,50 @@ ${members.join('\n')}
   return messages.join('\n\n') + '\n'
 }
 
-function generateGraphqlSchemaOfObject(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration) {
+// tslint:disable-next-line:cognitive-complexity
+function collectInputTypeSet(
+  typeDeclaration: TypeDeclaration,
+  declarations: TypeDeclaration[],
+  inputTypeSet: Set<TypeDeclaration>,
+  isSureInput: boolean
+) {
+  if (typeDeclaration.kind === 'object') {
+    for (const member of typeDeclaration.members) {
+      if (member.parameters) {
+        for (const parameter of member.parameters) {
+          if (parameter.type.kind === 'reference') {
+            const referenceName = parameter.type.name
+            const declaration = declarations.find((d) => d.name === referenceName)
+            if (declaration) {
+              collectInputTypeSet(declaration, declarations, inputTypeSet, true)
+            }
+          }
+        }
+      }
+
+      if (isSureInput && member.type.kind === 'reference') {
+        const referenceName = member.type.name
+        const declaration = declarations.find((d) => d.name === referenceName)
+        if (declaration) {
+          collectInputTypeSet(declaration, declarations, inputTypeSet, true)
+        }
+      }
+    }
+  }
+
+  if (isSureInput && !inputTypeSet.has(typeDeclaration)) {
+    inputTypeSet.add(typeDeclaration)
+    collectInputTypeSet(typeDeclaration, declarations, inputTypeSet, true)
+  }
+}
+
+function generateGraphqlSchemaOfObject(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration, inputTypeSet: Set<TypeDeclaration>) {
   if (objectDeclaration.members.length === 0) {
     return undefined
   }
   const members = objectDeclaration.members.map(m => generateGraphqlSchemaOfObjectMember(typeDeclarations, m))
-  return `type ${objectDeclaration.name} {
+  const type = inputTypeSet.has(objectDeclaration) ? 'input' : 'type'
+  return `${type} ${objectDeclaration.name} {
 ${members.filter(m => m).join('\n')}
 }`
 }
