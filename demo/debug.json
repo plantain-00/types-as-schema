@@ -2742,6 +2742,255 @@
   },
   {
     "kind": "object",
+    "name": "Mutation",
+    "members": [
+      {
+        "name": "create",
+        "type": {
+          "kind": "reference",
+          "name": "MutationResult",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 358,
+            "character": 30
+          }
+        },
+        "parameters": [
+          {
+            "name": "input",
+            "type": {
+              "kind": "reference",
+              "name": "CreateInput",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 358,
+                "character": 16
+              }
+            },
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 0,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 357,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "CreateInput",
+    "members": [
+      {
+        "name": "member1",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 362,
+            "character": 11
+          }
+        }
+      },
+      {
+        "name": "member2",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 363,
+            "character": 11
+          }
+        }
+      },
+      {
+        "name": "member3",
+        "type": {
+          "kind": "reference",
+          "name": "CreateInputMember3",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 364,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 361,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "MutationResult",
+    "members": [
+      {
+        "name": "result",
+        "type": {
+          "kind": "boolean",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 368,
+            "character": 10
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 367,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "Query",
+    "members": [
+      {
+        "name": "user",
+        "type": {
+          "kind": "reference",
+          "name": "GetResult",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 372,
+            "character": 29
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 372,
+                "character": 20
+              }
+            },
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 0,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 371,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "GetResult",
+    "members": [
+      {
+        "name": "result",
+        "type": {
+          "kind": "reference",
+          "name": "Result",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 376,
+            "character": 10
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 375,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "Result",
+    "members": [
+      {
+        "name": "member1",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 380,
+            "character": 11
+          }
+        }
+      },
+      {
+        "name": "member2",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 382,
+            "character": 26
+          }
+        },
+        "parameters": [
+          {
+            "name": "input",
+            "type": {
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 382,
+                "character": 17
+              }
+            },
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 379,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "CreateInputMember3",
+    "members": [
+      {
+        "name": "member1",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 386,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 385,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
     "name": "OuterType",
     "members": [
       {

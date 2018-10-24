@@ -354,3 +354,35 @@ export type EntryType = {
   circular: Circular;
   outerType: OuterType;
 }
+
+export interface Mutation {
+  create(input: CreateInput): MutationResult
+}
+
+interface CreateInput {
+  member1: string
+  member2: number
+  member3: CreateInputMember3
+}
+
+interface MutationResult {
+  result: boolean
+}
+
+export abstract class Query {
+  abstract user(id: string): GetResult
+}
+
+interface GetResult {
+  result: Result
+}
+
+interface Result {
+  member1: string
+
+  member2(input: string): string
+}
+
+interface CreateInputMember3 {
+  member1: string
+}
