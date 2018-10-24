@@ -750,6 +750,9 @@
         },
         "mapType7": {
           "$ref": "#/definitions/MapType7"
+        },
+        "mapType8": {
+          "$ref": "#/definitions/MapType8"
         }
       },
       "required": [
@@ -759,7 +762,8 @@
         "mapType4",
         "mapType5",
         "mapType6",
-        "mapType7"
+        "mapType7",
+        "mapType8"
       ],
       "additionalProperties": false
     },
@@ -773,6 +777,14 @@
       "required": [
         "foo"
       ],
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "MapType8": {
+      "type": "object",
+      "properties": {},
+      "required": [],
       "additionalProperties": {
         "type": "string"
       }

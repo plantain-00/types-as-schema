@@ -150,6 +150,7 @@ type MapType {
   mapType4: JSON!
   mapType5: JSON!
   mapType7: MapType7!
+  mapType8: JSON!
 }
 
 type Parameter {
