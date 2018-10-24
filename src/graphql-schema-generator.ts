@@ -1,5 +1,7 @@
 import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter, warn } from './utils'
 
+const stageName = 'grapql schema generator'
+
 export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   const messages: string[] = []
   for (const typeDeclaration of declarations) {
@@ -18,7 +20,7 @@ ${members.join('\n')}
         const members = (typeDeclaration.members as ReferenceType[]).map(m => m.name)
         messages.push(`union ${typeDeclaration.name} = ${members.join(' | ')}`)
       } else {
-        warn(typeDeclaration.position, 'grapql schema generator')
+        warn(typeDeclaration.position, stageName)
       }
     } else if (typeDeclaration.kind === 'string' && typeDeclaration.enums) {
       const members = typeDeclaration.enums.map(m => `  ${m}`)
@@ -96,8 +98,14 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
   } else if (memberType.kind === 'boolean') {
     propertyType = 'Boolean'
   } else if (memberType.kind === 'map') {
-    warn(memberType.position, 'grapql schema generator')
+    warn(memberType.position, stageName)
     propertyType = 'JSON'
+  } else if (memberType.kind === 'union') {
+    // tslint:disable-next-line:no-collapsible-if
+    if (memberType.members.some(m => m.kind !== 'reference')) {
+      warn(memberType.position, stageName)
+      propertyType = 'JSON'
+    }
   }
   return propertyType
 }
@@ -109,6 +117,11 @@ function getGraphqlSchemaPropertyOfReference(typeDeclarations: TypeDeclaration[]
       return 'String'
     }
     if (typeDeclaration.kind === 'object' && typeDeclaration.members.length === 0) {
+      warn(memberType.position, stageName)
+      return 'JSON'
+    }
+    if (typeDeclaration.kind === 'union' && typeDeclaration.members.some(m => m.kind !== 'reference')) {
+      warn(memberType.position, stageName)
       return 'JSON'
     }
   }
