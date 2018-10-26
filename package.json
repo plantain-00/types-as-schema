@@ -30,14 +30,14 @@
     "@types/minimist": "1.2.0",
     "@types/node": "10.12.0",
     "@types/puppeteer": "1.9.0",
-    "autoprefixer": "9.2.1",
+    "autoprefixer": "9.3.1",
     "clean-css-cli": "4.2.1",
     "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
     "file2variable-cli": "1.8.5",
     "github-fork-ribbon-css": "0.2.1",
     "http-server": "0.11.1",
-    "jasmine": "3.2.0",
+    "jasmine": "3.3.0",
     "less": "3.8.1",
     "markdownlint-cli": "0.13.0",
     "no-unused-export": "1.6.0",
@@ -55,7 +55,7 @@
     "vue": "2.5.17",
     "vue-class-component": "6.3.2",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.21.0",
+    "webpack": "4.23.1",
     "webpack-cli": "3.1.2"
   },
   "dependencies": {
@@ -66,7 +66,7 @@
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
     "tslib": "1.9.3",
-    "typescript": "3.1.1"
+    "typescript": "3.1.3"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
