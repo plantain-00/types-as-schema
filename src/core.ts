@@ -6,6 +6,7 @@ import { generateGraphqlSchema } from './graphql-schema-generator'
 import { generateReasonTypes } from './reason-type-generator'
 import { generateOcamlTypes } from './ocaml-type-generator'
 import { generateRustTypes } from './rust-type-generator'
+import { generateMongooseSchema } from './mongoose-schema-generator'
 import { TypeDeclaration } from './utils'
 
 export class Generator {
@@ -38,6 +39,10 @@ export class Generator {
 
   generateRustTypes() {
     return generateRustTypes(this.declarations)
+  }
+
+  generateMongooseSchema() {
+    return generateMongooseSchema(this.declarations)
   }
 }
 

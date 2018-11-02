@@ -28,6 +28,7 @@ async function executeCommandLine() {
     ocamlPath,
     rustPath,
     jsonPath,
+    mongoosePath,
     debugPath,
     filePaths,
     watchMode
@@ -89,6 +90,11 @@ async function executeCommandLine() {
       fs.writeFileSync(rustPath, rustContent)
     }
 
+    if (mongoosePath) {
+      const mongooseContent = generator.generateMongooseSchema()
+      fs.writeFileSync(mongoosePath, mongooseContent)
+    }
+
     if (jsonPath) {
       generateJsonSchemas(generator)
     }
@@ -121,6 +127,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
   const ocamlPath = parseParameter(argv, 'ocaml')
   const rustPath = parseParameter(argv, 'rust')
   const jsonPath = parseParameter(argv, 'json')
+  const mongoosePath = parseParameter(argv, 'mongoose')
   const debugPath = parseParameter(argv, 'debug')
 
   const filePaths = argv._
@@ -138,6 +145,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
     ocamlPath,
     rustPath,
     jsonPath,
+    mongoosePath,
     debugPath,
     filePaths,
     watchMode

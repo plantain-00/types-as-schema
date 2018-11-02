@@ -19,6 +19,7 @@ export class App extends Vue {
   reasonTypes = ''
   ocamlTypes = ''
   rustTypes = ''
+  mongooseSchema = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -67,6 +68,9 @@ export class App extends Vue {
 
       this.rustTypes = generator.generateRustTypes()
       this.options.push('rust types')
+
+      this.mongooseSchema = generator.generateMongooseSchema()
+      this.options.push('mongoose schema')
     }
   }
 }
