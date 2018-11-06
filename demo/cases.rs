@@ -319,6 +319,7 @@ pub struct MutationResult {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Query {
   pub user: GetResult,
+  pub users: GetResult,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

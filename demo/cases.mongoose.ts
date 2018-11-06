@@ -676,6 +676,10 @@ export const querySchema = {
     type: Schema.Types.Mixed,
     required: true
   },
+  users: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
 }
 
 export const getResultSchema = {

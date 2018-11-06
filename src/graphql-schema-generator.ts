@@ -109,7 +109,7 @@ function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], 
       }
     }
   }
-  return `(${parameters.join(', ')})`
+  return parameters.length > 0 ? `(${parameters.join(', ')})` : ''
 }
 
 // tslint:disable-next-line:cognitive-complexity

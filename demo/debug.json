@@ -2881,6 +2881,19 @@
             "optional": false
           }
         ]
+      },
+      {
+        "name": "users",
+        "type": {
+          "kind": "reference",
+          "name": "GetResult",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 373,
+            "character": 20
+          }
+        },
+        "parameters": []
       }
     ],
     "minProperties": 0,
@@ -2902,7 +2915,7 @@
           "name": "Result",
           "position": {
             "file": "demo/cases.ts",
-            "line": 376,
+            "line": 377,
             "character": 10
           }
         }
@@ -2912,7 +2925,7 @@
     "maxProperties": 1,
     "position": {
       "file": "demo/cases.ts",
-      "line": 375,
+      "line": 376,
       "character": 0
     }
   },
@@ -2926,7 +2939,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 380,
+            "line": 381,
             "character": 11
           }
         }
@@ -2937,7 +2950,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 382,
+            "line": 383,
             "character": 26
           }
         },
@@ -2948,7 +2961,7 @@
               "kind": "string",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 382,
+                "line": 383,
                 "character": 17
               }
             },
@@ -2961,7 +2974,7 @@
     "maxProperties": 1,
     "position": {
       "file": "demo/cases.ts",
-      "line": 379,
+      "line": 380,
       "character": 0
     }
   },
@@ -2975,7 +2988,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 386,
+            "line": 387,
             "character": 11
           }
         }
@@ -2985,7 +2998,7 @@
     "maxProperties": 1,
     "position": {
       "file": "demo/cases.ts",
-      "line": 385,
+      "line": 386,
       "character": 0
     }
   },

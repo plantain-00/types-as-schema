@@ -246,6 +246,7 @@ type MutationResult {
 
 type Query {
   user(id: String!): GetResult!
+  users: GetResult!
 }
 
 type GetResult {
