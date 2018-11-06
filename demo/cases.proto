@@ -241,6 +241,7 @@ message MutationResult {
 
 message Query {
     GetResult user = 1;
+    GetResult users = 2;
 }
 
 message GetResult {

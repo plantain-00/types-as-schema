@@ -234,6 +234,7 @@ type mutationResult = {
 
 type query = {
   user: getResult;
+  users: getResult;
 }
 
 type getResult = {

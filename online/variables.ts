@@ -378,6 +378,7 @@ interface MutationResult {
 
 export abstract class Query {
   abstract user(id: string): GetResult
+  abstract users(): GetResult
 }
 
 interface GetResult {
