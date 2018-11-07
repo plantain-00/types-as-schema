@@ -131,8 +131,10 @@ boolean[]:
 
 ```ts
 type uint32 = number;
+type integer = number;
 
 type Foo = {
     bar: uint32;
+    foo: integer;
 }
 ```
