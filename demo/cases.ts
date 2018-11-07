@@ -298,7 +298,7 @@ class ClassType1 {
 }
 
 class ClassType2 extends ClassType1 {
-  classMember3: string
+  constructor(public classMember3: string) { super() }
   classMember4: number
 }
 

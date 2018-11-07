@@ -137,8 +137,7 @@ export class Parser {
       declaration,
       members,
       minProperties,
-      maxProperties,
-      sourceFile
+      maxProperties
     ))
     if (additionalPropertiesFromHeritageClauses) {
       additionalProperties = additionalPropertiesFromHeritageClauses
@@ -166,8 +165,7 @@ export class Parser {
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
     members: Member[],
     minProperties: number,
-    maxProperties: number,
-    sourceFile: ts.SourceFile
+    maxProperties: number
   ) {
     let additionalProperties: Type | undefined | boolean
     if (declaration.heritageClauses) {
@@ -800,6 +798,7 @@ export class Parser {
     }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private getObjectMembers(elements: ts.NodeArray<ts.TypeElement | ts.ClassElement>, sourceFile: ts.SourceFile): MembersInfo {
     const members: Member[] = []
     let minProperties = 0
@@ -808,7 +807,7 @@ export class Parser {
     for (const element of elements) {
       if (element.kind === ts.SyntaxKind.PropertySignature || element.kind === ts.SyntaxKind.PropertyDeclaration) {
         const property = element as ts.PropertySignature | ts.PropertyDeclaration
-        const member = this.getObjectMemberOfPropertyOrMethod(property, sourceFile)
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(property, sourceFile)
         members.push(member)
         if (!property.questionToken) {
           minProperties++
@@ -821,8 +820,23 @@ export class Parser {
         }
       } else if (element.kind === ts.SyntaxKind.MethodSignature || element.kind === ts.SyntaxKind.MethodDeclaration) {
         const methodSignature = element as ts.MethodSignature | ts.MethodDeclaration
-        const member = this.getObjectMemberOfPropertyOrMethod(methodSignature, sourceFile)
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(methodSignature, sourceFile)
         members.push(member)
+      } else if (element.kind === ts.SyntaxKind.Constructor) {
+        const constructorDeclaration = element as ts.ConstructorDeclaration
+        for (const parameter of constructorDeclaration.parameters) {
+          if (parameter.modifiers
+            && parameter.modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.PublicKeyword
+              || modifier.kind === ts.SyntaxKind.PrivateKeyword
+              || modifier.kind === ts.SyntaxKind.ProtectedKeyword)) {
+            const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(parameter, sourceFile)
+            members.push(member)
+            if (!parameter.questionToken) {
+              minProperties++
+            }
+            maxProperties++
+          }
+        }
       }
     }
     return { members, minProperties, maxProperties, additionalProperties }
@@ -918,9 +932,9 @@ export class Parser {
     }
   }
 
-  private getObjectMemberOfPropertyOrMethod(
+  private getObjectMemberOfPropertyOrMethodOrConstructorParameter(
     // tslint:disable-next-line:max-union-size
-    property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration,
+    property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration | ts.ParameterDeclaration,
     sourceFile: ts.SourceFile
   ) {
     const name = property.name as ts.Identifier
