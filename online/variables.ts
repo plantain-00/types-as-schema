@@ -363,7 +363,7 @@ export type EntryType = {
 }
 
 export interface Mutation {
-  create(input: CreateInput): MutationResult
+  create(input: CreateInput): Promise<MutationResult>
 }
 
 interface CreateInput {
