@@ -587,6 +587,12 @@ export class Parser {
       if (reference.typeName.text === 'Array') {
         return this.getTypeOfArrayTypeReference(reference, sourceFile)
       }
+      if (reference.typeName.text === 'Promise' && reference.typeArguments && reference.typeArguments.length > 0) {
+        const typeArgument = reference.typeArguments[0]
+        if (typeArgument.kind === ts.SyntaxKind.TypeReference) {
+          return this.getTypeOfTypeReference(typeArgument as ts.TypeReferenceNode, sourceFile)
+        }
+      }
       return {
         kind: 'reference',
         name: reference.typeName.text,
