@@ -3,7 +3,8 @@ import * as path from 'path'
 import { TypeDeclaration, Type, MemberParameter, ReferenceType, EnumType } from './utils'
 
 export function generateGraphqlRootType(declarations: TypeDeclaration[], graphqlRootTypePath: string) {
-  const members: string[] = []
+  const rootTypes: string[] = []
+  const resolveResults: string[] = []
   const referenceTypes: (ReferenceType | EnumType)[] = []
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object'
@@ -11,13 +12,18 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
       for (const member of typeDeclaration.members) {
         const memberType = getMemberType(member.type, referenceTypes)
         const parameters = getMemberParameters(referenceTypes, member.parameters)
-        members.push(`  ${member.name}(${parameters}): ${memberType} | Promise<${memberType}>`)
+        rootTypes.push(`  ${member.name}(${parameters}): ${memberType} | Promise<${memberType}>`)
+        resolveResults.push(`  ${member.name}: ${memberType}`)
       }
     }
   }
   const referenceTypeImports = getReferenceTypeImports(referenceTypes, graphqlRootTypePath)
   return referenceTypeImports + `export interface Root {
-${members.join('\n')}
+${rootTypes.join('\n')}
+}
+
+export interface ResolveResult {
+${resolveResults.join('\n')}
 }
 `
 }
