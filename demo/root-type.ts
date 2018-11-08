@@ -5,3 +5,9 @@ export interface Root {
   user(input: { id: string }): GetResult | Promise<GetResult>
   users(): GetResult | Promise<GetResult>
 }
+
+export interface ResolveResult {
+  create: MutationResult
+  user: GetResult
+  users: GetResult
+}
