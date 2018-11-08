@@ -359,13 +359,13 @@ export interface Mutation {
   create(input: CreateInput): Promise<MutationResult>
 }
 
-interface CreateInput {
+export interface CreateInput {
   member1: string
   member2: number
   member3: CreateInputMember3
 }
 
-interface MutationResult {
+export interface MutationResult {
   result: boolean
 }
 
@@ -374,7 +374,7 @@ export abstract class Query {
   abstract users(): GetResult
 }
 
-interface GetResult {
+export interface GetResult {
   result: Result
 }
 
