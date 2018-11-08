@@ -49,10 +49,12 @@ async function executeCommandLine() {
     }
   }
 
-  function run() {
-    const program = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext })
+  let program: ts.Program | undefined
 
-    const sourceFiles = filePaths.map(filePath => program.getSourceFile(filePath)!)
+  function run() {
+    program = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext }, undefined, program)
+
+    const sourceFiles = filePaths.map(filePath => program!.getSourceFile(filePath)!)
 
     const generator = new Generator(sourceFiles)
 
