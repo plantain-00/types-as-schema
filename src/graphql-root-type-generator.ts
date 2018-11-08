@@ -1,10 +1,10 @@
 import * as path from 'path'
 
-import { TypeDeclaration, Type, MemberParameter, ReferenceType } from './utils'
+import { TypeDeclaration, Type, MemberParameter, ReferenceType, EnumType } from './utils'
 
 export function generateGraphqlRootType(declarations: TypeDeclaration[], graphqlRootTypePath: string) {
   const members: string[] = []
-  const referenceTypes: ReferenceType[] = []
+  const referenceTypes: (ReferenceType | EnumType)[] = []
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object'
       && (typeDeclaration.name === 'Query' || typeDeclaration.name === 'Mutation')) {
@@ -22,13 +22,16 @@ ${members.join('\n')}
 `
 }
 
-function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
+function getReferenceTypeImports(referenceTypes: (ReferenceType | EnumType)[], graphqlRootTypePath: string) {
   const map: { [name: string]: string[] } = {}
   for (const referenceType of referenceTypes) {
-    if (!map[referenceType.position.file]) {
-      map[referenceType.position.file] = []
+    const file = referenceType.position.file
+    if (!map[file]) {
+      map[file] = []
     }
-    map[referenceType.position.file].push(referenceType.name)
+    if (map[file].every((n) => n !== referenceType.name)) {
+      map[file].push(referenceType.name)
+    }
   }
   const dirname = path.dirname(graphqlRootTypePath)
   const imports: string[] = []
@@ -43,7 +46,7 @@ function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTyp
   return imports.join('\n') + '\n\n'
 }
 
-function getMemberParameters(referenceTypes: ReferenceType[], parameters?: MemberParameter[]) {
+function getMemberParameters(referenceTypes: (ReferenceType | EnumType)[], parameters?: MemberParameter[]) {
   if (parameters && parameters.length > 0) {
     const parameterString = parameters.map((parameter) => `${parameter.name}${parameter.optional ? '?' : ''}: ${getMemberType(parameter.type, referenceTypes)}`).join(', ')
     return `input: { ${parameterString} }`
@@ -51,17 +54,16 @@ function getMemberParameters(referenceTypes: ReferenceType[], parameters?: Membe
   return ''
 }
 
-function getMemberType(memberType: Type, referenceTypes: ReferenceType[]): string {
+function getMemberType(memberType: Type, referenceTypes: (ReferenceType | EnumType)[]): string {
   if (memberType.kind === 'array') {
     return `Array<${getMemberType(memberType.type, referenceTypes)}>`
   }
   if (memberType.kind === 'enum') {
+    referenceTypes.push(memberType)
     return memberType.name
   }
   if (memberType.kind === 'reference') {
-    if (referenceTypes.every((r) => r.name !== memberType.name)) {
-      referenceTypes.push(memberType)
-    }
+    referenceTypes.push(memberType)
     return memberType.name
   }
   if (memberType.kind === 'map') {
