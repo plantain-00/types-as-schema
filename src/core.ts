@@ -8,6 +8,7 @@ import { generateOcamlTypes } from './ocaml-type-generator'
 import { generateRustTypes } from './rust-type-generator'
 import { generateMongooseSchema } from './mongoose-schema-generator'
 import { TypeDeclaration } from './utils'
+import { generateGraphqlRootType } from './graphql-root-type-generator'
 
 export class Generator {
   declarations: TypeDeclaration[] = []
@@ -27,6 +28,10 @@ export class Generator {
 
   generateGraphqlSchema() {
     return generateGraphqlSchema(this.declarations)
+  }
+
+  generateGraphqlRootType(graphqlRootTypePath: string) {
+    return generateGraphqlRootType(this.declarations, graphqlRootTypePath)
   }
 
   generateReasonTypes() {

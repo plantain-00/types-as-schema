@@ -24,6 +24,7 @@ async function executeCommandLine() {
   const {
     protobufPath,
     graphqlPath,
+    graphqlRootTypePath,
     reasonPath,
     ocamlPath,
     rustPath,
@@ -77,6 +78,11 @@ async function executeCommandLine() {
       fs.writeFileSync(graphqlPath, graphqlContent)
     }
 
+    if (graphqlRootTypePath) {
+      const graphqlRootPathContent = generator.generateGraphqlRootType(graphqlRootTypePath)
+      fs.writeFileSync(graphqlRootTypePath, graphqlRootPathContent)
+    }
+
     if (reasonPath) {
       const reasonContent = generator.generateReasonTypes()
       fs.writeFileSync(reasonPath, reasonContent)
@@ -125,6 +131,7 @@ function parseParameter(argv: minimist.ParsedArgs, name: string) {
 function parseParameters(argv: minimist.ParsedArgs) {
   const protobufPath = parseParameter(argv, 'protobuf')
   const graphqlPath = parseParameter(argv, 'graphql')
+  const graphqlRootTypePath = parseParameter(argv, 'graphql-root-type')
   const reasonPath = parseParameter(argv, 'reason')
   const ocamlPath = parseParameter(argv, 'ocaml')
   const rustPath = parseParameter(argv, 'rust')
@@ -143,6 +150,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
   return {
     protobufPath,
     graphqlPath,
+    graphqlRootTypePath,
     reasonPath,
     ocamlPath,
     rustPath,

@@ -20,6 +20,7 @@ export class App extends Vue {
   ocamlTypes = ''
   rustTypes = ''
   mongooseSchema = ''
+  graphqlRootType = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -71,6 +72,9 @@ export class App extends Vue {
 
       this.mongooseSchema = generator.generateMongooseSchema()
       this.options.push('mongoose schema')
+
+      this.graphqlRootType = generator.generateGraphqlRootType('.')
+      this.options.push('graphql root type')
     }
   }
 }

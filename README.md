@@ -35,13 +35,14 @@ Genetate json scheme, protobuf file, graphQL/mongoose schema and reasonml/ocaml/
 
 ## usage
 
-`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --reason demo/types.re --ocaml demo/types.ml --rust demo/types.rs --debug demo/debug.json`
+`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --graphql-root-type demo/root-type.ts --reason demo/types.re --ocaml demo/types.ml --rust demo/types.rs --debug demo/debug.json`
 
 parameters | description
 --- | ---
 `--json` | directory for generated json files
 `--protobuf` | generated protobuf file
 `--graphql` | generated graphql schema file
+`--graphql-root-type` | generated graphql root type
 `--reason` | generated reason types file
 `--ocaml` | generated ocaml types file
 `--rust` | generated rust types file
