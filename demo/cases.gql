@@ -1,3 +1,5 @@
+scalar JSON
+
 enum StringEnum {
   enumMember1
   enumMember2
@@ -91,6 +93,7 @@ type TypeIntersection2 {
 type TypeIntersection {
   typeIntersectionMember1: TypeIntersection1!
   typeIntersectionMember2: TypeIntersection2!
+  typeIntersectionMember3: JSON!
 }
 
 type TypeUnionAndIntersection {
@@ -165,6 +168,7 @@ type DefaultValue {
   booleanMember: Boolean!
   stringMember2: String!
   stringMember3: String!
+  arrayMember: [JSON]!
   numberMember1: Int!
   objectMember2: TypeLiteral!
 }
@@ -225,6 +229,7 @@ type EntryType {
   optionalArrayMember: [String]
   tupleType: [String]!
   defaultType: DefaultValue!
+  anyType: JSON!
   classType: ClassType!
   circular: Circular!
   outerType: OuterType!

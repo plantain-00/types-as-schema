@@ -1,3 +1,5 @@
+scalar JSON
+
 enum RequestProtocolKind {
   searchLogs
   searchSamples
