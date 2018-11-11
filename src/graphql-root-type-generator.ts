@@ -12,7 +12,7 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
       for (const member of typeDeclaration.members) {
         const memberType = getMemberType(member.type, referenceTypes)
         const parameters = getMemberParameters(referenceTypes, member.parameters)
-        rootTypes.push(`  ${member.name}(${parameters}, context: any, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
+        rootTypes.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
         resolveResults.push(`  ${member.name}: ${memberType}`)
       }
     }
@@ -20,7 +20,7 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
   const referenceTypeImports = getReferenceTypeImports(referenceTypes, graphqlRootTypePath)
   return `import { GraphQLResolveInfo } from 'graphql'
 
-` + referenceTypeImports + `export interface Root {
+` + referenceTypeImports + `export interface Root<TContext = any> {
 ${rootTypes.join('\n')}
 }
 
