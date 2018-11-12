@@ -13,7 +13,7 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
         const memberType = getMemberType(member.type, referenceTypes)
         const parameters = getMemberParameters(referenceTypes, member.parameters)
         rootTypes.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
-        resolveResults.push(`  ${member.name}: ${memberType}`)
+        resolveResults.push(`  ${member.name}: ResolveFunctionResult<${memberType}>`)
       }
     }
   }
@@ -22,6 +22,14 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
 
 ` + referenceTypeImports + `export interface Root<TContext = any> {
 ${rootTypes.join('\n')}
+}
+
+type ResolveFunctionResult<T> = {
+  [P in keyof T]: T[P] extends Array<infer U>
+    ? Array<ResolveFunctionResult<U>>
+    : T[P] extends (...args: any[]) => infer R
+      ? R
+      : ResolveFunctionResult<T[P]>
 }
 
 export interface ResolveResult {
