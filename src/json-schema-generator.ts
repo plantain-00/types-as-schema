@@ -23,6 +23,18 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
         type: undefined,
         $ref: `#/definitions/${typeDeclaration.name}`
       }
+    } else if (typeDeclaration.kind === 'enum') {
+      if (typeDeclaration.members.length === 1) {
+        definitions[typeDeclaration.name] = {
+          type: undefined,
+          const: typeDeclaration.members[0]
+        }
+      } else {
+        definitions[typeDeclaration.name] = {
+          type: undefined,
+          enum: typeDeclaration.members.map((m) => m.value)
+        }
+      }
     }
   }
   return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)

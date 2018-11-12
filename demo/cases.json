@@ -829,6 +829,24 @@
       ],
       "additionalProperties": false
     },
+    "StringEnum": {
+      "enum": [
+        "enum member 1",
+        "enum member 2"
+      ]
+    },
+    "NumberEnum": {
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "NumberEnum2": {
+      "enum": [
+        3,
+        4
+      ]
+    },
     "StringType": {
       "type": "object",
       "properties": {
