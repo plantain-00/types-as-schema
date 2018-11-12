@@ -8,8 +8,16 @@ export interface Root<TContext = any> {
   users(input: {}, context: TContext, info: GraphQLResolveInfo): GetResult | Promise<GetResult>
 }
 
+type ResolveFunctionResult<T> = {
+  [P in keyof T]: T[P] extends Array<infer U>
+    ? Array<ResolveFunctionResult<U>>
+    : T[P] extends (...args: any[]) => infer R
+      ? R
+      : ResolveFunctionResult<T[P]>
+}
+
 export interface ResolveResult {
-  create: MutationResult
-  user: GetResult
-  users: GetResult
+  create: ResolveFunctionResult<MutationResult>
+  user: ResolveFunctionResult<GetResult>
+  users: ResolveFunctionResult<GetResult>
 }
