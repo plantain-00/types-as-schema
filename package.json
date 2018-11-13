@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/plantain-00/types-as-schema/issues"
   },
+  "typeCoverage": {
+    "atLeast": 91
+  },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
     "@commitlint/cli": "7.2.1",

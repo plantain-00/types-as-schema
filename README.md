@@ -6,6 +6,7 @@
 [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/github/plantain-00/types-as-schema?branch=master&svg=true)](https://ci.appveyor.com/project/plantain-00/types-as-schema/branch/master)
 [![npm version](https://badge.fury.io/js/types-as-schema.svg)](https://badge.fury.io/js/types-as-schema)
 [![Downloads](https://img.shields.io/npm/dm/types-as-schema.svg)](https://www.npmjs.com/package/types-as-schema)
+[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fplantain-00%2Ftypes-as-schema%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/types-as-schema)
 
 Genetate json scheme, protobuf file, graphQL/mongoose schema and reasonml/ocaml/rust types from typescript types.
 
