@@ -233,6 +233,7 @@ type EntryType {
   classType: ClassType!
   circular: Circular!
   outerType: OuterType!
+  typeAlias: TypeAlias!
 }
 
 type Mutation {
@@ -265,4 +266,12 @@ type Result {
 
 input CreateInputMember3 {
   member1: String!
+}
+
+type TypeAlias {
+  result: Result2!
+}
+
+type Result3 {
+  result3: String!
 }

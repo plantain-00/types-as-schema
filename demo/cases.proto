@@ -223,6 +223,7 @@ message EntryType {
     ClassType classType = 23;
     Circular circular = 24;
     OuterType outerType = 25;
+    TypeAlias typeAlias = 26;
 }
 
 message Mutation {
@@ -255,4 +256,12 @@ message Result {
 
 message CreateInputMember3 {
     string member1 = 1;
+}
+
+message TypeAlias {
+    Result2 result = 1;
+}
+
+message Result3 {
+    string result3 = 1;
 }

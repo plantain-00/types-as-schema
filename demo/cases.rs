@@ -297,6 +297,7 @@ pub struct EntryType {
   #[serde(rename = "classType")] pub class_type: ClassType,
   pub circular: Circular,
   #[serde(rename = "outerType")] pub outer_type: OuterType,
+  #[serde(rename = "typeAlias")] pub type_alias: TypeAlias,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -336,4 +337,16 @@ pub struct Result {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateInputMember3 {
   #[serde(rename = "member1")] pub member_1: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TypeAlias {
+  pub result: Result2,
+}
+
+type Result2 = Result3;
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Result3 {
+  #[serde(rename = "result3")] pub result_3: String,
 }

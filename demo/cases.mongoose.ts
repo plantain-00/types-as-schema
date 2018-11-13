@@ -640,6 +640,10 @@ export const entryTypeSchema = {
     type: Schema.Types.Mixed,
     required: true
   },
+  typeAlias: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
 }
 
 export const mutationSchema = {
@@ -702,6 +706,20 @@ export const resultSchema = {
 
 export const createInputMember3Schema = {
   member1: {
+    type: Schema.Types.String,
+    required: true
+  },
+}
+
+export const typeAliasSchema = {
+  result: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
+export const result3Schema = {
+  result3: {
     type: Schema.Types.String,
     required: true
   },

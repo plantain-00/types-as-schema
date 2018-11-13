@@ -216,6 +216,7 @@ type entryType = {
   classType: classType;
   circular: circular;
   outerType: outerType;
+  typeAlias: typeAlias;
 }
 
 type mutation = {
@@ -248,4 +249,12 @@ type result = {
 
 type createInputMember3 = {
   member1: string;
+}
+
+type typeAlias = {
+  result: result2;
+}
+
+type result3 = {
+  result3: string;
 }

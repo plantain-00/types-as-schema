@@ -360,6 +360,7 @@ export type EntryType = {
   classType: ClassType;
   circular: Circular;
   outerType: OuterType;
+  typeAlias: TypeAlias;
 }
 
 export interface Mutation {
@@ -393,6 +394,16 @@ interface Result {
 
 interface CreateInputMember3 {
   member1: string
+}
+
+export interface TypeAlias {
+  result: Result2
+}
+
+type Result2 = Result3
+
+interface Result3 {
+  result3: string
 }
 `
 // @ts-ignore

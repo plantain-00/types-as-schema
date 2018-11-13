@@ -122,7 +122,7 @@ export class Parser {
     sourceFile: ts.SourceFile
   ) {
     // if the node is pre-handled, then it should be in `declarations` already, so don't continue
-    if (this.declarations.some(m => m.name === declaration.name!.text)) {
+    if (this.declarations.some(m => m.kind === 'enum' && m.name === declaration.name!.text)) {
       return
     }
 
