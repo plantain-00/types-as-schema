@@ -93,6 +93,9 @@
         },
         "outerType": {
           "$ref": "#/definitions/OuterType"
+        },
+        "typeAlias": {
+          "$ref": "#/definitions/TypeAlias"
         }
       },
       "required": [
@@ -118,7 +121,8 @@
         "anyType",
         "classType",
         "circular",
-        "outerType"
+        "outerType",
+        "typeAlias"
       ],
       "additionalProperties": true
     },
@@ -1079,6 +1083,33 @@
       },
       "required": [
         "outerType"
+      ],
+      "additionalProperties": false
+    },
+    "TypeAlias": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/Result2"
+        }
+      },
+      "required": [
+        "result"
+      ],
+      "additionalProperties": false
+    },
+    "Result2": {
+      "$ref": "#/definitions/Result3"
+    },
+    "Result3": {
+      "type": "object",
+      "properties": {
+        "result3": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "result3"
       ],
       "additionalProperties": false
     }
