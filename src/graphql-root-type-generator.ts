@@ -12,24 +12,32 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
       for (const member of typeDeclaration.members) {
         const memberType = getMemberType(member.type, referenceTypes)
         const parameters = getMemberParameters(referenceTypes, member.parameters)
-        rootTypes.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
-        resolveResults.push(`  ${member.name}: ResolveFunctionResult<${memberType}>`)
+        rootTypes.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<${memberType}> | Promise<DeepPromisifyReturnType<${memberType}>>`)
+        resolveResults.push(`  ${member.name}: DeepReturnType<${memberType}>`)
       }
     }
   }
   const referenceTypeImports = getReferenceTypeImports(referenceTypes, graphqlRootTypePath)
   return `import { GraphQLResolveInfo } from 'graphql'
 
-` + referenceTypeImports + `export interface Root<TContext = any> {
+` + referenceTypeImports + `type DeepPromisifyReturnType<T> = {
+  [P in keyof T]: T[P] extends Array<infer U>
+    ? Array<DeepPromisifyReturnType<U>>
+    : T[P] extends (...args: infer P) => infer R
+      ? (...args: P) => R | Promise<R>
+      : DeepPromisifyReturnType<T[P]>
+}
+
+export interface Root<TContext = any> {
 ${rootTypes.join('\n')}
 }
 
-type ResolveFunctionResult<T> = {
+type DeepReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
-    ? Array<ResolveFunctionResult<U>>
+    ? Array<DeepReturnType<U>>
     : T[P] extends (...args: any[]) => infer R
       ? R
-      : ResolveFunctionResult<T[P]>
+      : DeepReturnType<T[P]>
 }
 
 export interface ResolveResult {
