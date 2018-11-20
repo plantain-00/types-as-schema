@@ -20,7 +20,7 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
   const referenceTypeImports = getReferenceTypeImports(referenceTypes, graphqlRootTypePath)
   return `import { GraphQLResolveInfo } from 'graphql'
 
-` + referenceTypeImports + `type DeepPromisifyReturnType<T> = {
+` + referenceTypeImports + `export type DeepPromisifyReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepPromisifyReturnType<U>>
     : T[P] extends (...args: infer P) => infer R
@@ -32,7 +32,7 @@ export interface Root<TContext = any> {
 ${rootTypes.join('\n')}
 }
 
-type DeepReturnType<T> = {
+export type DeepReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepReturnType<U>>
     : T[P] extends (...args: any[]) => infer R

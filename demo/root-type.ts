@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql'
 
 import { MutationResult, CreateInput, GetResult } from './cases'
 
-type DeepPromisifyReturnType<T> = {
+export type DeepPromisifyReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepPromisifyReturnType<U>>
     : T[P] extends (...args: infer P) => infer R
@@ -16,7 +16,7 @@ export interface Root<TContext = any> {
   users(input: {}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult> | Promise<DeepPromisifyReturnType<GetResult>>
 }
 
-type DeepReturnType<T> = {
+export type DeepReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepReturnType<U>>
     : T[P] extends (...args: any[]) => infer R
