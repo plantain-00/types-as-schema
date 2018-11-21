@@ -20,7 +20,9 @@ export type DeepReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepReturnType<U>>
     : T[P] extends (...args: any[]) => infer R
-      ? R
+      ? R extends Promise<infer U>
+        ? U
+        : R
       : DeepReturnType<T[P]>
 }
 
