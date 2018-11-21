@@ -1,33 +1,59 @@
 import * as path from 'path'
 
-import { TypeDeclaration, Type, MemberParameter, ReferenceType, EnumType } from './utils'
+import { TypeDeclaration, Type, MemberParameter, EnumType, StringDeclaration, EnumDeclaration } from './utils'
 
 // tslint:disable-next-line:cognitive-complexity
 export function generateGraphqlRootType(declarations: TypeDeclaration[], graphqlRootTypePath: string) {
   const rootTypes: string[] = []
+  const nonRootTypes: string[] = []
   const resolveResults: string[] = []
   const resolvers: string[] = []
-  const referenceTypes: (ReferenceType | EnumType)[] = []
+  const referenceTypes: ReferenceType[] = []
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object') {
       const isQueryOrMutation = typeDeclaration.name === 'Query' || typeDeclaration.name === 'Mutation'
       if (isQueryOrMutation) {
         for (const member of typeDeclaration.members) {
-          const memberType = getMemberType(member.type, referenceTypes)
-          const parameters = getMemberParameters(referenceTypes, member.parameters)
+          const memberType = getMemberType(member.type, referenceTypes, declarations)
+          const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
           rootTypes.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<${memberType}> | Promise<DeepPromisifyReturnType<${memberType}>>`)
           resolveResults.push(`  ${member.name}: DeepReturnType<${memberType}>`)
         }
+      } else {
+        const nonRootTypeMembers: string[] = []
+        for (const member of typeDeclaration.members) {
+          const memberType = getMemberType(member.type, referenceTypes, declarations)
+          if (member.parameters) {
+            const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
+            nonRootTypeMembers.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
+          } else {
+            nonRootTypeMembers.push(`  ${member.name}: ${memberType}`)
+          }
+        }
+        nonRootTypes.push(`export interface ${typeDeclaration.name}<TContext = any> {
+${nonRootTypeMembers.join('\n')}
+}`)
       }
       const resolverFields: string[] = []
       const optionalToken = isQueryOrMutation ? '' : '?'
       for (const member of typeDeclaration.members) {
-        const parameters = getMemberParameters(referenceTypes, member.parameters)
+        const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
         resolverFields.push(`    ${member.name}${optionalToken}(parent: any, ${parameters}, context: TContext, info: GraphQLResolveInfo): any,`)
       }
       resolvers.push(`  ${typeDeclaration.name}${optionalToken}: {
 ${resolverFields.join('\n')}
   },`)
+    } else if (typeDeclaration.kind === 'reference') {
+      nonRootTypes.push(`export type ${typeDeclaration.newName}<TContext = any> = ${typeDeclaration.name}<TContext>`)
+    } else if (typeDeclaration.kind === 'union') {
+      const memberType = getMemberType(typeDeclaration, referenceTypes, declarations)
+      nonRootTypes.push(`export type ${typeDeclaration.name}<TContext = any> = ${memberType}`)
+    } else if (typeDeclaration.kind === 'string') {
+      if (typeDeclaration.enums && !isNativeType(typeDeclaration.name)) {
+        referenceTypes.push(typeDeclaration)
+      }
+    } else if (typeDeclaration.kind === 'enum') {
+      referenceTypes.push(typeDeclaration)
     }
   }
   const referenceTypeImports = getReferenceTypeImports(referenceTypes, graphqlRootTypePath)
@@ -39,20 +65,14 @@ ${resolverFields.join('\n')}
 
 import { GraphQLResolveInfo } from 'graphql'
 
-` + referenceTypeImports + `export type DeepPromisifyReturnType<T> = {
+${referenceTypeImports}
+
+export type DeepPromisifyReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepPromisifyReturnType<U>>
     : T[P] extends (...args: infer P) => infer R
       ? (...args: P) => R | Promise<R>
       : DeepPromisifyReturnType<T[P]>
-}
-
-export interface Root<TContext = any> {
-${rootTypes.join('\n')}
-}
-
-export interface ApolloResolvers<TContext> {
-${resolvers.join('\n')}
 }
 
 export type DeepReturnType<T> = {
@@ -63,7 +83,17 @@ export type DeepReturnType<T> = {
       : DeepReturnType<T[P]>
 }
 
-export interface ResolveResult {
+export interface Root<TContext = any> {
+${rootTypes.join('\n')}
+}
+
+${nonRootTypes.join('\n\n')}
+
+export interface ApolloResolvers<TContext = any> {
+${resolvers.join('\n')}
+}
+
+export interface ResolveResult<TContext = any> {
 ${resolveResults.join('\n')}
 }
 
@@ -71,7 +101,9 @@ ${resolveResults.join('\n')}
 `
 }
 
-function getReferenceTypeImports(referenceTypes: (ReferenceType | EnumType)[], graphqlRootTypePath: string) {
+type ReferenceType = EnumType | StringDeclaration | EnumDeclaration
+
+function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
   const map: { [name: string]: string[] } = {}
   for (const referenceType of referenceTypes) {
     const file = referenceType.position.file
@@ -92,36 +124,49 @@ function getReferenceTypeImports(referenceTypes: (ReferenceType | EnumType)[], g
     relativePath = relativePath.substring(0, relativePath.length - path.extname(relativePath).length)
     imports.push(`import { ${map[file].join(', ')} } from '${relativePath}'`)
   }
-  return imports.join('\n') + '\n\n'
+  return imports.join('\n')
 }
 
-function getMemberParameters(referenceTypes: (ReferenceType | EnumType)[], parameters?: MemberParameter[]) {
+function getMemberParameters(referenceTypes: ReferenceType[], declarations: TypeDeclaration[], parameters?: MemberParameter[]) {
   if (parameters && parameters.length > 0) {
-    const parameterString = parameters.map((parameter) => `${parameter.name}${parameter.optional ? '?' : ''}: ${getMemberType(parameter.type, referenceTypes)}`).join(', ')
+    const parameterString = parameters.map((parameter) => {
+      const optionalToken = parameter.optional ? '?' : ''
+      const parameterType = getMemberType(parameter.type, referenceTypes, declarations)
+      return `${parameter.name}${optionalToken}: ${parameterType}`
+    }).join(', ')
     return `input: { ${parameterString} }`
   }
   return 'input: {}'
 }
 
-function getMemberType(memberType: Type, referenceTypes: (ReferenceType | EnumType)[]): string {
+function isNativeType(typeName: string) {
+  return typeName === 'string' || typeName === 'number' || typeName === 'boolean'
+}
+
+function getMemberType(memberType: Type, referenceTypes: ReferenceType[], declarations: TypeDeclaration[]): string {
   if (memberType.kind === 'array') {
-    return `Array<${getMemberType(memberType.type, referenceTypes)}>`
+    return `Array<${getMemberType(memberType.type, referenceTypes, declarations)}>`
   }
   if (memberType.kind === 'enum') {
-    referenceTypes.push(memberType)
+    if (!isNativeType(memberType.name)) {
+      referenceTypes.push(memberType)
+    }
     return memberType.name
   }
   if (memberType.kind === 'reference') {
-    referenceTypes.push(memberType)
-    return memberType.name
+    const declaration = declarations.find((d) => d.name === memberType.name)
+    if (declaration && (declaration.kind === 'enum' || (declaration.kind === 'string' && declaration.enums))) {
+      return memberType.name
+    }
+    return memberType.name + '<TContext>'
   }
   if (memberType.kind === 'map') {
-    const mapKeyType = getMemberType(memberType.key, referenceTypes)
-    const mapValueType = getMemberType(memberType.value, referenceTypes)
+    const mapKeyType = getMemberType(memberType.key, referenceTypes, declarations)
+    const mapValueType = getMemberType(memberType.value, referenceTypes, declarations)
     return `{ [name: ${mapKeyType}]: ${mapValueType} }`
   }
   if (memberType.kind === 'union') {
-    return memberType.members.map((member) => getMemberType(member, referenceTypes)).join(' | ')
+    return memberType.members.map((member) => getMemberType(member, referenceTypes, declarations)).join(' | ')
   }
   if (memberType.kind === undefined) {
     return 'any'

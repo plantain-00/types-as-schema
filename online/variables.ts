@@ -51,7 +51,7 @@ type TypeUnion4 =
   }
 type TypeUnion5 = TypeLiteral | Interface
 type TypeUnion8 = 'foo' | 'bar' | null | false
-type TypeUnion9 = 'foo' | 'bar'
+export type TypeUnion9 = 'foo' | 'bar'
 type TypeUnion = {
   typeUnionMember1: TypeUnion1;
   typeUnionMember2: TypeUnion2;
