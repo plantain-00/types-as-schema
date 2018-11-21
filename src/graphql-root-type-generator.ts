@@ -23,11 +23,12 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
         const nonRootTypeMembers: string[] = []
         for (const member of typeDeclaration.members) {
           const memberType = getMemberType(member.type, referenceTypes, declarations)
+          const optionalToken = member.optional ? '?' : ''
           if (member.parameters) {
             const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
-            nonRootTypeMembers.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
+            nonRootTypeMembers.push(`  ${member.name}${optionalToken}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
           } else {
-            nonRootTypeMembers.push(`  ${member.name}: ${memberType}`)
+            nonRootTypeMembers.push(`  ${member.name}${optionalToken}: ${memberType}`)
           }
         }
         nonRootTypes.push(`export interface ${typeDeclaration.name}<TContext = any> {
