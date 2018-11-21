@@ -23,10 +23,14 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], graphql
         const nonRootTypeMembers: string[] = []
         for (const member of typeDeclaration.members) {
           const memberType = getMemberType(member.type, referenceTypes, declarations)
-          const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
-          nonRootTypeMembers.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
+          if (member.parameters) {
+            const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
+            nonRootTypeMembers.push(`  ${member.name}(${parameters}, context: TContext, info: GraphQLResolveInfo): ${memberType} | Promise<${memberType}>`)
+          } else {
+            nonRootTypeMembers.push(`  ${member.name}: ${memberType}`)
+          }
         }
-        nonRootTypes.push(`export interface ${typeDeclaration.name}<TContext> {
+        nonRootTypes.push(`export interface ${typeDeclaration.name}<TContext = any> {
 ${nonRootTypeMembers.join('\n')}
 }`)
       }
@@ -40,10 +44,10 @@ ${nonRootTypeMembers.join('\n')}
 ${resolverFields.join('\n')}
   },`)
     } else if (typeDeclaration.kind === 'reference') {
-      nonRootTypes.push(`export type ${typeDeclaration.newName}<TContext> = ${typeDeclaration.name}<TContext>`)
+      nonRootTypes.push(`export type ${typeDeclaration.newName}<TContext = any> = ${typeDeclaration.name}<TContext>`)
     } else if (typeDeclaration.kind === 'union') {
       const memberType = getMemberType(typeDeclaration, referenceTypes, declarations)
-      nonRootTypes.push(`export type ${typeDeclaration.name}<TContext> = ${memberType}`)
+      nonRootTypes.push(`export type ${typeDeclaration.name}<TContext = any> = ${memberType}`)
     } else if (typeDeclaration.kind === 'string') {
       if (typeDeclaration.enums && !isNativeType(typeDeclaration.name)) {
         referenceTypes.push(typeDeclaration)
@@ -99,7 +103,7 @@ ${resolveResults.join('\n')}
 
 type ReferenceType = EnumType | StringDeclaration | EnumDeclaration
 
-export function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
+function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
   const map: { [name: string]: string[] } = {}
   for (const referenceType of referenceTypes) {
     const file = referenceType.position.file
