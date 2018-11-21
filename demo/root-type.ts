@@ -6,7 +6,7 @@
 
 import { GraphQLResolveInfo } from 'graphql'
 
-import { MutationResult, CreateInput, GetResult } from './cases'
+import { StringEnum, NumberEnum, NumberEnum2, TypeUnion9 } from './cases'
 
 export type DeepPromisifyReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
@@ -16,13 +16,291 @@ export type DeepPromisifyReturnType<T> = {
       : DeepPromisifyReturnType<T[P]>
 }
 
-export interface Root<TContext = any> {
-  create(input: { input: CreateInput }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<MutationResult> | Promise<DeepPromisifyReturnType<MutationResult>>
-  user(input: { id: string }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult> | Promise<DeepPromisifyReturnType<GetResult>>
-  users(input: {}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult> | Promise<DeepPromisifyReturnType<GetResult>>
+export type DeepReturnType<T> = {
+  [P in keyof T]: T[P] extends Array<infer U>
+    ? Array<DeepReturnType<U>>
+    : T[P] extends (...args: any[]) => infer R
+      ? R
+      : DeepReturnType<T[P]>
 }
 
-export interface ApolloResolvers<TContext> {
+export interface Root<TContext = any> {
+  create(input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<MutationResult<TContext>> | Promise<DeepPromisifyReturnType<MutationResult<TContext>>>
+  user(input: { id: string }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult<TContext>> | Promise<DeepPromisifyReturnType<GetResult<TContext>>>
+  users(input: {}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult<TContext>> | Promise<DeepPromisifyReturnType<GetResult<TContext>>>
+}
+
+export interface TypeLiteral<TContext> {
+  typeLiteralMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeLiteralMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface Interface<TContext> {
+  interfaceMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  interfaceMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeUnion1<TContext> {
+  typeLiteralMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeLiteralMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeUnion2<TContext> {
+  kind(input: {}, context: TContext, info: GraphQLResolveInfo): StringEnum | Promise<StringEnum>
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeUnion3<TContext> {
+  kind(input: {}, context: TContext, info: GraphQLResolveInfo): NumberEnum | Promise<NumberEnum>
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeUnion4<TContext> {
+  kind(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export type TypeUnion5<TContext> = TypeLiteral<TContext> | Interface<TContext>
+
+export type TypeUnion8<TContext> = string | string | null | boolean
+
+export interface TypeUnion<TContext> {
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion1<TContext> | Promise<TypeUnion1<TContext>>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion2<TContext> | Promise<TypeUnion2<TContext>>
+  typeUnionMember3(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion3<TContext> | Promise<TypeUnion3<TContext>>
+  typeUnionMember4(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion4<TContext> | Promise<TypeUnion4<TContext>>
+  typeUnionMember5(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion5<TContext> | Promise<TypeUnion5<TContext>>
+  typeUnionMember6(input: {}, context: TContext, info: GraphQLResolveInfo): string | null | boolean | Promise<string | null | boolean>
+  typeUnionMember7(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember8(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion8<TContext> | Promise<TypeUnion8<TContext>>
+  typeUnionMember9(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion9 | Promise<TypeUnion9>
+}
+
+export interface InterfaceExtends<TContext> {
+  interfaceExtendsMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  interfaceExtendsMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  interfaceMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  interfaceMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeIntersection1<TContext> {
+  interfaceMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  interfaceMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeIntersectionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeIntersectionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeIntersection2<TContext> {
+  typeIntersectionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeIntersectionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeIntersectionMember3(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  typeIntersectionMember4(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeIntersection<TContext> {
+  typeIntersectionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): TypeIntersection1<TContext> | Promise<TypeIntersection1<TContext>>
+  typeIntersectionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): TypeIntersection2<TContext> | Promise<TypeIntersection2<TContext>>
+  typeIntersectionMember3(input: {}, context: TContext, info: GraphQLResolveInfo): any | Promise<any>
+}
+
+export interface TypeUnionAndIntersection<TContext> {
+  typeIntersectionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  kind(input: {}, context: TContext, info: GraphQLResolveInfo): NumberEnum | Promise<NumberEnum>
+  typeUnionMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  typeUnionMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TaggedField<TContext> {
+  taggedFieldMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  taggedFieldMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface Enum<TContext> {
+  stringEnum(input: {}, context: TContext, info: GraphQLResolveInfo): StringEnum | Promise<StringEnum>
+  numberEnum(input: {}, context: TContext, info: GraphQLResolveInfo): NumberEnum | Promise<NumberEnum>
+  numberEnum2(input: {}, context: TContext, info: GraphQLResolveInfo): NumberEnum2 | Promise<NumberEnum2>
+  stringEnum2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface NumberType<TContext> {
+  numberMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  integerMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  uint32Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  int32Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  sint32Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  fixed32Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  sfixed32Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  uint64Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  int64Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  sint64Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  fixed64Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  sfixed64Member(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  floatMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  doubleMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  titleMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+}
+
+export interface StringType<TContext> {
+  stringMember(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface ArrayType<TContext> {
+  arrayType1(input: {}, context: TContext, info: GraphQLResolveInfo): Array<string> | Promise<Array<string>>
+  arrayType2(input: {}, context: TContext, info: GraphQLResolveInfo): Array<TypeLiteral<TContext>> | Promise<Array<TypeLiteral<TContext>>>
+  arrayType3(input: {}, context: TContext, info: GraphQLResolveInfo): Array<object> | Promise<Array<object>>
+  arrayType4(input: {}, context: TContext, info: GraphQLResolveInfo): Array<number> | Promise<Array<number>>
+  arrayType5(input: {}, context: TContext, info: GraphQLResolveInfo): Array<object> | Promise<Array<object>>
+  arrayType6(input: {}, context: TContext, info: GraphQLResolveInfo): Array<object> | Promise<Array<object>>
+  arrayType7(input: {}, context: TContext, info: GraphQLResolveInfo): Array<object> | Promise<Array<object>>
+  arrayType8(input: {}, context: TContext, info: GraphQLResolveInfo): Array<object> | Promise<Array<object>>
+}
+
+export interface MapType7<TContext> {
+  foo(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface MapType8<TContext> {
+
+}
+
+export interface MapType<TContext> {
+  mapType(input: {}, context: TContext, info: GraphQLResolveInfo): { [name: string]: number } | Promise<{ [name: string]: number }>
+  mapType2(input: {}, context: TContext, info: GraphQLResolveInfo): { [name: string]: TypeLiteral<TContext> } | Promise<{ [name: string]: TypeLiteral<TContext> }>
+  mapType3(input: {}, context: TContext, info: GraphQLResolveInfo): { [name: string]: object } | Promise<{ [name: string]: object }>
+  mapType4(input: {}, context: TContext, info: GraphQLResolveInfo): { [name: string]: number } | Promise<{ [name: string]: number }>
+  mapType5(input: {}, context: TContext, info: GraphQLResolveInfo): { [name: string]: any } | Promise<{ [name: string]: any }>
+  mapType6(input: {}, context: TContext, info: GraphQLResolveInfo): object | Promise<object>
+  mapType7(input: {}, context: TContext, info: GraphQLResolveInfo): MapType7<TContext> | Promise<MapType7<TContext>>
+  mapType8(input: {}, context: TContext, info: GraphQLResolveInfo): MapType8<TContext> | Promise<MapType8<TContext>>
+}
+
+export interface Parameter<TContext> {
+  member1(input: { name: string, age: number }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  member2(input: { name?: string }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface DefaultValue<TContext> {
+  stringMember(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  numberMember(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  booleanMember(input: {}, context: TContext, info: GraphQLResolveInfo): boolean | Promise<boolean>
+  stringMember2(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  stringMember3(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  arrayMember(input: {}, context: TContext, info: GraphQLResolveInfo): Array<any> | Promise<Array<any>>
+  objectMember(input: {}, context: TContext, info: GraphQLResolveInfo): object | Promise<object>
+  numberMember1(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  objectMember2(input: {}, context: TContext, info: GraphQLResolveInfo): TypeLiteral<TContext> | Promise<TypeLiteral<TContext>>
+}
+
+export type TypeReferenceMember2<TContext> = TypeLiteral<TContext>
+
+export interface ReferenceType<TContext> {
+  typeReferenceMember1(input: {}, context: TContext, info: GraphQLResolveInfo): TypeLiteral<TContext> | Promise<TypeLiteral<TContext>>
+  typeReferenceMember2(input: {}, context: TContext, info: GraphQLResolveInfo): TypeReferenceMember2<TContext> | Promise<TypeReferenceMember2<TContext>>
+}
+
+export interface ClassType1<TContext> {
+  classMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  classMember2(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+}
+
+export interface ClassType2<TContext> {
+  classMember3(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  classMember4(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  classMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  classMember2(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+}
+
+export interface ClassType3<TContext> {
+  classMember1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  classMember2(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  classMember3(input: {}, context: TContext, info: GraphQLResolveInfo): boolean | Promise<boolean>
+  classMember4(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  classMember5(input: {}, context: TContext, info: GraphQLResolveInfo): Array<string> | Promise<Array<string>>
+  classMember6(input: {}, context: TContext, info: GraphQLResolveInfo): object | Promise<object>
+}
+
+export interface ClassType<TContext> {
+  classType1(input: {}, context: TContext, info: GraphQLResolveInfo): ClassType1<TContext> | Promise<ClassType1<TContext>>
+  classType2(input: {}, context: TContext, info: GraphQLResolveInfo): ClassType2<TContext> | Promise<ClassType2<TContext>>
+  classType3(input: {}, context: TContext, info: GraphQLResolveInfo): ClassType3<TContext> | Promise<ClassType3<TContext>>
+}
+
+export interface Circular<TContext> {
+  children(input: {}, context: TContext, info: GraphQLResolveInfo): Array<Circular<TContext>> | Promise<Array<Circular<TContext>>>
+}
+
+export interface EntryType<TContext> {
+  optionalMember(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  booleanMember(input: {}, context: TContext, info: GraphQLResolveInfo): boolean | Promise<boolean>
+  stringMember(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  numberType(input: {}, context: TContext, info: GraphQLResolveInfo): NumberType<TContext> | Promise<NumberType<TContext>>
+  arrayType(input: {}, context: TContext, info: GraphQLResolveInfo): ArrayType<TContext> | Promise<ArrayType<TContext>>
+  typeLiteral(input: {}, context: TContext, info: GraphQLResolveInfo): object | Promise<object>
+  referenceType(input: {}, context: TContext, info: GraphQLResolveInfo): ReferenceType<TContext> | Promise<ReferenceType<TContext>>
+  interfaceType(input: {}, context: TContext, info: GraphQLResolveInfo): Interface<TContext> | Promise<Interface<TContext>>
+  typeUnion(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnion<TContext> | Promise<TypeUnion<TContext>>
+  interfaceExtends(input: {}, context: TContext, info: GraphQLResolveInfo): InterfaceExtends<TContext> | Promise<InterfaceExtends<TContext>>
+  typeIntersection(input: {}, context: TContext, info: GraphQLResolveInfo): TypeIntersection<TContext> | Promise<TypeIntersection<TContext>>
+  typeUnionAndIntersection(input: {}, context: TContext, info: GraphQLResolveInfo): TypeUnionAndIntersection<TContext> | Promise<TypeUnionAndIntersection<TContext>>
+  mapType(input: {}, context: TContext, info: GraphQLResolveInfo): MapType<TContext> | Promise<MapType<TContext>>
+  taggedField(input: {}, context: TContext, info: GraphQLResolveInfo): TaggedField<TContext> | Promise<TaggedField<TContext>>
+  enum(input: {}, context: TContext, info: GraphQLResolveInfo): Enum<TContext> | Promise<Enum<TContext>>
+  stringNumber(input: {}, context: TContext, info: GraphQLResolveInfo): StringType<TContext> | Promise<StringType<TContext>>
+  id(input: {}, context: TContext, info: GraphQLResolveInfo): ID<TContext> | Promise<ID<TContext>>
+  parameter(input: {}, context: TContext, info: GraphQLResolveInfo): Parameter<TContext> | Promise<Parameter<TContext>>
+  optionalArrayMember(input: {}, context: TContext, info: GraphQLResolveInfo): Array<string> | Promise<Array<string>>
+  tupleType(input: {}, context: TContext, info: GraphQLResolveInfo): Array<string> | Promise<Array<string>>
+  defaultType(input: {}, context: TContext, info: GraphQLResolveInfo): DefaultValue<TContext> | Promise<DefaultValue<TContext>>
+  anyType(input: {}, context: TContext, info: GraphQLResolveInfo): any | Promise<any>
+  classType(input: {}, context: TContext, info: GraphQLResolveInfo): ClassType<TContext> | Promise<ClassType<TContext>>
+  circular(input: {}, context: TContext, info: GraphQLResolveInfo): Circular<TContext> | Promise<Circular<TContext>>
+  outerType(input: {}, context: TContext, info: GraphQLResolveInfo): OuterType<TContext> | Promise<OuterType<TContext>>
+  typeAlias(input: {}, context: TContext, info: GraphQLResolveInfo): TypeAlias<TContext> | Promise<TypeAlias<TContext>>
+}
+
+export interface CreateInput<TContext> {
+  member1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  member2(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  member3(input: {}, context: TContext, info: GraphQLResolveInfo): CreateInputMember3<TContext> | Promise<CreateInputMember3<TContext>>
+}
+
+export interface MutationResult<TContext> {
+  result(input: {}, context: TContext, info: GraphQLResolveInfo): boolean | Promise<boolean>
+}
+
+export interface GetResult<TContext> {
+  result(input: {}, context: TContext, info: GraphQLResolveInfo): Result<TContext> | Promise<Result<TContext>>
+}
+
+export interface Result<TContext> {
+  member1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+  member2(input: { input: string }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface CreateInputMember3<TContext> {
+  member1(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface TypeAlias<TContext> {
+  result(input: {}, context: TContext, info: GraphQLResolveInfo): Result2<TContext> | Promise<Result2<TContext>>
+}
+
+export type Result2<TContext> = Result3<TContext>
+
+export interface Result3<TContext> {
+  result3(input: {}, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
+export interface OuterType<TContext> {
+  outerType(input: {}, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+}
+
+export interface ApolloResolvers<TContext = any> {
   TypeLiteral?: {
     typeLiteralMember1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     typeLiteralMember2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
@@ -222,7 +500,7 @@ export interface ApolloResolvers<TContext> {
     typeAlias?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   Mutation: {
-    create(parent: any, input: { input: CreateInput }, context: TContext, info: GraphQLResolveInfo): any,
+    create(parent: any, input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): any,
   },
   CreateInput?: {
     member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
@@ -257,18 +535,10 @@ export interface ApolloResolvers<TContext> {
   },
 }
 
-export type DeepReturnType<T> = {
-  [P in keyof T]: T[P] extends Array<infer U>
-    ? Array<DeepReturnType<U>>
-    : T[P] extends (...args: any[]) => infer R
-      ? R
-      : DeepReturnType<T[P]>
-}
-
-export interface ResolveResult {
-  create: DeepReturnType<MutationResult>
-  user: DeepReturnType<GetResult>
-  users: DeepReturnType<GetResult>
+export interface ResolveResult<TContext = any> {
+  create: DeepReturnType<MutationResult<TContext>>
+  user: DeepReturnType<GetResult<TContext>>
+  users: DeepReturnType<GetResult<TContext>>
 }
 
 // tslint:enable
