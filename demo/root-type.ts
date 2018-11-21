@@ -36,33 +36,33 @@ export interface TypeLiteral<TContext = any> {
 }
 
 export interface Interface<TContext = any> {
-  interfaceMember1: number
-  interfaceMember2: string
+  interfaceMember1?: number
+  interfaceMember2?: string
 }
 
 export interface TypeUnion1<TContext = any> {
-  typeLiteralMember1: number
-  typeLiteralMember2: string
-  typeUnionMember1: number
-  typeUnionMember2: string
+  typeLiteralMember1?: number
+  typeLiteralMember2?: string
+  typeUnionMember1?: number
+  typeUnionMember2?: string
 }
 
 export interface TypeUnion2<TContext = any> {
   kind: StringEnum
-  typeUnionMember1: string
-  typeUnionMember2: string
+  typeUnionMember1?: string
+  typeUnionMember2?: string
 }
 
 export interface TypeUnion3<TContext = any> {
   kind: NumberEnum
-  typeUnionMember1: string
-  typeUnionMember2: string
+  typeUnionMember1?: string
+  typeUnionMember2?: string
 }
 
 export interface TypeUnion4<TContext = any> {
   kind: string
-  typeUnionMember1: string
-  typeUnionMember2: string
+  typeUnionMember1?: string
+  typeUnionMember2?: string
 }
 
 export type TypeUnion5<TContext = any> = TypeLiteral<TContext> | Interface<TContext>
@@ -84,13 +84,13 @@ export interface TypeUnion<TContext = any> {
 export interface InterfaceExtends<TContext = any> {
   interfaceExtendsMember1: number
   interfaceExtendsMember2: string
-  interfaceMember1: number
-  interfaceMember2: string
+  interfaceMember1?: number
+  interfaceMember2?: string
 }
 
 export interface TypeIntersection1<TContext = any> {
-  interfaceMember1: number
-  interfaceMember2: string
+  interfaceMember1?: number
+  interfaceMember2?: string
   typeIntersectionMember1: number
   typeIntersectionMember2: string
 }
@@ -111,8 +111,8 @@ export interface TypeIntersection<TContext = any> {
 export interface TypeUnionAndIntersection<TContext = any> {
   typeIntersectionMember1: number
   kind: NumberEnum
-  typeUnionMember1: string
-  typeUnionMember2: string
+  typeUnionMember1?: string
+  typeUnionMember2?: string
 }
 
 export interface TaggedField<TContext = any> {
@@ -235,7 +235,7 @@ export interface Circular<TContext = any> {
 }
 
 export interface EntryType<TContext = any> {
-  optionalMember: string
+  optionalMember?: string
   booleanMember: boolean
   stringMember: string
   numberType: NumberType<TContext>
@@ -253,7 +253,7 @@ export interface EntryType<TContext = any> {
   stringNumber: StringType<TContext>
   id: ID<TContext>
   parameter: Parameter<TContext>
-  optionalArrayMember: Array<string>
+  optionalArrayMember?: Array<string>
   tupleType: Array<string>
   defaultType: DefaultValue<TContext>
   anyType: any
