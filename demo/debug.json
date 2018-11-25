@@ -3075,6 +3075,80 @@
   },
   {
     "kind": "object",
+    "name": "Pet",
+    "members": [
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 402,
+            "character": 7
+          }
+        },
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 403,
+            "character": 8
+          }
+        }
+      },
+      {
+        "name": "photoUrls",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 404,
+              "character": 13
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 404,
+            "character": 13
+          }
+        }
+      },
+      {
+        "name": "status",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "available",
+            "pending",
+            "sold"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 405,
+            "character": 10
+          }
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 4,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 401,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
     "name": "OuterType",
     "members": [
       {

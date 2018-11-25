@@ -9,6 +9,7 @@ import { generateRustTypes } from './rust-type-generator'
 import { generateMongooseSchema } from './mongoose-schema-generator'
 import { TypeDeclaration } from './utils'
 import { generateGraphqlRootType } from './graphql-root-type-generator'
+import { generateSwaggerDoc } from './swagger-doc-generator'
 
 export class Generator {
   declarations: TypeDeclaration[] = []
@@ -48,6 +49,10 @@ export class Generator {
 
   generateMongooseSchema() {
     return generateMongooseSchema(this.declarations)
+  }
+
+  generateSwaggerDoc() {
+    return generateSwaggerDoc(this.declarations)
   }
 }
 

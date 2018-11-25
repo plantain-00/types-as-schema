@@ -259,6 +259,13 @@ type result3 = {
   result3: string;
 }
 
+type pet = {
+  id: float option;
+  name: string;
+  photoUrls: string list;
+  status: string;
+}
+
 type outerType = {
   outerType: float;
 }

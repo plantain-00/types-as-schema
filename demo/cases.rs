@@ -352,6 +352,14 @@ pub struct Result3 {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct Pet {
+  pub id: Option<f32>,
+  pub name: String,
+  #[serde(rename = "photoUrls")] pub photo_urls: Vec<String>,
+  pub status: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OuterType {
   #[serde(rename = "outerType")] pub outer_type: f32,
 }

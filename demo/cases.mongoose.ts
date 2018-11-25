@@ -725,6 +725,25 @@ export const result3Schema = {
   },
 }
 
+export const petSchema = {
+  id: {
+    type: Schema.Types.Number,
+    required: false
+  },
+  name: {
+    type: Schema.Types.String,
+    required: true
+  },
+  photoUrls: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+  status: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Schema.Types.Number,

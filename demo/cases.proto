@@ -266,6 +266,13 @@ message Result3 {
     string result3 = 1;
 }
 
+message Pet {
+    double id = 1;
+    string name = 2;
+    repeated string photoUrls = 3;
+    string status = 4;
+}
+
 message OuterType {
     double outerType = 1;
 }

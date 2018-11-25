@@ -276,6 +276,13 @@ type Result3 {
   result3: String!
 }
 
+type Pet {
+  id: Float
+  name: String!
+  photoUrls: [String]!
+  status: String!
+}
+
 type OuterType {
   outerType: Float!
 }
