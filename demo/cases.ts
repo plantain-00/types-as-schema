@@ -408,6 +408,6 @@ interface Pet {
 
 /**
  * @method get
- * @path "/pet/{id}"
+ * @path /pet/{id}
  */
-export declare function getPetById(petId: number): Promise<Pet>
+export declare function getPetById(id: number): Promise<Pet>

@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-import { TypeDeclaration, Type, MemberParameter, EnumType, StringDeclaration, EnumDeclaration } from './utils'
+import { TypeDeclaration, Type, Parameter, EnumType, StringDeclaration, EnumDeclaration } from './utils'
 
 // tslint:disable-next-line:cognitive-complexity
 export function generateGraphqlRootType(declarations: TypeDeclaration[], graphqlRootTypePath: string) {
@@ -130,7 +130,7 @@ function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTyp
   return imports.join('\n')
 }
 
-function getMemberParameters(referenceTypes: ReferenceType[], declarations: TypeDeclaration[], parameters?: MemberParameter[]) {
+function getMemberParameters(referenceTypes: ReferenceType[], declarations: TypeDeclaration[], parameters?: Parameter[]) {
   if (parameters && parameters.length > 0) {
     const parameterString = parameters.map((parameter) => {
       const optionalToken = parameter.optional ? '?' : ''

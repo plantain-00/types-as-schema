@@ -28,6 +28,7 @@ export type TypeDeclaration =
   | StringDeclaration
   | NumberDeclaration
   | ReferenceDeclaration
+  | FunctionDeclaration
 
 export type EnumDeclaration = {
   kind: 'enum';
@@ -79,6 +80,16 @@ export type NumberDeclaration = NumberType & {
 
 export type ReferenceDeclaration = ReferenceType & {
   newName: string;
+}
+
+export type FunctionDeclaration = {
+  kind: 'function';
+  name: string;
+  type: Type;
+  optional?: boolean;
+  parameters: Parameter[];
+  method?: string;
+  path?: string;
 }
 
 export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType
@@ -189,10 +200,10 @@ export type Member = {
   optional?: boolean;
   tag?: number;
   enum?: any[];
-  parameters?: MemberParameter[];
+  parameters?: Parameter[];
 }
 
-export type MemberParameter = {
+export type Parameter = {
   name: string;
   type: Type;
   optional?: boolean;

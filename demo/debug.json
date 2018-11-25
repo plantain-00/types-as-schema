@@ -3146,5 +3146,36 @@
       "line": 401,
       "character": 0
     }
+  },
+  {
+    "kind": "function",
+    "name": "getPetById",
+    "type": {
+      "kind": "reference",
+      "name": "Pet",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 412,
+        "character": 56
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 412,
+            "character": 39
+          }
+        },
+        "optional": false
+      }
+    ],
+    "method": "get",
+    "path": "/pet/{id}"
   }
 ]
