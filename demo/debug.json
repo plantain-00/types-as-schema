@@ -3148,6 +3148,35 @@
     }
   },
   {
+    "kind": "function",
+    "name": "getPetById",
+    "type": {
+      "kind": "reference",
+      "name": "Pet",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 412,
+        "character": 59
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "petId",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 412,
+            "character": 42
+          }
+        },
+        "optional": false
+      }
+    ]
+  },
+  {
     "kind": "object",
     "name": "OuterType",
     "members": [

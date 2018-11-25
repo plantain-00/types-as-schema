@@ -1,4 +1,4 @@
-import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, MemberParameter, warn } from './utils'
+import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, Parameter, warn } from './utils'
 
 const stageName = 'grapql schema generator'
 
@@ -118,7 +118,7 @@ function generateGraphqlSchemaOfObjectMember(typeDeclarations: TypeDeclaration[]
   }
 }
 
-function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], memberParameters: MemberParameter[]) {
+function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], memberParameters: Parameter[]) {
   const parameters: string[] = []
   let hasJSON = false
   for (const parameter of memberParameters) {

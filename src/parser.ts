@@ -112,7 +112,28 @@ export class Parser {
       this.handleTypeAliasDeclaration(node as ts.TypeAliasDeclaration, jsDocs, entry, sourceFile)
     } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration) {
       this.handleInterfaceOrClassDeclaration(node as ts.InterfaceDeclaration, jsDocs, entry, sourceFile)
+    } else if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
+      this.handleFunctionDeclaration(node as ts.FunctionDeclaration, sourceFile)
     }
+  }
+
+  private handleFunctionDeclaration(
+    declaration: ts.FunctionDeclaration,
+    sourceFile: ts.SourceFile
+  ) {
+    const type = declaration.type
+      ? this.getType(declaration.type, sourceFile)
+      : {
+        kind: undefined,
+        position: getPosition(declaration, sourceFile)
+      }
+    this.declarations.push({
+      kind: 'function',
+      name: declaration.name ? declaration.name.text : '',
+      type,
+      optional: !!declaration.questionToken,
+      parameters: declaration.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
+    })
   }
 
   private handleInterfaceOrClassDeclaration(
@@ -978,20 +999,21 @@ export class Parser {
     }
 
     if (property.kind === ts.SyntaxKind.MethodSignature || property.kind === ts.SyntaxKind.MethodDeclaration) {
-      member.parameters = []
-      for (const parameter of property.parameters) {
-        member.parameters.push({
-          name: (parameter.name as ts.Identifier).text,
-          type: parameter.type ? this.getType(parameter.type, sourceFile) : {
-            kind: undefined,
-            position: getPosition(parameter, sourceFile)
-          },
-          optional: !!parameter.questionToken
-        })
-      }
+      member.parameters = property.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
     }
 
     return member
+  }
+
+  private getParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
+    return {
+      name: (parameter.name as ts.Identifier).text,
+      type: parameter.type ? this.getType(parameter.type, sourceFile) : {
+        kind: undefined,
+        position: getPosition(parameter, sourceFile)
+      },
+      optional: !!parameter.questionToken
+    }
   }
 
   private setPropertyJsDoc(
