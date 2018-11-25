@@ -3156,25 +3156,27 @@
       "position": {
         "file": "demo/cases.ts",
         "line": 412,
-        "character": 59
+        "character": 56
       }
     },
     "optional": false,
     "parameters": [
       {
-        "name": "petId",
+        "name": "id",
         "type": {
           "kind": "number",
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
             "line": 412,
-            "character": 42
+            "character": 39
           }
         },
         "optional": false
       }
-    ]
+    ],
+    "method": "get",
+    "path": "/pet/{id}"
   },
   {
     "kind": "object",

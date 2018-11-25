@@ -18,7 +18,8 @@ import {
   ArrayDeclaration,
   Expression,
   warn,
-  getPosition
+  getPosition,
+  FunctionDeclaration
 } from './utils'
 
 export class Parser {
@@ -113,12 +114,13 @@ export class Parser {
     } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration) {
       this.handleInterfaceOrClassDeclaration(node as ts.InterfaceDeclaration, jsDocs, entry, sourceFile)
     } else if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
-      this.handleFunctionDeclaration(node as ts.FunctionDeclaration, sourceFile)
+      this.handleFunctionDeclaration(node as ts.FunctionDeclaration, jsDocs, sourceFile)
     }
   }
 
   private handleFunctionDeclaration(
     declaration: ts.FunctionDeclaration,
+    jsDocs: JsDoc[],
     sourceFile: ts.SourceFile
   ) {
     const type = declaration.type
@@ -127,13 +129,23 @@ export class Parser {
         kind: undefined,
         position: getPosition(declaration, sourceFile)
       }
-    this.declarations.push({
+    const functionDeclaration: FunctionDeclaration = {
       kind: 'function',
       name: declaration.name ? declaration.name.text : '',
       type,
       optional: !!declaration.questionToken,
       parameters: declaration.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
-    })
+    }
+    for (const jsDoc of jsDocs) {
+      if (jsDoc.comment) {
+        if (jsDoc.name === 'method') {
+          functionDeclaration.method = jsDoc.comment
+        } else if (jsDoc.name === 'path') {
+          functionDeclaration.path = jsDoc.comment
+        }
+      }
+    }
+    this.declarations.push(functionDeclaration)
   }
 
   private handleInterfaceOrClassDeclaration(
