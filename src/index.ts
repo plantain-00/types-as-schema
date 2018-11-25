@@ -30,6 +30,7 @@ async function executeCommandLine() {
     rustPath,
     jsonPath,
     mongoosePath,
+    swaggerPath,
     debugPath,
     filePaths,
     watchMode
@@ -103,6 +104,11 @@ async function executeCommandLine() {
       fs.writeFileSync(mongoosePath, mongooseContent)
     }
 
+    if (swaggerPath) {
+      const swaggerDoc = generator.generateSwaggerDoc()
+      fs.writeFileSync(swaggerPath, swaggerDoc)
+    }
+
     if (jsonPath) {
       generateJsonSchemas(generator)
     }
@@ -137,6 +143,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
   const rustPath = parseParameter(argv, 'rust')
   const jsonPath = parseParameter(argv, 'json')
   const mongoosePath = parseParameter(argv, 'mongoose')
+  const swaggerPath = parseParameter(argv, 'swagger')
   const debugPath = parseParameter(argv, 'debug')
 
   const filePaths = argv._
@@ -156,6 +163,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
     rustPath,
     jsonPath,
     mongoosePath,
+    swaggerPath,
     debugPath,
     filePaths,
     watchMode

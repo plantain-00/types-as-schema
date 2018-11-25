@@ -298,6 +298,13 @@ export interface Result3<TContext = any> {
   result3: string
 }
 
+export interface Pet<TContext = any> {
+  id?: number
+  name: string
+  photoUrls: Array<string>
+  status: string
+}
+
 export interface OuterType<TContext = any> {
   outerType: number
 }
@@ -531,6 +538,12 @@ export interface ApolloResolvers<TContext = any> {
   },
   Result3?: {
     result3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  Pet?: {
+    id?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    name?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    photoUrls?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    status?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

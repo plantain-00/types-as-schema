@@ -21,6 +21,7 @@ export class App extends Vue {
   rustTypes = ''
   mongooseSchema = ''
   graphqlRootType = ''
+  swaggerDoc = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -75,6 +76,9 @@ export class App extends Vue {
 
       this.graphqlRootType = generator.generateGraphqlRootType('.')
       this.options.push('graphql root type')
+
+      this.swaggerDoc = generator.generateSwaggerDoc()
+      this.options.push('swagger doc')
     }
   }
 }

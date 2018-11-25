@@ -350,3 +350,11 @@ type Result2 = Result3;
 pub struct Result3 {
   #[serde(rename = "result3")] pub result_3: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Pet {
+  pub id: Option<f32>,
+  pub name: String,
+  #[serde(rename = "photoUrls")] pub photo_urls: Vec<String>,
+  pub status: String,
+}

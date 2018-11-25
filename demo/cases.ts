@@ -398,3 +398,16 @@ type Result2 = Result3
 interface Result3 {
   result3: string
 }
+
+interface Pet {
+  id?: number
+  name: string
+  photoUrls: string[]
+  status: 'available' | 'pending' | 'sold'
+}
+
+/**
+ * @method get
+ * @path "/pet/{id}"
+ */
+export declare function getPetById(petId: number): Promise<Pet>
