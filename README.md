@@ -130,6 +130,11 @@ boolean[]:
 + `@param {string} name`: set argument `name: String!`
 + `@param {string} [name]`: set argument `name: String`
 
+## swagger doc only
+
++ `@method get`: set api method
++ `@path /pet/{id}`: set api url
+
 ## number type alias
 
 ```ts

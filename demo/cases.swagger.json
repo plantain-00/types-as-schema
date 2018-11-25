@@ -6,9 +6,10 @@
         "operationId": "getPetById",
         "parameters": [
           {
-            "name": "petId",
+            "name": "id",
             "required": true,
-            "type": "integer"
+            "in": "query",
+            "type": "number"
           }
         ],
         "responses": {
