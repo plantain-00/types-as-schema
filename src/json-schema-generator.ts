@@ -62,7 +62,7 @@ function getTypeNameOfEnumOrConst(type: string): any {
   return 'integer'
 }
 
-function getJsonSchemaProperty(memberType: Type): Definition {
+export function getJsonSchemaProperty(memberType: Type): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
