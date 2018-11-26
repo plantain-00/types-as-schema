@@ -1,4 +1,4 @@
-import { TypeDeclaration } from './utils'
+import { TypeDeclaration, Type } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
 export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
@@ -24,17 +24,15 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
             name: parameter.name,
             required: !parameter.optional,
             in: parameter.in,
-            ...getJsonSchemaProperty(parameter.type)
+            ...getSchema(parameter.type)
           }
         }),
         summary: typeDeclaration.summary,
         description: typeDeclaration.description,
+        deprecated: typeDeclaration.deprecated,
+        tags: typeDeclaration.tags,
         responses: {
-          200: {
-            schema: {
-              ...getJsonSchemaProperty(typeDeclaration.type)
-            }
-          }
+          200: getSchema(typeDeclaration.type)
         }
       }
     }
@@ -51,4 +49,14 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
     definitions: mergedDefinitions
   }
   return JSON.stringify(result, null, 2)
+}
+
+function getSchema(type: Type) {
+  const schema = getJsonSchemaProperty(type)
+  if (type.kind === 'reference') {
+    return {
+      schema
+    }
+  }
+  return schema
 }

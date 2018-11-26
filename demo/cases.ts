@@ -411,12 +411,28 @@ interface Pet {
  * @path /pet/{id}
  * @summary get pet by id.
  * @description get pet by id
+ * @deprecated
+ * @tags pet
  */
 export declare function getPetById(
   /**
    * @in path
    * @description pet id
    * @minimum 1
+   * @default 2
    */
-  id: integer
+  id: integer,
+  /**
+   * @in query
+   */
+  status: 'health' | 'sick',
+  /**
+   * @in body
+   * @minItems 1
+   */
+  tags: string[],
+  /**
+   * @in body
+   */
+  pet: Pet
 ): Promise<Pet>
