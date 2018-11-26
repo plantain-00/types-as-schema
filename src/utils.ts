@@ -92,6 +92,8 @@ export type FunctionDeclaration = {
   path?: string;
   description?: string
   summary?: string
+  deprecated?: boolean
+  tags?: string[]
 }
 
 export type FunctionParameter = Parameter & {
@@ -106,6 +108,7 @@ export type MapType = {
   kind: 'map';
   key: Type;
   value: Type;
+  default?: any
 } & Position
 
 /**
@@ -116,6 +119,7 @@ export type EnumType = {
   type: string;
   name: string;
   enums: any[];
+  default?: any
 } & Position
 
 export type ReferenceType = {
@@ -161,6 +165,7 @@ export type BooleanType = {
  */
 export type AnyType = {
   kind: undefined;
+  default?: any
 } & Position
 
 export type ObjectType = {
@@ -190,6 +195,7 @@ export type ArrayType = {
  */
 export type NullType = {
   kind: 'null'
+  default?: any
 } & Position
 
 /**
@@ -198,6 +204,7 @@ export type NullType = {
 export type UnionType = {
   kind: 'union';
   members: Type[];
+  default?: any
 } & Position
 
 export type Member = {

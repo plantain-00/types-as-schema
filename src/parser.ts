@@ -147,7 +147,11 @@ export class Parser {
           functionDeclaration.description = jsDoc.comment
         } else if (jsDoc.name === 'summary') {
           functionDeclaration.summary = jsDoc.comment
+        } else if (jsDoc.name === 'tags') {
+          functionDeclaration.tags = jsDoc.comment.split(',')
         }
+      } else if (jsDoc.name === 'deprecated') {
+        functionDeclaration.deprecated = true
       }
     }
     this.declarations.push(functionDeclaration)
@@ -159,9 +163,10 @@ export class Parser {
     for (const jsDoc of jsDocs) {
       if (jsDoc.comment && jsDoc.name === 'in') {
         parameterDoc.in = jsDoc.comment
+      } else {
+        this.setJsDoc(jsDoc, parameterDoc.type, sourceFile)
       }
     }
-    this.setJsDoc(jsDocs, parameterDoc.type, sourceFile)
     return parameterDoc
   }
 
@@ -1035,35 +1040,48 @@ export class Parser {
   }
 
   private getParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
-    return {
-      name: (parameter.name as ts.Identifier).text,
-      type: parameter.type ? this.getType(parameter.type, sourceFile) : {
+    let type: Type | undefined
+    let value: any
+    if (parameter.initializer) {
+      const typeAndValue = this.getTypeAndValueOfExpression(parameter.initializer, sourceFile)
+      type = typeAndValue.type
+      value = typeAndValue.value
+    }
+    if (parameter.type) {
+      type = this.getType(parameter.type, sourceFile)
+    }
+    if (!type) {
+      type = {
         kind: undefined,
         position: getPosition(parameter, sourceFile)
-      },
+      }
+    }
+    type.default = value
+
+    return {
+      name: (parameter.name as ts.Identifier).text,
+      type,
       optional: !!parameter.questionToken
     } as FunctionParameter
   }
 
-  private setJsDoc(jsDocs: JsDoc[], type: Type, sourceFile: ts.SourceFile) {
-    for (const jsDoc of jsDocs) {
-      if (jsDoc.name === 'mapValueType') {
-        this.setJsDocMapValue(jsDoc, type)
-      } else if (jsDoc.name === 'type') {
-        this.overrideType(type, jsDoc)
-      } else if (type.kind === 'array') {
-        this.setJsDocArray(jsDoc, type, sourceFile)
-      } else if (type.kind === 'number') {
-        this.setJsDocNumber(jsDoc, type)
-      } else if (type.kind === 'string') {
-        this.setJsDocString(jsDoc, type)
-      } else if (type.kind === 'boolean') {
-        this.setJsDocBoolean(jsDoc, type)
-      } else if (type.kind === 'object') {
-        this.setJsDocObject(jsDoc, type)
-      } else if (type.kind === 'reference') {
-        this.setJsDocReference(jsDoc, type)
-      }
+  private setJsDoc(jsDoc: JsDoc, type: Type, sourceFile: ts.SourceFile) {
+    if (jsDoc.name === 'mapValueType') {
+      this.setJsDocMapValue(jsDoc, type)
+    } else if (jsDoc.name === 'type') {
+      this.overrideType(type, jsDoc)
+    } else if (type.kind === 'array') {
+      this.setJsDocArray(jsDoc, type, sourceFile)
+    } else if (type.kind === 'number') {
+      this.setJsDocNumber(jsDoc, type)
+    } else if (type.kind === 'string') {
+      this.setJsDocString(jsDoc, type)
+    } else if (type.kind === 'boolean') {
+      this.setJsDocBoolean(jsDoc, type)
+    } else if (type.kind === 'object') {
+      this.setJsDocObject(jsDoc, type)
+    } else if (type.kind === 'reference') {
+      this.setJsDocReference(jsDoc, type)
     }
   }
 
@@ -1078,9 +1096,10 @@ export class Parser {
         this.setJsDocTag(propertyJsDoc, member)
       } else if (propertyJsDoc.name === 'param') {
         this.setJsDocParam(propertyJsDoc, member)
+      } else {
+        this.setJsDoc(propertyJsDoc, member.type, sourceFile)
       }
     }
-    this.setJsDoc(propertyJsDocs, member.type, sourceFile)
   }
 
   private setJsDocReference(propertyJsDoc: JsDoc, type: ReferenceType) {

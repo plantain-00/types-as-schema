@@ -11,11 +11,44 @@
             "in": "path",
             "type": "integer",
             "minimum": 1,
+            "default": 2,
             "description": "pet id"
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "health",
+              "sick"
+            ]
+          },
+          {
+            "name": "tags",
+            "required": true,
+            "in": "body",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          {
+            "name": "pet",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
           }
         ],
         "summary": "get pet by id.",
         "description": "get pet by id",
+        "deprecated": true,
+        "tags": [
+          "pet"
+        ],
         "responses": {
           "200": {
             "schema": {

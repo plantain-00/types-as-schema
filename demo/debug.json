@@ -3155,7 +3155,7 @@
       "name": "Pet",
       "position": {
         "file": "demo/cases.ts",
-        "line": 421,
+        "line": 437,
         "character": 11
       }
     },
@@ -3168,19 +3168,79 @@
           "type": "integer",
           "position": {
             "file": "demo/cases.ts",
-            "line": 420,
+            "line": 423,
             "character": 6
           },
+          "default": 2,
           "description": "pet id",
           "minimum": 1
         },
         "optional": false,
         "in": "path"
+      },
+      {
+        "name": "status",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "health",
+            "sick"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 427,
+            "character": 10
+          }
+        },
+        "optional": false,
+        "in": "query"
+      },
+      {
+        "name": "tags",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 432,
+              "character": 8
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 432,
+            "character": 8
+          },
+          "minItems": 1
+        },
+        "optional": false,
+        "in": "body"
+      },
+      {
+        "name": "pet",
+        "type": {
+          "kind": "reference",
+          "name": "Pet",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 436,
+            "character": 7
+          }
+        },
+        "optional": false,
+        "in": "body"
       }
     ],
     "method": "get",
     "path": "/pet/{id}",
     "summary": "get pet by id.",
-    "description": "get pet by id"
+    "description": "get pet by id",
+    "deprecated": true,
+    "tags": [
+      "pet"
+    ]
   }
 ]
