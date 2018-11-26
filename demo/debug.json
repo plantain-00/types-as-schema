@@ -3156,7 +3156,7 @@
       "position": {
         "file": "demo/cases.ts",
         "line": 412,
-        "character": 56
+        "character": 71
       }
     },
     "optional": false,
@@ -3169,10 +3169,11 @@
           "position": {
             "file": "demo/cases.ts",
             "line": 412,
-            "character": 39
+            "character": 54
           }
         },
-        "optional": false
+        "optional": false,
+        "in": "path"
       }
     ],
     "method": "get",

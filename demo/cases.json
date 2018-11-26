@@ -439,11 +439,13 @@
               "type": "null"
             },
             {
+              "type": "boolean",
               "const": false
             }
           ]
         },
         "typeUnionMember7": {
+          "type": "string",
           "enum": [
             "foo",
             "bar"
@@ -494,6 +496,7 @@
       "type": "object",
       "properties": {
         "kind": {
+          "type": "string",
           "enum": [
             "enum member 1",
             "enum member 2"
@@ -517,6 +520,7 @@
       "type": "object",
       "properties": {
         "kind": {
+          "type": "integer",
           "enum": [
             0,
             1
@@ -540,6 +544,7 @@
       "type": "object",
       "properties": {
         "kind": {
+          "type": "string",
           "enum": [
             "foo",
             "bar"
@@ -578,6 +583,7 @@
       ]
     },
     "TypeUnion9": {
+      "type": "string",
       "enum": [
         "foo",
         "bar"
@@ -676,6 +682,7 @@
           "type": "number"
         },
         "kind": {
+          "type": "integer",
           "enum": [
             0,
             1
@@ -822,6 +829,7 @@
           "$ref": "#/definitions/NumberEnum2"
         },
         "stringEnum2": {
+          "type": "string",
           "const": "foo"
         }
       },
@@ -834,18 +842,21 @@
       "additionalProperties": false
     },
     "StringEnum": {
+      "type": "string",
       "enum": [
         "enum member 1",
         "enum member 2"
       ]
     },
     "NumberEnum": {
+      "type": "integer",
       "enum": [
         0,
         1
       ]
     },
     "NumberEnum2": {
+      "type": "integer",
       "enum": [
         3,
         4

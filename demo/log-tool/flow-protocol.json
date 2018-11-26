@@ -20,6 +20,7 @@
       "type": "object",
       "properties": {
         "kind": {
+          "type": "string",
           "enum": [
             "log",
             "sample"

@@ -87,9 +87,13 @@ export type FunctionDeclaration = {
   name: string;
   type: Type;
   optional?: boolean;
-  parameters: Parameter[];
+  parameters: FunctionParameter[];
   method?: string;
   path?: string;
+}
+
+export type FunctionParameter = Parameter & {
+  in?: string
 }
 
 export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType

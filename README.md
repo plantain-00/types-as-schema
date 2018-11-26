@@ -134,6 +134,7 @@ boolean[]:
 
 + `@method get`: set api method
 + `@path /pet/{id}`: set api url
++ `@in query`: a parameter in a `query`, `body`, `header` or `path`
 
 ## number type alias
 

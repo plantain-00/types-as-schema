@@ -10,6 +10,7 @@
           "maximum": 4294967295
         },
         "kind": {
+          "type": "string",
           "enum": [
             "search logs",
             "search samples",

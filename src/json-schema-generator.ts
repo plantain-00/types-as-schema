@@ -38,18 +38,28 @@ export function getAllDefinitions(typeDeclarations: TypeDeclaration[]) {
     } else if (typeDeclaration.kind === 'enum') {
       if (typeDeclaration.members.length === 1) {
         definitions[typeDeclaration.name] = {
-          type: undefined,
+          type: getTypeNameOfEnumOrConst(typeDeclaration.type),
           const: typeDeclaration.members[0]
         }
       } else {
         definitions[typeDeclaration.name] = {
-          type: undefined,
+          type: getTypeNameOfEnumOrConst(typeDeclaration.type),
           enum: typeDeclaration.members.map((m) => m.value)
         }
       }
     }
   }
   return definitions
+}
+
+function getTypeNameOfEnumOrConst(type: string): any {
+  if (type === 'boolean' || type === 'string') {
+    return type
+  }
+  if (type === 'double' || type === 'float' || type === 'number') {
+    return 'number'
+  }
+  return 'integer'
 }
 
 function getJsonSchemaProperty(memberType: Type): Definition {
@@ -81,12 +91,12 @@ function getJsonSchemaProperty(memberType: Type): Definition {
   } else if (memberType.kind === 'enum') {
     if (memberType.enums.length === 1) {
       return {
-        type: undefined,
+        type: getTypeNameOfEnumOrConst(memberType.type),
         const: memberType.enums[0]
       }
     }
     return {
-      type: undefined,
+      type: getTypeNameOfEnumOrConst(memberType.type),
       enum: memberType.enums
     }
   } else if (memberType.kind === 'reference') {
@@ -137,12 +147,12 @@ function getJsonSchemaPropertyOfString(memberType: StringType): Definition {
   if (memberType.enums) {
     if (memberType.enums.length === 1) {
       return {
-        type: undefined,
+        type: 'string',
         const: memberType.enums[0]
       }
     }
     return {
-      type: undefined,
+      type: 'string',
       enum: memberType.enums
     }
   }
@@ -307,58 +317,55 @@ export type Definition =
  * @public
  */
 export type NumberDefinition = {
-  type: 'number' | 'integer',
-  minimum?: number;
-  maximum?: number;
-  exclusiveMinimum?: number;
-  exclusiveMaximum?: number;
-  multipleOf?: number;
-  default?: number;
-  title?: string;
-  description?: string;
-}
+  type: 'number' | 'integer'
+  minimum?: number
+  maximum?: number
+  exclusiveMinimum?: number
+  exclusiveMaximum?: number
+  multipleOf?: number
+  default?: number
+} & CommonDefinition
 
 /**
  * @public
  */
 export type BooleanDefinition = {
-  type: 'boolean';
-  default?: boolean;
-  title?: string;
-  description?: string;
-}
+  type: 'boolean'
+  default?: boolean
+} & CommonDefinition
 
 export type ObjectDefinition = {
-  type: 'object',
-  additionalProperties?: Definition | boolean,
-  properties?: { [name: string]: Definition },
-  required?: string[],
-  minProperties?: number,
-  maxProperties?: number,
-  anyOf?: Definition[],
+  type: 'object'
+  additionalProperties?: Definition | boolean
+  properties?: { [name: string]: Definition }
+  required?: string[]
+  minProperties?: number
+  maxProperties?: number
+  anyOf?: Definition[]
   default?: any
-  title?: string;
-  description?: string;
-}
+} & CommonDefinition
 
 export type ArrayDefinition = {
-  type: 'array',
-  items: Definition,
-  uniqueItems?: boolean,
-  minItems?: number,
-  maxItems?: number,
+  type: 'array'
+  items: Definition
+  uniqueItems?: boolean
+  minItems?: number
+  maxItems?: number
   default?: any[]
-  title?: string;
-  description?: string;
-}
+} & CommonDefinition
 
 export type UndefinedDefinition = {
-  type: undefined,
-  $ref?: string,
+  type: undefined
+  $ref?: string
   anyOf?: Definition[]
+  default?: any
+} & CommonDefinition
+
+type CommonDefinition = {
   enum?: any[]
   const?: any
-  default?: any
+  title?: string
+  description?: string;
 }
 
 /**
@@ -370,9 +377,7 @@ export type StringDefinition = {
   maxLength?: number;
   pattern?: string;
   default?: string;
-  title?: string;
-  description?: string;
-}
+} & CommonDefinition
 
 /**
  * @public

@@ -19,7 +19,8 @@ import {
   Expression,
   warn,
   getPosition,
-  FunctionDeclaration
+  FunctionDeclaration,
+  FunctionParameter
 } from './utils'
 
 export class Parser {
@@ -134,7 +135,16 @@ export class Parser {
       name: declaration.name ? declaration.name.text : '',
       type,
       optional: !!declaration.questionToken,
-      parameters: declaration.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
+      parameters: declaration.parameters.map((parameter) => {
+        const parameterDoc = this.getParameter(parameter, sourceFile)
+        const jsDocs = this.getJsDocs(parameter, sourceFile)
+        for (const jsDoc of jsDocs) {
+          if (jsDoc.comment && jsDoc.name === 'in') {
+            parameterDoc.in = jsDoc.comment
+          }
+        }
+        return parameterDoc
+      })
     }
     for (const jsDoc of jsDocs) {
       if (jsDoc.comment) {
@@ -1025,7 +1035,7 @@ export class Parser {
         position: getPosition(parameter, sourceFile)
       },
       optional: !!parameter.questionToken
-    }
+    } as FunctionParameter
   }
 
   private setPropertyJsDoc(

@@ -23,7 +23,7 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
           return {
             name: parameter.name,
             required: !parameter.optional,
-            in: 'query',
+            in: parameter.in,
             ...getType(parameter.type)
           }
         }),
