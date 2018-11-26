@@ -90,6 +90,8 @@ export type FunctionDeclaration = {
   parameters: FunctionParameter[];
   method?: string;
   path?: string;
+  description?: string
+  summary?: string
 }
 
 export type FunctionParameter = Parameter & {

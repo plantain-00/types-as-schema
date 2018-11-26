@@ -135,16 +135,7 @@ export class Parser {
       name: declaration.name ? declaration.name.text : '',
       type,
       optional: !!declaration.questionToken,
-      parameters: declaration.parameters.map((parameter) => {
-        const parameterDoc = this.getParameter(parameter, sourceFile)
-        const jsDocs = this.getJsDocs(parameter, sourceFile)
-        for (const jsDoc of jsDocs) {
-          if (jsDoc.comment && jsDoc.name === 'in') {
-            parameterDoc.in = jsDoc.comment
-          }
-        }
-        return parameterDoc
-      })
+      parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile))
     }
     for (const jsDoc of jsDocs) {
       if (jsDoc.comment) {
@@ -152,10 +143,26 @@ export class Parser {
           functionDeclaration.method = jsDoc.comment
         } else if (jsDoc.name === 'path') {
           functionDeclaration.path = jsDoc.comment
+        } else if (jsDoc.name === 'description') {
+          functionDeclaration.description = jsDoc.comment
+        } else if (jsDoc.name === 'summary') {
+          functionDeclaration.summary = jsDoc.comment
         }
       }
     }
     this.declarations.push(functionDeclaration)
+  }
+
+  private handleFunctionParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
+    const parameterDoc = this.getParameter(parameter, sourceFile)
+    const jsDocs = this.getJsDocs(parameter, sourceFile)
+    for (const jsDoc of jsDocs) {
+      if (jsDoc.comment && jsDoc.name === 'in') {
+        parameterDoc.in = jsDoc.comment
+      }
+    }
+    this.setJsDoc(jsDocs, parameterDoc.type, sourceFile)
+    return parameterDoc
   }
 
   private handleInterfaceOrClassDeclaration(
@@ -1038,6 +1045,28 @@ export class Parser {
     } as FunctionParameter
   }
 
+  private setJsDoc(jsDocs: JsDoc[], type: Type, sourceFile: ts.SourceFile) {
+    for (const jsDoc of jsDocs) {
+      if (jsDoc.name === 'mapValueType') {
+        this.setJsDocMapValue(jsDoc, type)
+      } else if (jsDoc.name === 'type') {
+        this.overrideType(type, jsDoc)
+      } else if (type.kind === 'array') {
+        this.setJsDocArray(jsDoc, type, sourceFile)
+      } else if (type.kind === 'number') {
+        this.setJsDocNumber(jsDoc, type)
+      } else if (type.kind === 'string') {
+        this.setJsDocString(jsDoc, type)
+      } else if (type.kind === 'boolean') {
+        this.setJsDocBoolean(jsDoc, type)
+      } else if (type.kind === 'object') {
+        this.setJsDocObject(jsDoc, type)
+      } else if (type.kind === 'reference') {
+        this.setJsDocReference(jsDoc, type)
+      }
+    }
+  }
+
   private setPropertyJsDoc(
     property: ts.PropertySignature | ts.PropertyDeclaration,
     member: Member,
@@ -1047,26 +1076,11 @@ export class Parser {
     for (const propertyJsDoc of propertyJsDocs) {
       if (propertyJsDoc.name === 'tag') {
         this.setJsDocTag(propertyJsDoc, member)
-      } else if (propertyJsDoc.name === 'mapValueType') {
-        this.setJsDocMapValue(propertyJsDoc, member.type)
-      } else if (propertyJsDoc.name === 'type') {
-        this.overrideType(member.type, propertyJsDoc)
       } else if (propertyJsDoc.name === 'param') {
         this.setJsDocParam(propertyJsDoc, member)
-      } else if (member.type.kind === 'array') {
-        this.setJsDocArray(propertyJsDoc, member.type, sourceFile)
-      } else if (member.type.kind === 'number') {
-        this.setJsDocNumber(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'string') {
-        this.setJsDocString(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'boolean') {
-        this.setJsDocBoolean(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'object') {
-        this.setJsDocObject(propertyJsDoc, member.type)
-      } else if (member.type.kind === 'reference') {
-        this.setJsDocReference(propertyJsDoc, member.type)
       }
     }
+    this.setJsDoc(propertyJsDocs, member.type, sourceFile)
   }
 
   private setJsDocReference(propertyJsDoc: JsDoc, type: ReferenceType) {

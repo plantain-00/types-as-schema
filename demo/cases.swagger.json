@@ -9,9 +9,13 @@
             "name": "id",
             "required": true,
             "in": "path",
-            "type": "number"
+            "type": "integer",
+            "minimum": 1,
+            "description": "pet id"
           }
         ],
+        "summary": "get pet by id.",
+        "description": "get pet by id",
         "responses": {
           "200": {
             "schema": {

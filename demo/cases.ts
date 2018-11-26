@@ -409,5 +409,14 @@ interface Pet {
 /**
  * @method get
  * @path /pet/{id}
+ * @summary get pet by id.
+ * @description get pet by id
  */
-export declare function getPetById(/** @in path */id: number): Promise<Pet>
+export declare function getPetById(
+  /**
+   * @in path
+   * @description pet id
+   * @minimum 1
+   */
+  id: integer
+): Promise<Pet>

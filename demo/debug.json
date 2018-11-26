@@ -3155,8 +3155,8 @@
       "name": "Pet",
       "position": {
         "file": "demo/cases.ts",
-        "line": 412,
-        "character": 71
+        "line": 421,
+        "character": 11
       }
     },
     "optional": false,
@@ -3165,19 +3165,23 @@
         "name": "id",
         "type": {
           "kind": "number",
-          "type": "number",
+          "type": "integer",
           "position": {
             "file": "demo/cases.ts",
-            "line": 412,
-            "character": 54
-          }
+            "line": 420,
+            "character": 6
+          },
+          "description": "pet id",
+          "minimum": 1
         },
         "optional": false,
         "in": "path"
       }
     ],
     "method": "get",
-    "path": "/pet/{id}"
+    "path": "/pet/{id}",
+    "summary": "get pet by id.",
+    "description": "get pet by id"
   },
   {
     "kind": "object",
