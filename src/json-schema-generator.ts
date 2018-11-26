@@ -10,6 +10,18 @@ import {
 } from './utils'
 
 export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
+  const definitions = getAllDefinitions(typeDeclarations)
+  return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
+    .map(m => ({
+      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
+      schema: {
+        $ref: `#/definitions/${m.name}`,
+        definitions: getReferencedDefinitions(m.name, definitions, [])
+      }
+    }))
+}
+
+export function getAllDefinitions(typeDeclarations: TypeDeclaration[]) {
   const definitions: { [name: string]: Definition } = {}
   for (const typeDeclaration of typeDeclarations) {
     if (typeDeclaration.kind === 'object'
@@ -37,14 +49,7 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
       }
     }
   }
-  return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
-    .map(m => ({
-      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
-      schema: {
-        $ref: `#/definitions/${m.name}`,
-        definitions: getReferencedDefinitions(m.name, definitions, [])
-      }
-    }))
+  return definitions
 }
 
 function getJsonSchemaProperty(memberType: Type): Definition {
@@ -183,7 +188,7 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectTyp
 }
 
 // tslint:disable-next-line:cognitive-complexity
-function getReferencedDefinitions(
+export function getReferencedDefinitions(
   typeName: string | Definition,
   definitions: { [name: string]: Definition },
   dependents: string[]
