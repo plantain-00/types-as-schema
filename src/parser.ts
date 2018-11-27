@@ -630,6 +630,7 @@ export class Parser {
     }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private getTypeOfTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): Type {
     if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
       if (numberTypes.includes(reference.typeName.text)) {
@@ -642,7 +643,11 @@ export class Parser {
       if (reference.typeName.text === 'Array') {
         return this.getTypeOfArrayTypeReference(reference, sourceFile)
       }
-      if (reference.typeName.text === 'Promise' && reference.typeArguments && reference.typeArguments.length > 0) {
+      if ((reference.typeName.text === 'Promise'
+        || reference.typeName.text === 'ReturnType'
+        || reference.typeName.text === 'DeepReturnType')
+        && reference.typeArguments
+        && reference.typeArguments.length > 0) {
         const typeArgument = reference.typeArguments[0]
         if (typeArgument.kind === ts.SyntaxKind.TypeReference) {
           return this.getTypeOfTypeReference(typeArgument as ts.TypeReferenceNode, sourceFile)
