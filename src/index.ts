@@ -31,6 +31,7 @@ async function executeCommandLine() {
     jsonPath,
     mongoosePath,
     swaggerPath,
+    swaggerBasePath,
     debugPath,
     filePaths,
     watchMode
@@ -105,7 +106,8 @@ async function executeCommandLine() {
     }
 
     if (swaggerPath) {
-      const swaggerDoc = generator.generateSwaggerDoc()
+      const swaggerBase = swaggerBasePath ? JSON.parse(fs.readFileSync(swaggerBasePath).toString()) : undefined
+      const swaggerDoc = generator.generateSwaggerDoc(swaggerBase)
       fs.writeFileSync(swaggerPath, swaggerDoc)
     }
 
@@ -144,6 +146,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
   const jsonPath = parseParameter(argv, 'json')
   const mongoosePath = parseParameter(argv, 'mongoose')
   const swaggerPath = parseParameter(argv, 'swagger')
+  const swaggerBasePath = parseParameter(argv, 'swagger-base')
   const debugPath = parseParameter(argv, 'debug')
 
   const filePaths = argv._
@@ -164,6 +167,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
     jsonPath,
     mongoosePath,
     swaggerPath,
+    swaggerBasePath,
     debugPath,
     filePaths,
     watchMode

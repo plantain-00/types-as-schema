@@ -51,8 +51,8 @@ export class Generator {
     return generateMongooseSchema(this.declarations)
   }
 
-  generateSwaggerDoc() {
-    return generateSwaggerDoc(this.declarations)
+  generateSwaggerDoc(swaggerBase?: {}) {
+    return generateSwaggerDoc(this.declarations, swaggerBase)
   }
 }
 

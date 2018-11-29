@@ -31,7 +31,7 @@ module.exports = {
     },
     revStaticCommand,
     {
-      default: 'node ./dist/index.js demo/cases.ts demo/case2.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto --graphql-root-type demo/root-type.ts --graphql demo/cases.gql --reason demo/cases.re --ocaml demo/cases.ml --rust demo/cases.rs --mongoose demo/cases.mongoose.ts --swagger demo/cases.swagger.json',
+      default: 'node ./dist/index.js demo/cases.ts demo/case2.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto --graphql-root-type demo/root-type.ts --graphql demo/cases.gql --reason demo/cases.re --ocaml demo/cases.ml --rust demo/cases.rs --mongoose demo/cases.mongoose.ts --swagger demo/cases.swagger.json --swagger-base demo/case.swagger-base.json',
       logTool: 'node ./dist/index.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto --graphql demo/log-tool/protocol.gql',
       matchCalculator: 'node ./dist/index.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
       baogame: 'node ./dist/index.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --graphql demo/baogame/protocol.gql --debug demo/baogame/debug.json'
