@@ -1,7 +1,8 @@
 import { TypeDeclaration, Type } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
-export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
+// tslint:disable-next-line:cognitive-complexity
+export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], swaggerBase?: {}) {
   const paths: { [path: string]: { [method: string]: any } } = {}
   const referenceNames: string[] = []
   for (const typeDeclaration of typeDeclarations) {
@@ -43,10 +44,13 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[]) {
     const referencedName = getReferencedDefinitions(referenceName, definitions, [])
     Object.assign(mergedDefinitions, referencedName)
   }
-  const result = {
+  let result = {
     swagger: '2.0',
     paths,
     definitions: mergedDefinitions
+  }
+  if (swaggerBase) {
+    result = { ...swaggerBase, ...result }
   }
   return JSON.stringify(result, null, 2)
 }

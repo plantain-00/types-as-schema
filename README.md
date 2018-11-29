@@ -49,6 +49,7 @@ parameters | description
 `--rust` | generated rust types file
 `--mongoose` | generated mongoose schema file
 `--swagger` | generated swagger json file
+`--swagger-base` | swagger json file that generation based on
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 
