@@ -46,7 +46,8 @@ export const typeUnion1Schema = {
 export const typeUnion2Schema = {
   kind: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
+    enum: ['enum member 1', 'enum member 2']
   },
   typeUnionMember1: {
     type: Schema.Types.String,
@@ -76,7 +77,8 @@ export const typeUnion3Schema = {
 export const typeUnion4Schema = {
   kind: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
+    enum: ['foo', 'bar']
   },
   typeUnionMember1: {
     type: Schema.Types.String,
@@ -115,7 +117,8 @@ export const typeUnionSchema = {
   },
   typeUnionMember7: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
+    enum: ['foo', 'bar']
   },
   typeUnionMember8: {
     type: Schema.Types.Mixed,
@@ -244,7 +247,8 @@ export const enumSchema = {
   },
   stringEnum2: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
+    enum: ['foo']
   },
 }
 
@@ -748,7 +752,8 @@ export const petSchema = {
   },
   status: {
     type: Schema.Types.Mixed,
-    required: true
+    required: true,
+    enum: ['available', 'pending', 'sold']
   },
 }
 

@@ -212,7 +212,6 @@ export type Member = {
   type: Type;
   optional?: boolean;
   tag?: number;
-  enum?: any[];
   parameters?: Parameter[];
 }
 
