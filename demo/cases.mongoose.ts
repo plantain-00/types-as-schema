@@ -255,7 +255,9 @@ export const enumSchema = {
 export const numberTypeSchema = {
   numberMember: {
     type: Schema.Types.Number,
-    required: true
+    required: true,
+    min: 70,
+    max: 90
   },
   integerMember: {
     type: Schema.Types.Number,

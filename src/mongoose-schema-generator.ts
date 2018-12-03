@@ -35,6 +35,14 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
   if (enumValue !== undefined) {
     properties.push(`enum: [${enumValue}]`)
   }
+  if (member.type.kind === 'number') {
+    if (member.type.minimum !== undefined) {
+      properties.push(`min: ${member.type.minimum}`)
+    }
+    if (member.type.maximum !== undefined) {
+      properties.push(`max: ${member.type.maximum}`)
+    }
+  }
   return `  ${member.name}: {
     ${properties.join(',\n    ')}
   },`
