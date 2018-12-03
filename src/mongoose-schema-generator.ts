@@ -27,21 +27,32 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
     `type: ${propertyType}`,
     `required: ${!member.optional}`
   ]
-  const defaultValue = getMongooseDefaultValue(member.type.default)
+  const defaultValue = getMongooseDefaultValue(member.type)
   if (defaultValue !== undefined) {
     properties.push(`default: ${defaultValue}`)
+  }
+  const enumValue = getMongooseEnumValue(member.type)
+  if (enumValue !== undefined) {
+    properties.push(`enum: [${enumValue}]`)
   }
   return `  ${member.name}: {
     ${properties.join(',\n    ')}
   },`
 }
 
-function getMongooseDefaultValue(defaultValue: any) {
-  if (typeof defaultValue === 'number') {
-    return defaultValue
+function getMongooseEnumValue(type: Type) {
+  if (type.kind === 'enum' && type.type === 'string' && type.enums && type.enums.length > 0) {
+    return type.enums.map((e) => `'${e}'`).join(', ')
   }
-  if (typeof defaultValue === 'string') {
-    return `'${defaultValue}'`
+  return undefined
+}
+
+function getMongooseDefaultValue(type: Type) {
+  if (typeof type.default === 'number') {
+    return type.default
+  }
+  if (typeof type.default === 'string') {
+    return `'${type.default}'`
   }
   return undefined
 }
