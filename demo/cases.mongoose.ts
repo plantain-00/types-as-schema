@@ -320,7 +320,9 @@ export const numberTypeSchema = {
 export const stringTypeSchema = {
   stringMember: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    minLength: 10,
+    maxLength: 20
   },
 }
 

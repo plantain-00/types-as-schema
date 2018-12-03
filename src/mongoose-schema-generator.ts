@@ -27,14 +27,17 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
     `type: ${propertyType}`,
     `required: ${!member.optional}`
   ]
+
   const defaultValue = getMongooseDefaultValue(member.type)
   if (defaultValue !== undefined) {
     properties.push(`default: ${defaultValue}`)
   }
+
   const enumValue = getMongooseEnumValue(member.type)
   if (enumValue !== undefined) {
     properties.push(`enum: [${enumValue}]`)
   }
+
   if (member.type.kind === 'number') {
     if (member.type.minimum !== undefined) {
       properties.push(`min: ${member.type.minimum}`)
@@ -43,6 +46,16 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
       properties.push(`max: ${member.type.maximum}`)
     }
   }
+
+  if (member.type.kind === 'string') {
+    if (member.type.minLength !== undefined) {
+      properties.push(`minLength: ${member.type.minLength}`)
+    }
+    if (member.type.maxLength !== undefined) {
+      properties.push(`maxLength: ${member.type.maxLength}`)
+    }
+  }
+
   return `  ${member.name}: {
     ${properties.join(',\n    ')}
   },`
