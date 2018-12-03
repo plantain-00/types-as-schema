@@ -23,10 +23,27 @@ ${members.join('\n')}
 
 function generateMongooseSchemaOfObjectMember(member: Member) {
   const propertyType = getMongooseSchemaProperty(member.type)
+  const properties = [
+    `type: ${propertyType}`,
+    `required: ${!member.optional}`
+  ]
+  const defaultValue = getMongooseDefaultValue(member.type.default)
+  if (defaultValue !== undefined) {
+    properties.push(`default: ${defaultValue}`)
+  }
   return `  ${member.name}: {
-    type: ${propertyType},
-    required: ${!member.optional}
+    ${properties.join(',\n    ')}
   },`
+}
+
+function getMongooseDefaultValue(defaultValue: any) {
+  if (typeof defaultValue === 'number') {
+    return defaultValue
+  }
+  if (typeof defaultValue === 'string') {
+    return `'${defaultValue}'`
+  }
+  return undefined
 }
 
 function getMongooseSchemaProperty(memberType: Type) {

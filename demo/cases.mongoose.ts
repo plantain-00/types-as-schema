@@ -413,11 +413,13 @@ export const parameterSchema = {
 export const defaultValueSchema = {
   stringMember: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    default: 'foo'
   },
   numberMember: {
     type: Schema.Types.Number,
-    required: true
+    required: true,
+    default: 123
   },
   booleanMember: {
     type: Schema.Types.Boolean,
@@ -425,11 +427,13 @@ export const defaultValueSchema = {
   },
   stringMember2: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    default: 'foo bar'
   },
   stringMember3: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    default: ''
   },
   arrayMember: {
     type: Schema.Types.Mixed,
@@ -441,7 +445,8 @@ export const defaultValueSchema = {
   },
   numberMember1: {
     type: Schema.Types.Number,
-    required: true
+    required: true,
+    default: 123
   },
   objectMember2: {
     type: Schema.Types.Mixed,
@@ -493,11 +498,13 @@ export const classType2Schema = {
 export const classType3Schema = {
   classMember1: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    default: 'foo'
   },
   classMember2: {
     type: Schema.Types.Number,
-    required: true
+    required: true,
+    default: 123
   },
   classMember3: {
     type: Schema.Types.Boolean,
@@ -505,7 +512,8 @@ export const classType3Schema = {
   },
   classMember4: {
     type: Schema.Types.String,
-    required: true
+    required: true,
+    default: 'foo'
   },
   classMember5: {
     type: Schema.Types.Mixed,
