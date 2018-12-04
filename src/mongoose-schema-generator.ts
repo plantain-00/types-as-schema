@@ -54,6 +54,9 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
     if (member.type.maxLength !== undefined) {
       properties.push(`maxLength: ${member.type.maxLength}`)
     }
+    if (member.type.pattern !== undefined) {
+      properties.push(`match: ${escapeStringLiteral(member.type.pattern)}`)
+    }
   }
 
   return `  ${member.name}: {
@@ -63,7 +66,7 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
 
 function getMongooseEnumValue(type: Type) {
   if (type.kind === 'enum' && type.type === 'string' && type.enums && type.enums.length > 0) {
-    return type.enums.map((e) => `'${e}'`).join(', ')
+    return type.enums.map((e) => `${escapeStringLiteral(e)}`).join(', ')
   }
   return undefined
 }
@@ -73,7 +76,7 @@ function getMongooseDefaultValue(type: Type) {
     return type.default
   }
   if (typeof type.default === 'string') {
-    return `'${type.default}'`
+    return escapeStringLiteral(type.default)
   }
   return undefined
 }
@@ -90,4 +93,8 @@ function getMongooseSchemaProperty(memberType: Type) {
     propertyType = 'Mixed'
   }
   return `Schema.Types.${propertyType}`
+}
+
+function escapeStringLiteral(s: string) {
+  return JSON.stringify(s)
 }

@@ -47,7 +47,7 @@ export const typeUnion2Schema = {
   kind: {
     type: Schema.Types.Mixed,
     required: true,
-    enum: ['enum member 1', 'enum member 2']
+    enum: ["enum member 1", "enum member 2"]
   },
   typeUnionMember1: {
     type: Schema.Types.String,
@@ -78,7 +78,7 @@ export const typeUnion4Schema = {
   kind: {
     type: Schema.Types.Mixed,
     required: true,
-    enum: ['foo', 'bar']
+    enum: ["foo", "bar"]
   },
   typeUnionMember1: {
     type: Schema.Types.String,
@@ -118,7 +118,7 @@ export const typeUnionSchema = {
   typeUnionMember7: {
     type: Schema.Types.Mixed,
     required: true,
-    enum: ['foo', 'bar']
+    enum: ["foo", "bar"]
   },
   typeUnionMember8: {
     type: Schema.Types.Mixed,
@@ -248,7 +248,7 @@ export const enumSchema = {
   stringEnum2: {
     type: Schema.Types.Mixed,
     required: true,
-    enum: ['foo']
+    enum: ["foo"]
   },
 }
 
@@ -322,7 +322,8 @@ export const stringTypeSchema = {
     type: Schema.Types.String,
     required: true,
     minLength: 10,
-    maxLength: 20
+    maxLength: 20,
+    match: "^[A-z]{3}$"
   },
 }
 
@@ -422,7 +423,7 @@ export const defaultValueSchema = {
   stringMember: {
     type: Schema.Types.String,
     required: true,
-    default: 'foo'
+    default: "foo"
   },
   numberMember: {
     type: Schema.Types.Number,
@@ -436,12 +437,12 @@ export const defaultValueSchema = {
   stringMember2: {
     type: Schema.Types.String,
     required: true,
-    default: 'foo bar'
+    default: "foo bar"
   },
   stringMember3: {
     type: Schema.Types.String,
     required: true,
-    default: ''
+    default: ""
   },
   arrayMember: {
     type: Schema.Types.Mixed,
@@ -507,7 +508,7 @@ export const classType3Schema = {
   classMember1: {
     type: Schema.Types.String,
     required: true,
-    default: 'foo'
+    default: "foo"
   },
   classMember2: {
     type: Schema.Types.Number,
@@ -521,7 +522,7 @@ export const classType3Schema = {
   classMember4: {
     type: Schema.Types.String,
     required: true,
-    default: 'foo'
+    default: "foo"
   },
   classMember5: {
     type: Schema.Types.Mixed,
@@ -757,7 +758,7 @@ export const petSchema = {
   status: {
     type: Schema.Types.Mixed,
     required: true,
-    enum: ['available', 'pending', 'sold']
+    enum: ["available", "pending", "sold"]
   },
 }
 
