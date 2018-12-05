@@ -22,46 +22,52 @@ ${members.join('\n')}
 }
 
 function generateMongooseSchemaOfObjectMember(member: Member) {
-  const propertyType = getMongooseSchemaProperty(member.type)
+  const type = generateType(member.type, 2, member.optional)
+  return `  ${member.name}: ${type},`
+}
+
+function generateType(type: Type, indentationCount: number, optional?: boolean) {
+  const propertyType = getMongooseSchemaProperty(type)
   const properties = [
     `type: ${propertyType}`,
-    `required: ${!member.optional}`
+    `required: ${!optional}`
   ]
 
-  const defaultValue = getMongooseDefaultValue(member.type)
+  const defaultValue = getMongooseDefaultValue(type)
   if (defaultValue !== undefined) {
     properties.push(`default: ${defaultValue}`)
   }
 
-  const enumValue = getMongooseEnumValue(member.type)
+  const enumValue = getMongooseEnumValue(type)
   if (enumValue !== undefined) {
     properties.push(`enum: [${enumValue}]`)
   }
 
-  if (member.type.kind === 'number') {
-    if (member.type.minimum !== undefined) {
-      properties.push(`min: ${member.type.minimum}`)
+  if (type.kind === 'number') {
+    if (type.minimum !== undefined) {
+      properties.push(`min: ${type.minimum}`)
     }
-    if (member.type.maximum !== undefined) {
-      properties.push(`max: ${member.type.maximum}`)
-    }
-  }
-
-  if (member.type.kind === 'string') {
-    if (member.type.minLength !== undefined) {
-      properties.push(`minLength: ${member.type.minLength}`)
-    }
-    if (member.type.maxLength !== undefined) {
-      properties.push(`maxLength: ${member.type.maxLength}`)
-    }
-    if (member.type.pattern !== undefined) {
-      properties.push(`match: ${escapeStringLiteral(member.type.pattern)}`)
+    if (type.maximum !== undefined) {
+      properties.push(`max: ${type.maximum}`)
     }
   }
 
-  return `  ${member.name}: {
-    ${properties.join(',\n    ')}
-  },`
+  if (type.kind === 'string') {
+    if (type.minLength !== undefined) {
+      properties.push(`minLength: ${type.minLength}`)
+    }
+    if (type.maxLength !== undefined) {
+      properties.push(`maxLength: ${type.maxLength}`)
+    }
+    if (type.pattern !== undefined) {
+      properties.push(`match: ${escapeStringLiteral(type.pattern)}`)
+    }
+  }
+
+  const indentation = '  '.repeat(indentationCount)
+  return `{
+${indentation}${properties.join(',\n' + indentation)}
+${'  '.repeat(indentationCount - 1)}}`
 }
 
 function getMongooseEnumValue(type: Type) {
@@ -89,10 +95,15 @@ function getMongooseSchemaProperty(memberType: Type) {
     propertyType = 'Boolean'
   } else if (memberType.kind === 'number') {
     propertyType = 'Number'
+  } else if (memberType.kind === 'array') {
+    const itemType = generateType(memberType.type, 4)
+    propertyType = `[
+      ${itemType}
+    ]`
   } else {
-    propertyType = 'Mixed'
+    propertyType = 'Schema.Types.Mixed'
   }
-  return `Schema.Types.${propertyType}`
+  return propertyType
 }
 
 function escapeStringLiteral(s: string) {

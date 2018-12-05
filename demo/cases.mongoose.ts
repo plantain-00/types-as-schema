@@ -4,41 +4,41 @@ import { Schema } from 'mongoose'
 
 export const typeLiteralSchema = {
   typeLiteralMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   typeLiteralMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
 
 export const interfaceSchema = {
   interfaceMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   interfaceMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
 
 export const typeUnion1Schema = {
   typeLiteralMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   typeLiteralMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeUnionMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   typeUnionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
@@ -50,11 +50,11 @@ export const typeUnion2Schema = {
     enum: ["enum member 1", "enum member 2"]
   },
   typeUnionMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeUnionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
@@ -65,11 +65,11 @@ export const typeUnion3Schema = {
     required: true
   },
   typeUnionMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeUnionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
@@ -81,11 +81,11 @@ export const typeUnion4Schema = {
     enum: ["foo", "bar"]
   },
   typeUnionMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeUnionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
@@ -132,57 +132,57 @@ export const typeUnionSchema = {
 
 export const interfaceExtendsSchema = {
   interfaceExtendsMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   interfaceExtendsMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   interfaceMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   interfaceMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
 
 export const typeIntersection1Schema = {
   interfaceMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   interfaceMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeIntersectionMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   typeIntersectionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
 
 export const typeIntersection2Schema = {
   typeIntersectionMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   typeIntersectionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   typeIntersectionMember3: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   typeIntersectionMember4: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
@@ -204,7 +204,7 @@ export const typeIntersectionSchema = {
 
 export const typeUnionAndIntersectionSchema = {
   typeIntersectionMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   kind: {
@@ -212,22 +212,22 @@ export const typeUnionAndIntersectionSchema = {
     required: true
   },
   typeUnionMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   typeUnionMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
 }
 
 export const taggedFieldSchema = {
   taggedFieldMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   taggedFieldMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
@@ -254,72 +254,72 @@ export const enumSchema = {
 
 export const numberTypeSchema = {
   numberMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true,
     min: 70,
     max: 90
   },
   integerMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   uint32Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   int32Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   sint32Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   fixed32Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   sfixed32Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   uint64Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   int64Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   sint64Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   fixed64Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   sfixed64Member: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   floatMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   doubleMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   titleMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
 }
 
 export const stringTypeSchema = {
   stringMember: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     minLength: 10,
     maxLength: 20,
@@ -329,42 +329,87 @@ export const stringTypeSchema = {
 
 export const arrayTypeSchema = {
   arrayType1: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: String,
+        required: true,
+        minLength: 10,
+        maxLength: 20,
+        match: "^[A-z]{3}$"
+      }
+    ],
     required: true
   },
   arrayType2: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   arrayType3: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   arrayType4: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Number,
+        required: true,
+        min: 100,
+        max: 200
+      }
+    ],
     required: true
   },
   arrayType5: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   arrayType6: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   arrayType7: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   arrayType8: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
 }
 
 export const mapType7Schema = {
   foo: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
@@ -410,42 +455,47 @@ export const mapTypeSchema = {
 
 export const parameterSchema = {
   member1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   member2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
 
 export const defaultValueSchema = {
   stringMember: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     default: "foo"
   },
   numberMember: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true,
     default: 123
   },
   booleanMember: {
-    type: Schema.Types.Boolean,
+    type: Boolean,
     required: true
   },
   stringMember2: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     default: "foo bar"
   },
   stringMember3: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     default: ""
   },
   arrayMember: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
   objectMember: {
@@ -453,7 +503,7 @@ export const defaultValueSchema = {
     required: true
   },
   numberMember1: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true,
     default: 123
   },
@@ -476,56 +526,61 @@ export const referenceTypeSchema = {
 
 export const classType1Schema = {
   classMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   classMember2: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
 }
 
 export const classType2Schema = {
   classMember3: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   classMember4: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   classMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   classMember2: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
 }
 
 export const classType3Schema = {
   classMember1: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     default: "foo"
   },
   classMember2: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true,
     default: 123
   },
   classMember3: {
-    type: Schema.Types.Boolean,
+    type: Boolean,
     required: true
   },
   classMember4: {
-    type: Schema.Types.String,
+    type: String,
     required: true,
     default: "foo"
   },
   classMember5: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: String,
+        required: true
+      }
+    ],
     required: true
   },
   classMember6: {
@@ -551,22 +606,27 @@ export const classTypeSchema = {
 
 export const circularSchema = {
   children: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true
+      }
+    ],
     required: true
   },
 }
 
 export const entryTypeSchema = {
   optionalMember: {
-    type: Schema.Types.String,
+    type: String,
     required: false
   },
   booleanMember: {
-    type: Schema.Types.Boolean,
+    type: Boolean,
     required: true
   },
   stringMember: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   numberType: {
@@ -630,11 +690,21 @@ export const entryTypeSchema = {
     required: true
   },
   optionalArrayMember: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: String,
+        required: true
+      }
+    ],
     required: false
   },
   tupleType: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: String,
+        required: true
+      }
+    ],
     required: true
   },
   defaultType: {
@@ -672,11 +742,11 @@ export const mutationSchema = {
 
 export const createInputSchema = {
   member1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   member2: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
   member3: {
@@ -687,7 +757,7 @@ export const createInputSchema = {
 
 export const mutationResultSchema = {
   result: {
-    type: Schema.Types.Boolean,
+    type: Boolean,
     required: true
   },
 }
@@ -712,18 +782,18 @@ export const getResultSchema = {
 
 export const resultSchema = {
   member1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   member2: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
 
 export const createInputMember3Schema = {
   member1: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
@@ -737,22 +807,27 @@ export const typeAliasSchema = {
 
 export const result3Schema = {
   result3: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
 }
 
 export const petSchema = {
   id: {
-    type: Schema.Types.Number,
+    type: Number,
     required: false
   },
   name: {
-    type: Schema.Types.String,
+    type: String,
     required: true
   },
   photoUrls: {
-    type: Schema.Types.Mixed,
+    type: [
+      {
+        type: String,
+        required: true
+      }
+    ],
     required: true
   },
   status: {
@@ -764,7 +839,7 @@ export const petSchema = {
 
 export const outerTypeSchema = {
   outerType: {
-    type: Schema.Types.Number,
+    type: Number,
     required: true
   },
 }
