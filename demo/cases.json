@@ -348,6 +348,12 @@
             ],
             "additionalProperties": false
           }
+        },
+        "arrayType9": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -358,7 +364,8 @@
         "arrayType5",
         "arrayType6",
         "arrayType7",
-        "arrayType8"
+        "arrayType8",
+        "arrayType9"
       ],
       "additionalProperties": false
     },
