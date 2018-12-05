@@ -71,19 +71,23 @@ ${referenceTypeImports}
 export type DeepPromisifyReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepPromisifyReturnType<U>>
-    : T[P] extends (...args: infer P) => infer R
-      ? (...args: P) => R | Promise<R>
-      : DeepPromisifyReturnType<T[P]>
+    : T[P] extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPromisifyReturnType<U>>
+      : T[P] extends (...args: infer P) => infer R
+        ? (...args: P) => R | Promise<R>
+        : DeepPromisifyReturnType<T[P]>
 }
 
 export type DeepReturnType<T> = {
   [P in keyof T]: T[P] extends Array<infer U>
     ? Array<DeepReturnType<U>>
-    : T[P] extends (...args: any[]) => infer R
-      ? R extends Promise<infer U>
-        ? U
-        : R
-      : DeepReturnType<T[P]>
+    : T[P] extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepReturnType<U>>
+      : T[P] extends (...args: any[]) => infer R
+        ? R extends Promise<infer U>
+          ? U
+          : R
+        : DeepReturnType<T[P]>
 }
 
 export interface Root<TContext = any> {
