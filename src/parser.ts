@@ -640,7 +640,7 @@ export class Parser {
           position: getPosition(reference.typeName, sourceFile)
         }
       }
-      if (reference.typeName.text === 'Array') {
+      if (reference.typeName.text === 'Array' || reference.typeName.text === 'ReadonlyArray') {
         return this.getTypeOfArrayTypeReference(reference, sourceFile)
       }
       if ((reference.typeName.text === 'Promise'

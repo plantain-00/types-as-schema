@@ -405,6 +405,15 @@ export const arrayTypeSchema = {
     ],
     required: true
   },
+  arrayType9: {
+    type: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+    required: true
+  },
 }
 
 export const mapType7Schema = {

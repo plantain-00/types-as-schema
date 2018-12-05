@@ -141,6 +141,7 @@ type ArrayType {
   arrayType1: [String]!
   arrayType2: [TypeLiteral]!
   arrayType4: [Int]!
+  arrayType9: [String]!
 }
 
 type MapType7 {

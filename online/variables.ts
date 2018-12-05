@@ -214,6 +214,7 @@ type ArrayType = {
   arrayType6: { literal: number | null }[];
   arrayType7: { literal: TypeLiteral | null }[];
   arrayType8: Array<{ literal: number }>;
+  arrayType9: ReadonlyArray<string>;
 }
 
 type MapType7 = {
