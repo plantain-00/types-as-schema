@@ -846,6 +846,13 @@ export const petSchema = {
   },
 }
 
+export const mongooseSchemeSchema = {
+  objectId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Number,

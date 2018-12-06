@@ -437,3 +437,9 @@ export declare function getPetById(
    */
   pet: Pet
 ): Promise<Pet>
+
+type ObjectId = any
+
+export interface MongooseScheme {
+  objectId: ObjectId
+}

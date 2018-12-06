@@ -361,6 +361,11 @@ pub struct Pet {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct MongooseScheme {
+  #[serde(rename = "objectId")] pub object_id: ObjectId,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OuterType {
   #[serde(rename = "outerType")] pub outer_type: f32,
 }

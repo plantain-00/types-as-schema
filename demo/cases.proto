@@ -274,6 +274,10 @@ message Pet {
     string status = 4;
 }
 
+message MongooseScheme {
+    ObjectId objectId = 1;
+}
+
 message OuterType {
     double outerType = 1;
 }

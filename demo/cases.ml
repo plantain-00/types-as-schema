@@ -267,6 +267,10 @@ type pet = {
   status: string;
 }
 
+type mongooseScheme = {
+  objectId: objectId;
+}
+
 type outerType = {
   outerType: float;
 }
