@@ -283,3 +283,7 @@ type Pet {
   photoUrls: [String]!
   status: String!
 }
+
+type MongooseScheme {
+  objectId: ObjectId!
+}

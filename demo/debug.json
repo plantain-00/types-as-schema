@@ -3261,5 +3261,30 @@
     "tags": [
       "pet"
     ]
+  },
+  {
+    "kind": "object",
+    "name": "MongooseScheme",
+    "members": [
+      {
+        "name": "objectId",
+        "type": {
+          "kind": "reference",
+          "name": "ObjectId",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 443,
+            "character": 12
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 442,
+      "character": 0
+    }
   }
 ]

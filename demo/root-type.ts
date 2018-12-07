@@ -310,6 +310,10 @@ export interface Pet<TContext = any> {
   status: string
 }
 
+export interface MongooseScheme<TContext = any> {
+  objectId: ObjectId<TContext>
+}
+
 export interface OuterType<TContext = any> {
   outerType: number
 }
@@ -550,6 +554,9 @@ export interface ApolloResolvers<TContext = any> {
     name?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     photoUrls?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     status?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  MongooseScheme?: {
+    objectId?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

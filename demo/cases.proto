@@ -273,3 +273,7 @@ message Pet {
     repeated string photoUrls = 3;
     string status = 4;
 }
+
+message MongooseScheme {
+    ObjectId objectId = 1;
+}

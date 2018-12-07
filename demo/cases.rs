@@ -359,3 +359,8 @@ pub struct Pet {
   #[serde(rename = "photoUrls")] pub photo_urls: Vec<String>,
   pub status: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct MongooseScheme {
+  #[serde(rename = "objectId")] pub object_id: ObjectId,
+}

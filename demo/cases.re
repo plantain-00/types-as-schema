@@ -305,3 +305,8 @@ type pet = {
   photoUrls: list(string),
   status: string,
 };
+
+type mongooseScheme = {
+  .
+  objectId: objectId,
+};
