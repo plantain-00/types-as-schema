@@ -276,4 +276,5 @@ message Pet {
 
 message MongooseScheme {
     ObjectId objectId = 1;
+    Date date = 2;
 }

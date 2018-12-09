@@ -851,6 +851,10 @@ export const mongooseSchemeSchema = {
     type: Schema.Types.ObjectId,
     required: true
   },
+  date: {
+    type: Date,
+    required: true
+  },
 }
 
 export const outerTypeSchema = {

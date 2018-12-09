@@ -363,4 +363,5 @@ pub struct Pet {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MongooseScheme {
   #[serde(rename = "objectId")] pub object_id: ObjectId,
+  pub date: Date,
 }

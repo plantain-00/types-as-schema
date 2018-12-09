@@ -3277,10 +3277,22 @@
             "character": 12
           }
         }
+      },
+      {
+        "name": "date",
+        "type": {
+          "kind": "reference",
+          "name": "Date",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 444,
+            "character": 8
+          }
+        }
       }
     ],
-    "minProperties": 1,
-    "maxProperties": 1,
+    "minProperties": 2,
+    "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
       "line": 442,
