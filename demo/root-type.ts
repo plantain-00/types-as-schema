@@ -312,6 +312,7 @@ export interface Pet<TContext = any> {
 
 export interface MongooseScheme<TContext = any> {
   objectId: ObjectId<TContext>
+  date: Date<TContext>
 }
 
 export interface OuterType<TContext = any> {
@@ -557,6 +558,7 @@ export interface ApolloResolvers<TContext = any> {
   },
   MongooseScheme?: {
     objectId?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    date?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

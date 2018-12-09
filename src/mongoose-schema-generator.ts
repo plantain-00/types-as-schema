@@ -100,8 +100,14 @@ function getMongooseSchemaProperty(memberType: Type) {
     propertyType = `[
       ${itemType}
     ]`
-  } else if (memberType.kind === 'reference' && memberType.name.endsWith('ObjectId')) {
-    propertyType = 'Schema.Types.ObjectId'
+  } else if (memberType.kind === 'reference') {
+    if ((memberType.name === 'ObjectId' || memberType.name === 'ObjectID')) {
+      propertyType = 'Schema.Types.ObjectId'
+    } else if (memberType.name === 'Date') {
+      propertyType = 'Date'
+    } else {
+      propertyType = 'Schema.Types.Mixed'
+    }
   } else {
     propertyType = 'Schema.Types.Mixed'
   }

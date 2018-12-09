@@ -309,6 +309,7 @@ type pet = {
 type mongooseScheme = {
   .
   objectId: objectId,
+  date: date,
 };
 
 type outerType = {

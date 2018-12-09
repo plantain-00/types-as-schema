@@ -449,6 +449,7 @@ type ObjectId = any
 
 export interface MongooseScheme {
   objectId: ObjectId
+  date: Date
 }
 `
 // @ts-ignore

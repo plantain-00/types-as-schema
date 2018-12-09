@@ -1109,7 +1109,11 @@ export class Parser {
 
   private setJsDocReference(propertyJsDoc: JsDoc, type: ReferenceType) {
     if (propertyJsDoc.comment) {
-      type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
+      try {
+        type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
+      } catch (error) {
+        warn(type.position, 'parser')
+      }
     }
   }
 

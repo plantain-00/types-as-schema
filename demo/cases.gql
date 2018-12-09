@@ -286,6 +286,7 @@ type Pet {
 
 type MongooseScheme {
   objectId: ObjectId!
+  date: Date!
 }
 
 type OuterType {
