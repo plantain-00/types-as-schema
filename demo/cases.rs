@@ -364,6 +364,7 @@ pub struct Pet {
 pub struct MongooseScheme {
   #[serde(rename = "objectId")] pub object_id: ObjectId,
   pub date: Date,
+  #[serde(rename = "decimal128")] pub decimal_128: Decimal128,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

@@ -287,6 +287,7 @@ type Pet {
 type MongooseScheme {
   objectId: ObjectId!
   date: Date!
+  decimal128: Decimal128!
 }
 
 type OuterType {

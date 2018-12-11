@@ -313,6 +313,7 @@ export interface Pet<TContext = any> {
 export interface MongooseScheme<TContext = any> {
   objectId: ObjectId<TContext>
   date: Date<TContext>
+  decimal128: Decimal128<TContext>
 }
 
 export interface OuterType<TContext = any> {
@@ -559,6 +560,7 @@ export interface ApolloResolvers<TContext = any> {
   MongooseScheme?: {
     objectId?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     date?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    decimal128?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

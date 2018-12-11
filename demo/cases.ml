@@ -270,6 +270,7 @@ type pet = {
 type mongooseScheme = {
   objectId: objectId;
   date: date;
+  decimal128: decimal128;
 }
 
 type outerType = {

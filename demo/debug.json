@@ -3289,10 +3289,22 @@
             "character": 8
           }
         }
+      },
+      {
+        "name": "decimal128",
+        "type": {
+          "kind": "reference",
+          "name": "Decimal128",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 445,
+            "character": 14
+          }
+        }
       }
     ],
-    "minProperties": 2,
-    "maxProperties": 2,
+    "minProperties": 3,
+    "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
       "line": 442,

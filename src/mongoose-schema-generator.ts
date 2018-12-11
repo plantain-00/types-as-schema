@@ -105,6 +105,8 @@ function getMongooseSchemaProperty(memberType: Type) {
       propertyType = 'Schema.Types.ObjectId'
     } else if (memberType.name === 'Date') {
       propertyType = 'Date'
+    } else if (memberType.name === 'Decimal128') {
+      propertyType = 'Schema.Types.Decimal128'
     } else {
       propertyType = 'Schema.Types.Mixed'
     }
