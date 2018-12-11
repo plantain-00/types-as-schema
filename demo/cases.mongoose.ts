@@ -855,6 +855,10 @@ export const mongooseSchemeSchema = {
     type: Date,
     required: true
   },
+  decimal128: {
+    type: Schema.Types.Decimal128,
+    required: true
+  },
 }
 
 export const outerTypeSchema = {

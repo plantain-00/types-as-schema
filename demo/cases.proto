@@ -277,4 +277,5 @@ message Pet {
 message MongooseScheme {
     ObjectId objectId = 1;
     Date date = 2;
+    Decimal128 decimal128 = 3;
 }
