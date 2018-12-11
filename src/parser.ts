@@ -1101,6 +1101,12 @@ export class Parser {
         this.setJsDocTag(propertyJsDoc, member)
       } else if (propertyJsDoc.name === 'param') {
         this.setJsDocParam(propertyJsDoc, member)
+      } else if (propertyJsDoc.name === 'index') {
+        member.index = true
+      } else if (propertyJsDoc.name === 'unique') {
+        member.unique = true
+      } else if (propertyJsDoc.name === 'sparse') {
+        member.sparse = true
       } else {
         this.setJsDoc(propertyJsDoc, member.type, sourceFile)
       }

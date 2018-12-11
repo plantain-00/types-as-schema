@@ -139,6 +139,12 @@ boolean[]:
 + `@deprecated`: set api as deprecated api
 + `@tags pet`: set api tags, can be seperated by `,`
 
+## mongoose schema only
+
++ `@index`: set index
++ `@unique`: set unique index
++ `@sparse`: set sparse index
+
 ## number type alias
 
 ```ts

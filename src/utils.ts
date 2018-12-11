@@ -212,6 +212,9 @@ export type Member = {
   type: Type;
   optional?: boolean;
   tag?: number;
+  index?: boolean
+  unique?: boolean
+  sparse?: boolean
   parameters?: Parameter[];
 }
 

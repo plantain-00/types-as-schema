@@ -278,6 +278,9 @@ message MongooseScheme {
     ObjectId objectId = 1;
     Date date = 2;
     Decimal128 decimal128 = 3;
+    string index1 = 4;
+    string index2 = 5;
+    string index3 = 6;
 }
 
 message OuterType {

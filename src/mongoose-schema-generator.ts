@@ -22,11 +22,19 @@ ${members.join('\n')}
 }
 
 function generateMongooseSchemaOfObjectMember(member: Member) {
-  const type = generateType(member.type, 2, member.optional)
+  const type = generateType(member.type, 2, member.optional, member.index, member.unique, member.sparse)
   return `  ${member.name}: ${type},`
 }
 
-function generateType(type: Type, indentationCount: number, optional?: boolean) {
+// tslint:disable-next-line:cognitive-complexity
+function generateType(
+  type: Type,
+  indentationCount: number,
+  optional?: boolean,
+  index?: boolean,
+  unique?: boolean,
+  sparse?: boolean
+) {
   const propertyType = getMongooseSchemaProperty(type)
   const properties = [
     `type: ${propertyType}`,
@@ -62,6 +70,16 @@ function generateType(type: Type, indentationCount: number, optional?: boolean) 
     if (type.pattern !== undefined) {
       properties.push(`match: ${escapeStringLiteral(type.pattern)}`)
     }
+  }
+
+  if (index) {
+    properties.push(`index: true`)
+  }
+  if (unique) {
+    properties.push(`unique: true`)
+  }
+  if (sparse) {
+    properties.push(`sparse: true`)
   }
 
   const indentation = '  '.repeat(indentationCount)

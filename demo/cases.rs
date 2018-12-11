@@ -365,6 +365,9 @@ pub struct MongooseScheme {
   #[serde(rename = "objectId")] pub object_id: ObjectId,
   pub date: Date,
   #[serde(rename = "decimal128")] pub decimal_128: Decimal128,
+  #[serde(rename = "index1")] pub index_1: String,
+  #[serde(rename = "index2")] pub index_2: String,
+  #[serde(rename = "index3")] pub index_3: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

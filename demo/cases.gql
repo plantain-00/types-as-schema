@@ -288,6 +288,9 @@ type MongooseScheme {
   objectId: ObjectId!
   date: Date!
   decimal128: Decimal128!
+  index1: String!
+  index2: String!
+  index3: String!
 }
 
 type OuterType {
