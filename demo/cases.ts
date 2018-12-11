@@ -444,6 +444,18 @@ export interface MongooseScheme {
   objectId: ObjectId
   date: Date
   decimal128: Decimal128
+  /**
+   * @index
+   */
+  index1: string
+  /**
+   * @unique
+   */
+  index2: string
+  /**
+   * @sparse
+   */
+  index3: string
 }
 
 type Decimal128 = number

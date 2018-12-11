@@ -859,6 +859,21 @@ export const mongooseSchemeSchema = {
     type: Schema.Types.Decimal128,
     required: true
   },
+  index1: {
+    type: String,
+    required: true,
+    index: true
+  },
+  index2: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  index3: {
+    type: String,
+    required: true,
+    sparse: true
+  },
 }
 
 export const outerTypeSchema = {

@@ -311,4 +311,7 @@ type mongooseScheme = {
   objectId: objectId,
   date: date,
   decimal128: decimal128,
+  index1: string,
+  index2: string,
+  index3: string,
 };

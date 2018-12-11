@@ -3301,10 +3301,46 @@
             "character": 14
           }
         }
+      },
+      {
+        "name": "index1",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 449,
+            "character": 10
+          }
+        },
+        "index": true
+      },
+      {
+        "name": "index2",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 453,
+            "character": 10
+          }
+        },
+        "unique": true
+      },
+      {
+        "name": "index3",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 457,
+            "character": 10
+          }
+        },
+        "sparse": true
       }
     ],
-    "minProperties": 3,
-    "maxProperties": 3,
+    "minProperties": 6,
+    "maxProperties": 6,
     "position": {
       "file": "demo/cases.ts",
       "line": 442,
