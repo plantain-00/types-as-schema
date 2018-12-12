@@ -144,6 +144,8 @@ boolean[]:
 + `@index`: set index
 + `@unique`: set unique index
 + `@sparse`: set sparse index
++ `@select`: set select
++ `@alias index4`: set alias
 
 ## number type alias
 

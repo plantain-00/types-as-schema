@@ -22,7 +22,7 @@ ${members.join('\n')}
 }
 
 function generateMongooseSchemaOfObjectMember(member: Member) {
-  const type = generateType(member.type, 2, member.optional, member.index, member.unique, member.sparse)
+  const type = generateType(member.type, 2, member.optional, member.index, member.unique, member.sparse, member.select, member.alias)
   return `  ${member.name}: ${type},`
 }
 
@@ -33,7 +33,9 @@ function generateType(
   optional?: boolean,
   index?: boolean,
   unique?: boolean,
-  sparse?: boolean
+  sparse?: boolean,
+  select?: boolean,
+  alias?: string
 ) {
   const propertyType = getMongooseSchemaProperty(type)
   const properties = [
@@ -80,6 +82,12 @@ function generateType(
   }
   if (sparse) {
     properties.push(`sparse: true`)
+  }
+  if (select) {
+    properties.push(`select: true`)
+  }
+  if (alias) {
+    properties.push(`alias: ${escapeStringLiteral(alias)}`)
   }
 
   const indentation = '  '.repeat(indentationCount)

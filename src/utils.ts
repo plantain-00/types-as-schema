@@ -215,6 +215,8 @@ export type Member = {
   index?: boolean
   unique?: boolean
   sparse?: boolean
+  select?: boolean
+  alias?: string
   parameters?: Parameter[];
 }
 
