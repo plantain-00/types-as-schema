@@ -872,7 +872,9 @@ export const mongooseSchemeSchema = {
   index3: {
     type: String,
     required: true,
-    sparse: true
+    sparse: true,
+    select: true,
+    alias: "index4"
   },
 }
 

@@ -1107,6 +1107,12 @@ export class Parser {
         member.unique = true
       } else if (propertyJsDoc.name === 'sparse') {
         member.sparse = true
+      } else if (propertyJsDoc.name === 'select') {
+        member.select = true
+      } else if (propertyJsDoc.name === 'alias') {
+        if (propertyJsDoc.comment) {
+          member.alias = propertyJsDoc.comment
+        }
       } else {
         this.setJsDoc(propertyJsDoc, member.type, sourceFile)
       }

@@ -3332,11 +3332,13 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 457,
+            "line": 459,
             "character": 10
           }
         },
-        "sparse": true
+        "sparse": true,
+        "select": true,
+        "alias": "index4"
       }
     ],
     "minProperties": 6,
