@@ -463,6 +463,9 @@ export interface MongooseScheme {
    * @sparse
    * @select
    * @alias index4
+   * @lowercase
+   * @uppercase
+   * @trim
    */
   index3: string
 }

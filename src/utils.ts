@@ -151,6 +151,9 @@ export type StringType = {
   enums?: string[];
   title?: string;
   description?: string;
+  lowercase?: boolean;
+  uppercase?: boolean;
+  trim?: boolean;
 } & Position
 
 export type BooleanType = {

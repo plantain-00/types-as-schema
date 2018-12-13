@@ -1193,6 +1193,13 @@ export class Parser {
         type.description = propertyJsDoc.comment
       }
     }
+    if (propertyJsDoc.name === 'lowercase') {
+      type.lowercase = true
+    } else if (propertyJsDoc.name === 'uppercase') {
+      type.uppercase = true
+    } else if (propertyJsDoc.name === 'trim') {
+      type.trim = true
+    }
   }
 
   private setJsDocNumber(propertyJsDoc: JsDoc, type: NumberType) {

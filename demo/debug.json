@@ -3332,9 +3332,12 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 459,
+            "line": 462,
             "character": 10
-          }
+          },
+          "lowercase": true,
+          "uppercase": true,
+          "trim": true
         },
         "sparse": true,
         "select": true,

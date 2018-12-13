@@ -72,6 +72,15 @@ function generateType(
     if (type.pattern !== undefined) {
       properties.push(`match: ${escapeStringLiteral(type.pattern)}`)
     }
+    if (type.lowercase) {
+      properties.push(`lowercase: true`)
+    }
+    if (type.uppercase) {
+      properties.push(`uppercase: true`)
+    }
+    if (type.trim) {
+      properties.push(`trim: true`)
+    }
   }
 
   if (index) {
