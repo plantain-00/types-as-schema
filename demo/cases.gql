@@ -291,6 +291,7 @@ type MongooseScheme {
   index1: String!
   index2: String!
   index3: String!
+  buffer: Buffer!
 }
 
 type OuterType {

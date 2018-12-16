@@ -142,6 +142,8 @@ function getMongooseSchemaProperty(memberType: Type) {
       propertyType = 'Date'
     } else if (memberType.name === 'Decimal128') {
       propertyType = 'Schema.Types.Decimal128'
+    } else if (memberType.name === 'Buffer') {
+      propertyType = 'Schema.Types.Buffer'
     } else {
       propertyType = 'Schema.Types.Mixed'
     }

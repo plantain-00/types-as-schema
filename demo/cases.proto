@@ -281,6 +281,7 @@ message MongooseScheme {
     string index1 = 4;
     string index2 = 5;
     string index3 = 6;
+    Buffer buffer = 7;
 }
 
 message OuterType {

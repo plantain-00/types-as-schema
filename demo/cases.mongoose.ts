@@ -879,6 +879,10 @@ export const mongooseSchemeSchema = {
     select: true,
     alias: "index4"
   },
+  buffer: {
+    type: Schema.Types.Buffer,
+    required: true
+  },
 }
 
 export const outerTypeSchema = {
