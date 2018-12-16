@@ -37,11 +37,15 @@ function generateType(
   select?: boolean,
   alias?: string
 ) {
-  const propertyType = getMongooseSchemaProperty(type)
+  const { propertyType, mapOf } = getMongooseSchemaProperty(type)
   const properties = [
     `type: ${propertyType}`,
     `required: ${!optional}`
   ]
+
+  if (mapOf) {
+    properties.push(`of: ${mapOf}`)
+  }
 
   const defaultValue = getMongooseDefaultValue(type)
   if (defaultValue !== undefined) {
@@ -124,6 +128,7 @@ function getMongooseDefaultValue(type: Type) {
 
 function getMongooseSchemaProperty(memberType: Type) {
   let propertyType = ''
+  let mapOf: string | undefined
   if (memberType.kind === 'string') {
     propertyType = 'String'
   } else if (memberType.kind === 'boolean') {
@@ -135,6 +140,9 @@ function getMongooseSchemaProperty(memberType: Type) {
     propertyType = `[
       ${itemType}
     ]`
+  } else if (memberType.kind === 'map') {
+    mapOf = generateType(memberType.value, 3)
+    propertyType = `Map`
   } else if (memberType.kind === 'reference') {
     if ((memberType.name === 'ObjectId' || memberType.name === 'ObjectID')) {
       propertyType = 'Schema.Types.ObjectId'
@@ -150,7 +158,7 @@ function getMongooseSchemaProperty(memberType: Type) {
   } else {
     propertyType = 'Schema.Types.Mixed'
   }
-  return propertyType
+  return { propertyType, mapOf }
 }
 
 function escapeStringLiteral(s: string) {
