@@ -317,6 +317,7 @@ export interface MongooseScheme<TContext = any> {
   index1: string
   index2: string
   index3: string
+  buffer: Buffer<TContext>
 }
 
 export interface OuterType<TContext = any> {
@@ -567,6 +568,7 @@ export interface ApolloResolvers<TContext = any> {
     index1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     index2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     index3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    buffer?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

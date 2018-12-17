@@ -429,24 +429,44 @@ export const mapType8Schema = {
 
 export const mapTypeSchema = {
   mapType: {
-    type: Schema.Types.Mixed,
-    required: true
+    type: Map,
+    required: true,
+    of: {
+      type: Number,
+      required: true
+    }
   },
   mapType2: {
-    type: Schema.Types.Mixed,
-    required: true
+    type: Map,
+    required: true,
+    of: {
+      type: Schema.Types.Mixed,
+      required: true
+    }
   },
   mapType3: {
-    type: Schema.Types.Mixed,
-    required: true
+    type: Map,
+    required: true,
+    of: {
+      type: Schema.Types.Mixed,
+      required: true
+    }
   },
   mapType4: {
-    type: Schema.Types.Mixed,
-    required: true
+    type: Map,
+    required: true,
+    of: {
+      type: Number,
+      required: true
+    }
   },
   mapType5: {
-    type: Schema.Types.Mixed,
-    required: true
+    type: Map,
+    required: true,
+    of: {
+      type: Schema.Types.Mixed,
+      required: true
+    }
   },
   mapType6: {
     type: Schema.Types.Mixed,
@@ -878,6 +898,10 @@ export const mongooseSchemeSchema = {
     sparse: true,
     select: true,
     alias: "index4"
+  },
+  buffer: {
+    type: Schema.Types.Buffer,
+    required: true
   },
 }
 

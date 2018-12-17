@@ -274,4 +274,5 @@ type mongooseScheme = {
   index1: string;
   index2: string;
   index3: string;
+  buffer: buffer;
 }

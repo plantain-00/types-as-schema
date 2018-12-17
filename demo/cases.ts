@@ -461,6 +461,8 @@ export interface MongooseScheme {
    * @trim
    */
   index3: string
+  buffer: Buffer
 }
 
 type Decimal128 = number
+type Buffer = any

@@ -368,4 +368,5 @@ pub struct MongooseScheme {
   #[serde(rename = "index1")] pub index_1: String,
   #[serde(rename = "index2")] pub index_2: String,
   #[serde(rename = "index3")] pub index_3: String,
+  pub buffer: Buffer,
 }

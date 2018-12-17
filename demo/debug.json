@@ -3342,10 +3342,22 @@
         "sparse": true,
         "select": true,
         "alias": "index4"
+      },
+      {
+        "name": "buffer",
+        "type": {
+          "kind": "reference",
+          "name": "Buffer",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 463,
+            "character": 10
+          }
+        }
       }
     ],
-    "minProperties": 6,
-    "maxProperties": 6,
+    "minProperties": 7,
+    "maxProperties": 7,
     "position": {
       "file": "demo/cases.ts",
       "line": 442,
