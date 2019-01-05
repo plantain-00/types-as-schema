@@ -33,7 +33,7 @@
     "@types/minimist": "1.2.0",
     "@types/node": "10.12.18",
     "@types/puppeteer": "1.11.1",
-    "autoprefixer": "9.4.3",
+    "autoprefixer": "9.4.4",
     "clean-css-cli": "4.2.1",
     "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
@@ -44,10 +44,10 @@
     "less": "3.9.0",
     "markdownlint-cli": "0.13.0",
     "no-unused-export": "1.7.0",
-    "postcss-cli": "6.1.0",
+    "postcss-cli": "6.1.1",
     "puppeteer": "1.11.0",
     "rev-static": "3.4.2",
-    "rimraf": "2.6.2",
+    "rimraf": "2.6.3",
     "standard": "12.0.1",
     "stylelint": "9.9.0",
     "stylelint-config-standard": "18.2.0",
@@ -60,7 +60,7 @@
     "vue-class-component": "6.3.2",
     "watch-then-execute": "1.1.1",
     "webpack": "4.28.3",
-    "webpack-cli": "3.1.2"
+    "webpack-cli": "3.2.0"
   },
   "dependencies": {
     "ajv": "6.6.2",
