@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
-    "@commitlint/cli": "7.2.1",
-    "@commitlint/config-conventional": "7.1.2",
+    "@commitlint/cli": "7.3.1",
+    "@commitlint/config-conventional": "7.3.1",
     "@types/chokidar": "1.7.5",
     "@types/fs-extra": "5.0.4",
     "@types/jasmine": "3.3.5",
@@ -51,16 +51,16 @@
     "standard": "12.0.1",
     "stylelint": "9.9.0",
     "stylelint-config-standard": "18.2.0",
-    "tslint": "5.12.0",
+    "tslint": "5.12.1",
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.8.0",
     "type-coverage": "1.6.2",
     "types-as-schema": "1.6.0",
-    "vue": "2.5.21",
+    "vue": "2.5.22",
     "vue-class-component": "6.3.2",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.28.3",
-    "webpack-cli": "3.2.0"
+    "webpack": "4.28.4",
+    "webpack-cli": "3.2.1"
   },
   "dependencies": {
     "ajv": "6.6.2",
@@ -70,7 +70,7 @@
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
     "tslib": "1.9.3",
-    "typescript": "3.2.1"
+    "typescript": "3.2.2"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
