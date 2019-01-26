@@ -113,7 +113,7 @@ function getReferenceDeclaration(referenceDeclaration: ReferenceDeclaration) {
   return `type ${referenceDeclaration.newName} = ${referenceDeclaration.name};`
 }
 
-function getRustTypesProperty(typeDeclarations: TypeDeclaration[], memberType: Type, optional: boolean | undefined): string {
+function getRustTypesProperty(typeDeclarations: TypeDeclaration[], memberType: Type, optional = false): string {
   let propertyType = ''
   if (memberType.kind === 'array') {
     const elementPropertyType = getRustTypesProperty(typeDeclarations, memberType.type, undefined)

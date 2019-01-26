@@ -30,11 +30,11 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
 function generateType(
   type: Type,
   indentationCount: number,
-  optional?: boolean,
-  index?: boolean,
-  unique?: boolean,
-  sparse?: boolean,
-  select?: boolean,
+  optional = false,
+  index = false,
+  unique = false,
+  sparse = false,
+  select = false,
   alias?: string
 ) {
   const { propertyType, mapOf } = getMongooseSchemaProperty(type)
