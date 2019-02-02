@@ -25,15 +25,15 @@
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
-    "@commitlint/cli": "7.3.2",
-    "@commitlint/config-conventional": "7.3.1",
+    "@commitlint/cli": "7.5.0",
+    "@commitlint/config-conventional": "7.5.0",
     "@types/chokidar": "1.7.5",
     "@types/fs-extra": "5.0.4",
     "@types/jasmine": "3.3.8",
     "@types/minimist": "1.2.0",
-    "@types/node": "10.12.18",
-    "@types/puppeteer": "1.11.2",
-    "autoprefixer": "9.4.6",
+    "@types/node": "10.12.21",
+    "@types/puppeteer": "1.11.3",
+    "autoprefixer": "9.4.7",
     "clean-css-cli": "4.2.1",
     "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
@@ -45,7 +45,7 @@
     "markdownlint-cli": "0.13.0",
     "no-unused-export": "1.7.0",
     "postcss-cli": "6.1.1",
-    "puppeteer": "1.11.0",
+    "puppeteer": "1.12.1",
     "rev-static": "3.4.2",
     "rimraf": "2.6.3",
     "standard": "12.0.1",
@@ -54,7 +54,7 @@
     "tslint": "5.12.1",
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.9.0",
-    "type-coverage": "1.7.0",
+    "type-coverage": "1.9.1",
     "types-as-schema": "1.6.0",
     "vue": "2.5.22",
     "vue-class-component": "6.3.2",
@@ -70,7 +70,7 @@
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
     "tslib": "1.9.3",
-    "typescript": "3.2.4"
+    "typescript": "3.3.1"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
