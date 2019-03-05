@@ -46,7 +46,7 @@ export class App extends Vue {
     if (this.source) {
       const sourceFile = ts.createSourceFile('', this.source, ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS)
 
-      const generator = new Generator([sourceFile])
+      const generator = new Generator([sourceFile], false)
 
       this.protobuf = generator.generateProtobuf()
       this.options = ['protobuf']

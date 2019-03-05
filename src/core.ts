@@ -14,7 +14,7 @@ import { generateSwaggerDoc } from './swagger-doc-generator'
 export class Generator {
   declarations: TypeDeclaration[] = []
 
-  constructor(public sourceFiles: ts.SourceFile[]) {
+  constructor(public sourceFiles: ts.SourceFile[], private looseMode: boolean) {
     const parser = new Parser(sourceFiles)
     this.declarations = parser.parse()
   }
@@ -24,7 +24,7 @@ export class Generator {
   }
 
   generateJsonSchemas() {
-    return generateJsonSchemas(this.declarations)
+    return generateJsonSchemas(this.declarations, this.looseMode)
   }
 
   generateGraphqlSchema() {
@@ -52,7 +52,7 @@ export class Generator {
   }
 
   generateSwaggerDoc(swaggerBase?: {}) {
-    return generateSwaggerDoc(this.declarations, swaggerBase)
+    return generateSwaggerDoc(this.declarations, this.looseMode, swaggerBase)
   }
 }
 

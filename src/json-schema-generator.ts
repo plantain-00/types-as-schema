@@ -9,8 +9,8 @@ import {
   StringType
 } from './utils'
 
-export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
-  const definitions = getAllDefinitions(typeDeclarations)
+export function generateJsonSchemas(typeDeclarations: TypeDeclaration[], looseMode: boolean) {
+  const definitions = getAllDefinitions(typeDeclarations, looseMode)
   return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
     .map(m => ({
       entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
@@ -21,7 +21,7 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[]) {
     }))
 }
 
-export function getAllDefinitions(typeDeclarations: TypeDeclaration[]) {
+export function getAllDefinitions(typeDeclarations: TypeDeclaration[], looseMode: boolean) {
   const definitions: { [name: string]: Definition } = {}
   for (const typeDeclaration of typeDeclarations) {
     if (typeDeclaration.kind === 'object'
@@ -29,7 +29,7 @@ export function getAllDefinitions(typeDeclarations: TypeDeclaration[]) {
       || typeDeclaration.kind === 'union'
       || typeDeclaration.kind === 'string'
       || typeDeclaration.kind === 'number') {
-      definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration)
+      definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration, looseMode)
     } else if (typeDeclaration.kind === 'reference') {
       definitions[typeDeclaration.newName] = {
         type: undefined,
@@ -62,7 +62,7 @@ function getTypeNameOfEnumOrConst(type: string): any {
   return 'integer'
 }
 
-export function getJsonSchemaProperty(memberType: Type): Definition {
+export function getJsonSchemaProperty(memberType: Type, looseMode: boolean): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
@@ -75,12 +75,12 @@ export function getJsonSchemaProperty(memberType: Type): Definition {
   } else if (memberType.kind === 'map') {
     return {
       type: 'object',
-      additionalProperties: getJsonSchemaProperty(memberType.value)
+      additionalProperties: getJsonSchemaProperty(memberType.value, looseMode)
     }
   } else if (memberType.kind === 'array') {
     return {
       type: 'array',
-      items: getJsonSchemaProperty(memberType.type),
+      items: getJsonSchemaProperty(memberType.type, looseMode),
       uniqueItems: memberType.uniqueItems,
       minItems: memberType.minItems,
       maxItems: memberType.maxItems,
@@ -106,11 +106,11 @@ export function getJsonSchemaProperty(memberType: Type): Definition {
       default: memberType.default
     }
   } else if (memberType.kind === 'object') {
-    return getJsonSchemaPropertyOfObject(memberType)
+    return getJsonSchemaPropertyOfObject(memberType, looseMode)
   } else if (memberType.kind === 'string') {
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
-    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration)
+    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration, looseMode)
   } else if (memberType.kind === 'null') {
     return {
       type: 'null'
@@ -122,7 +122,7 @@ export function getJsonSchemaProperty(memberType: Type): Definition {
   }
 }
 
-function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration): Definition {
+function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, looseMode: boolean): Definition {
   if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
     let enums: any[] = []
     for (const member of memberType.members) {
@@ -139,7 +139,7 @@ function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration): Definition 
   }
   return {
     type: undefined,
-    anyOf: memberType.members.map(m => getJsonSchemaProperty(m))
+    anyOf: memberType.members.map(m => getJsonSchemaProperty(m, looseMode))
   }
 }
 
@@ -167,22 +167,22 @@ function getJsonSchemaPropertyOfString(memberType: StringType): Definition {
   }
 }
 
-function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectType): ObjectDefinition {
+function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectType, looseMode: boolean): ObjectDefinition {
   const properties: { [name: string]: Definition } = {}
   const required: string[] = []
   for (const member of memberType.members) {
     if (!member.optional) {
       required.push(member.name)
     }
-    properties[member.name] = getJsonSchemaProperty(member.type)
+    properties[member.name] = getJsonSchemaProperty(member.type, looseMode)
   }
   let additionalProperties: Definition | boolean | undefined
   if (memberType.additionalProperties === undefined) {
-    additionalProperties = memberType.additionalProperties === undefined ? false : undefined
+    additionalProperties = looseMode ? undefined : false
   } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
     additionalProperties = memberType.additionalProperties
   } else {
-    additionalProperties = getJsonSchemaProperty(memberType.additionalProperties)
+    additionalProperties = getJsonSchemaProperty(memberType.additionalProperties, looseMode)
   }
   return {
     type: 'object',

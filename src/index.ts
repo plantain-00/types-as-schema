@@ -34,7 +34,8 @@ async function executeCommandLine() {
     swaggerBasePath,
     debugPath,
     filePaths,
-    watchMode
+    watchMode,
+    looseMode
   } = parseParameters(argv)
 
   function generateJsonSchemas(generator: Generator) {
@@ -59,7 +60,7 @@ async function executeCommandLine() {
 
     const sourceFiles = filePaths.map(filePath => program!.getSourceFile(filePath)!)
 
-    const generator = new Generator(sourceFiles)
+    const generator = new Generator(sourceFiles, looseMode)
 
     if (debugPath) {
       fs.writeFileSync(debugPath, JSON.stringify(generator.declarations, null, '  '))
@@ -156,6 +157,7 @@ function parseParameters(argv: minimist.ParsedArgs) {
   }
 
   const watchMode: boolean = argv.w || argv.watch
+  const looseMode: boolean = argv.loose
 
   return {
     protobufPath,
@@ -170,7 +172,8 @@ function parseParameters(argv: minimist.ParsedArgs) {
     swaggerBasePath,
     debugPath,
     filePaths,
-    watchMode
+    watchMode,
+    looseMode
   }
 }
 
