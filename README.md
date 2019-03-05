@@ -52,6 +52,7 @@ parameters | description
 `--swagger-base` | swagger json file that generation based on
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
+`--loose` | do not force `additionalProperties`
 
 ## protobuf and json schema
 

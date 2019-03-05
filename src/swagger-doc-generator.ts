@@ -2,7 +2,7 @@ import { TypeDeclaration, Type } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
 // tslint:disable-next-line:cognitive-complexity
-export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], swaggerBase?: {}) {
+export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], looseMode: boolean, swaggerBase?: {}) {
   const paths: { [path: string]: { [method: string]: any } } = {}
   const referenceNames: string[] = []
   for (const typeDeclaration of typeDeclarations) {
@@ -25,7 +25,7 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], swaggerB
             name: parameter.name,
             required: !parameter.optional,
             in: parameter.in,
-            ...getSchema(parameter.type)
+            ...getSchema(parameter.type, looseMode)
           }
         }),
         summary: typeDeclaration.summary,
@@ -33,12 +33,12 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], swaggerB
         deprecated: typeDeclaration.deprecated,
         tags: typeDeclaration.tags,
         responses: {
-          200: getSchema(typeDeclaration.type)
+          200: getSchema(typeDeclaration.type, looseMode)
         }
       }
     }
   }
-  const definitions = getAllDefinitions(typeDeclarations)
+  const definitions = getAllDefinitions(typeDeclarations, looseMode)
   const mergedDefinitions: {[name: string]: Definition} = {}
   for (const referenceName of referenceNames) {
     const referencedName = getReferencedDefinitions(referenceName, definitions, [])
@@ -55,8 +55,8 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], swaggerB
   return JSON.stringify(result, null, 2)
 }
 
-function getSchema(type: Type) {
-  const schema = getJsonSchemaProperty(type)
+function getSchema(type: Type, looseMode: boolean) {
+  const schema = getJsonSchemaProperty(type, looseMode)
   if (type.kind === 'reference') {
     return {
       schema
