@@ -1,11 +1,11 @@
-import { TypeDeclaration, Type } from './utils'
+import { Type, Context } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
 // tslint:disable-next-line:cognitive-complexity
-export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], looseMode: boolean, swaggerBase?: {}) {
+export function generateSwaggerDoc(context: Context, swaggerBase?: {}) {
   const paths: { [path: string]: { [method: string]: any } } = {}
   const referenceNames: string[] = []
-  for (const typeDeclaration of typeDeclarations) {
+  for (const typeDeclaration of context.declarations) {
     if (typeDeclaration.kind === 'function'
       && typeDeclaration.path
       && typeDeclaration.method) {
@@ -25,7 +25,7 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], looseMod
             name: parameter.name,
             required: !parameter.optional,
             in: parameter.in,
-            ...getSchema(parameter.type, looseMode)
+            ...getSchema(parameter.type, context)
           }
         }),
         summary: typeDeclaration.summary,
@@ -33,12 +33,12 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], looseMod
         deprecated: typeDeclaration.deprecated,
         tags: typeDeclaration.tags,
         responses: {
-          200: getSchema(typeDeclaration.type, looseMode)
+          200: getSchema(typeDeclaration.type, context)
         }
       }
     }
   }
-  const definitions = getAllDefinitions(typeDeclarations, looseMode)
+  const definitions = getAllDefinitions(context)
   const mergedDefinitions: {[name: string]: Definition} = {}
   for (const referenceName of referenceNames) {
     const referencedName = getReferencedDefinitions(referenceName, definitions, [])
@@ -55,8 +55,8 @@ export function generateSwaggerDoc(typeDeclarations: TypeDeclaration[], looseMod
   return JSON.stringify(result, null, 2)
 }
 
-function getSchema(type: Type, looseMode: boolean) {
-  const schema = getJsonSchemaProperty(type, looseMode)
+function getSchema(type: Type, context: Context) {
+  const schema = getJsonSchemaProperty(type, context)
   if (type.kind === 'reference') {
     return {
       schema

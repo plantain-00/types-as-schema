@@ -355,6 +355,7 @@ export type EntryType = {
   circular: Circular;
   outerType: OuterType;
   typeAlias: TypeAlias;
+  pick: Pick<TypeAlias, 'result'>
 }
 
 export interface Mutation {

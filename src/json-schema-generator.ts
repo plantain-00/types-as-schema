@@ -3,15 +3,16 @@ import {
   ObjectDeclaration,
   ArrayDeclaration,
   UnionDeclaration,
-  TypeDeclaration,
   NumberType,
   ObjectType,
-  StringType
+  StringType,
+  isValidReference,
+  Context
 } from './utils'
 
-export function generateJsonSchemas(typeDeclarations: TypeDeclaration[], looseMode: boolean) {
-  const definitions = getAllDefinitions(typeDeclarations, looseMode)
-  return typeDeclarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
+export function generateJsonSchemas(context: Context) {
+  const definitions = getAllDefinitions(context)
+  return context.declarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
     .map(m => ({
       entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
       schema: {
@@ -21,15 +22,15 @@ export function generateJsonSchemas(typeDeclarations: TypeDeclaration[], looseMo
     }))
 }
 
-export function getAllDefinitions(typeDeclarations: TypeDeclaration[], looseMode: boolean) {
+export function getAllDefinitions(context: Context) {
   const definitions: { [name: string]: Definition } = {}
-  for (const typeDeclaration of typeDeclarations) {
+  for (const typeDeclaration of context.declarations) {
     if (typeDeclaration.kind === 'object'
       || typeDeclaration.kind === 'array'
       || typeDeclaration.kind === 'union'
       || typeDeclaration.kind === 'string'
       || typeDeclaration.kind === 'number') {
-      definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration, looseMode)
+      definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration, context)
     } else if (typeDeclaration.kind === 'reference') {
       definitions[typeDeclaration.newName] = {
         type: undefined,
@@ -62,7 +63,7 @@ function getTypeNameOfEnumOrConst(type: string): any {
   return 'integer'
 }
 
-export function getJsonSchemaProperty(memberType: Type, looseMode: boolean): Definition {
+export function getJsonSchemaProperty(memberType: Type, context: Context): Definition {
   if (memberType.kind === 'number') {
     return getNumberType(memberType)
   } else if (memberType.kind === 'boolean') {
@@ -75,12 +76,12 @@ export function getJsonSchemaProperty(memberType: Type, looseMode: boolean): Def
   } else if (memberType.kind === 'map') {
     return {
       type: 'object',
-      additionalProperties: getJsonSchemaProperty(memberType.value, looseMode)
+      additionalProperties: getJsonSchemaProperty(memberType.value, context)
     }
   } else if (memberType.kind === 'array') {
     return {
       type: 'array',
-      items: getJsonSchemaProperty(memberType.type, looseMode),
+      items: getJsonSchemaProperty(memberType.type, context),
       uniqueItems: memberType.uniqueItems,
       minItems: memberType.minItems,
       maxItems: memberType.maxItems,
@@ -100,17 +101,22 @@ export function getJsonSchemaProperty(memberType: Type, looseMode: boolean): Def
       enum: memberType.enums
     }
   } else if (memberType.kind === 'reference') {
+    if (isValidReference(context.declarations, memberType.name)) {
+      return {
+        type: undefined,
+        $ref: `#/definitions/${memberType.name}`,
+        default: memberType.default
+      }
+    }
     return {
-      type: undefined,
-      $ref: `#/definitions/${memberType.name}`,
-      default: memberType.default
+      type: undefined
     }
   } else if (memberType.kind === 'object') {
-    return getJsonSchemaPropertyOfObject(memberType, looseMode)
+    return getJsonSchemaPropertyOfObject(memberType, context)
   } else if (memberType.kind === 'string') {
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
-    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration, looseMode)
+    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration, context)
   } else if (memberType.kind === 'null') {
     return {
       type: 'null'
@@ -122,7 +128,7 @@ export function getJsonSchemaProperty(memberType: Type, looseMode: boolean): Def
   }
 }
 
-function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, looseMode: boolean): Definition {
+function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, context: Context): Definition {
   if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
     let enums: any[] = []
     for (const member of memberType.members) {
@@ -139,7 +145,7 @@ function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, looseMode: b
   }
   return {
     type: undefined,
-    anyOf: memberType.members.map(m => getJsonSchemaProperty(m, looseMode))
+    anyOf: memberType.members.map(m => getJsonSchemaProperty(m, context))
   }
 }
 
@@ -167,22 +173,22 @@ function getJsonSchemaPropertyOfString(memberType: StringType): Definition {
   }
 }
 
-function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectType, looseMode: boolean): ObjectDefinition {
+function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectType, context: Context): ObjectDefinition {
   const properties: { [name: string]: Definition } = {}
   const required: string[] = []
   for (const member of memberType.members) {
     if (!member.optional) {
       required.push(member.name)
     }
-    properties[member.name] = getJsonSchemaProperty(member.type, looseMode)
+    properties[member.name] = getJsonSchemaProperty(member.type, context)
   }
   let additionalProperties: Definition | boolean | undefined
   if (memberType.additionalProperties === undefined) {
-    additionalProperties = looseMode ? undefined : false
+    additionalProperties = context.looseMode ? undefined : false
   } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
     additionalProperties = memberType.additionalProperties
   } else {
-    additionalProperties = getJsonSchemaProperty(memberType.additionalProperties, looseMode)
+    additionalProperties = getJsonSchemaProperty(memberType.additionalProperties, context)
   }
   return {
     type: 'object',

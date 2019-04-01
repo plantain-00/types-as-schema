@@ -235,6 +235,7 @@ type EntryType {
   circular: Circular!
   outerType: OuterType!
   typeAlias: TypeAlias!
+  pick: Pick!
 }
 
 type Mutation {

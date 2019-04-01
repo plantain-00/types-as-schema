@@ -268,6 +268,7 @@ export interface EntryType<TContext = any> {
   circular: Circular<TContext>
   outerType: OuterType<TContext>
   typeAlias: TypeAlias<TContext>
+  pick: Pick<TContext>
 }
 
 export interface CreateInput<TContext = any> {
@@ -523,6 +524,7 @@ export interface ApolloResolvers<TContext = any> {
     circular?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     typeAlias?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    pick?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   Mutation: {
     create(parent: any, input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): any,

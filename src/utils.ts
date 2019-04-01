@@ -20,6 +20,24 @@ export function getPosition(typeNode: ts.Node, sourceFile: ts.SourceFile) {
   }
 }
 
+export function isValidReference(declarations: TypeDeclaration[], referenceName: string) {
+  for (const declaration of declarations) {
+    if (declaration.kind === 'reference') {
+      if (declaration.newName === referenceName) {
+        return true
+      }
+    } else if (declaration.name === referenceName) {
+      return true
+    }
+  }
+  return false
+}
+
+export interface Context {
+  looseMode: boolean
+  declarations: TypeDeclaration[]
+}
+
 export type TypeDeclaration =
   | EnumDeclaration
   | ObjectDeclaration

@@ -299,6 +299,7 @@ pub struct EntryType {
   pub circular: Circular,
   #[serde(rename = "outerType")] pub outer_type: OuterType,
   #[serde(rename = "typeAlias")] pub type_alias: TypeAlias,
+  pub pick: Pick,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

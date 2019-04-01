@@ -760,6 +760,10 @@ export const entryTypeSchema = {
     type: Schema.Types.Mixed,
     required: true
   },
+  pick: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
 }
 
 export const mutationSchema = {
