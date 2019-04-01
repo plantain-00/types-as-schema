@@ -61,9 +61,7 @@
         "stringNumber": {
           "$ref": "#/definitions/StringType"
         },
-        "id": {
-          "$ref": "#/definitions/ID"
-        },
+        "id": {},
         "parameter": {
           "$ref": "#/definitions/Parameter"
         },
@@ -91,12 +89,11 @@
         "circular": {
           "$ref": "#/definitions/Circular"
         },
-        "outerType": {
-          "$ref": "#/definitions/OuterType"
-        },
+        "outerType": {},
         "typeAlias": {
           "$ref": "#/definitions/TypeAlias"
-        }
+        },
+        "pick": {}
       },
       "required": [
         "booleanMember",
@@ -122,7 +119,8 @@
         "classType",
         "circular",
         "outerType",
-        "typeAlias"
+        "typeAlias",
+        "pick"
       ],
       "additionalProperties": true
     },

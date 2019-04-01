@@ -218,6 +218,7 @@ type entryType = {
   circular: circular;
   outerType: outerType;
   typeAlias: typeAlias;
+  pick: pick;
 }
 
 type mutation = {

@@ -24,7 +24,10 @@ export class Generator {
   }
 
   generateJsonSchemas() {
-    return generateJsonSchemas(this.declarations, this.looseMode)
+    return generateJsonSchemas({
+      declarations: this.declarations,
+      looseMode: this.looseMode
+    })
   }
 
   generateGraphqlSchema() {
@@ -52,7 +55,10 @@ export class Generator {
   }
 
   generateSwaggerDoc(swaggerBase?: {}) {
-    return generateSwaggerDoc(this.declarations, this.looseMode, swaggerBase)
+    return generateSwaggerDoc({
+      declarations: this.declarations,
+      looseMode: this.looseMode
+    }, swaggerBase)
   }
 }
 
