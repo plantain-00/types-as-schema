@@ -1,6 +1,6 @@
 {
   "name": "types-as-schema",
-  "version": "1.28.1",
+  "version": "1.28.2",
   "description": "Genetate json scheme, protobuf file, graphQL/mongoose schema and reasonml/ocaml/rust types from typescript types.",
   "main": "index.js",
   "scripts": {
@@ -55,7 +55,6 @@
     "tslint-config-standard": "8.0.1",
     "tslint-sonarts": "1.9.0",
     "type-coverage": "1.12.0",
-    "types-as-schema": "1.6.0",
     "vue": "2.6.10",
     "vue-class-component": "7.0.2",
     "watch-then-execute": "1.1.1",
@@ -70,7 +69,7 @@
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
     "tslib": "1.9.3",
-    "typescript": "3.3.1"
+    "typescript": "3"
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
