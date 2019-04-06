@@ -221,6 +221,18 @@ type circular = {
   children: list(circular),
 };
 
+type typeAlias = {
+  .
+  result: result2,
+};
+
+type createInput = {
+  .
+  member1: string,
+  member2: float,
+  member3: createInputMember3,
+};
+
 type entryType = {
   .
   optionalMember: option(string),
@@ -247,19 +259,12 @@ type entryType = {
   circular: circular,
   outerType: outerType,
   typeAlias: typeAlias,
-  pick: pick,
+  pick3: createInput2,
 };
 
 type mutation = {
   .
   create: mutationResult,
-};
-
-type createInput = {
-  .
-  member1: string,
-  member2: float,
-  member3: createInputMember3,
 };
 
 type mutationResult = {
@@ -289,11 +294,6 @@ type createInputMember3 = {
   member1: string,
 };
 
-type typeAlias = {
-  .
-  result: result2,
-};
-
 type result3 = {
   .
   result3: string,
@@ -316,4 +316,10 @@ type mongooseScheme = {
   index2: string,
   index3: string,
   buffer: buffer,
+};
+
+type createInput2 = {
+  .
+  member1: string,
+  member2: float,
 };

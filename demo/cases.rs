@@ -274,6 +274,18 @@ pub struct Circular {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct TypeAlias {
+  pub result: Result2,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateInput {
+  #[serde(rename = "member1")] pub member_1: String,
+  #[serde(rename = "member2")] pub member_2: f32,
+  #[serde(rename = "member3")] pub member_3: CreateInputMember3,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct EntryType {
   #[serde(rename = "optionalMember")] pub optional_member: Option<String>,
   #[serde(rename = "booleanMember")] pub boolean_member: bool,
@@ -299,19 +311,12 @@ pub struct EntryType {
   pub circular: Circular,
   #[serde(rename = "outerType")] pub outer_type: OuterType,
   #[serde(rename = "typeAlias")] pub type_alias: TypeAlias,
-  pub pick: Pick,
+  #[serde(rename = "pick3")] pub pick_3: CreateInput2,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Mutation {
   pub create: MutationResult,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct CreateInput {
-  #[serde(rename = "member1")] pub member_1: String,
-  #[serde(rename = "member2")] pub member_2: f32,
-  #[serde(rename = "member3")] pub member_3: CreateInputMember3,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -341,11 +346,6 @@ pub struct CreateInputMember3 {
   #[serde(rename = "member1")] pub member_1: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct TypeAlias {
-  pub result: Result2,
-}
-
 type Result2 = Result3;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -370,4 +370,10 @@ pub struct MongooseScheme {
   #[serde(rename = "index2")] pub index_2: String,
   #[serde(rename = "index3")] pub index_3: String,
   pub buffer: Buffer,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateInput2 {
+  #[serde(rename = "member1")] pub member_1: String,
+  #[serde(rename = "member2")] pub member_2: f32,
 }

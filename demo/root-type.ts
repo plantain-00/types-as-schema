@@ -241,6 +241,16 @@ export interface Circular<TContext = any> {
   children: Array<Circular<TContext>>
 }
 
+export interface TypeAlias<TContext = any> {
+  result: Result2<TContext>
+}
+
+export interface CreateInput<TContext = any> {
+  member1: string
+  member2: number
+  member3: CreateInputMember3<TContext>
+}
+
 export interface EntryType<TContext = any> {
   optionalMember?: string
   booleanMember: boolean
@@ -268,13 +278,9 @@ export interface EntryType<TContext = any> {
   circular: Circular<TContext>
   outerType: OuterType<TContext>
   typeAlias: TypeAlias<TContext>
-  pick: Pick<TContext>
-}
-
-export interface CreateInput<TContext = any> {
-  member1: string
-  member2: number
-  member3: CreateInputMember3<TContext>
+  pick: object
+  pick2: object
+  pick3: CreateInput2<TContext>
 }
 
 export interface MutationResult<TContext = any> {
@@ -292,10 +298,6 @@ export interface Result<TContext = any> {
 
 export interface CreateInputMember3<TContext = any> {
   member1: string
-}
-
-export interface TypeAlias<TContext = any> {
-  result: Result2<TContext>
 }
 
 export type Result2<TContext = any> = Result3<TContext>
@@ -319,6 +321,11 @@ export interface MongooseScheme<TContext = any> {
   index2: string
   index3: string
   buffer: Buffer<TContext>
+}
+
+export interface CreateInput2<TContext = any> {
+  member1: string
+  member2: number
 }
 
 export interface OuterType<TContext = any> {
@@ -497,6 +504,14 @@ export interface ApolloResolvers<TContext = any> {
   Circular?: {
     children?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
+  TypeAlias?: {
+    result?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  CreateInput?: {
+    member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    member2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    member3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
   EntryType?: {
     optionalMember?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     booleanMember?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
@@ -525,14 +540,11 @@ export interface ApolloResolvers<TContext = any> {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     typeAlias?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     pick?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    pick2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    pick3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   Mutation: {
     create(parent: any, input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): any,
-  },
-  CreateInput?: {
-    member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
-    member2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
-    member3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   MutationResult?: {
     result?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
@@ -551,9 +563,6 @@ export interface ApolloResolvers<TContext = any> {
   CreateInputMember3?: {
     member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
-  TypeAlias?: {
-    result?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
-  },
   Result3?: {
     result3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
@@ -571,6 +580,10 @@ export interface ApolloResolvers<TContext = any> {
     index2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     index3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     buffer?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  CreateInput2?: {
+    member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    member2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

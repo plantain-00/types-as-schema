@@ -200,6 +200,16 @@ message Circular {
     repeated Circular children = 1;
 }
 
+message TypeAlias {
+    Result2 result = 1;
+}
+
+message CreateInput {
+    string member1 = 1;
+    double member2 = 2;
+    CreateInputMember3 member3 = 3;
+}
+
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
@@ -225,17 +235,11 @@ message EntryType {
     Circular circular = 24;
     OuterType outerType = 25;
     TypeAlias typeAlias = 26;
-    Pick pick = 27;
+    CreateInput2 pick3 = 29;
 }
 
 message Mutation {
     MutationResult create = 1;
-}
-
-message CreateInput {
-    string member1 = 1;
-    double member2 = 2;
-    CreateInputMember3 member3 = 3;
 }
 
 message MutationResult {
@@ -260,10 +264,6 @@ message CreateInputMember3 {
     string member1 = 1;
 }
 
-message TypeAlias {
-    Result2 result = 1;
-}
-
 message Result3 {
     string result3 = 1;
 }
@@ -283,4 +283,9 @@ message MongooseScheme {
     string index2 = 5;
     string index3 = 6;
     Buffer buffer = 7;
+}
+
+message CreateInput2 {
+    string member1 = 1;
+    double member2 = 2;
 }

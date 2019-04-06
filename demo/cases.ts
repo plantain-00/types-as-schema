@@ -356,6 +356,8 @@ export type EntryType = {
   outerType: OuterType;
   typeAlias: TypeAlias;
   pick: Pick<TypeAlias, 'result'>
+  pick2: Pick<CreateInput, 'member1' | 'member2'>
+  pick3: CreateInput2
 }
 
 export interface Mutation {
@@ -467,3 +469,5 @@ export interface MongooseScheme {
 
 type Decimal128 = number
 type Buffer = any
+
+type CreateInput2 = Pick<CreateInput, 'member1' | 'member2'>
