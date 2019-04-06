@@ -25,6 +25,7 @@ Genetate json scheme, protobuf file, graphQL/mongoose(alpha) schema, reasonml(al
 + class extends
 + muitiple files
 + function / method
++ Pick
 
 ## unsupported types features
 

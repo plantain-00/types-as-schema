@@ -209,6 +209,16 @@ type Circular {
   children: [Circular]!
 }
 
+type TypeAlias {
+  result: Result2!
+}
+
+input CreateInput {
+  member1: String!
+  member2: Float!
+  member3: CreateInputMember3!
+}
+
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -235,17 +245,11 @@ type EntryType {
   circular: Circular!
   outerType: OuterType!
   typeAlias: TypeAlias!
-  pick: Pick!
+  pick3: CreateInput2!
 }
 
 type Mutation {
   create(input: CreateInput!): MutationResult!
-}
-
-input CreateInput {
-  member1: String!
-  member2: Float!
-  member3: CreateInputMember3!
 }
 
 type MutationResult {
@@ -270,10 +274,6 @@ input CreateInputMember3 {
   member1: String!
 }
 
-type TypeAlias {
-  result: Result2!
-}
-
 type Result3 {
   result3: String!
 }
@@ -293,6 +293,11 @@ type MongooseScheme {
   index2: String!
   index3: String!
   buffer: Buffer!
+}
+
+type CreateInput2 {
+  member1: String!
+  member2: Float!
 }
 
 type OuterType {

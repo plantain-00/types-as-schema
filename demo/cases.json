@@ -95,7 +95,37 @@
         "typeAlias": {
           "$ref": "#/definitions/TypeAlias"
         },
-        "pick": {}
+        "pick": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "$ref": "#/definitions/Result2"
+            }
+          },
+          "required": [
+            "result"
+          ],
+          "additionalProperties": false
+        },
+        "pick2": {
+          "type": "object",
+          "properties": {
+            "member1": {
+              "type": "string"
+            },
+            "member2": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "member1",
+            "member2"
+          ],
+          "additionalProperties": false
+        },
+        "pick3": {
+          "$ref": "#/definitions/CreateInput2"
+        }
       },
       "required": [
         "booleanMember",
@@ -122,7 +152,9 @@
         "circular",
         "outerType",
         "typeAlias",
-        "pick"
+        "pick",
+        "pick2",
+        "pick3"
       ],
       "additionalProperties": true
     },
@@ -1128,6 +1160,22 @@
       },
       "required": [
         "result3"
+      ],
+      "additionalProperties": false
+    },
+    "CreateInput2": {
+      "type": "object",
+      "properties": {
+        "member1": {
+          "type": "string"
+        },
+        "member2": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "member1",
+        "member2"
       ],
       "additionalProperties": false
     }

@@ -176,9 +176,12 @@ export class Parser {
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
-    // if the node is pre-handled, then it should be in `declarations` already, so don't continue
-    if (this.declarations.some(m => m.kind === 'enum' && m.name === declaration.name!.text)) {
-      return
+    if (declaration.name) {
+      const declarationName = declaration.name.text
+      // if the node is pre-handled, then it should be in `declarations` already, so don't continue
+      if (this.declarations.some(m => m.kind === 'reference' ? m.newName === declarationName : m.name === declarationName)) {
+        return
+      }
     }
 
     let { members, minProperties, maxProperties, additionalProperties } = this.getObjectMembers(declaration.members, sourceFile)
@@ -293,10 +296,25 @@ export class Parser {
       )
     } else if (declaration.type.kind === ts.SyntaxKind.TypeReference) {
       const typeReference = declaration.type as ts.TypeReferenceNode
+      const typeName = typeReference.typeName as ts.Identifier
+      if (typeReference.typeArguments && typeReference.typeArguments.length > 0) {
+        if (typeName.text === 'Pick') {
+          const type = this.getTypeOfPick(typeName, typeReference.typeArguments, sourceFile)
+          if (type) {
+            this.declarations.push({
+              name: declaration.name.text,
+              ...type
+            })
+            return
+          }
+        } else {
+          warn(getPosition(declaration, sourceFile), 'parse')
+        }
+      }
       const referenceDeclaration: ReferenceDeclaration = {
         kind: 'reference',
         newName: declaration.name.text,
-        name: (typeReference.typeName as ts.Identifier).text,
+        name: typeName.text,
         position: getPosition(declaration, sourceFile)
       }
       this.declarations.push(referenceDeclaration)
@@ -643,14 +661,20 @@ export class Parser {
       if (reference.typeName.text === 'Array' || reference.typeName.text === 'ReadonlyArray') {
         return this.getTypeOfArrayTypeReference(reference, sourceFile)
       }
-      if ((reference.typeName.text === 'Promise'
-        || reference.typeName.text === 'ReturnType'
-        || reference.typeName.text === 'DeepReturnType')
-        && reference.typeArguments
+      if (reference.typeArguments
         && reference.typeArguments.length > 0) {
-        const typeArgument = reference.typeArguments[0]
-        if (typeArgument.kind === ts.SyntaxKind.TypeReference) {
-          return this.getTypeOfTypeReference(typeArgument as ts.TypeReferenceNode, sourceFile)
+        if ((reference.typeName.text === 'Promise'
+          || reference.typeName.text === 'ReturnType'
+          || reference.typeName.text === 'DeepReturnType')) {
+          const typeArgument = reference.typeArguments[0]
+          if (typeArgument.kind === ts.SyntaxKind.TypeReference) {
+            return this.getTypeOfTypeReference(typeArgument as ts.TypeReferenceNode, sourceFile)
+          }
+        } else if (reference.typeName.text === 'Pick') {
+          const type = this.getTypeOfPick(reference.typeName, reference.typeArguments, sourceFile)
+          if (type) {
+            return type
+          }
         }
       }
       return {
@@ -676,6 +700,63 @@ export class Parser {
       kind: undefined,
       position: getPosition(reference.typeName, sourceFile)
     }
+  }
+
+  // tslint:disable-next-line:cognitive-complexity
+  private getTypeOfPick(
+    typeName: ts.Identifier,
+    typeArguments: ts.NodeArray<ts.TypeNode>,
+    sourceFile: ts.SourceFile
+  ): ObjectType | undefined {
+    const argument = typeArguments[0]
+    if (argument.kind === ts.SyntaxKind.TypeReference) {
+      const declarationName = ((argument as ts.TypeReferenceNode).typeName as ts.Identifier).escapedText.toString()
+      this.preHandleType(declarationName)
+      const declaration = this.declarations.find(m => m.kind === 'object' && m.name === declarationName)
+      if (declaration && declaration.kind === 'object') {
+        const field = typeArguments[1]
+        const memberNames: string[] = []
+        if (field.kind === ts.SyntaxKind.LiteralType) {
+          const literal = (field as ts.LiteralTypeNode).literal
+          if (literal.kind === ts.SyntaxKind.StringLiteral) {
+            memberNames.push(literal.text)
+          }
+        } else if (field.kind === ts.SyntaxKind.UnionType) {
+          const types = (field as ts.UnionTypeNode).types
+          for (const type of types) {
+            if (type.kind === ts.SyntaxKind.LiteralType) {
+              const literal = (type as ts.LiteralTypeNode).literal
+              if (literal.kind === ts.SyntaxKind.StringLiteral) {
+                memberNames.push(literal.text)
+              }
+            }
+          }
+        } else {
+          warn(getPosition(typeName, sourceFile), 'parser')
+          return undefined
+        }
+        const members: Member[] = []
+        let minProperties = 0
+        let maxProperties = 0
+        for (const member of declaration.members) {
+          if (memberNames.includes(member.name)) {
+            maxProperties++
+            if (!member.optional) {
+              minProperties++
+            }
+            members.push(member)
+          }
+        }
+        return {
+          kind: 'object',
+          members,
+          minProperties,
+          maxProperties,
+          position: getPosition(typeName, sourceFile)
+        }
+      }
+    }
+    return undefined
   }
 
   private getTypeOfTypeLiteral(literal: ts.TypeLiteralNode, sourceFile: ts.SourceFile): Type {

@@ -645,6 +645,28 @@ export const circularSchema = {
   },
 }
 
+export const typeAliasSchema = {
+  result: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
+export const createInputSchema = {
+  member1: {
+    type: String,
+    required: true
+  },
+  member2: {
+    type: Number,
+    required: true
+  },
+  member3: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
 export const entryTypeSchema = {
   optionalMember: {
     type: String,
@@ -764,25 +786,18 @@ export const entryTypeSchema = {
     type: Schema.Types.Mixed,
     required: true
   },
-}
-
-export const mutationSchema = {
-  create: {
+  pick2: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+  pick3: {
     type: Schema.Types.Mixed,
     required: true
   },
 }
 
-export const createInputSchema = {
-  member1: {
-    type: String,
-    required: true
-  },
-  member2: {
-    type: Number,
-    required: true
-  },
-  member3: {
+export const mutationSchema = {
+  create: {
     type: Schema.Types.Mixed,
     required: true
   },
@@ -827,13 +842,6 @@ export const resultSchema = {
 export const createInputMember3Schema = {
   member1: {
     type: String,
-    required: true
-  },
-}
-
-export const typeAliasSchema = {
-  result: {
-    type: Schema.Types.Mixed,
     required: true
   },
 }
@@ -905,6 +913,17 @@ export const mongooseSchemeSchema = {
   },
   buffer: {
     type: Schema.Types.Buffer,
+    required: true
+  },
+}
+
+export const createInput2Schema = {
+  member1: {
+    type: String,
+    required: true
+  },
+  member2: {
+    type: Number,
     required: true
   },
 }
