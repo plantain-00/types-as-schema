@@ -31,10 +31,10 @@
     "@types/fs-extra": "5.0.5",
     "@types/jasmine": "3.3.12",
     "@types/minimist": "1.2.0",
-    "@types/node": "11.13.0",
+    "@types/node": "11.13.4",
     "@types/puppeteer": "1.12.3",
-    "autoprefixer": "9.5.0",
-    "clean-css-cli": "4.2.1",
+    "autoprefixer": "9.5.1",
+    "clean-css-cli": "4.3.0",
     "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
     "file2variable-cli": "1.8.5",
@@ -58,7 +58,7 @@
     "vue": "2.6.10",
     "vue-class-component": "7.0.2",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.29.6",
+    "webpack": "4.30.0",
     "webpack-cli": "3.3.0"
   },
   "dependencies": {
