@@ -45,7 +45,7 @@
     "markdownlint-cli": "0.16.0",
     "no-unused-export": "1.7.0",
     "postcss-cli": "6.1.2",
-    "puppeteer": "1.16.0",
+    "puppeteer": "1.17.0",
     "rev-static": "3.4.3",
     "rimraf": "2.6.3",
     "standard": "12.0.1",
@@ -58,7 +58,7 @@
     "vue": "2.6.10",
     "vue-class-component": "7.1.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.31.0",
+    "webpack": "4.32.2",
     "webpack-cli": "3.3.2"
   },
   "dependencies": {
