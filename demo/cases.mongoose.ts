@@ -794,6 +794,10 @@ export const entryTypeSchema = {
     type: Schema.Types.Mixed,
     required: true
   },
+  unknown: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
 }
 
 export const mutationSchema = {
@@ -926,6 +930,14 @@ export const createInput2Schema = {
     type: Number,
     required: true
   },
+}
+
+export const layoutMetadataMapSchema = {
+
+}
+
+export const metadataSchema = {
+
 }
 
 export const outerTypeSchema = {

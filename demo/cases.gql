@@ -246,6 +246,7 @@ type EntryType {
   outerType: OuterType!
   typeAlias: TypeAlias!
   pick3: CreateInput2!
+  unknown: JSON!
 }
 
 type Mutation {

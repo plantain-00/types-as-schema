@@ -281,6 +281,7 @@ export interface EntryType<TContext = any> {
   pick: object
   pick2: object
   pick3: CreateInput2<TContext>
+  unknown: LayoutMetadataMap<TContext>
 }
 
 export interface MutationResult<TContext = any> {
@@ -326,6 +327,14 @@ export interface MongooseScheme<TContext = any> {
 export interface CreateInput2<TContext = any> {
   member1: string
   member2: number
+}
+
+export interface LayoutMetadataMap<TContext = any> {
+
+}
+
+export interface Metadata<TContext = any> {
+
 }
 
 export interface OuterType<TContext = any> {
@@ -542,6 +551,7 @@ export interface ApolloResolvers<TContext = any> {
     pick?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     pick2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     pick3?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    unknown?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   Mutation: {
     create(parent: any, input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): any,
@@ -584,6 +594,12 @@ export interface ApolloResolvers<TContext = any> {
   CreateInput2?: {
     member1?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     member2?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  LayoutMetadataMap?: {
+
+  },
+  Metadata?: {
+
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

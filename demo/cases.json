@@ -123,6 +123,9 @@
         },
         "pick3": {
           "$ref": "#/definitions/CreateInput2"
+        },
+        "unknown": {
+          "$ref": "#/definitions/LayoutMetadataMap"
         }
       },
       "required": [
@@ -152,7 +155,8 @@
         "typeAlias",
         "pick",
         "pick2",
-        "pick3"
+        "pick3",
+        "unknown"
       ],
       "additionalProperties": true
     },
@@ -1164,6 +1168,20 @@
         "member2"
       ],
       "additionalProperties": false
+    },
+    "LayoutMetadataMap": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": {
+        "$ref": "#/definitions/Metadata"
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": {}
     }
   }
 }

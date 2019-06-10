@@ -236,6 +236,7 @@ message EntryType {
     OuterType outerType = 25;
     TypeAlias typeAlias = 26;
     CreateInput2 pick3 = 29;
+    LayoutMetadataMap unknown = 30;
 }
 
 message Mutation {
@@ -288,4 +289,12 @@ message MongooseScheme {
 message CreateInput2 {
     string member1 = 1;
     double member2 = 2;
+}
+
+message LayoutMetadataMap {
+
+}
+
+message Metadata {
+
 }
