@@ -126,7 +126,7 @@ export type MapType = {
   kind: 'map';
   key: Type;
   value: Type;
-  default?: any
+  default?: unknown
 } & Position
 
 /**
@@ -136,14 +136,14 @@ export type EnumType = {
   kind: 'enum';
   type: string;
   name: string;
-  enums: any[];
-  default?: any
+  enums: unknown[];
+  default?: unknown
 } & Position
 
 export type ReferenceType = {
   kind: 'reference';
   name: string;
-  default?: any;
+  default?: unknown;
 } & Position
 
 export type NumberType = {
@@ -186,7 +186,7 @@ export type BooleanType = {
  */
 export type AnyType = {
   kind: undefined;
-  default?: any
+  default?: unknown
 } & Position
 
 export type ObjectType = {
@@ -195,7 +195,7 @@ export type ObjectType = {
   minProperties: number;
   maxProperties?: number;
   additionalProperties?: boolean | Type;
-  default?: any;
+  default?: unknown;
   title?: string;
   description?: string;
 } & Position
@@ -206,7 +206,7 @@ export type ArrayType = {
   uniqueItems?: boolean;
   minItems?: number;
   maxItems?: number;
-  default?: any[]
+  default?: unknown[]
   title?: string;
   description?: string;
 } & Position
@@ -216,7 +216,7 @@ export type ArrayType = {
  */
 export type NullType = {
   kind: 'null'
-  default?: any
+  default?: unknown
 } & Position
 
 /**
@@ -225,7 +225,7 @@ export type NullType = {
 export type UnionType = {
   kind: 'union';
   members: Type[];
-  default?: any
+  default?: unknown
 } & Position
 
 export type Member = {
@@ -250,5 +250,5 @@ export type Parameter = {
 export type Expression = {
   name: string;
   type: Type;
-  value: any;
+  value: unknown;
 }

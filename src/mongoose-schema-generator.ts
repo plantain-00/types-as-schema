@@ -161,6 +161,6 @@ function getMongooseSchemaProperty(memberType: Type) {
   return { propertyType, mapOf }
 }
 
-function escapeStringLiteral(s: string) {
+function escapeStringLiteral(s: unknown) {
   return JSON.stringify(s)
 }
