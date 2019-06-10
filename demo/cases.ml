@@ -229,6 +229,7 @@ type entryType = {
   outerType: outerType;
   typeAlias: typeAlias;
   pick3: createInput2;
+  unknown: layoutMetadataMap;
 }
 
 type mutation = {
@@ -281,6 +282,14 @@ type mongooseScheme = {
 type createInput2 = {
   member1: string;
   member2: float;
+}
+
+type layoutMetadataMap = {
+
+}
+
+type metadata = {
+
 }
 
 type outerType = {

@@ -312,6 +312,7 @@ pub struct EntryType {
   #[serde(rename = "outerType")] pub outer_type: OuterType,
   #[serde(rename = "typeAlias")] pub type_alias: TypeAlias,
   #[serde(rename = "pick3")] pub pick_3: CreateInput2,
+  pub unknown: LayoutMetadataMap,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -376,6 +377,16 @@ pub struct MongooseScheme {
 pub struct CreateInput2 {
   #[serde(rename = "member1")] pub member_1: String,
   #[serde(rename = "member2")] pub member_2: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct LayoutMetadataMap {
+
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Metadata {
+
 }
 
 #[derive(Serialize, Deserialize, Debug)]

@@ -358,6 +358,7 @@ export type EntryType = {
   pick: Pick<TypeAlias, 'result'>
   pick2: Pick<CreateInput, 'member1' | 'member2'>
   pick3: CreateInput2
+  unknown: LayoutMetadataMap
 }
 
 export interface Mutation {
@@ -471,3 +472,11 @@ type Decimal128 = number
 type Buffer = any
 
 type CreateInput2 = Pick<CreateInput, 'member1' | 'member2'>
+
+interface LayoutMetadataMap {
+  [layoutId: string]: Metadata
+}
+
+interface Metadata {
+  [key: string]: unknown
+}

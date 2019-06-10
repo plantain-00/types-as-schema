@@ -232,6 +232,11 @@ export function getReferencedDefinitions(
         }
       }
     }
+    if (definition.additionalProperties
+      && definition.additionalProperties !== true
+      && definition.additionalProperties.type === undefined) {
+      Object.assign(result, getJsonSchemaPropertyOfUndefined(definition.additionalProperties, definitions, dependents))
+    }
   } else if (definition.type === undefined) {
     Object.assign(result, getJsonSchemaPropertyOfUndefined(definition, definitions, dependents))
   }
