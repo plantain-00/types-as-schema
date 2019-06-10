@@ -44,8 +44,8 @@ module.exports = {
     export: `no-unused-export ${tsFiles} ${lessFiles}`,
     commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
-    typeCoverage: 'type-coverage -p src --strict',
-    typeCoverageOnline: 'type-coverage -p online --strict'
+    typeCoverage: 'type-coverage -p src --strict --ignore-catch',
+    typeCoverageOnline: 'type-coverage -p online --strict --ignore-catch --ignore-files "online/variables.ts" --ignore-files "dist/*"'
   },
   test: [
     'tsc -p spec',

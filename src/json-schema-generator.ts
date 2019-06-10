@@ -41,19 +41,19 @@ export function getAllDefinitions(context: Context) {
         definitions[typeDeclaration.name] = {
           type: getTypeNameOfEnumOrConst(typeDeclaration.type),
           const: typeDeclaration.members[0]
-        }
+        } as Definition
       } else {
         definitions[typeDeclaration.name] = {
           type: getTypeNameOfEnumOrConst(typeDeclaration.type),
           enum: typeDeclaration.members.map((m) => m.value)
-        }
+        } as Definition
       }
     }
   }
   return definitions
 }
 
-function getTypeNameOfEnumOrConst(type: string): any {
+function getTypeNameOfEnumOrConst(type: string) {
   if (type === 'boolean' || type === 'string') {
     return type
   }
@@ -94,12 +94,12 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
       return {
         type: getTypeNameOfEnumOrConst(memberType.type),
         const: memberType.enums[0]
-      }
+      } as Definition
     }
     return {
       type: getTypeNameOfEnumOrConst(memberType.type),
       enum: memberType.enums
-    }
+    } as Definition
   } else if (memberType.kind === 'reference') {
     if (isValidReference(context.declarations, memberType.name)) {
       return {
@@ -130,7 +130,7 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
 
 function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, context: Context): Definition {
   if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
-    let enums: any[] = []
+    let enums: unknown[] = []
     for (const member of memberType.members) {
       if (member.kind === 'enum') {
         enums = enums.concat(member.enums)
@@ -353,7 +353,7 @@ export type ObjectDefinition = {
   minProperties?: number
   maxProperties?: number
   anyOf?: Definition[]
-  default?: any
+  default?: unknown
 } & CommonDefinition
 
 export type ArrayDefinition = {
@@ -362,19 +362,19 @@ export type ArrayDefinition = {
   uniqueItems?: boolean
   minItems?: number
   maxItems?: number
-  default?: any[]
+  default?: unknown[]
 } & CommonDefinition
 
 export type UndefinedDefinition = {
   type: undefined
   $ref?: string
   anyOf?: Definition[]
-  default?: any
+  default?: unknown
 } & CommonDefinition
 
 type CommonDefinition = {
-  enum?: any[]
-  const?: any
+  enum?: unknown[]
+  const?: unknown
   title?: string
   description?: string;
 }

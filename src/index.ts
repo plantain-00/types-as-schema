@@ -13,7 +13,7 @@ import Ajv from 'ajv'
 const ajv = new Ajv()
 
 async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true })
+  const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as Args
 
   const showVersion = argv.v || argv.version
   if (showVersion) {
@@ -107,7 +107,7 @@ async function executeCommandLine() {
     }
 
     if (swaggerPath) {
-      const swaggerBase = swaggerBasePath ? JSON.parse(fs.readFileSync(swaggerBasePath).toString()) : undefined
+      const swaggerBase = swaggerBasePath ? JSON.parse(fs.readFileSync(swaggerBasePath).toString()) as {} : undefined
       const swaggerDoc = generator.generateSwaggerDoc(swaggerBase)
       fs.writeFileSync(swaggerPath, swaggerDoc)
     }
@@ -129,7 +129,7 @@ async function executeCommandLine() {
   }
 }
 
-function parseParameter(argv: minimist.ParsedArgs, name: string) {
+function parseParameter(argv: PathArgs, name: keyof PathArgs) {
   const result = argv[name]
   if (result && typeof result !== 'string') {
     throw new Error(`expect the path of generated ${name} file`)
@@ -137,7 +137,7 @@ function parseParameter(argv: minimist.ParsedArgs, name: string) {
   return result
 }
 
-function parseParameters(argv: minimist.ParsedArgs) {
+function parseParameters(argv: Args) {
   const protobufPath = parseParameter(argv, 'protobuf')
   const graphqlPath = parseParameter(argv, 'graphql')
   const graphqlRootTypePath = parseParameter(argv, 'graphql-root-type')
@@ -177,7 +177,30 @@ function parseParameters(argv: minimist.ParsedArgs) {
   }
 }
 
-function printInConsole(message: any) {
+interface Args extends PathArgs {
+  v: boolean
+  version: boolean
+  _: string[]
+  w: boolean
+  watch: boolean
+  loose: boolean
+}
+
+interface PathArgs {
+  protobuf: string
+  graphql: string
+  ['graphql-root-type']: string
+  reason: string
+  ocaml: string
+  rust: string
+  json: string
+  mongoose: string
+  swagger: string
+  ['swagger-base']: string
+  debug: string
+}
+
+function printInConsole(message: unknown) {
   console.log(message)
 }
 
@@ -187,7 +210,7 @@ function showToolVersion() {
 
 executeCommandLine().then(() => {
   printInConsole('types-as-schema success.')
-}, error => {
+}, (error: Error) => {
   printInConsole(error)
   process.exit(1)
 })

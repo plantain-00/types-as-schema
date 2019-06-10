@@ -66,9 +66,9 @@ export class Parser {
             const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier, sourceFile)
             enumType.members.push({
               name,
-              value
+              value: value as number
             })
-            lastIndex = value + 1
+            lastIndex = value as number + 1
           } else {
             enumType.members.push({
               name: (member.name as ts.Identifier).text,
@@ -100,7 +100,7 @@ export class Parser {
         const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier, sourceFile)
         enumType.members.push({
           name,
-          value
+          value: value as string | number
         })
       }
     }
@@ -365,7 +365,7 @@ export class Parser {
 
   private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier, sourceFile: ts.SourceFile) {
     let enumType: EnumValueType | undefined
-    const enums: any[] = []
+    const enums: unknown[] = []
     for (const childType of unionType.types) {
       if (childType.kind === ts.SyntaxKind.LiteralType) {
         const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
@@ -384,7 +384,7 @@ export class Parser {
         const stringDeclaration: StringDeclaration = {
           kind: 'string',
           name: declarationName.text,
-          enums,
+          enums: enums as string[],
           position: getPosition(declarationName, sourceFile)
         }
         this.declarations.push(stringDeclaration)
@@ -393,7 +393,7 @@ export class Parser {
           kind: 'number',
           type: enumType,
           name: declarationName.text,
-          enums,
+          enums: enums as string[],
           position: getPosition(declarationName, sourceFile)
         }
         this.declarations.push(numberDeclaration)
@@ -432,7 +432,7 @@ export class Parser {
   }
 
   private getJsDocs(node: ts.Node, sourceFile: ts.SourceFile) {
-    const jsDocs: ts.JSDoc[] | undefined = (node as any).jsDoc
+    const jsDocs = (node as unknown as { jsDoc?: ts.JSDoc[] }).jsDoc
     const result: JsDoc[] = []
     if (jsDocs && jsDocs.length > 0) {
       for (const jsDoc of jsDocs) {
@@ -451,10 +451,10 @@ export class Parser {
     let paramName: string | undefined
     let optional: boolean | undefined
     if (tag.tagName.text === 'param') {
-      const typeExpression: ts.JSDocTypeExpression = (tag as any).typeExpression
+      const typeExpression: ts.JSDocTypeExpression = (tag as unknown as { typeExpression: ts.JSDocTypeExpression }).typeExpression
       type = this.getType(typeExpression.type, sourceFile)
-      paramName = ((tag as any).name as ts.Identifier).text
-      optional = (tag as any).isBracketed
+      paramName = (tag as unknown as { name: ts.Identifier }).name.text
+      optional = (tag as unknown as { isBracketed?: boolean }).isBracketed
     }
     return {
       name: tag.tagName.text,
@@ -538,7 +538,7 @@ export class Parser {
     }
   }
 
-  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: any } {
+  private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: unknown } {
     if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
       return {
         type: 'string',
@@ -571,7 +571,7 @@ export class Parser {
 
   private getTypeOfLiteralType(literalType: ts.LiteralTypeNode, sourceFile: ts.SourceFile): Type {
     let enumType: EnumValueType | undefined
-    const enums: any[] = []
+    const enums: unknown[] = []
     const { type, value } = this.getEnumOfLiteralType(literalType)
     if (type !== undefined) {
       enumType = type
@@ -597,7 +597,7 @@ export class Parser {
   private getTypeOfUnionType(unionType: ts.UnionTypeNode, sourceFile: ts.SourceFile): Type {
     if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
       let enumType: EnumValueType | undefined
-      const enums: any[] = []
+      const enums: unknown[] = []
       for (const childType of unionType.types) {
         const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
         if (type !== undefined) {
@@ -998,7 +998,7 @@ export class Parser {
     }
   }
 
-  private getTypeAndValueOfExpression(expression: ts.Expression, sourceFile: ts.SourceFile): { type: Type, value: any } {
+  private getTypeAndValueOfExpression(expression: ts.Expression, sourceFile: ts.SourceFile): { type: Type, value: unknown } {
     if (expression.kind === ts.SyntaxKind.StringLiteral) {
       return {
         type: {
@@ -1032,7 +1032,7 @@ export class Parser {
         kind: undefined,
         position: getPosition(expression, sourceFile)
       }
-      const elementsValues = []
+      const elementsValues: unknown[] = []
       for (const element of arrayLiteral.elements) {
         const { type, value } = this.getTypeAndValueOfExpression(element, sourceFile)
         elementsType = type
@@ -1049,7 +1049,7 @@ export class Parser {
     } else if (expression.kind === ts.SyntaxKind.ObjectLiteralExpression) {
       const arrayLiteral = expression as ts.ObjectLiteralExpression
       const members: Member[] = []
-      const value: any = {}
+      const value: { [name: string]: unknown } = {}
       for (const property of arrayLiteral.properties) {
         if (property.kind === ts.SyntaxKind.PropertyAssignment) {
           const expression = this.getExpression(property.initializer, property.name as ts.Identifier, sourceFile)
@@ -1097,7 +1097,7 @@ export class Parser {
       member.optional = true
     }
 
-    let defaultValue: any
+    let defaultValue: unknown
     if ((property.kind === ts.SyntaxKind.PropertySignature || property.kind === ts.SyntaxKind.PropertyDeclaration)
       && property.initializer) {
       const { type, value } = this.getTypeAndValueOfExpression(property.initializer, sourceFile)
@@ -1127,7 +1127,7 @@ export class Parser {
 
   private getParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
     let type: Type | undefined
-    let value: any
+    let value: unknown
     if (parameter.initializer) {
       const typeAndValue = this.getTypeAndValueOfExpression(parameter.initializer, sourceFile)
       type = typeAndValue.type
