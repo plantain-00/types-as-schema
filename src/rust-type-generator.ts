@@ -1,5 +1,5 @@
 import { Type, TypeDeclaration, toUpperCase, ReferenceType, EnumDeclaration, NumberType, ObjectDeclaration, UnionDeclaration, ReferenceDeclaration } from './utils'
-const snakeCase: (name: string) => string = require('lodash.snakecase')
+import snakeCase = require('lodash.snakecase')
 
 export function generateRustTypes(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
