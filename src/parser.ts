@@ -31,8 +31,8 @@ export class Parser {
   parse() {
     for (const sourceFile of this.sourceFiles) {
       ts.forEachChild(sourceFile, node => {
-        if (node.kind === ts.SyntaxKind.EnumDeclaration) {
-          this.preHandleEnumDeclaration(node as ts.EnumDeclaration, sourceFile)
+        if (ts.isEnumDeclaration(node)) {
+          this.preHandleEnumDeclaration(node, sourceFile)
         }
       })
     }
@@ -62,8 +62,8 @@ export class Parser {
         }
         let lastIndex = 0
         for (const member of members) {
-          if (member.initializer) {
-            const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier, sourceFile)
+          if (member.initializer && ts.isIdentifier(member.name)) {
+            const { name, value } = this.getExpression(member.initializer, member.name, sourceFile)
             enumType.members.push({
               name,
               value: value as number
@@ -91,13 +91,13 @@ export class Parser {
     const enumType: EnumDeclaration = {
       kind: 'enum',
       name: declaration.name.text,
-      type: initializer.kind === ts.SyntaxKind.StringLiteral ? ts.ClassificationTypeNames.stringLiteral : 'uint32',
+      type: ts.isStringLiteral(initializer) ? 'string' : 'uint32',
       members: [],
       position: getPosition(declaration, sourceFile)
     }
     for (const member of members) {
-      if (member.initializer) {
-        const { name, value } = this.getExpression(member.initializer, member.name as ts.Identifier, sourceFile)
+      if (member.initializer && ts.isIdentifier(member.name)) {
+        const { name, value } = this.getExpression(member.initializer, member.name, sourceFile)
         enumType.members.push({
           name,
           value: value as string | number
@@ -110,12 +110,12 @@ export class Parser {
   private handleSourceFile(node: ts.Node, sourceFile: ts.SourceFile) {
     const jsDocs = this.getJsDocs(node, sourceFile)
     const entry = jsDocs.find(jsDoc => jsDoc.name === 'entry')
-    if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-      this.handleTypeAliasDeclaration(node as ts.TypeAliasDeclaration, jsDocs, entry, sourceFile)
-    } else if (node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration) {
-      this.handleInterfaceOrClassDeclaration(node as ts.InterfaceDeclaration, jsDocs, entry, sourceFile)
-    } else if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
-      this.handleFunctionDeclaration(node as ts.FunctionDeclaration, jsDocs, sourceFile)
+    if (ts.isTypeAliasDeclaration(node)) {
+      this.handleTypeAliasDeclaration(node, jsDocs, entry, sourceFile)
+    } else if (ts.isInterfaceDeclaration(node) || ts.isClassDeclaration(node)) {
+      this.handleInterfaceOrClassDeclaration(node, jsDocs, entry, sourceFile)
+    } else if (ts.isFunctionDeclaration(node)) {
+      this.handleFunctionDeclaration(node, jsDocs, sourceFile)
     }
   }
 
@@ -219,6 +219,7 @@ export class Parser {
     this.declarations.push(objectDeclaration)
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private handleHeritageClauses(
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
     members: Member[],
@@ -228,11 +229,11 @@ export class Parser {
     let additionalProperties: Type | undefined | boolean
     if (declaration.heritageClauses) {
       for (const clause of declaration.heritageClauses) {
-        if (clause.kind === ts.SyntaxKind.HeritageClause) {
+        if (ts.isHeritageClause(clause)) {
           for (const type of clause.types) {
-            if (type.kind === ts.SyntaxKind.ExpressionWithTypeArguments) {
+            if (ts.isExpressionWithTypeArguments(type) && ts.isIdentifier(type.expression)) {
               ({ minProperties, maxProperties, additionalProperties } = this.handleExpressionWithTypeArguments(
-                type.expression as ts.Identifier,
+                type.expression,
                 members,
                 minProperties,
                 maxProperties
@@ -270,36 +271,35 @@ export class Parser {
     return { minProperties, maxProperties, additionalProperties }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private handleTypeAliasDeclaration(
     declaration: ts.TypeAliasDeclaration,
     jsDocs: JsDoc[],
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
-    if (declaration.type.kind === ts.SyntaxKind.ArrayType) {
+    if (ts.isArrayTypeNode(declaration.type)) {
       this.handleArrayTypeInTypeAliasDeclaration(
-        declaration.type as ts.ArrayTypeNode,
+        declaration.type,
         declaration.name,
         jsDocs,
         entry,
         sourceFile
       )
-    } else if (declaration.type.kind === ts.SyntaxKind.TypeLiteral
-      || declaration.type.kind === ts.SyntaxKind.UnionType
-      || declaration.type.kind === ts.SyntaxKind.IntersectionType) {
+    } else if (ts.isTypeLiteralNode(declaration.type)
+      || ts.isUnionTypeNode(declaration.type)
+      || ts.isIntersectionTypeNode(declaration.type)) {
       this.handleTypeLiteralOrUnionTypeOrIntersectionType(
-        declaration.type as ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode,
+        declaration.type,
         declaration.name,
         jsDocs,
         entry,
         sourceFile
       )
-    } else if (declaration.type.kind === ts.SyntaxKind.TypeReference) {
-      const typeReference = declaration.type as ts.TypeReferenceNode
-      const typeName = typeReference.typeName as ts.Identifier
-      if (typeReference.typeArguments && typeReference.typeArguments.length > 0) {
-        if (typeName.text === 'Pick') {
-          const type = this.getTypeOfPick(typeName, typeReference.typeArguments, sourceFile)
+    } else if (ts.isTypeReferenceNode(declaration.type) && ts.isIdentifier(declaration.type.typeName)) {
+      if (declaration.type.typeArguments && declaration.type.typeArguments.length > 0) {
+        if (declaration.type.typeName.text === 'Pick') {
+          const type = this.getTypeOfPick(declaration.type.typeName, declaration.type.typeArguments, sourceFile)
           if (type) {
             this.declarations.push({
               name: declaration.name.text,
@@ -314,7 +314,7 @@ export class Parser {
       const referenceDeclaration: ReferenceDeclaration = {
         kind: 'reference',
         newName: declaration.name.text,
-        name: typeName.text,
+        name: declaration.type.typeName.text,
         position: getPosition(declaration, sourceFile)
       }
       this.declarations.push(referenceDeclaration)
@@ -328,17 +328,16 @@ export class Parser {
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
-    if (declarationType.kind === ts.SyntaxKind.UnionType) {
-      const unionType = declarationType
-      if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType || u.kind === ts.SyntaxKind.NullKeyword)) {
-        this.handleUnionTypeOfLiteralType(unionType, declarationName, sourceFile)
+    if (ts.isUnionTypeNode(declarationType)) {
+      if (declarationType.types.every(u => ts.isLiteralTypeNode(u) || u.kind === ts.SyntaxKind.NullKeyword)) {
+        this.handleUnionTypeOfLiteralType(declarationType, declarationName, sourceFile)
         return
       }
-      if (unionType.types.every(u => u.kind === ts.SyntaxKind.TypeReference)) {
+      if (declarationType.types.every(u => ts.isTypeReferenceNode(u))) {
         const unionDeclaration: UnionDeclaration = {
           kind: 'union',
           name: declarationName.text,
-          members: unionType.types.map(u => this.getType(u, sourceFile)),
+          members: declarationType.types.map(u => this.getType(u, sourceFile)),
           entry: entry ? entry.comment : undefined,
           position: getPosition(declarationName, sourceFile)
         }
@@ -367,8 +366,8 @@ export class Parser {
     let enumType: EnumValueType | undefined
     const enums: unknown[] = []
     for (const childType of unionType.types) {
-      if (childType.kind === ts.SyntaxKind.LiteralType) {
-        const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
+      if (ts.isLiteralTypeNode(childType)) {
+        const { type, value } = this.getEnumOfLiteralType(childType)
         if (type !== undefined) {
           enumType = type
         }
@@ -485,26 +484,25 @@ export class Parser {
         position: getPosition(type, sourceFile)
       }
     }
-    if (type.kind === ts.SyntaxKind.TypeLiteral) {
-      return this.getTypeOfTypeLiteral(type as ts.TypeLiteralNode, sourceFile)
+    if (ts.isTypeLiteralNode(type)) {
+      return this.getTypeOfTypeLiteral(type, sourceFile)
     }
-    if (type.kind === ts.SyntaxKind.ArrayType) {
-      const array = type as ts.ArrayTypeNode
-      const elementType = this.getType(array.elementType, sourceFile)
+    if (ts.isArrayTypeNode(type)) {
+      const elementType = this.getType(type.elementType, sourceFile)
       return {
         kind: 'array',
         type: elementType,
         position: getPosition(type, sourceFile)
       }
     }
-    if (type.kind === ts.SyntaxKind.TypeReference) {
-      return this.getTypeOfTypeReference(type as ts.TypeReferenceNode, sourceFile)
+    if (ts.isTypeReferenceNode(type)) {
+      return this.getTypeOfTypeReference(type, sourceFile)
     }
-    if (type.kind === ts.SyntaxKind.UnionType) {
-      return this.getTypeOfUnionType(type as ts.UnionTypeNode, sourceFile)
+    if (ts.isUnionTypeNode(type)) {
+      return this.getTypeOfUnionType(type, sourceFile)
     }
-    if (type.kind === ts.SyntaxKind.LiteralType) {
-      return this.getTypeOfLiteralType(type as ts.LiteralTypeNode, sourceFile)
+    if (ts.isLiteralTypeNode(type)) {
+      return this.getTypeOfLiteralType(type, sourceFile)
     }
     if (type.kind === ts.SyntaxKind.NullKeyword) {
       return {
@@ -512,18 +510,17 @@ export class Parser {
         position: getPosition(type, sourceFile)
       }
     }
-    if (type.kind === ts.SyntaxKind.TupleType) {
-      const tupleType = type as ts.TupleTypeNode
+    if (ts.isTupleTypeNode(type)) {
       let arrayType: Type | undefined
-      for (const elementType of tupleType.elementTypes) {
+      for (const elementType of type.elementTypes) {
         arrayType = this.getType(elementType, sourceFile)
       }
       if (arrayType) {
         return {
           kind: 'array',
           type: arrayType,
-          minItems: tupleType.elementTypes.length,
-          maxItems: tupleType.elementTypes.length,
+          minItems: type.elementTypes.length,
+          maxItems: type.elementTypes.length,
           position: getPosition(type, sourceFile)
         }
       }
@@ -539,13 +536,13 @@ export class Parser {
   }
 
   private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: unknown } {
-    if (literalType.literal.kind === ts.SyntaxKind.StringLiteral) {
+    if (ts.isStringLiteral(literalType.literal)) {
       return {
         type: 'string',
         value: literalType.literal.text
       }
     }
-    if (literalType.literal.kind === ts.SyntaxKind.NumericLiteral) {
+    if (ts.isNumericLiteral(literalType.literal)) {
       return {
         type: 'number',
         value: +literalType.literal.text
@@ -594,17 +591,20 @@ export class Parser {
     }
   }
 
+  // tslint:disable-next-line:cognitive-complexity
   private getTypeOfUnionType(unionType: ts.UnionTypeNode, sourceFile: ts.SourceFile): Type {
-    if (unionType.types.every(u => u.kind === ts.SyntaxKind.LiteralType)) {
+    if (unionType.types.every(u => ts.isLiteralTypeNode(u))) {
       let enumType: EnumValueType | undefined
       const enums: unknown[] = []
       for (const childType of unionType.types) {
-        const { type, value } = this.getEnumOfLiteralType(childType as ts.LiteralTypeNode)
-        if (type !== undefined) {
-          enumType = type
-        }
-        if (value !== undefined) {
-          enums.push(value)
+        if (ts.isLiteralTypeNode(childType)) {
+          const { type, value } = this.getEnumOfLiteralType(childType)
+          if (type !== undefined) {
+            enumType = type
+          }
+          if (value !== undefined) {
+            enums.push(value)
+          }
         }
       }
       if (enumType) {
@@ -650,7 +650,7 @@ export class Parser {
 
   // tslint:disable-next-line:cognitive-complexity
   private getTypeOfTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): Type {
-    if (reference.typeName.kind === ts.SyntaxKind.Identifier) {
+    if (ts.isIdentifier(reference.typeName)) {
       if (numberTypes.includes(reference.typeName.text)) {
         return {
           kind: 'number',
@@ -667,8 +667,8 @@ export class Parser {
           || reference.typeName.text === 'ReturnType'
           || reference.typeName.text === 'DeepReturnType')) {
           const typeArgument = reference.typeArguments[0]
-          if (typeArgument.kind === ts.SyntaxKind.TypeReference) {
-            return this.getTypeOfTypeReference(typeArgument as ts.TypeReferenceNode, sourceFile)
+          if (ts.isTypeReferenceNode(typeArgument)) {
+            return this.getTypeOfTypeReference(typeArgument, sourceFile)
           }
         } else if (reference.typeName.text === 'Pick') {
           const type = this.getTypeOfPick(reference.typeName, reference.typeArguments, sourceFile)
@@ -683,8 +683,8 @@ export class Parser {
         position: getPosition(reference.typeName, sourceFile)
       }
     }
-    if (reference.typeName.kind === ts.SyntaxKind.QualifiedName) {
-      const enumName = (reference.typeName.left as ts.Identifier).text
+    if (ts.isQualifiedName(reference.typeName) && ts.isIdentifier(reference.typeName.left)) {
+      const enumName = reference.typeName.left.text
       const enumDeclaration = this.declarations.find(m => m.kind === 'enum' && m.name === enumName) as EnumDeclaration | undefined
       if (enumDeclaration) {
         return {
@@ -709,26 +709,21 @@ export class Parser {
     sourceFile: ts.SourceFile
   ): ObjectType | undefined {
     const argument = typeArguments[0]
-    if (argument.kind === ts.SyntaxKind.TypeReference) {
-      const declarationName = ((argument as ts.TypeReferenceNode).typeName as ts.Identifier).escapedText.toString()
+    if (ts.isTypeReferenceNode(argument) && ts.isIdentifier(argument.typeName)) {
+      const declarationName = argument.typeName.escapedText.toString()
       this.preHandleType(declarationName)
       const declaration = this.declarations.find(m => m.kind === 'object' && m.name === declarationName)
       if (declaration && declaration.kind === 'object') {
         const field = typeArguments[1]
         const memberNames: string[] = []
-        if (field.kind === ts.SyntaxKind.LiteralType) {
-          const literal = (field as ts.LiteralTypeNode).literal
-          if (literal.kind === ts.SyntaxKind.StringLiteral) {
-            memberNames.push(literal.text)
+        if (ts.isLiteralTypeNode(field)) {
+          if (ts.isStringLiteral(field.literal)) {
+            memberNames.push(field.literal.text)
           }
-        } else if (field.kind === ts.SyntaxKind.UnionType) {
-          const types = (field as ts.UnionTypeNode).types
-          for (const type of types) {
-            if (type.kind === ts.SyntaxKind.LiteralType) {
-              const literal = (type as ts.LiteralTypeNode).literal
-              if (literal.kind === ts.SyntaxKind.StringLiteral) {
-                memberNames.push(literal.text)
-              }
+        } else if (ts.isUnionTypeNode(field)) {
+          for (const type of field.types) {
+            if (ts.isLiteralTypeNode(type) && ts.isStringLiteral(type.literal)) {
+              memberNames.push(type.literal.text)
             }
           }
         } else {
@@ -760,15 +755,15 @@ export class Parser {
   }
 
   private getTypeOfTypeLiteral(literal: ts.TypeLiteralNode, sourceFile: ts.SourceFile): Type {
-    if (literal.members.length === 1 && literal.members[0].kind === ts.SyntaxKind.IndexSignature) {
-      const indexSignature = literal.members[0] as ts.IndexSignatureDeclaration
-      if (indexSignature.parameters.length === 1) {
-        const parameterType = indexSignature.parameters[0].type
-        if (parameterType && indexSignature.type) {
+    if (literal.members.length === 1 && ts.isIndexSignatureDeclaration(literal.members[0])) {
+      const member = literal.members[0]
+      if (ts.isIndexSignatureDeclaration(member) && member.parameters.length === 1) {
+        const parameterType = member.parameters[0].type
+        if (parameterType && member.type) {
           return {
             kind: 'map',
             key: this.getType(parameterType, sourceFile),
-            value: this.getType(indexSignature.type, sourceFile),
+            value: this.getType(member.type, sourceFile),
             position: getPosition(parameterType, sourceFile)
           }
         }
@@ -791,21 +786,20 @@ export class Parser {
   }
 
   private getMembersInfo(node: ts.TypeNode, sourceFile: ts.SourceFile): MembersInfo {
-    if (node.kind === ts.SyntaxKind.TypeLiteral) {
-      const typeLiteral = node as ts.TypeLiteralNode
-      return this.getObjectMembers(typeLiteral.members, sourceFile)
+    if (ts.isTypeLiteralNode(node)) {
+      return this.getObjectMembers(node.members, sourceFile)
     }
-    if (node.kind === ts.SyntaxKind.UnionType) {
-      return this.getMembersInfoOfUnionType(node as ts.UnionTypeNode, sourceFile)
+    if (ts.isUnionTypeNode(node)) {
+      return this.getMembersInfoOfUnionType(node, sourceFile)
     }
-    if (node.kind === ts.SyntaxKind.IntersectionType) {
-      return this.getMembersInfoOfIntersectionType(node as ts.IntersectionTypeNode, sourceFile)
+    if (ts.isIntersectionTypeNode(node)) {
+      return this.getMembersInfoOfIntersectionType(node, sourceFile)
     }
-    if (node.kind === ts.SyntaxKind.ParenthesizedType) {
-      return this.getMembersInfoOfParenthesizedType(node as ts.ParenthesizedTypeNode, sourceFile)
+    if (ts.isParenthesizedTypeNode(node)) {
+      return this.getMembersInfoOfParenthesizedType(node, sourceFile)
     }
-    if (node.kind === ts.SyntaxKind.TypeReference) {
-      return this.getMembersInfoOfTypeReference(node as ts.TypeReferenceNode)
+    if (ts.isTypeReferenceNode(node)) {
+      return this.getMembersInfoOfTypeReference(node)
     }
     return { members: [], minProperties: 0, maxProperties: 0 }
   }
@@ -928,18 +922,14 @@ export class Parser {
         if (findIt) {
           return
         }
-        if (node.kind === ts.SyntaxKind.InterfaceDeclaration) {
-          const declaration = node as ts.InterfaceDeclaration
-          if (declaration.name.text === typeName) {
+        if (ts.isInterfaceDeclaration(node)) {
+          if (node.name.text === typeName) {
             findIt = true
             this.handleSourceFile(node, sourceFile)
           }
-        } else if (node.kind === ts.SyntaxKind.TypeAliasDeclaration) {
-          const declaration = node as ts.TypeAliasDeclaration
-          if (declaration.name.text === typeName) {
-            findIt = true
-            this.handleSourceFile(node, sourceFile)
-          }
+        } else if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
+          findIt = true
+          this.handleSourceFile(node, sourceFile)
         }
       })
     }
@@ -952,26 +942,22 @@ export class Parser {
     let maxProperties = 0
     let additionalProperties: Type | undefined | boolean
     for (const element of elements) {
-      if (element.kind === ts.SyntaxKind.PropertySignature || element.kind === ts.SyntaxKind.PropertyDeclaration) {
-        const property = element as ts.PropertySignature | ts.PropertyDeclaration
-        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(property, sourceFile)
+      if (ts.isPropertySignature(element) || ts.isPropertyDeclaration(element)) {
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(element, sourceFile)
         members.push(member)
-        if (!property.questionToken) {
+        if (!element.questionToken) {
           minProperties++
         }
         maxProperties++
-      } else if (element.kind === ts.SyntaxKind.IndexSignature) {
-        const indexSignature = element as ts.IndexSignatureDeclaration
-        if (indexSignature.type) {
-          additionalProperties = this.getType(indexSignature.type, sourceFile)
+      } else if (ts.isIndexSignatureDeclaration(element)) {
+        if (element.type) {
+          additionalProperties = this.getType(element.type, sourceFile)
         }
-      } else if (element.kind === ts.SyntaxKind.MethodSignature || element.kind === ts.SyntaxKind.MethodDeclaration) {
-        const methodSignature = element as ts.MethodSignature | ts.MethodDeclaration
-        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(methodSignature, sourceFile)
+      } else if (ts.isMethodSignature(element) || ts.isMethodDeclaration(element)) {
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(element, sourceFile)
         members.push(member)
-      } else if (element.kind === ts.SyntaxKind.Constructor) {
-        const constructorDeclaration = element as ts.ConstructorDeclaration
-        for (const parameter of constructorDeclaration.parameters) {
+      } else if (ts.isConstructorDeclaration(element)) {
+        for (const parameter of element.parameters) {
           if (parameter.modifiers
             && parameter.modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.PublicKeyword
               || modifier.kind === ts.SyntaxKind.PrivateKeyword
@@ -999,23 +985,23 @@ export class Parser {
   }
 
   private getTypeAndValueOfExpression(expression: ts.Expression, sourceFile: ts.SourceFile): { type: Type, value: unknown } {
-    if (expression.kind === ts.SyntaxKind.StringLiteral) {
+    if (ts.isStringLiteral(expression)) {
       return {
         type: {
           kind: 'string',
           position: getPosition(expression, sourceFile)
         },
-        value: (expression as ts.StringLiteral).text
+        value: expression.text
       }
     }
-    if (expression.kind === ts.SyntaxKind.NumericLiteral) {
+    if (ts.isNumericLiteral(expression)) {
       return {
         type: {
           kind: 'number',
           type: 'number',
           position: getPosition(expression, sourceFile)
         },
-        value: +(expression as ts.NumericLiteral).text
+        value: +expression.text
       }
     }
     if (expression.kind === ts.SyntaxKind.FalseKeyword || expression.kind === ts.SyntaxKind.TrueKeyword) {
@@ -1026,14 +1012,13 @@ export class Parser {
         },
         value: expression.kind === ts.SyntaxKind.TrueKeyword
       }
-    } else if (expression.kind === ts.SyntaxKind.ArrayLiteralExpression) {
-      const arrayLiteral = expression as ts.ArrayLiteralExpression
+    } else if (ts.isArrayLiteralExpression(expression)) {
       let elementsType: Type = {
         kind: undefined,
         position: getPosition(expression, sourceFile)
       }
       const elementsValues: unknown[] = []
-      for (const element of arrayLiteral.elements) {
+      for (const element of expression.elements) {
         const { type, value } = this.getTypeAndValueOfExpression(element, sourceFile)
         elementsType = type
         elementsValues.push(value)
@@ -1046,13 +1031,12 @@ export class Parser {
         },
         value: elementsValues
       }
-    } else if (expression.kind === ts.SyntaxKind.ObjectLiteralExpression) {
-      const arrayLiteral = expression as ts.ObjectLiteralExpression
+    } else if (ts.isObjectLiteralExpression(expression)) {
       const members: Member[] = []
       const value: { [name: string]: unknown } = {}
-      for (const property of arrayLiteral.properties) {
-        if (property.kind === ts.SyntaxKind.PropertyAssignment) {
-          const expression = this.getExpression(property.initializer, property.name as ts.Identifier, sourceFile)
+      for (const property of expression.properties) {
+        if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name)) {
+          const expression = this.getExpression(property.initializer, property.name, sourceFile)
           members.push({
             name: expression.name,
             type: expression.type
@@ -1084,9 +1068,8 @@ export class Parser {
     property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration | ts.ParameterDeclaration,
     sourceFile: ts.SourceFile
   ) {
-    const name = property.name as ts.Identifier
     const member: Member = {
-      name: name.text,
+      name: ts.isIdentifier(property.name) ? property.name.text : '',
       type: {
         kind: undefined,
         position: getPosition(property, sourceFile)
@@ -1098,7 +1081,7 @@ export class Parser {
     }
 
     let defaultValue: unknown
-    if ((property.kind === ts.SyntaxKind.PropertySignature || property.kind === ts.SyntaxKind.PropertyDeclaration)
+    if ((ts.isPropertySignature(property) || ts.isPropertyDeclaration(property))
       && property.initializer) {
       const { type, value } = this.getTypeAndValueOfExpression(property.initializer, sourceFile)
       member.type = type
@@ -1114,11 +1097,11 @@ export class Parser {
       (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
     }
 
-    if (property.kind === ts.SyntaxKind.PropertySignature || property.kind === ts.SyntaxKind.PropertyDeclaration) {
+    if (ts.isPropertySignature(property) || ts.isPropertyDeclaration(property)) {
       this.setPropertyJsDoc(property, member, sourceFile)
     }
 
-    if (property.kind === ts.SyntaxKind.MethodSignature || property.kind === ts.SyntaxKind.MethodDeclaration) {
+    if (ts.isMethodSignature(property) || ts.isMethodDeclaration(property)) {
       member.parameters = property.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
     }
 
