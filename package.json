@@ -43,7 +43,7 @@
     "jasmine": "3.4.0",
     "less": "3.9.0",
     "markdownlint-cli": "0.17.0",
-    "no-unused-export": "1.8.0-alpha.3",
+    "no-unused-export": "1.8.0",
     "postcss-cli": "6.1.2",
     "puppeteer": "1.18.1",
     "rev-static": "3.4.3",
