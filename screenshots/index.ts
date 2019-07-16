@@ -12,9 +12,9 @@ import puppeteer from 'puppeteer'
   await page.waitFor(2000)
   await page.screenshot({ path: `screenshots/protobuf.png` })
 
-  await (page as any).select('select', 'cases.json')
+  await page.select('select', 'cases.json')
   await page.waitFor(2000)
   await page.screenshot({ path: `screenshots/json.png` })
 
-  browser.close()
+  await browser.close()
 })()

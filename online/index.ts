@@ -52,7 +52,8 @@ export class App extends Vue {
       this.options = ['protobuf']
 
       this.jsonSchemas = generator.generateJsonSchemas().map(s => ({
-        entry: s.entry,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        entry: s.entry!,
         content: JSON.stringify(s.schema, null, '  ')
       }))
       for (const schema of this.jsonSchemas) {
@@ -83,5 +84,4 @@ export class App extends Vue {
   }
 }
 
-// tslint:disable-next-line:no-unused-expression
 new App({ el: '#container' })

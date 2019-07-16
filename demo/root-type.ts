@@ -3,6 +3,7 @@
  * It is not mean to be edited by hand
  */
 // tslint:disable
+/* eslint-disable */
 
 import { GraphQLResolveInfo } from 'graphql'
 
@@ -612,4 +613,5 @@ export interface ResolveResult<TContext = any> {
   users: DeepReturnType<GetResult<TContext>>
 }
 
+/* eslint-enable */
 // tslint:enable

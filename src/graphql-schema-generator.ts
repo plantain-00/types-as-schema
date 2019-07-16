@@ -2,7 +2,6 @@ import { TypeDeclaration, Type, ReferenceType, ObjectDeclaration, Member, Parame
 
 const stageName = 'grapql schema generator'
 
-// tslint:disable-next-line:cognitive-complexity
 export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
   const inputTypeSet = new Set<TypeDeclaration>()
   for (const typeDeclaration of declarations) {
@@ -43,7 +42,6 @@ ${members.join('\n')}
   return scalars + messages.join('\n\n') + '\n'
 }
 
-// tslint:disable-next-line:cognitive-complexity
 function collectInputTypeSet(
   typeDeclaration: TypeDeclaration,
   declarations: TypeDeclaration[],
@@ -138,7 +136,6 @@ function generateGraphqlSchemaOfParameters(typeDeclarations: TypeDeclaration[], 
   }
 }
 
-// tslint:disable-next-line:cognitive-complexity
 function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberType: Type): { propertyType: string, hasJSON: boolean } {
   let propertyType = ''
   let hasJSON = false
@@ -175,7 +172,6 @@ function getGraphqlSchemaProperty(typeDeclarations: TypeDeclaration[], memberTyp
     propertyType = 'JSON'
     hasJSON = true
   } else if (memberType.kind === 'union') {
-    // tslint:disable-next-line:no-collapsible-if
     if (memberType.members.some(m => m.kind !== 'reference')) {
       warn(memberType.position, stageName)
       propertyType = 'JSON'
@@ -202,7 +198,6 @@ function getGraphqlSchemaPropertyOfReference(typeDeclarations: TypeDeclaration[]
       warn(memberType.position, stageName)
       propertyType = 'JSON'
       hasJSON = true
-      // tslint:disable-next-line:no-duplicated-branches
     } else if (typeDeclaration.kind === 'union' && typeDeclaration.members.some(m => m.kind !== 'reference')) {
       warn(memberType.position, stageName)
       propertyType = 'JSON'

@@ -2,7 +2,6 @@ import * as path from 'path'
 
 import { TypeDeclaration, Type, Parameter, EnumType, StringDeclaration, EnumDeclaration } from './utils'
 
-// tslint:disable-next-line:cognitive-complexity
 export function generateGraphqlRootType(declarations: TypeDeclaration[], graphqlRootTypePath: string) {
   const rootTypes: string[] = []
   const nonRootTypes: string[] = []
@@ -63,6 +62,7 @@ ${resolverFields.join('\n')}
  * It is not mean to be edited by hand
  */
 // tslint:disable
+/* eslint-disable */
 
 import { GraphQLResolveInfo } from 'graphql'
 
@@ -104,6 +104,7 @@ export interface ResolveResult<TContext = any> {
 ${resolveResults.join('\n')}
 }
 
+/* eslint-enable */
 // tslint:enable
 `
 }

@@ -14,5 +14,5 @@ import * as fs from 'fs'
   })
   fs.writeFileSync('prerender/index.html', content)
 
-  browser.close()
+  await browser.close()
 })()
