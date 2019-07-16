@@ -164,7 +164,7 @@ export class Parser {
       if (jsDoc.comment && jsDoc.name === 'in') {
         parameterDoc.in = jsDoc.comment
       } else {
-        this.setJsDoc(jsDoc, parameterDoc.type, sourceFile)
+        this.setJsDoc(jsDoc, parameterDoc.type)
       }
     }
     return parameterDoc
@@ -184,26 +184,27 @@ export class Parser {
       }
     }
 
-    let { members, minProperties, maxProperties, additionalProperties } = this.getObjectMembers(declaration.members, sourceFile)
+    const objectMembers = this.getObjectMembers(declaration.members, sourceFile)
+    const members = objectMembers.members
+    let minProperties = objectMembers.minProperties
+    let maxProperties = objectMembers.maxProperties
+    let additionalProperties = objectMembers.additionalProperties
 
-    let additionalPropertiesFromHeritageClauses: Type | undefined | boolean
-    ({
-      minProperties,
-      maxProperties,
-      additionalProperties: additionalPropertiesFromHeritageClauses
-    } = this.handleHeritageClauses(
+    const heritageClauses = this.handleHeritageClauses(
       declaration,
       members,
       minProperties,
       maxProperties
-    ))
-    if (additionalPropertiesFromHeritageClauses) {
-      additionalProperties = additionalPropertiesFromHeritageClauses
+    )
+    minProperties = heritageClauses.minProperties
+    maxProperties = heritageClauses.maxProperties
+    if (heritageClauses.additionalProperties) {
+      additionalProperties = heritageClauses.additionalProperties
     }
 
     const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
-      name: declaration.name!.text,
+      name: declaration.name ? declaration.name.text : '',
       members,
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
@@ -219,7 +220,6 @@ export class Parser {
     this.declarations.push(objectDeclaration)
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private handleHeritageClauses(
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
     members: Member[],
@@ -271,7 +271,6 @@ export class Parser {
     return { minProperties, maxProperties, additionalProperties }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private handleTypeAliasDeclaration(
     declaration: ts.TypeAliasDeclaration,
     jsDocs: JsDoc[],
@@ -425,7 +424,7 @@ export class Parser {
       position: getPosition(declarationName, sourceFile)
     }
     for (const jsDoc of jsDocs) {
-      this.setJsDocArray(jsDoc, arrayDeclaration, sourceFile)
+      this.setJsDocArray(jsDoc, arrayDeclaration)
     }
     this.declarations.push(arrayDeclaration)
   }
@@ -591,7 +590,6 @@ export class Parser {
     }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private getTypeOfUnionType(unionType: ts.UnionTypeNode, sourceFile: ts.SourceFile): Type {
     if (unionType.types.every(u => ts.isLiteralTypeNode(u))) {
       let enumType: EnumValueType | undefined
@@ -629,7 +627,7 @@ export class Parser {
     }
   }
 
-  private getTypeOfArrayTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): Type {
+  private getTypeOfArrayTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): ArrayType {
     if (reference.typeArguments && reference.typeArguments.length === 1) {
       const typeArgument = reference.typeArguments[0]
       return {
@@ -638,17 +636,18 @@ export class Parser {
         position: getPosition(typeArgument, sourceFile)
       }
     } else {
+      const position = getPosition(reference, sourceFile)
       return {
         kind: 'array',
         type: {
-          kind: undefined
+          kind: undefined,
+          position
         },
-        position: getPosition(reference, sourceFile)
-      } as ArrayType
+        position
+      }
     }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private getTypeOfTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): Type {
     if (ts.isIdentifier(reference.typeName)) {
       if (numberTypes.includes(reference.typeName.text)) {
@@ -702,7 +701,6 @@ export class Parser {
     }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private getTypeOfPick(
     typeName: ts.Identifier,
     typeArguments: ts.NodeArray<ts.TypeNode>,
@@ -906,7 +904,6 @@ export class Parser {
     return { members, minProperties, maxProperties }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private preHandleType(typeName: string) {
     // if the node is pre-handled, then it should be in `declarations` already, so don't continue
     if (this.declarations.some(m => m.name === typeName)) {
@@ -935,7 +932,6 @@ export class Parser {
     }
   }
 
-  // tslint:disable-next-line:cognitive-complexity
   private getObjectMembers(elements: ts.NodeArray<ts.TypeElement | ts.ClassElement>, sourceFile: ts.SourceFile): MembersInfo {
     const members: Member[] = []
     let minProperties = 0
@@ -1064,7 +1060,6 @@ export class Parser {
   }
 
   private getObjectMemberOfPropertyOrMethodOrConstructorParameter(
-    // tslint:disable-next-line:max-union-size
     property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration | ts.ParameterDeclaration,
     sourceFile: ts.SourceFile
   ) {
@@ -1093,7 +1088,6 @@ export class Parser {
     }
 
     if (defaultValue !== undefined) {
-      // tslint:disable-next-line:max-union-size
       (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
     }
 
@@ -1108,7 +1102,7 @@ export class Parser {
     return member
   }
 
-  private getParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
+  private getParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile): FunctionParameter {
     let type: Type | undefined
     let value: unknown
     if (parameter.initializer) {
@@ -1131,16 +1125,16 @@ export class Parser {
       name: (parameter.name as ts.Identifier).text,
       type,
       optional: !!parameter.questionToken
-    } as FunctionParameter
+    }
   }
 
-  private setJsDoc(jsDoc: JsDoc, type: Type, sourceFile: ts.SourceFile) {
+  private setJsDoc(jsDoc: JsDoc, type: Type) {
     if (jsDoc.name === 'mapValueType') {
       this.setJsDocMapValue(jsDoc, type)
     } else if (jsDoc.name === 'type') {
       this.overrideType(type, jsDoc)
     } else if (type.kind === 'array') {
-      this.setJsDocArray(jsDoc, type, sourceFile)
+      this.setJsDocArray(jsDoc, type)
     } else if (type.kind === 'number') {
       this.setJsDocNumber(jsDoc, type)
     } else if (type.kind === 'string') {
@@ -1178,7 +1172,7 @@ export class Parser {
           member.alias = propertyJsDoc.comment
         }
       } else {
-        this.setJsDoc(propertyJsDoc, member.type, sourceFile)
+        this.setJsDoc(propertyJsDoc, member.type)
       }
     }
   }
@@ -1302,7 +1296,7 @@ export class Parser {
     }
   }
 
-  private setJsDocArray(jsDoc: JsDoc, type: ArrayType, sourceFile: ts.SourceFile) {
+  private setJsDocArray(jsDoc: JsDoc, type: ArrayType) {
     if (jsDoc.comment) {
       if (jsDoc.name === 'minItems') {
         type.minItems = +jsDoc.comment
@@ -1385,7 +1379,7 @@ export class Parser {
 
 const numberTypes = ['double', 'float', 'uint32', 'fixed32', 'integer', 'int32', 'sint32', 'sfixed32', 'uint64', 'fixed64', 'int64', 'sint64', 'sfixed64']
 
-type JsDoc = {
+interface JsDoc {
   name: string;
   type?: Type;
   paramName?: string;
@@ -1393,7 +1387,7 @@ type JsDoc = {
   optional?: boolean;
 }
 
-type MembersInfo = {
+interface MembersInfo {
   members: Member[];
   minProperties: number;
   maxProperties: number;

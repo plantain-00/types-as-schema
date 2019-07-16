@@ -14,7 +14,7 @@ export function generateJsonSchemas(context: Context) {
   const definitions = getAllDefinitions(context)
   return context.declarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
     .map(m => ({
-      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry!,
+      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry,
       schema: {
         $ref: `#/definitions/${m.name}`,
         definitions: getReferencedDefinitions(m.name, definitions, [])
@@ -203,7 +203,6 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectTyp
   }
 }
 
-// tslint:disable-next-line:cognitive-complexity
 export function getReferencedDefinitions(
   typeName: string | Definition,
   definitions: { [name: string]: Definition },
@@ -372,7 +371,7 @@ export type UndefinedDefinition = {
   default?: unknown
 } & CommonDefinition
 
-type CommonDefinition = {
+interface CommonDefinition {
   enum?: unknown[]
   const?: unknown
   title?: string
@@ -393,6 +392,6 @@ export type StringDefinition = {
 /**
  * @public
  */
-export type NullDefinition = {
+export interface NullDefinition {
   type: 'null'
 }

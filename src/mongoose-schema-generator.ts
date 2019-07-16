@@ -8,6 +8,7 @@ export function generateMongooseSchema(typeDeclarations: TypeDeclaration[]) {
     }
   }
   return `// tslint:disable
+/* eslint-disable */
 
 import { Schema } from 'mongoose'
 
@@ -26,7 +27,6 @@ function generateMongooseSchemaOfObjectMember(member: Member) {
   return `  ${member.name}: ${type},`
 }
 
-// tslint:disable-next-line:cognitive-complexity
 function generateType(
   type: Type,
   indentationCount: number,

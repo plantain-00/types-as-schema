@@ -1,4 +1,5 @@
 // tslint:disable
+/* eslint-disable */
 
 import { Schema } from 'mongoose'
 

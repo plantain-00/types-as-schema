@@ -55,11 +55,11 @@ export type EnumDeclaration = {
   members: EnumMember[];
 } & Position
 
-type Position = {
+interface Position {
   position: PositionValue
 }
 
-type PositionValue = {
+interface PositionValue {
   file: string
   line: number
   character: number
@@ -68,7 +68,7 @@ type PositionValue = {
 /**
  * @public
  */
-export type EnumMember = {
+export interface EnumMember {
   name: string;
   value: string | number;
 }
@@ -100,7 +100,7 @@ export type ReferenceDeclaration = ReferenceType & {
   newName: string;
 }
 
-export type FunctionDeclaration = {
+export interface FunctionDeclaration {
   kind: 'function';
   name: string;
   type: Type;
@@ -228,7 +228,7 @@ export type UnionType = {
   default?: unknown
 } & Position
 
-export type Member = {
+export interface Member {
   name: string;
   type: Type;
   optional?: boolean;
@@ -241,13 +241,13 @@ export type Member = {
   parameters?: Parameter[];
 }
 
-export type Parameter = {
+export interface Parameter {
   name: string;
   type: Type;
   optional?: boolean;
 }
 
-export type Expression = {
+export interface Expression {
   name: string;
   type: Type;
   value: unknown;

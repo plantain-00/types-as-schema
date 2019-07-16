@@ -1,9 +1,8 @@
 import { Type, Context } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
-// tslint:disable-next-line:cognitive-complexity
 export function generateSwaggerDoc(context: Context, swaggerBase?: {}) {
-  const paths: { [path: string]: { [method: string]: any } } = {}
+  const paths: { [path: string]: { [method: string]: unknown } } = {}
   const referenceNames: string[] = []
   for (const typeDeclaration of context.declarations) {
     if (typeDeclaration.kind === 'function'

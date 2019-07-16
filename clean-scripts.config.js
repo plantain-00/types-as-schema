@@ -38,8 +38,7 @@ module.exports = {
     }
   ],
   lint: {
-    ts: `tslint ${tsFiles}`,
-    js: `standard ${jsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles}`,
     less: `stylelint ${lessFiles}`,
     export: `no-unused-export "src/**/*.ts" ${lessFiles} --strict --need-module tslib`,
     commit: `commitlint --from=HEAD~1`,
@@ -53,8 +52,7 @@ module.exports = {
     'clean-release --config clean-run.config.js'
   ],
   fix: {
-    ts: `tslint --fix ${tsFiles}`,
-    js: `standard --fix ${jsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`,
     less: `stylelint --fix ${lessFiles}`
   },
   watch: {

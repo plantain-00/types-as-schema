@@ -42,7 +42,7 @@ async function executeCommandLine() {
     fse.ensureDirSync(jsonPath)
     const schemas = generator.generateJsonSchemas()
     for (const { entry, schema } of schemas) {
-      if (debugPath || ajv.validateSchema(schema)) {
+      if ((debugPath || ajv.validateSchema(schema)) && entry) {
         fs.writeFileSync(path.resolve(jsonPath, entry), JSON.stringify(schema, null, '  '))
       } else {
         printInConsole(`json schema verified fail for entry: ${entry}`)
@@ -56,9 +56,11 @@ async function executeCommandLine() {
   let program: ts.Program | undefined
 
   function run() {
-    program = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext }, undefined, program)
+    const newProgram = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext }, undefined, program)
+    program = newProgram
 
-    const sourceFiles = filePaths.map(filePath => program!.getSourceFile(filePath)!)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const sourceFiles = filePaths.map(filePath => newProgram.getSourceFile(filePath)!)
 
     const generator = new Generator(sourceFiles, looseMode)
 
