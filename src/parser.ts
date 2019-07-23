@@ -1,4 +1,5 @@
 import ts from 'typescript'
+import { getJsDocs as utilGetJsDocs } from 'ts-lib-utils/dist/js-doc'
 import {
   Member,
   TypeDeclaration,
@@ -430,37 +431,15 @@ export class Parser {
   }
 
   private getJsDocs(node: ts.Node, sourceFile: ts.SourceFile) {
-    const jsDocs = (node as unknown as { jsDoc?: ts.JSDoc[] }).jsDoc
+    const jsDocs = utilGetJsDocs(node)
     const result: JsDoc[] = []
-    if (jsDocs && jsDocs.length > 0) {
-      for (const jsDoc of jsDocs) {
-        if (jsDoc.tags) {
-          for (const tag of jsDoc.tags) {
-            result.push(this.getJsDocFromTag(tag, sourceFile))
-          }
-        }
-      }
+    for (const jsDoc of jsDocs) {
+      result.push({
+        ...jsDoc,
+        type: jsDoc.type ? this.getType(jsDoc.type, sourceFile) : undefined
+      })
     }
     return result
-  }
-
-  private getJsDocFromTag(tag: ts.JSDocTag, sourceFile: ts.SourceFile) {
-    let type: Type | undefined
-    let paramName: string | undefined
-    let optional: boolean | undefined
-    if (tag.tagName.text === 'param') {
-      const typeExpression: ts.JSDocTypeExpression = (tag as unknown as { typeExpression: ts.JSDocTypeExpression }).typeExpression
-      type = this.getType(typeExpression.type, sourceFile)
-      paramName = (tag as unknown as { name: ts.Identifier }).name.text
-      optional = (tag as unknown as { isBracketed?: boolean }).isBracketed
-    }
-    return {
-      name: tag.tagName.text,
-      type,
-      paramName,
-      comment: tag.comment,
-      optional
-    }
   }
 
   private getType(type: ts.TypeNode, sourceFile: ts.SourceFile): Type {

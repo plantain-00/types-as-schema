@@ -6144,6 +6144,14 @@ ts-lib-utils@^2.1.0:
     glob "7"
     tslib "1"
 
+ts-lib-utils@^2.2.0-alpha.2:
+  version "2.2.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/ts-lib-utils/-/ts-lib-utils-2.2.0-alpha.2.tgz#098197d36d67486ee106539b8e1ec06b5e51249d"
+  integrity sha512-16v1zpSAgh6vt2wA//E3Gu6jO6wSUGFMG2Vr69/qlSe9o4/Y2OWDcL0OGNDvaffsXCivt4CUQptlpuNmVBA7dQ==
+  dependencies:
+    glob "7"
+    tslib "1"
+
 tslib@1, tslib@1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
