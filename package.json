@@ -69,6 +69,7 @@
     "lodash.snakecase": "4.1.1",
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
+    "ts-lib-utils": "^2.2.0-alpha.2",
     "tslib": "1.10.0",
     "typescript": "3"
   },
