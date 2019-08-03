@@ -31,7 +31,7 @@
     "@types/fs-extra": "8.0.0",
     "@types/jasmine": "3.3.16",
     "@types/minimist": "1.2.0",
-    "@types/node": "12.6.8",
+    "@types/node": "12.6.9",
     "@types/puppeteer": "1.19.0",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
@@ -55,11 +55,11 @@
     "rimraf": "2.6.3",
     "stylelint": "10.1.0",
     "stylelint-config-standard": "18.3.0",
-    "type-coverage": "2.2.0-alpha.2",
+    "type-coverage": "2.2.0",
     "vue": "2.6.10",
     "vue-class-component": "7.1.0",
     "watch-then-execute": "1.1.1",
-    "webpack": "4.38.0",
+    "webpack": "4.39.1",
     "webpack-cli": "3.3.6"
   },
   "dependencies": {
@@ -69,7 +69,7 @@
     "lodash.snakecase": "4.1.1",
     "minimist": "1.2.0",
     "protobufjs": "6.8.8",
-    "ts-lib-utils": "^2.2.0-alpha.2",
+    "ts-lib-utils": "2.2.0",
     "tslib": "1.10.0",
     "typescript": "3"
   },
