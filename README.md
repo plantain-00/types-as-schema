@@ -54,6 +54,7 @@ parameters | description
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 `--loose` | do not force `additionalProperties`
+`--config` `--custom` | custom generated file by the config file
 
 ## protobuf and json schema
 

@@ -9,6 +9,7 @@ import * as packageJson from '../package.json'
 
 import * as protobuf from 'protobufjs'
 import Ajv from 'ajv'
+import type { TypeDeclaration } from './utils'
 
 const ajv = new Ajv()
 
@@ -35,7 +36,9 @@ async function executeCommandLine() {
     debugPath,
     filePaths,
     watchMode,
-    looseMode
+    looseMode,
+    customPath,
+    configPath
   } = parseParameters(argv)
 
   function generateJsonSchemas(generator: Generator) {
@@ -117,6 +120,12 @@ async function executeCommandLine() {
     if (jsonPath) {
       generateJsonSchemas(generator)
     }
+
+    if (customPath && configPath) {
+      const action = require(path.resolve(process.cwd(), configPath)) as (typeDeclarations: TypeDeclaration[]) => string
+      const customContent = action(generator.declarations)
+      fs.writeFileSync(customPath, customContent)
+    }
   }
 
   if (watchMode) {
@@ -151,6 +160,8 @@ function parseParameters(argv: Args) {
   const swaggerPath = parseParameter(argv, 'swagger')
   const swaggerBasePath = parseParameter(argv, 'swagger-base')
   const debugPath = parseParameter(argv, 'debug')
+  const customPath = parseParameter(argv, 'custom')
+  const configPath = parseParameter(argv, 'config')
 
   const filePaths = argv._
 
@@ -175,7 +186,9 @@ function parseParameters(argv: Args) {
     debugPath,
     filePaths,
     watchMode,
-    looseMode
+    looseMode,
+    customPath,
+    configPath
   }
 }
 
@@ -200,6 +213,8 @@ interface PathArgs {
   swagger: string
   ['swagger-base']: string
   debug: string
+  custom: string
+  config: string
 }
 
 function printInConsole(message: unknown) {
@@ -216,3 +231,5 @@ executeCommandLine().then(() => {
   printInConsole(error)
   process.exit(1)
 })
+
+export * from './utils'
