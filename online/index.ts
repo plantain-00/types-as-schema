@@ -4,7 +4,8 @@ import Component from 'vue-class-component'
 
 import { Generator } from '../dist/core'
 import { indexTemplateHtml, indexTemplateHtmlStatic, demoCasesTs } from './variables'
-import { TypeDeclaration, Type } from '../dist/utils'
+import { TypeDeclaration } from '../dist/utils'
+import { generateTypescriptOfFunctionParameter } from '../dist/typescript-generator'
 
 const localStorageKey = 'types-as-schema:source'
 
@@ -24,6 +25,7 @@ export class App extends Vue {
   graphqlRootType = ''
   swaggerDoc = ''
   custom = ''
+  typescript = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -85,6 +87,9 @@ export class App extends Vue {
 
       this.custom = customHandler(generator.declarations)
       this.options.push('custom')
+
+      this.typescript = generator.generateTypescript()
+      this.options.push('typescript')
     }
   }
 }
@@ -93,12 +98,11 @@ const customHandler = (typeDeclarations: TypeDeclaration[]) => {
   const result: string[] = []
   for (const declaration of typeDeclarations) {
     if (declaration.kind === 'function') {
-      const parameters: string[] = []
-      for (const parameter of declaration.parameters) {
-        const optional = parameter.optional ? '?' : ''
-        parameters.push(`${parameter.name}${optional}: ${getType(parameter.type)}`)
-      }
-      result.push(`  (name: '${declaration.name}', ${parameters.join(', ')}): string`)
+      const parameters = [
+        `functionName: '${declaration.name}'`,
+        ...declaration.parameters.map(generateTypescriptOfFunctionParameter),
+      ]
+      result.push(`  (${parameters.join(', ')}): string`)
     }
   }
   return `type TestType = {
@@ -106,25 +110,5 @@ ${result.join('\n')}
 }
 `
 }
-
-function getType(type: Type): string {
-  if (type.kind === undefined) {
-    return 'any'
-  }
-  if (type.kind === 'enum') {
-    return type.enums.map((e) => type.type === 'string' ? `'${e}'` : e).join(' | ')
-  }
-  if (type.kind === 'boolean' || type.kind === 'number' || type.kind === 'string' || type.kind === 'null') {
-    return type.kind
-  }
-  if (type.kind === 'array') {
-    return `Array<${getType(type.type)}>`
-  }
-  if (type.kind === 'reference') {
-    return type.name
-  }
-  return 'any'
-}
-
 
 new App({ el: '#container' })

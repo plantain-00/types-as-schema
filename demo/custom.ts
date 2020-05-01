@@ -1,3 +1,3 @@
 type TestType = {
-  (name: 'getPetById', id: number, status: 'health' | 'sick', tags: Array<string>, pet: Pet): string
+  (functionName: 'getPetById', id: number, status: "health" | "sick", tags: string[], pet: Pet): string
 }

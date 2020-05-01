@@ -5,6 +5,7 @@ import * as path from 'path'
 import * as chokidar from 'chokidar'
 import fse from 'fs-extra'
 import { Generator } from './core'
+import * as typescriptGenerator from './typescript-generator'
 import * as packageJson from '../package.json'
 
 import * as protobuf from 'protobufjs'
@@ -38,7 +39,8 @@ async function executeCommandLine() {
     watchMode,
     looseMode,
     customPath,
-    configPath
+    configPath,
+    typescriptPath
   } = parseParameters(argv)
 
   function generateJsonSchemas(generator: Generator) {
@@ -122,9 +124,14 @@ async function executeCommandLine() {
     }
 
     if (customPath && configPath) {
-      const action = require(path.resolve(process.cwd(), configPath)) as (typeDeclarations: TypeDeclaration[]) => string
-      const customContent = action(generator.declarations)
+      const action = require(path.resolve(process.cwd(), configPath)) as (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
+      const customContent = action(generator.declarations, typescriptGenerator)
       fs.writeFileSync(customPath, customContent)
+    }
+
+    if (typescriptPath) {
+      const typescriptContent = generator.generateTypescript()
+      fs.writeFileSync(typescriptPath, typescriptContent)
     }
   }
 
@@ -162,6 +169,7 @@ function parseParameters(argv: Args) {
   const debugPath = parseParameter(argv, 'debug')
   const customPath = parseParameter(argv, 'custom')
   const configPath = parseParameter(argv, 'config')
+  const typescriptPath = parseParameter(argv, 'typescript')
 
   const filePaths = argv._
 
@@ -188,7 +196,8 @@ function parseParameters(argv: Args) {
     watchMode,
     looseMode,
     customPath,
-    configPath
+    configPath,
+    typescriptPath
   }
 }
 
@@ -215,6 +224,7 @@ interface PathArgs {
   debug: string
   custom: string
   config: string
+  typescript: string
 }
 
 function printInConsole(message: unknown) {
@@ -233,3 +243,4 @@ executeCommandLine().then(() => {
 })
 
 export * from './utils'
+export * from './typescript-generator'

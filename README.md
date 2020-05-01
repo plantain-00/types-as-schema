@@ -51,6 +51,7 @@ parameters | description
 `--mongoose` | generated mongoose schema file
 `--swagger` | generated swagger json file
 `--swagger-base` | swagger json file that generation based on
+`--typescript` | generated typescript file
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 `--loose` | do not force `additionalProperties`
