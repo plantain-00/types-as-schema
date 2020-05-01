@@ -10,6 +10,7 @@ import { generateMongooseSchema } from './mongoose-schema-generator'
 import { TypeDeclaration } from './utils'
 import { generateGraphqlRootType } from './graphql-root-type-generator'
 import { generateSwaggerDoc } from './swagger-doc-generator'
+import { generateTypescript } from './typescript-generator'
 
 export class Generator {
   declarations: TypeDeclaration[] = []
@@ -59,6 +60,10 @@ export class Generator {
       declarations: this.declarations,
       looseMode: this.looseMode
     }, swaggerBase)
+  }
+
+  generateTypescript() {
+    return generateTypescript(this.declarations)
   }
 }
 
