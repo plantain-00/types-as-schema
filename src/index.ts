@@ -67,7 +67,7 @@ async function executeCommandLine() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const sourceFiles = filePaths.map(filePath => newProgram.getSourceFile(filePath)!)
 
-    const generator = new Generator(sourceFiles, looseMode)
+    const generator = new Generator(sourceFiles, looseMode, !!customPath && !!configPath)
 
     if (debugPath) {
       fs.writeFileSync(debugPath, JSON.stringify(generator.declarations, null, '  '))

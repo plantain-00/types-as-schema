@@ -26,6 +26,7 @@ import {
 
 export class Parser {
   private declarations: TypeDeclaration[] = []
+  disableWarning = false
 
   constructor(private sourceFiles: ts.SourceFile[]) { }
 
@@ -307,7 +308,7 @@ export class Parser {
             })
             return
           }
-        } else {
+        } else if (!this.disableWarning) {
           warn(getPosition(declaration, sourceFile), 'parse')
         }
       }
@@ -504,7 +505,7 @@ export class Parser {
       }
     }
     const position = getPosition(type, sourceFile)
-    if (type.kind !== ts.SyntaxKind.AnyKeyword) {
+    if (type.kind !== ts.SyntaxKind.AnyKeyword && !this.disableWarning) {
       warn(position, 'parser')
     }
     return {
@@ -704,7 +705,9 @@ export class Parser {
             }
           }
         } else {
-          warn(getPosition(typeName, sourceFile), 'parser')
+          if (!this.disableWarning) {
+            warn(getPosition(typeName, sourceFile), 'parser')
+          }
           return undefined
         }
         const members: Member[] = []
@@ -1161,7 +1164,9 @@ export class Parser {
       try {
         type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
       } catch (error) {
-        warn(type.position, 'parser')
+        if (!this.disableWarning) {
+          warn(type.position, 'parser')
+        }
       }
     }
   }
