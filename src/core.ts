@@ -15,8 +15,9 @@ import { generateTypescript } from './typescript-generator'
 export class Generator {
   declarations: TypeDeclaration[] = []
 
-  constructor(public sourceFiles: ts.SourceFile[], private looseMode: boolean) {
+  constructor(public sourceFiles: ts.SourceFile[], private looseMode: boolean, disableWarning = false) {
     const parser = new Parser(sourceFiles)
+    parser.disableWarning = disableWarning
     this.declarations = parser.parse()
   }
 
