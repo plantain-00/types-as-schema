@@ -1,15 +1,12 @@
-/**
- * @param { import('../dist').TypeDeclaration[] } typeDeclarations
- * @param { import('../dist') } modules
- * @returns {string}
- */
-module.exports = (typeDeclarations, modules) => {
+import { generateTypescriptOfFunctionParameter, TypeDeclaration } from '../dist/core'
+
+export = (typeDeclarations: TypeDeclaration[]) => {
   const result = []
   for (const declaration of typeDeclarations) {
     if (declaration.kind === 'function') {
       const parameters = [
         `functionName: '${declaration.name}'`,
-        ...declaration.parameters.map(modules.generateTypescriptOfFunctionParameter),
+        ...declaration.parameters.map(generateTypescriptOfFunctionParameter),
       ]
       result.push(`  (${parameters.join(', ')}): string`)
     }
