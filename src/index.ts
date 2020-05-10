@@ -124,7 +124,11 @@ async function executeCommandLine() {
     }
 
     if (customPath && configPath) {
-      const action = require(path.resolve(process.cwd(), configPath)) as (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
+      const configFilePath = path.resolve(process.cwd(), configPath)
+      if (configFilePath.endsWith('.ts')) {
+        require('ts-node/register/transpile-only')
+      }
+      const action = require(configFilePath) as (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
       const customContent = action(generator.declarations, typescriptGenerator)
       fs.writeFileSync(customPath, customContent)
     }
@@ -241,6 +245,3 @@ executeCommandLine().then(() => {
   printInConsole(error)
   process.exit(1)
 })
-
-export * from './utils'
-export * from './typescript-generator'

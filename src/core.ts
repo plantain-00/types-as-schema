@@ -69,3 +69,6 @@ export class Generator {
 }
 
 export { ArrayDefinition, ObjectDefinition, UndefinedDefinition }
+
+export * from './utils'
+export * from './typescript-generator'
