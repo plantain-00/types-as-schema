@@ -128,7 +128,12 @@ async function executeCommandLine() {
       if (configFilePath.endsWith('.ts')) {
         require('ts-node/register/transpile-only')
       }
-      const action = require(configFilePath) as (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
+      type Action = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      let action: Action & { default?: Action } = require(configFilePath)
+      if (action.default) {
+        action = action.default
+      }
       const customContent = action(generator.declarations, typescriptGenerator)
       fs.writeFileSync(customPath, customContent)
     }
