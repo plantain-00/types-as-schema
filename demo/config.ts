@@ -1,6 +1,6 @@
 import { generateTypescriptOfFunctionParameter, TypeDeclaration } from '../dist/core'
 
-export = (typeDeclarations: TypeDeclaration[]) => {
+export default (typeDeclarations: TypeDeclaration[]): string => {
   const result = []
   for (const declaration of typeDeclarations) {
     if (declaration.kind === 'function') {
