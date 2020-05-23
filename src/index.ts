@@ -114,7 +114,7 @@ async function executeCommandLine() {
     }
 
     if (swaggerPath) {
-      const swaggerBase = swaggerBasePath ? JSON.parse(fs.readFileSync(swaggerBasePath).toString()) as {} : undefined
+      const swaggerBase = swaggerBasePath ? JSON.parse(fs.readFileSync(swaggerBasePath).toString()) as Record<string, unknown> : undefined
       const swaggerDoc = generator.generateSwaggerDoc(swaggerBase)
       fs.writeFileSync(swaggerPath, swaggerDoc)
     }

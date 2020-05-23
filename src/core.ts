@@ -56,7 +56,7 @@ export class Generator {
     return generateMongooseSchema(this.declarations)
   }
 
-  generateSwaggerDoc(swaggerBase?: {}) {
+  generateSwaggerDoc(swaggerBase?: Record<string, unknown>) {
     return generateSwaggerDoc({
       declarations: this.declarations,
       looseMode: this.looseMode
