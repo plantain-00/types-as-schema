@@ -1,7 +1,7 @@
 import { Type, Context } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
-export function generateSwaggerDoc(context: Context, swaggerBase?: {}) {
+export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string, unknown>) {
   const paths: { [path: string]: { [method: string]: unknown } } = {}
   const referenceNames: string[] = []
   for (const typeDeclaration of context.declarations) {
