@@ -1,13 +1,12 @@
-module.exports = {
+import { ConfigData } from 'file2variable-cli'
+
+export default {
   base: 'online',
   files: [
     'online/index.template.html',
     'demo/cases.ts'
   ],
-  /**
-   * @argument {string} file
-   */
-  handler: file => {
+  handler: (file) => {
     if (file.endsWith('index.template.html')) {
       return {
         type: 'vue',
@@ -18,4 +17,4 @@ module.exports = {
     return { type: 'text' }
   },
   out: 'online/variables.ts'
-}
+} as ConfigData
