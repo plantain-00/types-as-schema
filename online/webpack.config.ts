@@ -1,16 +1,17 @@
-const resolve = {
-  alias: {
-    vue$: 'vue/dist/vue.esm.js'
-  }
-}
+import * as webpack from 'webpack'
 
-module.exports = {
+export default {
   entry: {
     index: './online/index'
   },
   output: {
     path: __dirname,
     filename: '[name].bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.tsx?$/, loader: 'ts-loader' }
+    ]
   },
   optimization: {
     splitChunks: {
@@ -23,5 +24,10 @@ module.exports = {
       }
     }
   },
-  resolve
-}
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      vue$: 'vue/dist/vue.esm.js'
+    }
+  }
+} as webpack.Configuration

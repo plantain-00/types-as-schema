@@ -1,6 +1,6 @@
-const fs = require('fs')
+import { ConfigData } from 'rev-static'
 
-module.exports = {
+export default {
   inputFiles: [
     'online/*.bundle.js',
     'online/*.bundle.css',
@@ -18,8 +18,5 @@ module.exports = {
   sha: 256,
   customNewFileName: (filePath, fileString, md5String, baseName, extensionName) => baseName + '-' + md5String + extensionName,
   base: 'online',
-  fileSize: 'online/file-size.json',
-  context: {
-    prerender: fs.readFileSync('prerender/index.html')
-  }
-}
+  fileSize: 'online/file-size.json'
+} as ConfigData

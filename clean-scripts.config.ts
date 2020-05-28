@@ -1,29 +1,27 @@
-const { Service, executeScriptAsync } = require('clean-scripts')
-const { watch } = require('watch-then-execute')
+import { executeScriptAsync } from 'clean-scripts'
+import { watch } from 'watch-then-execute'
 
-const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "screenshots/**/*.ts" "prerender/**/*.ts" "online/**/*.ts"`
-const jsFiles = `"*.config.js" "online/*.config.js"`
+const tsFiles = `"src/**/*.ts" "online/**/*.ts"`
+const jsFiles = `"*.config.js"`
 const lessFiles = `"online/**/*.less"`
 
-const templateCommand = `file2variable-cli --config online/file2variable.config.js`
+const templateCommand = `file2variable-cli --config online/file2variable.config.ts`
 const tscSrcCommand = `tsc -p src`
-const tscOnlineCommand = `tsc -p online`
-const webpackCommand = `webpack --config online/webpack.config.js`
-const revStaticCommand = `rev-static --config online/rev-static.config.js`
+const webpackCommand = `webpack --config online/webpack.config.ts`
+const revStaticCommand = `rev-static --config online/rev-static.config.ts`
 const cssCommand = [
   `lessc online/index.less > online/index.css`,
   `postcss online/index.css -o online/index.postcss.css`,
   `cleancss -o online/index.bundle.css online/index.postcss.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css`
 ]
 
-module.exports = {
+export default {
   build: [
     `rimraf dist/`,
     tscSrcCommand,
     {
       js: [
         templateCommand,
-        tscOnlineCommand,
         webpackCommand
       ],
       css: cssCommand,
@@ -47,9 +45,7 @@ module.exports = {
     typeCoverageOnline: 'type-coverage -p online --strict --ignore-catch --ignore-files "online/variables.ts" --ignore-files "dist/*"'
   },
   test: [
-    'tsc -p spec',
-    'jasmine',
-    'clean-release --config clean-run.config.js'
+    'clean-release --config clean-run.config.ts'
   ],
   fix: {
     ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`,
@@ -58,20 +54,8 @@ module.exports = {
   watch: {
     vue: `${templateCommand} --watch`,
     src: `${tscSrcCommand} --watch`,
-    online: `${tscOnlineCommand} --watch`,
     webpack: `${webpackCommand} --watch`,
     less: () => watch(['online/**/*.less'], [], () => executeScriptAsync(cssCommand)),
     rev: `${revStaticCommand} --watch`
-  },
-  screenshot: [
-    new Service(`http-server -p 8000`),
-    `tsc -p screenshots`,
-    `node screenshots/index.js`
-  ],
-  prerender: [
-    new Service(`http-server -p 8000`),
-    `tsc -p prerender`,
-    `node prerender/index.js`,
-    revStaticCommand
-  ]
+  }
 }
