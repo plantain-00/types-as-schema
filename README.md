@@ -39,6 +39,8 @@ Genetate json schema, protobuf file, graphQL/mongoose(alpha) schema, reasonml(al
 
 `types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --graphql-root-type demo/root-type.ts --reason demo/types.re --ocaml demo/types.ml --rust demo/types.rs --debug demo/debug.json`
 
+## options
+
 parameters | description
 --- | ---
 `--json` | directory for generated json files
@@ -56,6 +58,8 @@ parameters | description
 `--watch` or `-w` | watch mode
 `--loose` | do not force `additionalProperties`
 `--config` `--custom` | custom generated file by the config file
+`-h` or `--help` | Print this message.
+`-v` or `--version` | Print the version
 
 ## protobuf and json schema
 

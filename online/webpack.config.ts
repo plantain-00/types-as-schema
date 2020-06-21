@@ -1,6 +1,6 @@
 import * as webpack from 'webpack'
 
-export default {
+const config: webpack.Configuration = {
   entry: {
     index: './online/index'
   },
@@ -30,4 +30,6 @@ export default {
       vue$: 'vue/dist/vue.esm.js'
     }
   }
-} as webpack.Configuration
+}
+
+export default config

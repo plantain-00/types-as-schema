@@ -23,6 +23,11 @@ async function executeCommandLine() {
     return
   }
 
+  if (argv.h || argv.help) {
+    showHelp()
+    return
+  }
+
   const {
     protobufPath,
     graphqlPath,
@@ -217,6 +222,8 @@ interface Args extends PathArgs {
   w: boolean
   watch: boolean
   loose: boolean
+  h?: unknown
+  help?: unknown
 }
 
 interface PathArgs {
@@ -242,6 +249,31 @@ function printInConsole(message: unknown) {
 
 function showToolVersion() {
   printInConsole(`Version: ${packageJson.version}`)
+}
+
+function showHelp() {
+  console.log(`Version ${packageJson.version}
+Syntax:   types-as-schema [options] [file...]
+Examples: types-as-schema demo/types.ts --protobuf demo/types.proto
+Options:
+ -h, --help                                         Print this message.
+ -v, --version                                      Print the version
+ --json                                             directory for generated json files
+ --protobuf                                         generated protobuf file
+ --graphql                                          generated graphql schema file
+ --graphql-root-type                                generated graphql root type
+ --reason                                           generated reason types file
+ --ocaml                                            generated ocaml types file
+ --rust                                             generated rust types file
+ --mongoose                                         generated mongoose schema file
+ --swagger                                          generated swagger json file
+ --swagger-base                                     swagger json file that generation based on
+ --typescript                                       generated typescript file
+ --debug                                            generated file with debug information in it
+ --watch, -w                                        watch mode
+ --loose                                            do not force additionalProperties
+ --config, --custom                                 custom generated file by the config file
+`)
 }
 
 executeCommandLine().then(() => {

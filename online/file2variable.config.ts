@@ -1,6 +1,6 @@
 import { ConfigData } from 'file2variable-cli'
 
-export default {
+const config: ConfigData = {
   base: 'online',
   files: [
     'online/index.template.html',
@@ -17,4 +17,6 @@ export default {
     return { type: 'text' }
   },
   out: 'online/variables.ts'
-} as ConfigData
+}
+
+export default config
