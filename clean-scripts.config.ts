@@ -2,7 +2,6 @@ import { executeScriptAsync } from 'clean-scripts'
 import { watch } from 'watch-then-execute'
 
 const tsFiles = `"src/**/*.ts" "online/**/*.ts"`
-const jsFiles = `"*.config.js"`
 const lessFiles = `"online/**/*.less"`
 
 const templateCommand = `file2variable-cli --config online/file2variable.config.ts`
@@ -36,10 +35,9 @@ export default {
     }
   ],
   lint: {
-    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles}`,
     less: `stylelint ${lessFiles}`,
     export: `no-unused-export "src/**/*.ts" ${lessFiles} --strict --need-module tslib`,
-    commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
     typeCoverage: 'type-coverage -p src --strict --ignore-catch',
     typeCoverageOnline: 'type-coverage -p online --strict --ignore-catch --ignore-files "online/variables.ts" --ignore-files "dist/*"'
@@ -48,7 +46,7 @@ export default {
     'clean-release --config clean-run.config.ts'
   ],
   fix: {
-    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`,
+    ts: `eslint --ext .js,.ts ${tsFiles} --fix`,
     less: `stylelint --fix ${lessFiles}`
   },
   watch: {
