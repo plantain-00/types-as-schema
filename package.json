@@ -51,6 +51,7 @@
     "stylelint-config-standard": "20.0.0",
     "ts-loader": "7.0.5",
     "ts-node": "8.10.2",
+    "tsconfig-plantain": "0.0.1",
     "type-coverage": "2.8.2",
     "vue": "2.6.11",
     "vue-class-component": "7.2.3",
