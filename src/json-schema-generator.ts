@@ -12,7 +12,7 @@ import {
 
 export function generateJsonSchemas(context: Context) {
   const definitions = getAllDefinitions(context)
-  return context.declarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
+  const result = context.declarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
     .map(m => ({
       entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry,
       schema: {
@@ -20,6 +20,10 @@ export function generateJsonSchemas(context: Context) {
         definitions: getReferencedDefinitions(m.name, definitions, [])
       }
     }))
+  if (result.length === 0) {
+    console.warn('No json schema generated because no @entry found.')
+  }
+  return result
 }
 
 export function getAllDefinitions(context: Context) {
