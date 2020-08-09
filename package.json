@@ -73,5 +73,8 @@
   },
   "bin": {
     "types-as-schema": "bin/types-as-schema"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
