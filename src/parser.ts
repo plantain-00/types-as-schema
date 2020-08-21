@@ -481,6 +481,12 @@ export class Parser {
       return this.getTypeOfUnionType(type, sourceFile)
     }
     if (ts.isLiteralTypeNode(type)) {
+      if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
+        return {
+          kind: 'null',
+          position: getPosition(type, sourceFile)
+        }
+      }
       return this.getTypeOfLiteralType(type, sourceFile)
     }
     if (type.kind === ts.SyntaxKind.NullKeyword) {
@@ -491,15 +497,16 @@ export class Parser {
     }
     if (ts.isTupleTypeNode(type)) {
       let arrayType: Type | undefined
-      for (const elementType of type.elementTypes) {
+      const elementsType = type.elements || (type as { elementTypes?: ts.NodeArray<ts.Node> }).elementTypes
+      for (const elementType of elementsType) {
         arrayType = this.getType(elementType, sourceFile)
       }
       if (arrayType) {
         return {
           kind: 'array',
           type: arrayType,
-          minItems: type.elementTypes.length,
-          maxItems: type.elementTypes.length,
+          minItems: elementsType.length,
+          maxItems: elementsType.length,
           position: getPosition(type, sourceFile)
         }
       }
@@ -1163,7 +1170,7 @@ export class Parser {
     if (propertyJsDoc.comment) {
       try {
         type.default = JSON.parse(this.getJsDocComment(propertyJsDoc.comment))
-      } catch (error) {
+      } catch (error: unknown) {
         if (!this.disableWarning) {
           warn(type.position, 'parser')
         }
