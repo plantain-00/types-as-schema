@@ -656,9 +656,7 @@ export class Parser {
           || reference.typeName.text === 'ReturnType'
           || reference.typeName.text === 'DeepReturnType')) {
           const typeArgument = reference.typeArguments[0]
-          if (ts.isTypeReferenceNode(typeArgument)) {
-            return this.getTypeOfTypeReference(typeArgument, sourceFile)
-          }
+          return this.getType(typeArgument, sourceFile)
         } else if (reference.typeName.text === 'Pick') {
           const type = this.getTypeOfPick(reference.typeName, reference.typeArguments, sourceFile)
           if (type) {
