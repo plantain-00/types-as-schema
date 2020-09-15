@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.34.1](https://github.com/plantain-00/types-as-schema/compare/v1.34.0...v1.34.1) (2020-09-15)
+  
+* fix: function parameter with default value is optional, ts generator for type array ([1f3f0f1](https://github.com/plantain-00/types-as-schema/commit/1f3f0f1cfafb6a42045ef1c15c10ca014cab993e))
+* chore: update dependencies ([c139ea7](https://github.com/plantain-00/types-as-schema/commit/c139ea746897e92fd79da41a61f4497822cf1750)) ([ab02146](https://github.com/plantain-00/types-as-schema/commit/ab02146d5699eb0c29caa9c28e924efeec9a6a80)) ([a8beedf](https://github.com/plantain-00/types-as-schema/commit/a8beedfac71e38399d7d8e6f0b23d02eaeb37292))
+* fix: add missing parserOptions ([41045ec](https://github.com/plantain-00/types-as-schema/commit/41045ec5d547668f678ac7567f193bdeb4c12649))
+
 ## [1.34.0](https://github.com/plantain-00/types-as-schema/compare/v1.33.1...v1.34.0) (2020-08-21)
   
 * feat: support typescript 4 ([401fe1a](https://github.com/plantain-00/types-as-schema/commit/401fe1ad19be8ef30cd6fefdac4908318348eece))
