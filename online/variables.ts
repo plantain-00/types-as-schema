@@ -449,6 +449,11 @@ export declare function getPetById(
    * @default 2
    */
   id: integer,
+  /**
+   * @in query
+   * @default asc
+   */
+  sortType: 'asc' | 'desc',
 ): Promise<Pet>
 
 type ObjectId = any

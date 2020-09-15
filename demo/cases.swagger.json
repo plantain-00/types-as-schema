@@ -51,6 +51,17 @@
             "minimum": 1,
             "default": 2,
             "description": "pet id"
+          },
+          {
+            "name": "sortType",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "asc"
           }
         ],
         "summary": "get pet by id.",

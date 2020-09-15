@@ -309,7 +309,7 @@ interface Pet {
   status: "available" | "pending" | "sold"
 }
 
-declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number): Pet
+declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number, sortType?: "asc" | "desc"): Pet
 
 interface MongooseScheme {
   objectId: ObjectId

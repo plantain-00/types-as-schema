@@ -102,7 +102,8 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
     }
     return {
       type: getTypeNameOfEnumOrConst(memberType.type),
-      enum: memberType.enums
+      enum: memberType.enums,
+      default: memberType.default,
     } as Definition
   } else if (memberType.kind === 'reference') {
     if (isValidReference(context.declarations, memberType.name)) {
