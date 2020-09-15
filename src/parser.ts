@@ -21,7 +21,7 @@ import {
   warn,
   getPosition,
   FunctionDeclaration,
-  FunctionParameter
+  FunctionParameter, EnumType
 } from './utils'
 
 export class Parser {
@@ -1088,7 +1088,7 @@ export class Parser {
     }
 
     if (ts.isMethodSignature(property) || ts.isMethodDeclaration(property)) {
-      member.parameters = property.parameters.map((parameter) => this.getParameter(parameter, sourceFile))
+      member.parameters = property.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile))
     }
 
     return member
@@ -1137,6 +1137,8 @@ export class Parser {
       this.setJsDocObject(jsDoc, type)
     } else if (type.kind === 'reference') {
       this.setJsDocReference(jsDoc, type)
+    } else if (type.kind === 'enum') {
+      this.setJsDocEnum(jsDoc, type)
     }
   }
 
@@ -1215,6 +1217,14 @@ export class Parser {
         type.title = propertyJsDoc.comment
       } else if (propertyJsDoc.name === 'description') {
         type.description = propertyJsDoc.comment
+      }
+    }
+  }
+
+  private setJsDocEnum(propertyJsDoc: JsDoc, type: EnumType) {
+    if (propertyJsDoc.comment) {
+      if (propertyJsDoc.name === 'default') {
+        type.default = this.getJsDocComment(propertyJsDoc.comment)
       }
     }
   }
