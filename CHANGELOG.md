@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.34.2](https://github.com/plantain-00/types-as-schema/compare/v1.34.1...v1.34.2) (2020-09-15)
+  
+* fix: json schema default ([5187206](https://github.com/plantain-00/types-as-schema/commit/5187206c361f5c3a6c96f4f3f4f60ec6f51553b6))
+
 ## [1.34.1](https://github.com/plantain-00/types-as-schema/compare/v1.34.0...v1.34.1) (2020-09-15)
   
 * fix: function parameter with default value is optional, ts generator for type array ([1f3f0f1](https://github.com/plantain-00/types-as-schema/commit/1f3f0f1cfafb6a42045ef1c15c10ca014cab993e))
