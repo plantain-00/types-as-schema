@@ -195,6 +195,7 @@ pub struct ArrayType {
   #[serde(rename = "arrayType2")] pub array_type_2: Vec<TypeLiteral>,
   #[serde(rename = "arrayType4")] pub array_type_4: Vec<u32>,
   #[serde(rename = "arrayType9")] pub array_type_9: Vec<String>,
+  #[serde(rename = "arrayType10")] pub array_type_10: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

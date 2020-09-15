@@ -132,6 +132,9 @@ export function generateTypescriptOfType(type: Type): string {
     if (type.minItems && type.maxItems && type.minItems === type.maxItems) {
       return `[${Array.from({ length: type.minItems }).fill(item).join(', ')}]`
     }
+    if ((type.type.kind === 'enum' || type.type.kind === 'number' || type.type.kind === 'string') && type.type.enums && type.type.enums.length > 1) {
+      return `(${item})[]`
+    }
     return `${item}[]`
   }
   if (type.kind === 'reference') {

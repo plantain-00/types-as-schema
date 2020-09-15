@@ -388,6 +388,16 @@
           "items": {
             "type": "string"
           }
+        },
+        "arrayType10": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "foo",
+              "bar"
+            ]
+          }
         }
       },
       "required": [
@@ -399,7 +409,8 @@
         "arrayType6",
         "arrayType7",
         "arrayType8",
-        "arrayType9"
+        "arrayType9",
+        "arrayType10"
       ],
       "additionalProperties": false
     },

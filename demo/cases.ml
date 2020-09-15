@@ -128,6 +128,7 @@ type arrayType = {
   arrayType2: typeLiteral list;
   arrayType4: int list;
   arrayType9: string list;
+  arrayType10: string list;
 }
 
 type mapType7 = {

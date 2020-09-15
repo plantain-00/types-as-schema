@@ -16,15 +16,6 @@
         "operationId": "getPetById",
         "parameters": [
           {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "type": "integer",
-            "minimum": 1,
-            "default": 2,
-            "description": "pet id"
-          },
-          {
             "name": "status",
             "required": true,
             "in": "query",
@@ -51,6 +42,15 @@
             "schema": {
               "$ref": "#/definitions/Pet"
             }
+          },
+          {
+            "name": "id",
+            "required": false,
+            "in": "path",
+            "type": "integer",
+            "minimum": 1,
+            "default": 2,
+            "description": "pet id"
           }
         ],
         "summary": "get pet by id.",

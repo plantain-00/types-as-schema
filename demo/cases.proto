@@ -132,6 +132,7 @@ message ArrayType {
     repeated TypeLiteral arrayType2 = 2;
     repeated uint32 arrayType4 = 4;
     repeated string arrayType9 = 9;
+    repeated string arrayType10 = 10;
 }
 
 message MapType7 {

@@ -166,6 +166,7 @@ export interface ArrayType<TContext = any> {
   arrayType7: Array<object>
   arrayType8: Array<object>
   arrayType9: Array<string>
+  arrayType10: Array<string>
 }
 
 export interface MapType7<TContext = any> {
@@ -452,6 +453,7 @@ export interface ApolloResolvers<TContext = any> {
     arrayType7?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     arrayType8?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     arrayType9?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    arrayType10?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   MapType7?: {
     foo?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
