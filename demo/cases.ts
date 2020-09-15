@@ -208,6 +208,7 @@ type ArrayType = {
   arrayType7: { literal: TypeLiteral | null }[];
   arrayType8: Array<{ literal: number }>;
   arrayType9: ReadonlyArray<string>;
+  arrayType10: Array<'foo' | 'bar'>;
 }
 
 type MapType7 = {
@@ -421,13 +422,6 @@ interface Pet {
  */
 export declare function getPetById(
   /**
-   * @in path
-   * @description pet id
-   * @minimum 1
-   * @default 2
-   */
-  id: integer,
-  /**
    * @in query
    */
   status: 'health' | 'sick',
@@ -439,7 +433,14 @@ export declare function getPetById(
   /**
    * @in body
    */
-  pet: Pet
+  pet: Pet,
+  /**
+   * @in path
+   * @description pet id
+   * @minimum 1
+   * @default 2
+   */
+  id: integer,
 ): Promise<Pet>
 
 type ObjectId = any

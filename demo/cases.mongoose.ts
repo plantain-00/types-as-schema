@@ -415,6 +415,16 @@ export const arrayTypeSchema = {
     ],
     required: true
   },
+  arrayType10: {
+    type: [
+      {
+        type: Schema.Types.Mixed,
+        required: true,
+        enum: ["foo", "bar"]
+      }
+    ],
+    required: true
+  },
 }
 
 export const mapType7Schema = {

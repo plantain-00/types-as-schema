@@ -148,6 +148,7 @@ interface ArrayType {
   arrayType7: { literal: TypeLiteral | null }[]
   arrayType8: { literal: number }[]
   arrayType9: string[]
+  arrayType10: ("foo" | "bar")[]
 }
 
 interface MapType7 {
@@ -308,7 +309,7 @@ interface Pet {
   status: "available" | "pending" | "sold"
 }
 
-declare function getPetById(id: number, status: "health" | "sick", tags: string[], pet: Pet): Pet
+declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number): Pet
 
 interface MongooseScheme {
   objectId: ObjectId

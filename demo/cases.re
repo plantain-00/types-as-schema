@@ -145,6 +145,7 @@ type arrayType = {
   arrayType2: list(typeLiteral),
   arrayType4: list(int),
   arrayType9: list(string),
+  arrayType10: list(string),
 };
 
 type mapType7 = {

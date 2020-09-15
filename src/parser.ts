@@ -169,6 +169,9 @@ export class Parser {
         this.setJsDoc(jsDoc, parameterDoc.type)
       }
     }
+    if (parameterDoc.type.default !== undefined) {
+      parameterDoc.optional = true
+    }
     return parameterDoc
   }
 
@@ -1113,7 +1116,7 @@ export class Parser {
     return {
       name: (parameter.name as ts.Identifier).text,
       type,
-      optional: !!parameter.questionToken
+      optional: !!parameter.questionToken || type.default !== undefined
     }
   }
 
