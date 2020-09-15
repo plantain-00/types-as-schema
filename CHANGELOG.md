@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.34.3](https://github.com/plantain-00/types-as-schema/compare/v1.34.2...v1.34.3) (2020-09-16)
+  
+* fix: get type of type argument ([313b88e](https://github.com/plantain-00/types-as-schema/commit/313b88ea6c7e76b0a094427bd351561967d7c1c5))
+
 ## [1.34.2](https://github.com/plantain-00/types-as-schema/compare/v1.34.1...v1.34.2) (2020-09-15)
   
 * fix: json schema default ([5187206](https://github.com/plantain-00/types-as-schema/commit/5187206c361f5c3a6c96f4f3f4f60ec6f51553b6))
