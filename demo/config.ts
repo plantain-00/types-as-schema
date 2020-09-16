@@ -6,7 +6,7 @@ export default (typeDeclarations: TypeDeclaration[]): string => {
     if (declaration.kind === 'function') {
       const parameters = [
         `functionName: '${declaration.name}'`,
-        ...declaration.parameters.map(generateTypescriptOfFunctionParameter),
+        ...declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m)),
       ]
       result.push(`  (${parameters.join(', ')}): string`)
     }

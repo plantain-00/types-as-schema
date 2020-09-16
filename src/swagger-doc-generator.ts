@@ -1,4 +1,4 @@
-import { Type, Context } from './utils'
+import { Type, Context, getReferencesInType } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
 export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string, unknown>) {
@@ -11,15 +11,11 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
       if (!paths[typeDeclaration.path]) {
         paths[typeDeclaration.path] = {}
       }
-      if (typeDeclaration.type.kind === 'reference') {
-        referenceNames.push(typeDeclaration.type.name)
-      }
+      referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.name))
       paths[typeDeclaration.path][typeDeclaration.method] = {
         operationId: typeDeclaration.name,
         parameters: typeDeclaration.parameters.map((parameter) => {
-          if (parameter.type.kind === 'reference') {
-            referenceNames.push(parameter.type.name)
-          }
+          referenceNames.push(...getReferencesInType(parameter.type).map((r) => r.name))
           return {
             name: parameter.name,
             required: !parameter.optional,
