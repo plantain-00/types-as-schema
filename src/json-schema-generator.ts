@@ -349,6 +349,9 @@ export type BooleanDefinition = {
   default?: boolean
 } & CommonDefinition
 
+/**
+ * @public
+ */
 export type ObjectDefinition = {
   type: 'object'
   additionalProperties?: Definition | boolean
@@ -360,6 +363,9 @@ export type ObjectDefinition = {
   default?: unknown
 } & CommonDefinition
 
+/**
+ * @public
+ */
 export type ArrayDefinition = {
   type: 'array'
   items: Definition
@@ -369,6 +375,9 @@ export type ArrayDefinition = {
   default?: unknown[]
 } & CommonDefinition
 
+/**
+ * @public
+ */
 export type UndefinedDefinition = {
   type: undefined
   $ref?: string

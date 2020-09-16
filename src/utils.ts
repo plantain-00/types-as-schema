@@ -33,6 +33,20 @@ export function isValidReference(declarations: TypeDeclaration[], referenceName:
   return false
 }
 
+export function getReferencesInType(type: Type): ReferenceType[] {
+  const result: ReferenceType[] = []
+  if (type.kind === 'reference') {
+    result.push(type)
+  } else if (type.kind === 'object') {
+    for (const member of type.members) {
+      result.push(...getReferencesInType(member.type))
+    }
+  } else if (type.kind === 'array') {
+    result.push(...getReferencesInType(type.type))
+  }
+  return result
+}
+
 export interface Context {
   looseMode: boolean
   declarations: TypeDeclaration[]

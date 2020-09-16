@@ -57,7 +57,7 @@ export function generateTypescriptOfStringOrNumberDeclaration(declaration: Strin
  * @public
  */
 export function generateTypescriptOfUnionDeclaration(declaration: UnionDeclaration) {
-  const members = declaration.members.map(generateTypescriptOfType)
+  const members = declaration.members.map((m) => generateTypescriptOfType(m))
   return `type ${declaration.name} = ${members.join(' | ')}`
 }
 
@@ -104,7 +104,7 @@ export function generateTypescriptOfEnumMember(member: EnumMember) {
  * @public
  */
 export function generateTypescriptOfFunctionDeclaration(declaration: FunctionDeclaration) {
-  const parameters = declaration.parameters.map(generateTypescriptOfFunctionParameter)
+  const parameters = declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m))
   const type = generateTypescriptOfType(declaration.type)
   return `declare function ${declaration.name}(${parameters.join(', ')}): ${type}`
 }
@@ -112,15 +112,21 @@ export function generateTypescriptOfFunctionDeclaration(declaration: FunctionDec
 /**
  * @public
  */
-export function generateTypescriptOfFunctionParameter(parameter: FunctionParameter) {
+export function generateTypescriptOfFunctionParameter(parameter: FunctionParameter, processChild?: (type: Type) => string | undefined) {
   const optional = parameter.optional ? '?' : ''
-  return `${parameter.name}${optional}: ${generateTypescriptOfType(parameter.type)}`
+  return `${parameter.name}${optional}: ${generateTypescriptOfType(parameter.type, processChild)}`
 }
 
 /**
  * @public
  */
-export function generateTypescriptOfType(type: Type): string {
+export function generateTypescriptOfType(type: Type, processChild?: (type: Type) => string | undefined): string {
+  if (processChild) {
+    const childResult = processChild(type)
+    if (childResult !== undefined) {
+      return childResult
+    }
+  }
   if (type.kind === 'enum') {
     return type.enums.map((e) => JSON.stringify(e)).join(' | ')
   }
@@ -128,7 +134,7 @@ export function generateTypescriptOfType(type: Type): string {
     return type.kind
   }
   if (type.kind === 'array') {
-    const item = generateTypescriptOfType(type.type)
+    const item = generateTypescriptOfType(type.type, processChild)
     if (type.minItems && type.maxItems && type.minItems === type.maxItems) {
       return `[${Array.from({ length: type.minItems }).fill(item).join(', ')}]`
     }
@@ -141,18 +147,18 @@ export function generateTypescriptOfType(type: Type): string {
     return type.name
   }
   if (type.kind === 'union') {
-    return type.members.map((e) => generateTypescriptOfType(e)).join(' | ')
+    return type.members.map((e) => generateTypescriptOfType(e, processChild)).join(' | ')
   }
   if (type.kind === 'object') {
-    const members = type.members.map(generateTypescriptOfFunctionParameter)
+    const members = type.members.map((m) => generateTypescriptOfFunctionParameter(m, processChild))
     if (type.additionalProperties) {
       members.push(generateTypescriptOfObjectAdditionalProperties(type.additionalProperties))
     }
     return `{ ${members.join(', ')} }`
   }
   if (type.kind === 'map') {
-    const keyType = generateTypescriptOfType(type.key)
-    const valueType = generateTypescriptOfType(type.value)
+    const keyType = generateTypescriptOfType(type.key, processChild)
+    const valueType = generateTypescriptOfType(type.value, processChild)
     return `{ [name: ${keyType}]: ${valueType} }`
   }
   return 'unknown'
