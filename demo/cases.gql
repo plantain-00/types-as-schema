@@ -301,3 +301,24 @@ type CreateInput2 {
   member1: String!
   member2: Float!
 }
+
+union WsCommand = CreateBlog | UpdateBlog
+
+type CreateBlog {
+  type: String!
+  content: String!
+}
+
+type UpdateBlog {
+  type: String!
+  id: Float!
+  content: String!
+}
+
+union WsPush = BlogChange
+
+type BlogChange {
+  type: String!
+  id: Float!
+  content: String!
+}

@@ -437,6 +437,36 @@ interface Metadata {
   [name: string]: unknown
 }
 
+type WsCommand = CreateBlog | UpdateBlog
+
+/**
+ * @public
+ */
+interface CreateBlog {
+  type: "create blog"
+  content: string
+}
+
+/**
+ * @public
+ */
+interface UpdateBlog {
+  type: "update blog"
+  id: number
+  content: string
+}
+
+type WsPush = BlogChange
+
+/**
+ * @public
+ */
+interface BlogChange {
+  type: "blog change"
+  id: number
+  content: string
+}
+
 interface OuterType {
   outerType: number
 }

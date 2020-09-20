@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.36.0](https://github.com/plantain-00/types-as-schema/compare/v1.35.1...v1.36.0) (2020-09-20)
+  
+* feat: support --markdown ([c9d7290](https://github.com/plantain-00/types-as-schema/commit/c9d7290b1c987d81372213e0c02b01906cf93134))
+
 ## [1.35.1](https://github.com/plantain-00/types-as-schema/compare/v1.35.0...v1.35.1) (2020-09-20)
   
 * fix: union for protobuf ([6a85656](https://github.com/plantain-00/types-as-schema/commit/6a85656a4ad052caec7fb495c210da564112ce5b))

@@ -299,3 +299,32 @@ type layoutMetadataMap = {
 type metadata = {
 
 }
+
+type wsCommand = {
+  type: string;
+  content: string;
+  id: float option;
+}
+
+type createBlog = {
+  type: string;
+  content: string;
+}
+
+type updateBlog = {
+  type: string;
+  id: float;
+  content: string;
+}
+
+type wsPush = {
+  type: string;
+  id: float;
+  content: string;
+}
+
+type blogChange = {
+  type: string;
+  id: float;
+  content: string;
+}

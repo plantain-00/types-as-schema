@@ -389,3 +389,34 @@ pub struct LayoutMetadataMap {
 pub struct Metadata {
 
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum WsCommand {
+  CreateBlog(CreateBlog),
+  UpdateBlog(UpdateBlog),
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateBlog {
+  pub type: String,
+  pub content: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct UpdateBlog {
+  pub type: String,
+  pub id: f32,
+  pub content: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum WsPush {
+  BlogChange(BlogChange),
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BlogChange {
+  pub type: String,
+  pub id: f32,
+  pub content: String,
+}

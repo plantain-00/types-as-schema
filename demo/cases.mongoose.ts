@@ -970,6 +970,82 @@ export const metadataSchema = {
 
 }
 
+export const wsCommandSchema = {
+  type: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["create blog", "update blog"]
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: Number,
+    required: false
+  },
+}
+
+export const createBlogSchema = {
+  type: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["create blog"]
+  },
+  content: {
+    type: String,
+    required: true
+  },
+}
+
+export const updateBlogSchema = {
+  type: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["update blog"]
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+}
+
+export const wsPushSchema = {
+  type: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["blog change"]
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+}
+
+export const blogChangeSchema = {
+  type: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["blog change"]
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Number,

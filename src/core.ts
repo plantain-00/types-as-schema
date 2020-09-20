@@ -11,6 +11,7 @@ import { TypeDeclaration } from './utils'
 import { generateGraphqlRootType } from './graphql-root-type-generator'
 import { generateSwaggerDoc } from './swagger-doc-generator'
 import { generateTypescript } from './typescript-generator'
+import { generateMarkdownDoc } from './markdown-doc-generator'
 
 export class Generator {
   declarations: TypeDeclaration[] = []
@@ -65,6 +66,10 @@ export class Generator {
 
   generateTypescript() {
     return generateTypescript(this.declarations)
+  }
+
+  generateMarkdownDoc() {
+    return generateMarkdownDoc(this.declarations)
   }
 }
 

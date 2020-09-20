@@ -3724,5 +3724,313 @@
       "line": 485,
       "character": 0
     }
+  },
+  {
+    "kind": "union",
+    "name": "WsCommand",
+    "members": [
+      {
+        "kind": "reference",
+        "name": "CreateBlog",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 490,
+          "character": 4
+        }
+      },
+      {
+        "kind": "reference",
+        "name": "UpdateBlog",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 491,
+          "character": 4
+        }
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 489,
+      "character": 12
+    },
+    "objectType": {
+      "kind": "object",
+      "name": "WsCommand",
+      "members": [
+        {
+          "name": "type",
+          "type": {
+            "kind": "enum",
+            "type": "string",
+            "name": "string",
+            "enums": [
+              "create blog",
+              "update blog"
+            ],
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 500,
+              "character": 8
+            }
+          }
+        },
+        {
+          "name": "content",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 501,
+              "character": 11
+            }
+          }
+        },
+        {
+          "name": "id",
+          "type": {
+            "kind": "number",
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 509,
+              "character": 6
+            }
+          },
+          "optional": true
+        }
+      ],
+      "minProperties": 2,
+      "maxProperties": 3,
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 489,
+        "character": 12
+      }
+    }
+  },
+  {
+    "kind": "object",
+    "name": "CreateBlog",
+    "members": [
+      {
+        "name": "type",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "create blog"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 500,
+            "character": 8
+          }
+        }
+      },
+      {
+        "name": "content",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 501,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 499,
+      "character": 0
+    },
+    "comments": [
+      "/**\n * @public\n */"
+    ]
+  },
+  {
+    "kind": "object",
+    "name": "UpdateBlog",
+    "members": [
+      {
+        "name": "type",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "update blog"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 508,
+            "character": 8
+          }
+        }
+      },
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 509,
+            "character": 6
+          }
+        }
+      },
+      {
+        "name": "content",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 510,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 507,
+      "character": 0
+    },
+    "comments": [
+      "/**\n * @public\n */"
+    ]
+  },
+  {
+    "kind": "union",
+    "name": "WsPush",
+    "members": [
+      {
+        "kind": "reference",
+        "name": "BlogChange",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 494,
+          "character": 4
+        }
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 493,
+      "character": 12
+    },
+    "objectType": {
+      "kind": "object",
+      "name": "WsPush",
+      "members": [
+        {
+          "name": "type",
+          "type": {
+            "kind": "enum",
+            "type": "string",
+            "name": "string",
+            "enums": [
+              "blog change"
+            ],
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 517,
+              "character": 8
+            }
+          }
+        },
+        {
+          "name": "id",
+          "type": {
+            "kind": "number",
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 518,
+              "character": 6
+            }
+          }
+        },
+        {
+          "name": "content",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 519,
+              "character": 11
+            }
+          }
+        }
+      ],
+      "minProperties": 3,
+      "maxProperties": 3,
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 493,
+        "character": 12
+      }
+    }
+  },
+  {
+    "kind": "object",
+    "name": "BlogChange",
+    "members": [
+      {
+        "name": "type",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "blog change"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 517,
+            "character": 8
+          }
+        }
+      },
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 518,
+            "character": 6
+          }
+        }
+      },
+      {
+        "name": "content",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 519,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 516,
+      "character": 0
+    },
+    "comments": [
+      "/**\n * @public\n */"
+    ]
   }
 ]
