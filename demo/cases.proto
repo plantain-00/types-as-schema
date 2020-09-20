@@ -307,6 +307,35 @@ message Metadata {
 
 }
 
+message WsCommand {
+    string type = 1;
+    string content = 2;
+    double id = 3;
+}
+
+message CreateBlog {
+    string type = 1;
+    string content = 2;
+}
+
+message UpdateBlog {
+    string type = 1;
+    double id = 2;
+    string content = 3;
+}
+
+message WsPush {
+    string type = 1;
+    double id = 2;
+    string content = 3;
+}
+
+message BlogChange {
+    string type = 1;
+    double id = 2;
+    string content = 3;
+}
+
 message OuterType {
     double outerType = 1;
 }

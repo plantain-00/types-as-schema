@@ -67,6 +67,7 @@ export type EnumDeclaration = {
   name: string;
   type: string;
   members: EnumMember[];
+  description?: string;
 } & Position & Comments
 
 interface Position {
@@ -85,6 +86,7 @@ interface PositionValue {
 export interface EnumMember {
   name: string;
   value: string | number;
+  description?: string;
 }
 
 export type ObjectDeclaration = ObjectType & {
@@ -142,6 +144,7 @@ export type MapType = {
   key: Type;
   value: Type;
   default?: unknown
+  description?: string
 } & Position & Comments
 
 /**
@@ -153,12 +156,14 @@ export type EnumType = {
   name: string;
   enums: unknown[];
   default?: unknown
+  description?: string
 } & Position & Comments
 
 export type ReferenceType = {
   kind: 'reference';
   name: string;
   default?: unknown;
+  description?: string
 } & Position & Comments
 
 export type NumberType = {
@@ -202,6 +207,7 @@ export type BooleanType = {
 export type AnyType = {
   kind: undefined;
   default?: unknown
+  description?: string
 } & Position & Comments
 
 export type ObjectType = {
@@ -232,6 +238,7 @@ export type ArrayType = {
 export type NullType = {
   kind: 'null'
   default?: unknown
+  description?: string
 } & Position & Comments
 
 /**
@@ -241,6 +248,7 @@ export type UnionType = {
   kind: 'union';
   members: Type[];
   default?: unknown
+  description?: string
 } & Position & Comments
 
 export interface Member extends Comments {

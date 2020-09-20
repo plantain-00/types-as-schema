@@ -344,6 +344,40 @@ type metadata = {
 
 };
 
+type wsCommand = {
+  .
+  type: string,
+  content: string,
+  id: option(float),
+};
+
+type createBlog = {
+  .
+  type: string,
+  content: string,
+};
+
+type updateBlog = {
+  .
+  type: string,
+  id: float,
+  content: string,
+};
+
+type wsPush = {
+  .
+  type: string,
+  id: float,
+  content: string,
+};
+
+type blogChange = {
+  .
+  type: string,
+  id: float,
+  content: string,
+};
+
 type outerType = {
   .
   outerType: float,

@@ -339,6 +339,27 @@ export interface Metadata<TContext = any> {
 
 }
 
+export type WsCommand<TContext = any> = CreateBlog<TContext> | UpdateBlog<TContext>
+
+export interface CreateBlog<TContext = any> {
+  type: string
+  content: string
+}
+
+export interface UpdateBlog<TContext = any> {
+  type: string
+  id: number
+  content: string
+}
+
+export type WsPush<TContext = any> = BlogChange<TContext>
+
+export interface BlogChange<TContext = any> {
+  type: string
+  id: number
+  content: string
+}
+
 export interface OuterType<TContext = any> {
   outerType: number
 }
@@ -603,6 +624,20 @@ export interface ApolloResolvers<TContext = any> {
   },
   Metadata?: {
 
+  },
+  CreateBlog?: {
+    type?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    content?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  UpdateBlog?: {
+    type?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    id?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    content?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  BlogChange?: {
+    type?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    id?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+    content?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

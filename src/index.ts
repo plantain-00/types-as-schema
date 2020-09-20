@@ -45,10 +45,14 @@ async function executeCommandLine() {
     looseMode,
     customPath,
     configPath,
-    typescriptPath
+    typescriptPath,
+    markdownPath,
   } = parseParameters(argv)
 
   function generateJsonSchemas(generator: Generator) {
+    if (!jsonPath) {
+      return
+    }
     fse.ensureDirSync(jsonPath)
     const schemas = generator.generateJsonSchemas()
     for (const { entry, schema } of schemas) {
@@ -147,6 +151,11 @@ async function executeCommandLine() {
       const typescriptContent = generator.generateTypescript()
       fs.writeFileSync(typescriptPath, typescriptContent)
     }
+
+    if (markdownPath) {
+      const markdownContent = generator.generateMarkdownDoc()
+      fs.writeFileSync(markdownPath, markdownContent)
+    }
   }
 
   if (watchMode) {
@@ -161,7 +170,7 @@ async function executeCommandLine() {
   }
 }
 
-function parseParameter(argv: PathArgs, name: keyof PathArgs) {
+function parseParameter(argv: PathArgs, name: keyof PathArgs): string | undefined {
   const result = argv[name]
   if (result && typeof result !== 'string') {
     throw new Error(`expect the path of generated ${name} file`)
@@ -184,6 +193,7 @@ function parseParameters(argv: Args) {
   const customPath = parseParameter(argv, 'custom')
   const configPath = parseParameter(argv, 'config')
   const typescriptPath = parseParameter(argv, 'typescript')
+  const markdownPath = parseParameter(argv, 'markdown')
 
   const filePaths = argv._
 
@@ -211,7 +221,8 @@ function parseParameters(argv: Args) {
     looseMode,
     customPath,
     configPath,
-    typescriptPath
+    typescriptPath,
+    markdownPath,
   }
 }
 
@@ -241,6 +252,7 @@ interface PathArgs {
   custom: string
   config: string
   typescript: string
+  markdown: string
 }
 
 function printInConsole(message: unknown) {
@@ -273,6 +285,7 @@ Options:
  --watch, -w                                        watch mode
  --loose                                            do not force additionalProperties
  --config, --custom                                 custom generated file by the config file
+ --markdown                                         generated markdown file
 `)
 }
 
