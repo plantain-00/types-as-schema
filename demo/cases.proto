@@ -49,6 +49,13 @@ message TypeUnion4 {
     string typeUnionMember2 = 3;
 }
 
+message TypeUnion5 {
+    double typeLiteralMember1 = 1;
+    string typeLiteralMember2 = 2;
+    double interfaceMember1 = 3;
+    string interfaceMember2 = 4;
+}
+
 message TypeUnion {
     TypeUnion1 typeUnionMember1 = 1;
     TypeUnion2 typeUnionMember2 = 2;

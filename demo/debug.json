@@ -395,6 +395,69 @@
       "file": "demo/cases.ts",
       "line": 44,
       "character": 5
+    },
+    "objectType": {
+      "kind": "object",
+      "name": "TypeUnion5",
+      "members": [
+        {
+          "name": "typeLiteralMember1",
+          "type": {
+            "kind": "number",
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 1,
+              "character": 22
+            }
+          },
+          "optional": true
+        },
+        {
+          "name": "typeLiteralMember2",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 2,
+              "character": 22
+            }
+          },
+          "optional": true
+        },
+        {
+          "name": "interfaceMember1",
+          "type": {
+            "kind": "number",
+            "type": "number",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 10,
+              "character": 21
+            }
+          },
+          "optional": true
+        },
+        {
+          "name": "interfaceMember2",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 11,
+              "character": 21
+            }
+          },
+          "optional": true
+        }
+      ],
+      "minProperties": 0,
+      "maxProperties": 2,
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 44,
+        "character": 5
+      }
     }
   },
   {

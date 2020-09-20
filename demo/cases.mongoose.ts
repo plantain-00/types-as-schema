@@ -91,6 +91,25 @@ export const typeUnion4Schema = {
   },
 }
 
+export const typeUnion5Schema = {
+  typeLiteralMember1: {
+    type: Number,
+    required: false
+  },
+  typeLiteralMember2: {
+    type: String,
+    required: false
+  },
+  interfaceMember1: {
+    type: Number,
+    required: false
+  },
+  interfaceMember2: {
+    type: String,
+    required: false
+  },
+}
+
 export const typeUnionSchema = {
   typeUnionMember1: {
     type: Schema.Types.Mixed,

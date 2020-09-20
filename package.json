@@ -21,7 +21,7 @@
     "url": "https://github.com/plantain-00/types-as-schema/issues"
   },
   "typeCoverage": {
-    "atLeast": 99.61
+    "atLeast": 99.62
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {

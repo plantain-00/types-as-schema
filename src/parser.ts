@@ -335,13 +335,14 @@ export class Parser {
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
+    let unionDeclaration: UnionDeclaration | undefined
     if (ts.isUnionTypeNode(declarationType)) {
       if (declarationType.types.every(u => ts.isLiteralTypeNode(u) || u.kind === ts.SyntaxKind.NullKeyword)) {
         this.handleUnionTypeOfLiteralType(declarationType, declarationName, sourceFile)
         return
       }
       if (declarationType.types.every(u => ts.isTypeReferenceNode(u))) {
-        const unionDeclaration: UnionDeclaration = {
+        unionDeclaration = {
           kind: 'union',
           name: declarationName.text,
           members: declarationType.types.map(u => this.getType(u, sourceFile)),
@@ -350,7 +351,6 @@ export class Parser {
           comments,
         }
         this.declarations.push(unionDeclaration)
-        return
       }
     }
     const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(declarationType, sourceFile)
@@ -368,7 +368,11 @@ export class Parser {
     for (const jsDoc of jsDocs) {
       this.setJsDocObject(jsDoc, objectDeclaration)
     }
-    this.declarations.push(objectDeclaration)
+    if (unionDeclaration) {
+      unionDeclaration.objectType = objectDeclaration
+    } else {
+      this.declarations.push(objectDeclaration)
+    }
   }
 
   private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier, sourceFile: ts.SourceFile) {
