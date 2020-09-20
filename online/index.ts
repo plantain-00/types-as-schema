@@ -26,6 +26,7 @@ export class App extends Vue {
   swaggerDoc = ''
   custom = ''
   typescript = ''
+  markdown = ''
   private innerSource = localStorage.getItem(localStorageKey) || demoCasesTs
   private jsonSchemas: { entry: string; content: string }[] = []
 
@@ -90,6 +91,9 @@ export class App extends Vue {
 
       this.typescript = generator.generateTypescript()
       this.options.push('typescript')
+
+      this.markdown = generator.generateMarkdownDoc()
+      this.options.push('markdown')
     }
   }
 }
