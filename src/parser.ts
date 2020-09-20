@@ -111,7 +111,7 @@ export class Parser {
 
   private handleSourceFile(node: ts.Node, sourceFile: ts.SourceFile) {
     const jsDocs = this.getJsDocs(node, sourceFile)
-    const entry = jsDocs.find(jsDoc => jsDoc.name === 'entry')
+    const entry = jsDocs.jsDocs.find(jsDoc => jsDoc.name === 'entry')
     if (ts.isTypeAliasDeclaration(node)) {
       this.handleTypeAliasDeclaration(node, jsDocs, entry, sourceFile)
     } else if (ts.isInterfaceDeclaration(node) || ts.isClassDeclaration(node)) {
@@ -123,7 +123,7 @@ export class Parser {
 
   private handleFunctionDeclaration(
     declaration: ts.FunctionDeclaration,
-    jsDocs: JsDoc[],
+    { jsDocs, comments }: JsDocAndComment,
     sourceFile: ts.SourceFile
   ) {
     const type = declaration.type
@@ -137,7 +137,8 @@ export class Parser {
       name: declaration.name ? declaration.name.text : '',
       type,
       optional: !!declaration.questionToken,
-      parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile))
+      parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
+      comments,
     }
     for (const jsDoc of jsDocs) {
       if (jsDoc.comment) {
@@ -161,7 +162,8 @@ export class Parser {
 
   private handleFunctionParameter(parameter: ts.ParameterDeclaration, sourceFile: ts.SourceFile) {
     const parameterDoc = this.getParameter(parameter, sourceFile)
-    const jsDocs = this.getJsDocs(parameter, sourceFile)
+    const { jsDocs, comments } = this.getJsDocs(parameter, sourceFile)
+    parameterDoc.comments = comments
     for (const jsDoc of jsDocs) {
       if (jsDoc.comment && jsDoc.name === 'in') {
         parameterDoc.in = jsDoc.comment
@@ -177,7 +179,7 @@ export class Parser {
 
   private handleInterfaceOrClassDeclaration(
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
-    jsDocs: JsDoc[],
+    { jsDocs, comments }: JsDocAndComment,
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
@@ -215,7 +217,8 @@ export class Parser {
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declaration, sourceFile)
+      position: getPosition(declaration, sourceFile),
+      comments,
     }
 
     for (const jsDoc of jsDocs) {
@@ -278,7 +281,7 @@ export class Parser {
 
   private handleTypeAliasDeclaration(
     declaration: ts.TypeAliasDeclaration,
-    jsDocs: JsDoc[],
+    jsDocs: JsDocAndComment,
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
@@ -328,7 +331,7 @@ export class Parser {
   private handleTypeLiteralOrUnionTypeOrIntersectionType(
     declarationType: ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode,
     declarationName: ts.Identifier,
-    jsDocs: JsDoc[],
+    { jsDocs, comments }: JsDocAndComment,
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
@@ -343,7 +346,8 @@ export class Parser {
           name: declarationName.text,
           members: declarationType.types.map(u => this.getType(u, sourceFile)),
           entry: entry ? entry.comment : undefined,
-          position: getPosition(declarationName, sourceFile)
+          position: getPosition(declarationName, sourceFile),
+          comments,
         }
         this.declarations.push(unionDeclaration)
         return
@@ -358,7 +362,8 @@ export class Parser {
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declarationName, sourceFile)
+      position: getPosition(declarationName, sourceFile),
+      comments,
     }
     for (const jsDoc of jsDocs) {
       this.setJsDocObject(jsDoc, objectDeclaration)
@@ -416,7 +421,7 @@ export class Parser {
   private handleArrayTypeInTypeAliasDeclaration(
     arrayType: ts.ArrayTypeNode,
     declarationName: ts.Identifier,
-    jsDocs: JsDoc[],
+    { jsDocs, comments }: JsDocAndComment,
     entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
@@ -426,7 +431,8 @@ export class Parser {
       name: declarationName.text,
       type,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declarationName, sourceFile)
+      position: getPosition(declarationName, sourceFile),
+      comments,
     }
     for (const jsDoc of jsDocs) {
       this.setJsDocArray(jsDoc, arrayDeclaration)
@@ -434,7 +440,9 @@ export class Parser {
     this.declarations.push(arrayDeclaration)
   }
 
-  private getJsDocs(node: ts.Node, sourceFile: ts.SourceFile) {
+  private getJsDocs(node: ts.Node, sourceFile: ts.SourceFile): JsDocAndComment {
+    const ranges = ts.getLeadingCommentRanges(sourceFile.getText(), node.getFullStart())
+    const comments = ranges ? ranges.map((r) => sourceFile.getText().slice(r.pos, r.end)) : undefined
     const jsDocs = utilGetJsDocs(node)
     const result: JsDoc[] = []
     for (const jsDoc of jsDocs) {
@@ -443,7 +451,7 @@ export class Parser {
         type: jsDoc.type ? this.getType(jsDoc.type, sourceFile) : undefined
       })
     }
-    return result
+    return { jsDocs: result, comments }
   }
 
   private getType(type: ts.TypeNode, sourceFile: ts.SourceFile): Type {
@@ -1145,8 +1153,9 @@ export class Parser {
     member: Member,
     sourceFile: ts.SourceFile
   ) {
-    const propertyJsDocs = this.getJsDocs(property, sourceFile)
-    for (const propertyJsDoc of propertyJsDocs) {
+    const { jsDocs, comments } = this.getJsDocs(property, sourceFile)
+    member.comments = comments
+    for (const propertyJsDoc of jsDocs) {
       if (propertyJsDoc.name === 'tag') {
         this.setJsDocTag(propertyJsDoc, member)
       } else if (propertyJsDoc.name === 'param') {
@@ -1387,6 +1396,11 @@ interface JsDoc {
   paramName?: string;
   comment?: string;
   optional?: boolean;
+}
+
+interface JsDocAndComment {
+  jsDocs: JsDoc[]
+  comments?: string[]
 }
 
 interface MembersInfo {

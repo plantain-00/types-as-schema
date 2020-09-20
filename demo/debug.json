@@ -138,7 +138,10 @@
       "file": "demo/cases.ts",
       "line": 9,
       "character": 0
-    }
+    },
+    "comments": [
+      "/**\n * @minProperties 1\n * @maxProperties 1\n */"
+    ]
   },
   {
     "kind": "object",
@@ -936,6 +939,9 @@
             "character": 22
           }
         },
+        "comments": [
+          "/**\n   * @tag 2\n   */"
+        ],
         "tag": 2
       },
       {
@@ -948,6 +954,9 @@
             "character": 22
           }
         },
+        "comments": [
+          "/**\n   * @tag 3\n   */"
+        ],
         "tag": 3
       }
     ],
@@ -1043,7 +1052,10 @@
           "maximum": 90,
           "exclusiveMinimum": 70,
           "exclusiveMaximum": 90
-        }
+        },
+        "comments": [
+          "/**\n   * @multipleOf 10\n   * @minimum 70\n   * @maximum 90\n   * @exclusiveMinimum 70\n   * @exclusiveMaximum 90\n   */"
+        ]
       },
       {
         "name": "integerMember",
@@ -1213,7 +1225,10 @@
           },
           "title": "foo",
           "description": "bar"
-        }
+        },
+        "comments": [
+          "/**\n   * @title foo\n   * @description bar\n   */"
+        ]
       }
     ],
     "minProperties": 15,
@@ -1240,7 +1255,10 @@
           "minLength": 10,
           "maxLength": 20,
           "pattern": "^[A-z]{3}$"
-        }
+        },
+        "comments": [
+          "/**\n   * @minLength 10\n   * @maxLength 20\n   * @pattern ^[A-z]{3}$\n   */"
+        ]
       }
     ],
     "minProperties": 1,
@@ -1275,7 +1293,10 @@
             "line": 189,
             "character": 14
           }
-        }
+        },
+        "comments": [
+          "/**\n   * @itemMinLength 10\n   * @itemMaxLength 20\n   * @itemPattern ^[A-z]{3}$\n   */"
+        ]
       },
       {
         "name": "arrayType2",
@@ -1298,7 +1319,10 @@
           "uniqueItems": true,
           "minItems": 1,
           "maxItems": 10
-        }
+        },
+        "comments": [
+          "/**\n   * @uniqueItems\n   * @minItems 1\n   * @maxItems 10\n   */"
+        ]
       },
       {
         "name": "arrayType3",
@@ -1358,7 +1382,10 @@
             "line": 204,
             "character": 14
           }
-        }
+        },
+        "comments": [
+          "/**\n   * @itemMultipleOf 100\n   * @itemMinimum 100\n   * @itemMaximum 200\n   * @itemExclusiveMinimum 300\n   * @itemExclusiveMaximum 400\n   */"
+        ]
       },
       {
         "name": "arrayType5",
@@ -1896,6 +1923,9 @@
             "character": 11
           }
         },
+        "comments": [
+          "/**\n   * @param {string} name\n   * @param {number} age\n   */"
+        ],
         "parameters": [
           {
             "name": "name",
@@ -1934,6 +1964,9 @@
             "character": 11
           }
         },
+        "comments": [
+          "/**\n   * @param {string} [name]\n   */"
+        ],
         "parameters": [
           {
             "name": "name",
@@ -1972,7 +2005,10 @@
             "character": 16
           },
           "default": "foo"
-        }
+        },
+        "comments": [
+          "/**\n   * @default foo\n   */"
+        ]
       },
       {
         "name": "numberMember",
@@ -1985,7 +2021,10 @@
             "character": 16
           },
           "default": 123
-        }
+        },
+        "comments": [
+          "/**\n   * @default 123\n   */"
+        ]
       },
       {
         "name": "booleanMember",
@@ -1997,7 +2036,10 @@
             "character": 17
           },
           "default": true
-        }
+        },
+        "comments": [
+          "/**\n   * @default true\n   */"
+        ]
       },
       {
         "name": "stringMember2",
@@ -2009,7 +2051,10 @@
             "character": 17
           },
           "default": "foo bar"
-        }
+        },
+        "comments": [
+          "/**\n   * @default 'foo bar'\n   */"
+        ]
       },
       {
         "name": "stringMember3",
@@ -2021,7 +2066,10 @@
             "character": 17
           },
           "default": ""
-        }
+        },
+        "comments": [
+          "/**\n   * @default ''\n   */"
+        ]
       },
       {
         "name": "arrayMember",
@@ -2040,7 +2088,10 @@
             "character": 15
           },
           "default": []
-        }
+        },
+        "comments": [
+          "/**\n   * @default []\n   */"
+        ]
       },
       {
         "name": "objectMember",
@@ -2067,7 +2118,10 @@
             "character": 16
           },
           "default": {}
-        }
+        },
+        "comments": [
+          "/**\n   * @default {}\n   */"
+        ]
       },
       {
         "name": "numberMember1",
@@ -2080,7 +2134,10 @@
             "character": 17
           },
           "default": 123
-        }
+        },
+        "comments": [
+          "/**\n   * @default 123\n   */"
+        ]
       },
       {
         "name": "objectMember2",
@@ -2093,7 +2150,10 @@
             "character": 17
           },
           "default": {}
-        }
+        },
+        "comments": [
+          "/**\n   * @default {}\n   */"
+        ]
       }
     ],
     "minProperties": 9,
@@ -2956,7 +3016,10 @@
       "file": "demo/cases.ts",
       "line": 331,
       "character": 12
-    }
+    },
+    "comments": [
+      "/**\n * @entry cases.json\n * @additionalProperties\n */"
+    ]
   },
   {
     "kind": "object",
@@ -3311,6 +3374,9 @@
           }
         },
         "optional": false,
+        "comments": [
+          "/**\n   * @in query\n   */"
+        ],
         "in": "query"
       },
       {
@@ -3333,6 +3399,9 @@
           "minItems": 1
         },
         "optional": false,
+        "comments": [
+          "/**\n   * @in body\n   * @minItems 1\n   */"
+        ],
         "in": "body"
       },
       {
@@ -3347,6 +3416,9 @@
           }
         },
         "optional": false,
+        "comments": [
+          "/**\n   * @in body\n   */"
+        ],
         "in": "body"
       },
       {
@@ -3364,6 +3436,9 @@
           "minimum": 1
         },
         "optional": true,
+        "comments": [
+          "/**\n   * @in path\n   * @description pet id\n   * @minimum 1\n   * @default 2\n   */"
+        ],
         "in": "path"
       },
       {
@@ -3384,8 +3459,14 @@
           "default": "asc"
         },
         "optional": true,
+        "comments": [
+          "/**\n   * @in query\n   * @default asc\n   */"
+        ],
         "in": "query"
       }
+    ],
+    "comments": [
+      "/**\n * @method get\n * @path /pet/{id}\n * @summary get pet by id.\n * @description get pet by id\n * @deprecated\n * @tags pet\n */"
     ],
     "method": "get",
     "path": "/pet/{id}",
@@ -3446,6 +3527,9 @@
             "character": 10
           }
         },
+        "comments": [
+          "/**\n   * @index\n   */"
+        ],
         "index": true
       },
       {
@@ -3458,6 +3542,9 @@
             "character": 10
           }
         },
+        "comments": [
+          "/**\n   * @unique\n   */"
+        ],
         "unique": true
       },
       {
@@ -3473,6 +3560,9 @@
           "uppercase": true,
           "trim": true
         },
+        "comments": [
+          "/**\n   * @sparse\n   * @select\n   * @alias index4\n   * @lowercase\n   * @uppercase\n   * @trim\n   */"
+        ],
         "sparse": true,
         "select": true,
         "alias": "index4"

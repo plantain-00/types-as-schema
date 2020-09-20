@@ -677,7 +677,10 @@
             "line": 116,
             "character": 8
           }
-        }
+        },
+        "comments": [
+          "/**\n * @entry flow-protocol.json\n */"
+        ]
       },
       {
         "name": "samples",
