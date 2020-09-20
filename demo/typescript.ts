@@ -20,6 +20,10 @@ interface TypeLiteral {
   typeLiteralMember2: string
 }
 
+/**
+ * @minProperties 1
+ * @maxProperties 1
+ */
 interface Interface {
   interfaceMember1?: number
   interfaceMember2?: string
@@ -105,7 +109,13 @@ interface TypeUnionAndIntersection {
 }
 
 interface TaggedField {
+  /**
+   * @tag 2
+   */
   taggedFieldMember1: number
+  /**
+   * @tag 3
+   */
   taggedFieldMember2: string
 }
 
@@ -117,6 +127,13 @@ interface Enum {
 }
 
 interface NumberType {
+  /**
+   * @multipleOf 10
+   * @minimum 70
+   * @maximum 90
+   * @exclusiveMinimum 70
+   * @exclusiveMaximum 90
+   */
   numberMember: number
   integerMember: number
   uint32Member: number
@@ -131,17 +148,43 @@ interface NumberType {
   sfixed64Member: number
   floatMember: number
   doubleMember: number
+  /**
+   * @title foo
+   * @description bar
+   */
   titleMember: number
 }
 
 interface StringType {
+  /**
+   * @minLength 10
+   * @maxLength 20
+   * @pattern ^[A-z]{3}$
+   */
   stringMember: string
 }
 
 interface ArrayType {
+  /**
+   * @itemMinLength 10
+   * @itemMaxLength 20
+   * @itemPattern ^[A-z]{3}$
+   */
   arrayType1: string[]
+  /**
+   * @uniqueItems
+   * @minItems 1
+   * @maxItems 10
+   */
   arrayType2: TypeLiteral[]
   arrayType3: { literal: number }[]
+  /**
+   * @itemMultipleOf 100
+   * @itemMinimum 100
+   * @itemMaximum 200
+   * @itemExclusiveMinimum 300
+   * @itemExclusiveMaximum 400
+   */
   arrayType4: number[]
   arrayType5: { literal: number | string }[]
   arrayType6: { literal: number | null }[]
@@ -172,19 +215,53 @@ interface MapType {
 }
 
 interface Parameter {
+  /**
+   * @param {string} name
+   * @param {number} age
+   */
   member1: string
+  /**
+   * @param {string} [name]
+   */
   member2: string
 }
 
 interface DefaultValue {
+  /**
+   * @default foo
+   */
   stringMember: string
+  /**
+   * @default 123
+   */
   numberMember: number
+  /**
+   * @default true
+   */
   booleanMember: boolean
+  /**
+   * @default 'foo bar'
+   */
   stringMember2: string
+  /**
+   * @default ''
+   */
   stringMember3: string
+  /**
+   * @default []
+   */
   arrayMember: unknown[]
+  /**
+   * @default {}
+   */
   objectMember: { foo: string }
+  /**
+   * @default 123
+   */
   numberMember1: number
+  /**
+   * @default {}
+   */
   objectMember2: TypeLiteral
 }
 
@@ -236,6 +313,10 @@ interface CreateInput {
   member3: CreateInputMember3
 }
 
+/**
+ * @entry cases.json
+ * @additionalProperties
+ */
 interface EntryType {
   optionalMember?: string
   booleanMember: boolean
@@ -309,14 +390,36 @@ interface Pet {
   status: "available" | "pending" | "sold"
 }
 
+/**
+ * @method get
+ * @path /pet/{id}
+ * @summary get pet by id.
+ * @description get pet by id
+ * @deprecated
+ * @tags pet
+ */
 declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number, sortType?: "asc" | "desc"): Pet
 
 interface MongooseScheme {
   objectId: ObjectId
   date: Date
   decimal128: Decimal128
+  /**
+   * @index
+   */
   index1: string
+  /**
+   * @unique
+   */
   index2: string
+  /**
+   * @sparse
+   * @select
+   * @alias index4
+   * @lowercase
+   * @uppercase
+   * @trim
+   */
   index3: string
   buffer: Buffer
 }

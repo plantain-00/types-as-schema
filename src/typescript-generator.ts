@@ -42,15 +42,17 @@ ${messages.join('\n\n')}
  * @public
  */
 export function generateTypescriptOfReferenceDeclaration(declaration: ReferenceDeclaration) {
-  return `type ${declaration.newName} = ${declaration.name}`
+  const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  return `${comments}type ${declaration.newName} = ${declaration.name}`
 }
 
 /**
  * @public
  */
 export function generateTypescriptOfStringOrNumberDeclaration(declaration: StringDeclaration | NumberDeclaration) {
+  const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
   const members = declaration.enums ? declaration.enums.map((e) => JSON.stringify(e)).join(' | ') : declaration.kind
-  return `type ${declaration.name} = ${members}`
+  return `${comments}type ${declaration.name} = ${members}`
 }
 
 /**
@@ -58,18 +60,23 @@ export function generateTypescriptOfStringOrNumberDeclaration(declaration: Strin
  */
 export function generateTypescriptOfUnionDeclaration(declaration: UnionDeclaration) {
   const members = declaration.members.map((m) => generateTypescriptOfType(m))
-  return `type ${declaration.name} = ${members.join(' | ')}`
+  const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  return `${comments}type ${declaration.name} = ${members.join(' | ')}`
 }
 
 /**
  * @public
  */
 export function generateTypescriptOfObjectDeclaration(declaration: ObjectDeclaration) {
-  const members = declaration.members.map((m) => '  ' + generateTypescriptOfFunctionParameter(m))
+  const members = declaration.members.map((m) => {
+    const comments = m.comments ? m.comments.join('\n') + '\n  ' : ''
+    return '  ' + comments + generateTypescriptOfFunctionParameter(m)}
+  )
   if (declaration.additionalProperties) {
     members.push('  ' + generateTypescriptOfObjectAdditionalProperties(declaration.additionalProperties))
   }
-  return `interface ${declaration.name} {
+  const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  return `${comments}interface ${declaration.name} {
 ${members.join('\n')}
 }`
 }
@@ -106,7 +113,8 @@ export function generateTypescriptOfEnumMember(member: EnumMember) {
 export function generateTypescriptOfFunctionDeclaration(declaration: FunctionDeclaration) {
   const parameters = declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m))
   const type = generateTypescriptOfType(declaration.type)
-  return `declare function ${declaration.name}(${parameters.join(', ')}): ${type}`
+  const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  return `${comments}declare function ${declaration.name}(${parameters.join(', ')}): ${type}`
 }
 
 /**

@@ -67,7 +67,7 @@ export type EnumDeclaration = {
   name: string;
   type: string;
   members: EnumMember[];
-} & Position
+} & Position & Comments
 
 interface Position {
   position: PositionValue
@@ -114,7 +114,7 @@ export type ReferenceDeclaration = ReferenceType & {
   newName: string;
 }
 
-export interface FunctionDeclaration {
+export interface FunctionDeclaration extends Comments {
   kind: 'function';
   name: string;
   type: Type;
@@ -141,7 +141,7 @@ export type MapType = {
   key: Type;
   value: Type;
   default?: unknown
-} & Position
+} & Position & Comments
 
 /**
  * @public
@@ -152,13 +152,13 @@ export type EnumType = {
   name: string;
   enums: unknown[];
   default?: unknown
-} & Position
+} & Position & Comments
 
 export type ReferenceType = {
   kind: 'reference';
   name: string;
   default?: unknown;
-} & Position
+} & Position & Comments
 
 export type NumberType = {
   kind: 'number';
@@ -172,7 +172,7 @@ export type NumberType = {
   enums?: string[];
   title?: string;
   description?: string;
-} & Position
+} & Position & Comments
 
 export type StringType = {
   kind: 'string';
@@ -186,14 +186,14 @@ export type StringType = {
   lowercase?: boolean;
   uppercase?: boolean;
   trim?: boolean;
-} & Position
+} & Position & Comments
 
 export type BooleanType = {
   kind: 'boolean';
   default?: boolean;
   title?: string;
   description?: string;
-} & Position
+} & Position & Comments
 
 /**
  * @public
@@ -201,7 +201,7 @@ export type BooleanType = {
 export type AnyType = {
   kind: undefined;
   default?: unknown
-} & Position
+} & Position & Comments
 
 export type ObjectType = {
   kind: 'object';
@@ -212,7 +212,7 @@ export type ObjectType = {
   default?: unknown;
   title?: string;
   description?: string;
-} & Position
+} & Position & Comments
 
 export type ArrayType = {
   kind: 'array';
@@ -223,7 +223,7 @@ export type ArrayType = {
   default?: unknown[]
   title?: string;
   description?: string;
-} & Position
+} & Position & Comments
 
 /**
  * @public
@@ -231,7 +231,7 @@ export type ArrayType = {
 export type NullType = {
   kind: 'null'
   default?: unknown
-} & Position
+} & Position & Comments
 
 /**
  * @public
@@ -240,9 +240,9 @@ export type UnionType = {
   kind: 'union';
   members: Type[];
   default?: unknown
-} & Position
+} & Position & Comments
 
-export interface Member {
+export interface Member extends Comments {
   name: string;
   type: Type;
   optional?: boolean;
@@ -255,7 +255,11 @@ export interface Member {
   parameters?: Parameter[];
 }
 
-export interface Parameter {
+interface Comments {
+  comments?: string[]
+}
+
+export interface Parameter extends Comments {
   name: string;
   type: Type;
   optional?: boolean;

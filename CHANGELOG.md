@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.35.0](https://github.com/plantain-00/types-as-schema/compare/v1.34.4...v1.35.0) (2020-09-20)
+  
+* feat: parse comments and generate it for typescript target ([cfd6655](https://github.com/plantain-00/types-as-schema/commit/cfd66553273e561975b194a0af7d0382e8d1b3c6))
+
 ## [1.34.4](https://github.com/plantain-00/types-as-schema/compare/v1.34.3...v1.34.4) (2020-09-16)
   
 * fix: json schema reference ([b65eb00](https://github.com/plantain-00/types-as-schema/commit/b65eb00e56a6f0a72fbbf2be443d3e0328d56da8))
