@@ -1,6 +1,6 @@
 {
   "name": "types-as-schema",
-  "version": "1.35.0",
+  "version": "1.35.1",
   "description": "Genetate json schema, protobuf file, graphQL/mongoose schema and reasonml/ocaml/rust types from typescript types.",
   "main": "dist/core.js",
   "types": "dist/core.d.ts",
