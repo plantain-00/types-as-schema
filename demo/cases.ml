@@ -45,6 +45,13 @@ type typeUnion4 = {
   typeUnionMember2: string option;
 }
 
+type typeUnion5 = {
+  typeLiteralMember1: float option;
+  typeLiteralMember2: string option;
+  interfaceMember1: float option;
+  interfaceMember2: string option;
+}
+
 type typeUnion = {
   typeUnionMember1: typeUnion1;
   typeUnionMember2: typeUnion2;

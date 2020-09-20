@@ -11,6 +11,9 @@ export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
       if (message) {
         messages.push(message)
       }
+    } else if (typeDeclaration.kind === 'union' && typeDeclaration.objectType) {
+      const message = generateProtobufOfObject(typeDeclarations, { ...typeDeclaration, ...typeDeclaration.objectType })
+      messages.push(message)
     }
   }
   return `syntax = "proto3";

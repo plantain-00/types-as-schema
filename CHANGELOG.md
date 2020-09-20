@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.35.1](https://github.com/plantain-00/types-as-schema/compare/v1.35.0...v1.35.1) (2020-09-20)
+  
+* fix: union for protobuf ([6a85656](https://github.com/plantain-00/types-as-schema/commit/6a85656a4ad052caec7fb495c210da564112ce5b))
+
 ## [1.35.0](https://github.com/plantain-00/types-as-schema/compare/v1.34.4...v1.35.0) (2020-09-20)
   
 * feat: parse comments and generate it for typescript target ([cfd6655](https://github.com/plantain-00/types-as-schema/commit/cfd66553273e561975b194a0af7d0382e8d1b3c6))

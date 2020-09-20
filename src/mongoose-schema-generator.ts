@@ -5,6 +5,8 @@ export function generateMongooseSchema(typeDeclarations: TypeDeclaration[]) {
   for (const typeDeclaration of typeDeclarations) {
     if (typeDeclaration.kind === 'object') {
       messages.push(generateMongooseSchemaOfObject(typeDeclaration))
+    } else if (typeDeclaration.kind === 'union' && typeDeclaration.objectType) {
+      messages.push(generateMongooseSchemaOfObject({ ...typeDeclaration, ...typeDeclaration.objectType }))
     }
   }
   return `// tslint:disable

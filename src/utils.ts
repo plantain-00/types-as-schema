@@ -100,6 +100,7 @@ export type ArrayDeclaration = ArrayType & {
 export type UnionDeclaration = UnionType & {
   name: string;
   entry?: string;
+  objectType?: ObjectType;
 }
 
 export type StringDeclaration = StringType & {
