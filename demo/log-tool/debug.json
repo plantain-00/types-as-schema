@@ -163,7 +163,10 @@
       "file": "demo/log-tool/types.ts",
       "line": 3,
       "character": 12
-    }
+    },
+    "comments": [
+      "/**\n * @entry request-protocol.json\n */"
+    ]
   },
   {
     "kind": "object",
@@ -375,7 +378,10 @@
       "file": "demo/log-tool/types.ts",
       "line": 41,
       "character": 12
-    }
+    },
+    "comments": [
+      "/**\n * @entry response-protocol.json\n */"
+    ]
   },
   {
     "kind": "object",
@@ -677,10 +683,7 @@
             "line": 116,
             "character": 8
           }
-        },
-        "comments": [
-          "/**\n * @entry flow-protocol.json\n */"
-        ]
+        }
       },
       {
         "name": "samples",
@@ -744,7 +747,10 @@
       "file": "demo/log-tool/types.ts",
       "line": 123,
       "character": 12
-    }
+    },
+    "comments": [
+      "/**\n * @entry flow-protocol.json\n */"
+    ]
   },
   {
     "kind": "object",

@@ -17,6 +17,9 @@
       "line": 5,
       "character": 12
     },
+    "comments": [
+      "/**\n * @entry groups-schema.json\n * @uniqueItems\n * @minItems 1\n */"
+    ],
     "uniqueItems": true,
     "minItems": 1
   },
@@ -44,7 +47,10 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        }
+        },
+        "comments": [
+          "/**\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ]
       },
       {
         "name": "teams",
@@ -79,7 +85,10 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        }
+        },
+        "comments": [
+          "/**\n   * @itemMinimum 1\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ]
       }
     ],
     "minProperties": 3,
@@ -163,7 +172,10 @@
           },
           "uniqueItems": true,
           "minItems": 1
-        }
+        },
+        "comments": [
+          "/**\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ]
       }
     ],
     "minProperties": 3,
@@ -191,6 +203,9 @@
       "line": 42,
       "character": 12
     },
+    "comments": [
+      "/**\n * @entry teams-schema.json\n * @uniqueItems\n * @minItems 1\n */"
+    ],
     "uniqueItems": true,
     "minItems": 1
   }
