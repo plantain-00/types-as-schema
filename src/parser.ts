@@ -445,8 +445,8 @@ export class Parser {
   }
 
   private getJsDocs(node: ts.Node, sourceFile: ts.SourceFile): JsDocAndComment {
-    const ranges = ts.getLeadingCommentRanges(sourceFile.getText(), node.getFullStart())
-    const comments = ranges ? ranges.map((r) => sourceFile.getText().slice(r.pos, r.end)) : undefined
+    const ranges = ts.getLeadingCommentRanges(sourceFile.text, node.getFullStart())
+    const comments = ranges ? ranges.map((r) => sourceFile.text.slice(r.pos, r.end)) : undefined
     const jsDocs = utilGetJsDocs(node)
     const result: JsDoc[] = []
     for (const jsDoc of jsDocs) {

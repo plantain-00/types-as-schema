@@ -45,6 +45,9 @@ export function generateMarkdownDoc(declarations: TypeDeclaration[]) {
         const description = m.type.description ? ' ' + m.type.description : ''
         return `\`${m.name}\` | \`${m.optional ? 'false' : 'true'}\` | ${getType(m.type)} |${description}`
       }))
+      result.push(`\nReturn | Description`)
+      result.push(`--- | ---`)
+      result.push(`${getType(declaration.type)} |`)
     } else if ((declaration.kind === 'string' || declaration.kind === 'number') && declaration.enums) {
       result.push(`Enum | Description`)
       result.push(`--- | ---`)

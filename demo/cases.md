@@ -425,6 +425,10 @@ Field | Required | Type | Description
 `id` | `false` | `number` | pet id
 `sortType` | `false` | `"asc" | "desc"` |
 
+Return | Description
+--- | ---
+[`Pet`](#Pet) |
+
 ## `MongooseScheme`
 
 Field | Required | Type | Description
