@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.36.1](https://github.com/plantain-00/types-as-schema/compare/v1.36.0...v1.36.1) (2020-09-21)
+  
+* fix: function return and comment comments ([77f0483](https://github.com/plantain-00/types-as-schema/commit/77f0483ae293e4fd06d95062af94b72a7f52bf45))
+* feat: add online demo for markdown ([bee6352](https://github.com/plantain-00/types-as-schema/commit/bee635247850714b550f6bb3af4c46abc29dad11))
+
 ## [1.36.0](https://github.com/plantain-00/types-as-schema/compare/v1.35.1...v1.36.0) (2020-09-20)
   
 * feat: support --markdown ([c9d7290](https://github.com/plantain-00/types-as-schema/commit/c9d7290b1c987d81372213e0c02b01906cf93134))
