@@ -1,25 +1,35 @@
 import {
   Type,
   ObjectDeclaration,
-  ArrayDeclaration,
-  UnionDeclaration,
   NumberType,
   ObjectType,
   StringType,
   isValidReference,
-  Context
+  Context, UnionType
 } from './utils'
 
 export function generateJsonSchemas(context: Context) {
   const definitions = getAllDefinitions(context)
-  const result = context.declarations.filter(m => (m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry)
-    .map(m => ({
-      entry: (m as ObjectDeclaration | ArrayDeclaration | UnionDeclaration).entry,
-      schema: {
-        $ref: `#/definitions/${m.name}`,
-        definitions: getReferencedDefinitions(m.name, definitions, [])
-      }
-    }))
+  const result: {
+    entry: string
+    schema: {
+      $ref: string;
+      definitions: {
+        [name: string]: Definition;
+      };
+    };
+  }[] = []
+  for (const m of context.declarations) {
+    if ((m.kind === 'object' || m.kind === 'array' || m.kind === 'union') && m.entry) {
+      result.push({
+        entry: m.entry,
+        schema: {
+          $ref: `#/definitions/${m.name}`,
+          definitions: getReferencedDefinitions(m.name, definitions, [])
+        }
+      })
+    }
+  }
   if (result.length === 0) {
     console.warn('No json schema generated because no @entry found.')
   }
@@ -98,12 +108,12 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
       return {
         type: getTypeNameOfEnumOrConst(memberType.type),
         const: memberType.enums[0]
-      } as Definition
+      }
     }
     return {
       type: getTypeNameOfEnumOrConst(memberType.type),
       enum: memberType.enums,
-      default: memberType.default,
+      default: memberType.default as string,
     } as Definition
   } else if (memberType.kind === 'reference') {
     if (isValidReference(context.declarations, memberType.name)) {
@@ -121,7 +131,7 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
   } else if (memberType.kind === 'string') {
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
-    return getJsonSchemaPropertyOfUnion(memberType as UnionDeclaration, context)
+    return getJsonSchemaPropertyOfUnion(memberType, context)
   } else if (memberType.kind === 'null') {
     return {
       type: 'null'
@@ -133,7 +143,7 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
   }
 }
 
-function getJsonSchemaPropertyOfUnion(memberType: UnionDeclaration, context: Context): Definition {
+function getJsonSchemaPropertyOfUnion(memberType: UnionType, context: Context): Definition {
   if (memberType.members.every(m => m.kind === 'enum' || m.kind === 'null')) {
     let enums: unknown[] = []
     for (const member of memberType.members) {
