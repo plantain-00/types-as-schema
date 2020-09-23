@@ -71,4 +71,3 @@ service-worker.js
 #**/*-*.png
 #index.html
 *.data
-online/*.d.ts
