@@ -67,8 +67,7 @@ const App = defineComponent({
         this.options = ['protobuf']
 
         this.jsonSchemas = generator.generateJsonSchemas().map((s) => ({
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          entry: s.entry!,
+          entry: s.entry,
           content: JSON.stringify(s.schema, null, '  '),
         }))
         for (const schema of this.jsonSchemas) {

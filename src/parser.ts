@@ -684,7 +684,7 @@ export class Parser {
     }
     if (ts.isQualifiedName(reference.typeName) && ts.isIdentifier(reference.typeName.left)) {
       const enumName = reference.typeName.left.text
-      const enumDeclaration = this.declarations.find(m => m.kind === 'enum' && m.name === enumName) as EnumDeclaration | undefined
+      const enumDeclaration = this.declarations.find((m): m is EnumDeclaration => m.kind === 'enum' && m.name === enumName)
       if (enumDeclaration) {
         return {
           kind: 'enum',
@@ -1090,7 +1090,7 @@ export class Parser {
     }
 
     if (defaultValue !== undefined) {
-      (member.type as NumberType | StringType | BooleanType | ArrayType | ObjectType).default = defaultValue
+      member.type.default = defaultValue
     }
 
     if (ts.isPropertySignature(property) || ts.isPropertyDeclaration(property)) {

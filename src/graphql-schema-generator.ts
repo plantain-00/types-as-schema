@@ -25,8 +25,8 @@ export function generateGraphqlSchema(declarations: TypeDeclaration[]) {
 ${members.join('\n')}
 }`)
     } else if (typeDeclaration.kind === 'union') {
-      if (typeDeclaration.members.every(m => m.kind === 'reference')) {
-        const members = (typeDeclaration.members as ReferenceType[]).map(m => m.name)
+      if (typeDeclaration.members.every((m): m is ReferenceType => m.kind === 'reference')) {
+        const members = typeDeclaration.members.map(m => m.name)
         messages.push(`union ${typeDeclaration.name} = ${members.join(' | ')}`)
       } else {
         warn(typeDeclaration.position, stageName)

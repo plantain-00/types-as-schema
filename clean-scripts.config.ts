@@ -40,7 +40,7 @@ export default {
     export: `no-unused-export "src/**/*.ts" ${lessFiles} --strict --need-module tslib`,
     markdown: `markdownlint README.md`,
     typeCoverage: 'type-coverage -p src --strict',
-    typeCoverageOnline: 'type-coverage -p online --strict --ignore-files "online/variables.ts" --ignore-files "dist/*"'
+    typeCoverageOnline: 'type-coverage -p online --strict --ignore-files "dist/*"'
   },
   test: [
     'clean-release --config clean-run.config.ts'
