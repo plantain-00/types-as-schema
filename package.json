@@ -21,7 +21,7 @@
     "url": "https://github.com/plantain-00/types-as-schema/issues"
   },
   "typeCoverage": {
-    "atLeast": 99.76
+    "atLeast": 99.63
   },
   "homepage": "https://github.com/plantain-00/types-as-schema#readme",
   "devDependencies": {
@@ -32,7 +32,6 @@
     "@types/webpack": "4.41.22",
     "@typescript-eslint/eslint-plugin": "4.1.0",
     "@typescript-eslint/parser": "4.1.0",
-    "@vue/compiler-sfc": "3.0.0",
     "autoprefixer": "9.8.6",
     "clean-css-cli": "4.3.0",
     "clean-release": "2.14.0",
@@ -56,7 +55,6 @@
     "tsconfig-plantain": "0.0.1",
     "type-coverage": "2.11.0",
     "vue": "3.0.0",
-    "vue-loader": "16.0.0-beta.8",
     "watch-then-execute": "1.2.0",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12"

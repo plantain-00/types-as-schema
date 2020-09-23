@@ -1,5 +1,4 @@
 import * as webpack from 'webpack'
-import VueLoaderPlugin from 'vue-loader/dist/plugin'
 
 const config: webpack.Configuration = {
   entry: {
@@ -11,8 +10,7 @@ const config: webpack.Configuration = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'ts-loader', options: { appendTsSuffixTo: [/\.vue$/] } },
-      { test: /\.vue$/, loader: 'vue-loader' }
+      { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   },
   optimization: {
@@ -27,11 +25,11 @@ const config: webpack.Configuration = {
     }
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
-  },
-  plugins: [
-    new VueLoaderPlugin()
-  ]
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      vue$: 'vue/dist/vue.esm-bundler.js'
+    }
+  }
 }
 
 export default config
