@@ -1,6 +1,6 @@
-import { ConfigData } from 'file2variable-cli'
+import { Configuration } from 'file2variable-cli'
 
-const config: ConfigData = {
+const config: Configuration = {
   base: 'online',
   files: [
     'online/index.template.html',
@@ -9,9 +9,7 @@ const config: ConfigData = {
   handler: (file) => {
     if (file.endsWith('index.template.html')) {
       return {
-        type: 'vue',
-        name: 'App',
-        path: './index'
+        type: 'html-minify',
       }
     }
     return { type: 'text' }
