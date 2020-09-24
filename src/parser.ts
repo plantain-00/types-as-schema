@@ -21,7 +21,7 @@ import {
   warn,
   getPosition,
   FunctionDeclaration,
-  FunctionParameter, EnumType
+  FunctionParameter, EnumType, Decorator
 } from './utils'
 
 export class Parser {
@@ -219,6 +219,7 @@ export class Parser {
       entry: entry ? entry.comment : undefined,
       position: getPosition(declaration, sourceFile),
       comments,
+      decorators: ts.isClassDeclaration(declaration) ? this.getDecorators(sourceFile, declaration.decorators) : undefined,
     }
 
     for (const jsDoc of jsDocs) {
@@ -785,6 +786,22 @@ export class Parser {
     }
   }
 
+  private getDecorators(sourceFile: ts.SourceFile, decorators?: ts.NodeArray<ts.Decorator>) {
+    if (!decorators) {
+      return undefined
+    }
+    const result: Decorator[] = []
+    for (const decorator of decorators) {
+      if (ts.isCallExpression(decorator.expression) && ts.isIdentifier(decorator.expression.expression)) {
+        result.push({
+          name: decorator.expression.expression.escapedText.toString(),
+          parameters: decorator.expression.arguments.map((a) => this.getTypeAndValueOfExpression(a, sourceFile).value)
+        })
+      }
+    }
+    return result
+  }
+
   private getMembersInfo(node: ts.TypeNode, sourceFile: ts.SourceFile): MembersInfo {
     if (ts.isTypeLiteralNode(node)) {
       return this.getObjectMembers(node.members, sourceFile)
@@ -1051,6 +1068,15 @@ export class Parser {
         },
         value
       }
+    } else if (ts.isIdentifier(expression)) {
+      return {
+        type: {
+          kind: 'reference',
+          name: expression.escapedText.toString(),
+          position: getPosition(expression, sourceFile)
+        },
+        value: expression.escapedText.toString(),
+      }
     }
     return {
       type: {
@@ -1070,7 +1096,8 @@ export class Parser {
       type: {
         kind: undefined,
         position: getPosition(property, sourceFile)
-      }
+      },
+      decorators: this.getDecorators(sourceFile, property.decorators),
     }
 
     if (property.questionToken) {
@@ -1126,7 +1153,8 @@ export class Parser {
     return {
       name: (parameter.name as ts.Identifier).text,
       type,
-      optional: !!parameter.questionToken || type.default !== undefined
+      optional: !!parameter.questionToken || type.default !== undefined,
+      decorators: this.getDecorators(sourceFile, parameter.decorators),
     }
   }
 

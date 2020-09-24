@@ -9,7 +9,7 @@ const config: Configuration = {
   handler: (file) => {
     if (file.endsWith('index.template.html')) {
       return {
-        type: 'html-minify',
+        type: 'vue3',
       }
     }
     return { type: 'text' }

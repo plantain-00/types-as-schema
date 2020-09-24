@@ -420,3 +420,8 @@ pub struct BlogChange {
   pub id: f32,
   pub content: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TestController {
+
+}

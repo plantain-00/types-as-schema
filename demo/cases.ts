@@ -519,3 +519,14 @@ export interface BlogChange {
   id: number
   content: string
 }
+
+@Controller('/api/v1/tests')
+export class TestController {
+  @Get()
+  @Bar(TypeLiteral)
+  get(
+    @Query('foo') foo: number,
+    @Query('foo') bar: string,
+  ) {
+  }
+}

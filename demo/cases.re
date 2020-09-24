@@ -377,3 +377,8 @@ type blogChange = {
   id: float,
   content: string,
 };
+
+type testController = {
+  .
+
+};

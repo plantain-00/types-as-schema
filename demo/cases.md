@@ -494,6 +494,12 @@ Field | Required | Type | Description
 `id` | `true` | `number` |
 `content` | `true` | `string` |
 
+## `TestController`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`get` | `true` | `unknown` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

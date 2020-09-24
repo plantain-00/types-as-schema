@@ -322,3 +322,7 @@ type BlogChange {
   id: Float!
   content: String!
 }
+
+type TestController {
+  get(foo: Float!, bar: String!): JSON!
+}

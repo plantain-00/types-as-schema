@@ -4032,5 +4032,91 @@
     "comments": [
       "/**\n * @public\n */"
     ]
+  },
+  {
+    "kind": "object",
+    "name": "TestController",
+    "members": [
+      {
+        "name": "get",
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 524,
+            "character": 2
+          }
+        },
+        "decorators": [
+          {
+            "name": "Get",
+            "parameters": []
+          },
+          {
+            "name": "Bar",
+            "parameters": [
+              "TypeLiteral"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "foo",
+            "type": {
+              "kind": "number",
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 527,
+                "character": 23
+              }
+            },
+            "optional": false,
+            "decorators": [
+              {
+                "name": "Query",
+                "parameters": [
+                  "foo"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "bar",
+            "type": {
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 528,
+                "character": 23
+              }
+            },
+            "optional": false,
+            "decorators": [
+              {
+                "name": "Query",
+                "parameters": [
+                  "foo"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 0,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 522,
+      "character": 0
+    },
+    "decorators": [
+      {
+        "name": "Controller",
+        "parameters": [
+          "/api/v1/tests"
+        ]
+      }
+    ]
   }
 ]

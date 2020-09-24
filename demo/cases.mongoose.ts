@@ -1046,6 +1046,13 @@ export const blogChangeSchema = {
   },
 }
 
+export const testControllerSchema = {
+  get: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Number,

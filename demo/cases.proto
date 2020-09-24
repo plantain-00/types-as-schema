@@ -335,3 +335,7 @@ message BlogChange {
     double id = 2;
     string content = 3;
 }
+
+message TestController {
+
+}

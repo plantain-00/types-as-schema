@@ -1,6 +1,6 @@
 {
   "name": "types-as-schema",
-  "version": "1.36.1",
+  "version": "1.36.2",
   "description": "Genetate json schema, protobuf file, graphQL/mongoose schema and reasonml/ocaml/rust types from typescript types.",
   "main": "dist/core.js",
   "types": "dist/core.d.ts",
@@ -39,7 +39,7 @@
     "eslint": "7.8.1",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-plantain": "1.1.0",
-    "file2variable-cli": "1.12.2",
+    "file2variable-cli": "1.13.0",
     "github-fork-ribbon-css": "0.2.3",
     "http-server": "0.12.3",
     "less": "3.12.2",
