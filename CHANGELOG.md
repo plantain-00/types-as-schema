@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.36.2](https://github.com/plantain-00/types-as-schema/compare/v1.36.1...v1.36.2) (2020-09-25)
+  
+* feat: add decorator, add declarations output for online demo, prerender vue3 template ([2efbb7f](https://github.com/plantain-00/types-as-schema/commit/2efbb7f4a429946a3d1e54a976874c81a62e9de2))
+* refactor: improve type coverage ([b21518d](https://github.com/plantain-00/types-as-schema/commit/b21518d48760089a6e409785cfbe1e6f735b3dfb))
+* refactor: vue 3 ([eb8fe4f](https://github.com/plantain-00/types-as-schema/commit/eb8fe4f625ab30cb772ab4fc080d3471b91eb564))
+
 ## [1.36.1](https://github.com/plantain-00/types-as-schema/compare/v1.36.0...v1.36.1) (2020-09-21)
   
 * fix: function return and comment comments ([77f0483](https://github.com/plantain-00/types-as-schema/commit/77f0483ae293e4fd06d95062af94b72a7f52bf45))
