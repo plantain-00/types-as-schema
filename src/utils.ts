@@ -219,7 +219,16 @@ export type ObjectType = {
   default?: unknown;
   title?: string;
   description?: string;
-} & Position & Comments
+} & Position & Comments & Decorators
+
+export type Decorator = {
+  name: string
+  parameters?: unknown[]
+}
+
+type Decorators = {
+  decorators?: Decorator[]
+}
 
 export type ArrayType = {
   kind: 'array';
@@ -251,7 +260,7 @@ export type UnionType = {
   description?: string
 } & Position & Comments
 
-export interface Member extends Comments {
+export interface Member extends Comments, Decorators {
   name: string;
   type: Type;
   optional?: boolean;
@@ -268,7 +277,7 @@ interface Comments {
   comments?: string[]
 }
 
-export interface Parameter extends Comments {
+export interface Parameter extends Comments, Decorators {
   name: string;
   type: Type;
   optional?: boolean;

@@ -336,6 +336,10 @@ message BlogChange {
     string content = 3;
 }
 
+message TestController {
+
+}
+
 message OuterType {
     double outerType = 1;
 }

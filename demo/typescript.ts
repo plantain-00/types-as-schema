@@ -467,6 +467,10 @@ interface BlogChange {
   content: string
 }
 
+interface TestController {
+  get: unknown
+}
+
 interface OuterType {
   outerType: number
 }

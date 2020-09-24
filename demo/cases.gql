@@ -323,6 +323,10 @@ type BlogChange {
   content: String!
 }
 
+type TestController {
+  get(foo: Float!, bar: String!): JSON!
+}
+
 type OuterType {
   outerType: Float!
 }

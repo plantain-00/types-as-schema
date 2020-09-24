@@ -25,10 +25,7 @@ const config: webpack.Configuration = {
     }
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-    alias: {
-      vue$: 'vue/dist/vue.esm-bundler.js'
-    }
+    extensions: ['.ts', '.tsx', '.js']
   }
 }
 

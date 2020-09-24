@@ -378,6 +378,11 @@ type blogChange = {
   content: string,
 };
 
+type testController = {
+  .
+
+};
+
 type outerType = {
   .
   outerType: float,

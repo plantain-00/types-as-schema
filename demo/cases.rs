@@ -422,6 +422,11 @@ pub struct BlogChange {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct TestController {
+
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OuterType {
   #[serde(rename = "outerType")] pub outer_type: f32,
 }

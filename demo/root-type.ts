@@ -360,6 +360,10 @@ export interface BlogChange<TContext = any> {
   content: string
 }
 
+export interface TestController<TContext = any> {
+  get(input: { foo: number, bar: string }, context: TContext, info: GraphQLResolveInfo): any | Promise<any>
+}
+
 export interface OuterType<TContext = any> {
   outerType: number
 }
@@ -638,6 +642,9 @@ export interface ApolloResolvers<TContext = any> {
     type?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     id?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
     content?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,
+  },
+  TestController?: {
+    get?(parent: any, input: { foo: number, bar: string }, context: TContext, info: GraphQLResolveInfo): any,
   },
   OuterType?: {
     outerType?(parent: any, input: {}, context: TContext, info: GraphQLResolveInfo): any,

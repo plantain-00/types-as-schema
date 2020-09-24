@@ -24,6 +24,7 @@ const App = defineComponent({
       custom: '',
       typescript: '',
       markdown: '',
+      debug: '',
       innerSource: localStorage.getItem(localStorageKey) || demoCasesTs,
       jsonSchemas: [] as { entry: string, content: string }[],
     }
@@ -103,10 +104,13 @@ const App = defineComponent({
 
         this.markdown = generator.generateMarkdownDoc()
         this.options.push('markdown')
+
+        this.debug = JSON.stringify(generator.declarations, null, 2)
+        this.options.push('debug')
       }
     },
   },
-  template: indexTemplateHtml,
+  render: indexTemplateHtml,
 })
 
 export default App
