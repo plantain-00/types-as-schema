@@ -541,73 +541,18 @@ export class TestController {
 }
 `
 export function indexTemplateHtml(_ctx, _cache) {
-  const _hoisted_1 = { class: "app" }
-  const _hoisted_2 = { class: "result" }
-  const _hoisted_3 = { class: "options" }
-  const _hoisted_4 = {
-    key: 0,
-    class: "protobuf"
-  }
-  const _hoisted_5 = {
-    key: 1,
-    class: "json-schema"
-  }
-  const _hoisted_6 = {
-    key: 2,
-    class: "graphql-schema"
-  }
-  const _hoisted_7 = {
-    key: 3,
-    class: "reason-types"
-  }
-  const _hoisted_8 = {
-    key: 4,
-    class: "ocaml-types"
-  }
-  const _hoisted_9 = {
-    key: 5,
-    class: "rust-types"
-  }
-  const _hoisted_10 = {
-    key: 6,
-    class: "mongoose-schema"
-  }
-  const _hoisted_11 = {
-    key: 7,
-    class: "graphql-root-type"
-  }
-  const _hoisted_12 = {
-    key: 8,
-    class: "swagger-doc"
-  }
-  const _hoisted_13 = {
-    key: 9,
-    class: "custom"
-  }
-  const _hoisted_14 = {
-    key: 10,
-    class: "typescript"
-  }
-  const _hoisted_15 = {
-    key: 11,
-    class: "markdown"
-  }
-  const _hoisted_16 = {
-    key: 12,
-    class: "debug"
-  }
-  return (_openBlock(), _createBlock("div", _hoisted_1, [
+  return (_openBlock(), _createBlock("div", { class: "app" }, [
     _withDirectives(_createVNode("textarea", {
       class: "source",
       "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => (_ctx.source = $event))
     }, null, 512 /* NEED_PATCH */), [
       [_vModelText, _ctx.source]
     ]),
-    _createVNode("div", _hoisted_2, [
+    _createVNode("div", { class: "result" }, [
       _createVNode("button", {
         onClick: _cache[2] || (_cache[2] = $event => (_ctx.generate()))
       }, "generate"),
-      _createVNode("div", _hoisted_3, [
+      _createVNode("div", { class: "options" }, [
         _withDirectives(_createVNode("select", {
           "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (_ctx.selectedOption = $event))
         }, [
@@ -622,43 +567,82 @@ export function indexTemplateHtml(_ctx, _cache) {
         ])
       ]),
       (_ctx.selectedOption === 'protobuf')
-        ? (_openBlock(), _createBlock("pre", _hoisted_4, _toDisplayString(_ctx.protobuf), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 0,
+            class: "protobuf"
+          }, _toDisplayString(_ctx.protobuf), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.jsonSchema)
-        ? (_openBlock(), _createBlock("pre", _hoisted_5, _toDisplayString(_ctx.jsonSchema), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 1,
+            class: "json-schema"
+          }, _toDisplayString(_ctx.jsonSchema), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'graphql schema')
-        ? (_openBlock(), _createBlock("pre", _hoisted_6, _toDisplayString(_ctx.graphqlSchema), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 2,
+            class: "graphql-schema"
+          }, _toDisplayString(_ctx.graphqlSchema), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'reason types')
-        ? (_openBlock(), _createBlock("pre", _hoisted_7, _toDisplayString(_ctx.reasonTypes), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 3,
+            class: "reason-types"
+          }, _toDisplayString(_ctx.reasonTypes), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'ocaml types')
-        ? (_openBlock(), _createBlock("pre", _hoisted_8, _toDisplayString(_ctx.ocamlTypes), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 4,
+            class: "ocaml-types"
+          }, _toDisplayString(_ctx.ocamlTypes), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'rust types')
-        ? (_openBlock(), _createBlock("pre", _hoisted_9, _toDisplayString(_ctx.rustTypes), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 5,
+            class: "rust-types"
+          }, _toDisplayString(_ctx.rustTypes), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'mongoose schema')
-        ? (_openBlock(), _createBlock("pre", _hoisted_10, _toDisplayString(_ctx.mongooseSchema), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 6,
+            class: "mongoose-schema"
+          }, _toDisplayString(_ctx.mongooseSchema), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'graphql root type')
-        ? (_openBlock(), _createBlock("pre", _hoisted_11, _toDisplayString(_ctx.graphqlRootType), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 7,
+            class: "graphql-root-type"
+          }, _toDisplayString(_ctx.graphqlRootType), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'swagger doc')
-        ? (_openBlock(), _createBlock("pre", _hoisted_12, _toDisplayString(_ctx.swaggerDoc), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 8,
+            class: "swagger-doc"
+          }, _toDisplayString(_ctx.swaggerDoc), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'custom')
-        ? (_openBlock(), _createBlock("pre", _hoisted_13, _toDisplayString(_ctx.custom), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 9,
+            class: "custom"
+          }, _toDisplayString(_ctx.custom), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'typescript')
-        ? (_openBlock(), _createBlock("pre", _hoisted_14, _toDisplayString(_ctx.typescript), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 10,
+            class: "typescript"
+          }, _toDisplayString(_ctx.typescript), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'markdown')
-        ? (_openBlock(), _createBlock("pre", _hoisted_15, _toDisplayString(_ctx.markdown), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 11,
+            class: "markdown"
+          }, _toDisplayString(_ctx.markdown), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'debug')
-        ? (_openBlock(), _createBlock("pre", _hoisted_16, _toDisplayString(_ctx.debug), 1 /* TEXT */))
+        ? (_openBlock(), _createBlock("pre", {
+            key: 12,
+            class: "debug"
+          }, _toDisplayString(_ctx.debug), 1 /* TEXT */))
         : _createCommentVNode("v-if", true)
     ])
   ]))
