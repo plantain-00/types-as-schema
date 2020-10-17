@@ -1,6 +1,3 @@
-import ts from 'typescript'
-import * as path from 'path'
-
 export function toUpperCase(name: string) {
   return name[0].toUpperCase() + name.substring(1)
 }
@@ -11,13 +8,6 @@ export function toLowerCase(name: string) {
 
 export function warn(position: PositionValue, stage: string) {
   console.warn(`Warning for ${stage}: ${position.file}:${position.line + 1}:${position.character + 1}`)
-}
-
-export function getPosition(typeNode: ts.Node, sourceFile: ts.SourceFile) {
-  return {
-    file: path.relative(process.cwd(), sourceFile.fileName),
-    ...ts.getLineAndCharacterOfPosition(sourceFile, typeNode.getStart(sourceFile))
-  }
 }
 
 export function isValidReference(declarations: TypeDeclaration[], referenceName: string) {

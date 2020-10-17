@@ -11,6 +11,7 @@ import * as packageJson from '../package.json'
 import * as protobuf from 'protobufjs'
 import Ajv from 'ajv'
 import type { TypeDeclaration } from './utils'
+import { ReferenceType } from './graphql-root-type-generator'
 
 const ajv = new Ajv()
 
@@ -75,7 +76,12 @@ async function executeCommandLine() {
 
     const sourceFiles = filePaths.map(filePath => newProgram.getSourceFile(filePath))
 
-    const generator = new Generator(sourceFiles.filter((s): s is ts.SourceFile => !!s), looseMode, !!customPath && !!configPath)
+    const generator = new Generator(
+      sourceFiles.filter((s): s is ts.SourceFile => !!s),
+      looseMode,
+      !!customPath && !!configPath,
+      fileName => path.relative(process.cwd(), fileName),
+    )
 
     if (debugPath) {
       fs.writeFileSync(debugPath, JSON.stringify(generator.declarations, null, '  '))
@@ -97,7 +103,7 @@ async function executeCommandLine() {
     }
 
     if (graphqlRootTypePath) {
-      const graphqlRootPathContent = generator.generateGraphqlRootType(graphqlRootTypePath)
+      const graphqlRootPathContent = generator.generateGraphqlRootType((referenceTypes) => getReferenceTypeImports(referenceTypes, graphqlRootTypePath))
       fs.writeFileSync(graphqlRootTypePath, graphqlRootPathContent)
     }
 
@@ -294,3 +300,27 @@ executeCommandLine().then(() => {
   printInConsole(error)
   process.exit(1)
 })
+
+function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
+  const map: { [name: string]: string[] } = {}
+  for (const referenceType of referenceTypes) {
+    const file = referenceType.position.file
+    if (!map[file]) {
+      map[file] = []
+    }
+    if (map[file].every((n) => n !== referenceType.name)) {
+      map[file].push(referenceType.name)
+    }
+  }
+  const dirname = path.dirname(graphqlRootTypePath)
+  const imports: string[] = []
+  for (const file in map) {
+    let relativePath = path.relative(dirname, file)
+    if (!relativePath.startsWith('.' + path.sep) && !relativePath.startsWith('..' + path.sep)) {
+      relativePath = '.' + path.sep + relativePath
+    }
+    relativePath = relativePath.substring(0, relativePath.length - path.extname(relativePath).length)
+    imports.push(`import { ${map[file].join(', ')} } from '${relativePath}'`)
+  }
+  return imports.join('\n')
+}

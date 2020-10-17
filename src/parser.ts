@@ -19,7 +19,6 @@ import {
   ArrayDeclaration,
   Expression,
   warn,
-  getPosition,
   FunctionDeclaration,
   FunctionParameter, EnumType, Decorator
 } from './utils'
@@ -28,7 +27,7 @@ export class Parser {
   private declarations: TypeDeclaration[] = []
   disableWarning = false
 
-  constructor(private sourceFiles: ts.SourceFile[]) { }
+  constructor(private sourceFiles: ts.SourceFile[], private getRelativePath: (fileName: string) => string) { }
 
   parse() {
     for (const sourceFile of this.sourceFiles) {
@@ -60,7 +59,7 @@ export class Parser {
           name: declaration.name.text,
           type: 'uint32',
           members: [],
-          position: getPosition(declaration, sourceFile)
+          position: this.getPosition(declaration, sourceFile)
         }
         let lastIndex = 0
         for (const member of members) {
@@ -95,7 +94,7 @@ export class Parser {
       name: declaration.name.text,
       type: ts.isStringLiteral(initializer) ? 'string' : 'uint32',
       members: [],
-      position: getPosition(declaration, sourceFile)
+      position: this.getPosition(declaration, sourceFile)
     }
     for (const member of members) {
       if (member.initializer && ts.isIdentifier(member.name)) {
@@ -130,7 +129,7 @@ export class Parser {
       ? this.getType(declaration.type, sourceFile)
       : {
         kind: undefined,
-        position: getPosition(declaration, sourceFile)
+        position: this.getPosition(declaration, sourceFile)
       }
     const functionDeclaration: FunctionDeclaration = {
       kind: 'function',
@@ -217,7 +216,7 @@ export class Parser {
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declaration, sourceFile),
+      position: this.getPosition(declaration, sourceFile),
       comments,
       decorators: ts.isClassDeclaration(declaration) ? this.getDecorators(sourceFile, declaration.decorators) : undefined,
     }
@@ -316,14 +315,14 @@ export class Parser {
             return
           }
         } else if (!this.disableWarning) {
-          warn(getPosition(declaration, sourceFile), 'parse')
+          warn(this.getPosition(declaration, sourceFile), 'parse')
         }
       }
       const referenceDeclaration: ReferenceDeclaration = {
         kind: 'reference',
         newName: declaration.name.text,
         name: declaration.type.typeName.text,
-        position: getPosition(declaration, sourceFile)
+        position: this.getPosition(declaration, sourceFile)
       }
       this.declarations.push(referenceDeclaration)
     }
@@ -348,7 +347,7 @@ export class Parser {
           name: declarationName.text,
           members: declarationType.types.map(u => this.getType(u, sourceFile)),
           entry: entry ? entry.comment : undefined,
-          position: getPosition(declarationName, sourceFile),
+          position: this.getPosition(declarationName, sourceFile),
           comments,
         }
         this.declarations.push(unionDeclaration)
@@ -363,7 +362,7 @@ export class Parser {
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declarationName, sourceFile),
+      position: this.getPosition(declarationName, sourceFile),
       comments,
     }
     for (const jsDoc of jsDocs) {
@@ -398,7 +397,7 @@ export class Parser {
           kind: 'string',
           name: declarationName.text,
           enums: enums as string[],
-          position: getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile)
         }
         this.declarations.push(stringDeclaration)
       } else if (enumType === 'number') {
@@ -407,7 +406,7 @@ export class Parser {
           type: enumType,
           name: declarationName.text,
           enums: enums as string[],
-          position: getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile)
         }
         this.declarations.push(numberDeclaration)
       } else if (enumType === 'boolean') {
@@ -416,7 +415,7 @@ export class Parser {
           name: declarationName.text,
           members: unionType.types.map(e => this.getType(e, sourceFile)),
           entry: undefined,
-          position: getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile)
         }
         this.declarations.push(unionDeclaration)
       }
@@ -436,7 +435,7 @@ export class Parser {
       name: declarationName.text,
       type,
       entry: entry ? entry.comment : undefined,
-      position: getPosition(declarationName, sourceFile),
+      position: this.getPosition(declarationName, sourceFile),
       comments,
     }
     for (const jsDoc of jsDocs) {
@@ -463,20 +462,20 @@ export class Parser {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
       return {
         kind: 'string',
-        position: getPosition(type, sourceFile)
+        position: this.getPosition(type, sourceFile)
       }
     }
     if (type.kind === ts.SyntaxKind.NumberKeyword) {
       return {
         kind: 'number',
         type: 'number',
-        position: getPosition(type, sourceFile)
+        position: this.getPosition(type, sourceFile)
       }
     }
     if (type.kind === ts.SyntaxKind.BooleanKeyword) {
       return {
         kind: 'boolean',
-        position: getPosition(type, sourceFile)
+        position: this.getPosition(type, sourceFile)
       }
     }
     if (ts.isTypeLiteralNode(type)) {
@@ -487,7 +486,7 @@ export class Parser {
       return {
         kind: 'array',
         type: elementType,
-        position: getPosition(type, sourceFile)
+        position: this.getPosition(type, sourceFile)
       }
     }
     if (ts.isTypeReferenceNode(type)) {
@@ -500,7 +499,7 @@ export class Parser {
       if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
         return {
           kind: 'null',
-          position: getPosition(type, sourceFile)
+          position: this.getPosition(type, sourceFile)
         }
       }
       return this.getTypeOfLiteralType(type, sourceFile)
@@ -508,7 +507,7 @@ export class Parser {
     if (type.kind === ts.SyntaxKind.NullKeyword) {
       return {
         kind: 'null',
-        position: getPosition(type, sourceFile)
+        position: this.getPosition(type, sourceFile)
       }
     }
     if (ts.isTupleTypeNode(type)) {
@@ -523,11 +522,11 @@ export class Parser {
           type: arrayType,
           minItems: elementsType.length,
           maxItems: elementsType.length,
-          position: getPosition(type, sourceFile)
+          position: this.getPosition(type, sourceFile)
         }
       }
     }
-    const position = getPosition(type, sourceFile)
+    const position = this.getPosition(type, sourceFile)
     if (type.kind !== ts.SyntaxKind.AnyKeyword && !this.disableWarning) {
       warn(position, 'parser')
     }
@@ -584,12 +583,12 @@ export class Parser {
         type: enumType,
         name: enumType,
         enums,
-        position: getPosition(literalType, sourceFile)
+        position: this.getPosition(literalType, sourceFile)
       }
     }
     return {
       kind: undefined,
-      position: getPosition(literalType, sourceFile)
+      position: this.getPosition(literalType, sourceFile)
     }
   }
 
@@ -614,19 +613,19 @@ export class Parser {
           type: enumType,
           name: enumType,
           enums,
-          position: getPosition(unionType, sourceFile)
+          position: this.getPosition(unionType, sourceFile)
         }
       }
     } else {
       return {
         kind: 'union',
         members: unionType.types.map(u => this.getType(u, sourceFile)),
-        position: getPosition(unionType, sourceFile)
+        position: this.getPosition(unionType, sourceFile)
       }
     }
     return {
       kind: undefined,
-      position: getPosition(unionType, sourceFile)
+      position: this.getPosition(unionType, sourceFile)
     }
   }
 
@@ -636,10 +635,10 @@ export class Parser {
       return {
         kind: 'array',
         type: this.getType(typeArgument, sourceFile),
-        position: getPosition(typeArgument, sourceFile)
+        position: this.getPosition(typeArgument, sourceFile)
       }
     } else {
-      const position = getPosition(reference, sourceFile)
+      const position = this.getPosition(reference, sourceFile)
       return {
         kind: 'array',
         type: {
@@ -657,7 +656,7 @@ export class Parser {
         return {
           kind: 'number',
           type: reference.typeName.text,
-          position: getPosition(reference.typeName, sourceFile)
+          position: this.getPosition(reference.typeName, sourceFile)
         }
       }
       if (reference.typeName.text === 'Array' || reference.typeName.text === 'ReadonlyArray') {
@@ -680,7 +679,7 @@ export class Parser {
       return {
         kind: 'reference',
         name: reference.typeName.text,
-        position: getPosition(reference.typeName, sourceFile)
+        position: this.getPosition(reference.typeName, sourceFile)
       }
     }
     if (ts.isQualifiedName(reference.typeName) && ts.isIdentifier(reference.typeName.left)) {
@@ -692,13 +691,13 @@ export class Parser {
           name: enumDeclaration.name,
           type: enumDeclaration.type,
           enums: enumDeclaration.members.map(m => m.value),
-          position: getPosition(reference.typeName, sourceFile)
+          position: this.getPosition(reference.typeName, sourceFile)
         }
       }
     }
     return {
       kind: undefined,
-      position: getPosition(reference.typeName, sourceFile)
+      position: this.getPosition(reference.typeName, sourceFile)
     }
   }
 
@@ -727,7 +726,7 @@ export class Parser {
           }
         } else {
           if (!this.disableWarning) {
-            warn(getPosition(typeName, sourceFile), 'parser')
+            warn(this.getPosition(typeName, sourceFile), 'parser')
           }
           return undefined
         }
@@ -748,7 +747,7 @@ export class Parser {
           members,
           minProperties,
           maxProperties,
-          position: getPosition(typeName, sourceFile)
+          position: this.getPosition(typeName, sourceFile)
         }
       }
     }
@@ -765,7 +764,7 @@ export class Parser {
             kind: 'map',
             key: this.getType(parameterType, sourceFile),
             value: this.getType(member.type, sourceFile),
-            position: getPosition(parameterType, sourceFile)
+            position: this.getPosition(parameterType, sourceFile)
           }
         }
       }
@@ -777,12 +776,12 @@ export class Parser {
         minProperties,
         maxProperties: additionalProperties === undefined ? maxProperties : undefined,
         additionalProperties,
-        position: getPosition(literal, sourceFile)
+        position: this.getPosition(literal, sourceFile)
       }
     }
     return {
       kind: undefined,
-      position: getPosition(literal, sourceFile)
+      position: this.getPosition(literal, sourceFile)
     }
   }
 
@@ -1004,7 +1003,7 @@ export class Parser {
       return {
         type: {
           kind: 'string',
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value: expression.text
       }
@@ -1014,7 +1013,7 @@ export class Parser {
         type: {
           kind: 'number',
           type: 'number',
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value: +expression.text
       }
@@ -1023,14 +1022,14 @@ export class Parser {
       return {
         type: {
           kind: 'boolean',
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value: expression.kind === ts.SyntaxKind.TrueKeyword
       }
     } else if (ts.isArrayLiteralExpression(expression)) {
       let elementsType: Type = {
         kind: undefined,
-        position: getPosition(expression, sourceFile)
+        position: this.getPosition(expression, sourceFile)
       }
       const elementsValues: unknown[] = []
       for (const element of expression.elements) {
@@ -1042,7 +1041,7 @@ export class Parser {
         type: {
           kind: 'array',
           type: elementsType,
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value: elementsValues
       }
@@ -1064,7 +1063,7 @@ export class Parser {
           kind: 'object',
           members,
           minProperties: members.length,
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value
       }
@@ -1073,7 +1072,7 @@ export class Parser {
         type: {
           kind: 'reference',
           name: expression.escapedText.toString(),
-          position: getPosition(expression, sourceFile)
+          position: this.getPosition(expression, sourceFile)
         },
         value: expression.escapedText.toString(),
       }
@@ -1081,7 +1080,7 @@ export class Parser {
     return {
       type: {
         kind: undefined,
-        position: getPosition(expression, sourceFile)
+        position: this.getPosition(expression, sourceFile)
       },
       value: undefined
     }
@@ -1095,7 +1094,7 @@ export class Parser {
       name: ts.isIdentifier(property.name) ? property.name.text : '',
       type: {
         kind: undefined,
-        position: getPosition(property, sourceFile)
+        position: this.getPosition(property, sourceFile)
       },
       decorators: this.getDecorators(sourceFile, property.decorators),
     }
@@ -1145,7 +1144,7 @@ export class Parser {
     if (!type) {
       type = {
         kind: undefined,
-        position: getPosition(parameter, sourceFile)
+        position: this.getPosition(parameter, sourceFile)
       }
     }
     type.default = value
@@ -1416,6 +1415,13 @@ export class Parser {
       if (jsDoc.name === 'additionalProperties') {
         type.additionalProperties = true
       }
+    }
+  }
+
+  private getPosition(typeNode: ts.Node, sourceFile: ts.SourceFile) {
+    return {
+      file: this.getRelativePath(sourceFile.fileName),
+      ...ts.getLineAndCharacterOfPosition(sourceFile, typeNode.getStart(sourceFile))
     }
   }
 }
