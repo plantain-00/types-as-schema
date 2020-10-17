@@ -8,7 +8,7 @@ import { generateOcamlTypes } from './ocaml-type-generator'
 import { generateRustTypes } from './rust-type-generator'
 import { generateMongooseSchema } from './mongoose-schema-generator'
 import { TypeDeclaration } from './utils'
-import { generateGraphqlRootType } from './graphql-root-type-generator'
+import { generateGraphqlRootType, ReferenceType } from './graphql-root-type-generator'
 import { generateSwaggerDoc } from './swagger-doc-generator'
 import { generateTypescript } from './typescript-generator'
 import { generateMarkdownDoc } from './markdown-doc-generator'
@@ -16,8 +16,13 @@ import { generateMarkdownDoc } from './markdown-doc-generator'
 export class Generator {
   declarations: TypeDeclaration[] = []
 
-  constructor(public sourceFiles: ts.SourceFile[], private looseMode: boolean, disableWarning = false) {
-    const parser = new Parser(sourceFiles)
+  constructor(
+    public sourceFiles: ts.SourceFile[],
+    private looseMode: boolean,
+    disableWarning = false,
+    getRelativePath: (fileName: string) => string,
+  ) {
+    const parser = new Parser(sourceFiles, getRelativePath)
     parser.disableWarning = disableWarning
     this.declarations = parser.parse()
   }
@@ -37,8 +42,8 @@ export class Generator {
     return generateGraphqlSchema(this.declarations)
   }
 
-  generateGraphqlRootType(graphqlRootTypePath: string) {
-    return generateGraphqlRootType(this.declarations, graphqlRootTypePath)
+  generateGraphqlRootType(getReferenceTypeImports: (referenceTypes: ReferenceType[]) => string) {
+    return generateGraphqlRootType(this.declarations, getReferenceTypeImports)
   }
 
   generateReasonTypes() {

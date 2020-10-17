@@ -62,7 +62,7 @@ const App = defineComponent({
           ts.ScriptKind.TS
         )
 
-        const generator = new Generator([sourceFile], false)
+        const generator = new Generator([sourceFile], false, undefined, () => '')
 
         this.protobuf = generator.generateProtobuf()
         this.options = ['protobuf']
@@ -90,7 +90,7 @@ const App = defineComponent({
         this.mongooseSchema = generator.generateMongooseSchema()
         this.options.push('mongoose schema')
 
-        this.graphqlRootType = generator.generateGraphqlRootType('.')
+        this.graphqlRootType = generator.generateGraphqlRootType(() => '')
         this.options.push('graphql root type')
 
         this.swaggerDoc = generator.generateSwaggerDoc()
