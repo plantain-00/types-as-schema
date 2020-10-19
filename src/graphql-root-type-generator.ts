@@ -4,7 +4,6 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], getRefe
   const rootTypes: string[] = []
   const nonRootTypes: string[] = []
   const resolveResults: string[] = []
-  const resolvers: string[] = []
   const referenceTypes: ReferenceType[] = []
   for (const typeDeclaration of declarations) {
     if (typeDeclaration.kind === 'object') {
@@ -32,15 +31,6 @@ export function generateGraphqlRootType(declarations: TypeDeclaration[], getRefe
 ${nonRootTypeMembers.join('\n')}
 }`)
       }
-      const resolverFields: string[] = []
-      const optionalToken = isQueryOrMutation ? '' : '?'
-      for (const member of typeDeclaration.members) {
-        const parameters = getMemberParameters(referenceTypes, declarations, member.parameters)
-        resolverFields.push(`    ${member.name}${optionalToken}(parent: any, ${parameters}, context: TContext, info: GraphQLResolveInfo): any,`)
-      }
-      resolvers.push(`  ${typeDeclaration.name}${optionalToken}: {
-${resolverFields.join('\n')}
-  },`)
     } else if (typeDeclaration.kind === 'reference') {
       nonRootTypes.push(`export type ${typeDeclaration.newName}<TContext = any> = ${typeDeclaration.name}<TContext>`)
     } else if (typeDeclaration.kind === 'union') {
@@ -93,10 +83,6 @@ ${rootTypes.join('\n')}
 }
 
 ${nonRootTypes.join('\n\n')}
-
-export interface ApolloResolvers<TContext = any> {
-${resolvers.join('\n')}
-}
 
 export interface ResolveResult<TContext = any> {
 ${resolveResults.join('\n')}
