@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.37.0](https://github.com/plantain-00/types-as-schema/compare/v1.36.2...v1.37.0) (2020-10-19)
+  
+* feat: remove apollo graphql types ([56e6f3f](https://github.com/plantain-00/types-as-schema/commit/56e6f3fd0ad99250328329009a6f5f753b48f143))
+* chore: update dependencies, move path out of core ([790dd33](https://github.com/plantain-00/types-as-schema/commit/790dd33fc4291ba90b4556ae6b26a9ec76c714ef))
+* chore: update dependencies ([6a4c772](https://github.com/plantain-00/types-as-schema/commit/6a4c7722c58aabe846e1192e757ffcbadbe75684)) ([85d0003](https://github.com/plantain-00/types-as-schema/commit/85d0003c16c8a608e29048b5f4ebfc0f064fa347))
+
 ## [1.36.2](https://github.com/plantain-00/types-as-schema/compare/v1.36.1...v1.36.2) (2020-09-25)
   
 * feat: add decorator, add declarations output for online demo, prerender vue3 template ([2efbb7f](https://github.com/plantain-00/types-as-schema/commit/2efbb7f4a429946a3d1e54a976874c81a62e9de2))
