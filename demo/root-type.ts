@@ -9,132 +9,110 @@ import { GraphQLResolveInfo } from 'graphql'
 
 import { StringEnum, NumberEnum, NumberEnum2, TypeUnion9 } from './cases'
 
-export type DeepPromisifyReturnType<T> = {
-  [P in keyof T]: T[P] extends Array<infer U>
-    ? Array<DeepPromisifyReturnType<U>>
-    : T[P] extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPromisifyReturnType<U>>
-      : T[P] extends (...args: infer P) => infer R
-        ? (...args: P) => R | Promise<R>
-        : DeepPromisifyReturnType<T[P]>
+export interface Root<TContext> {
+  create(input: { input: CreateInput }, context: TContext, info: GraphQLResolveInfo): MutationResult | Promise<MutationResult>
+  user(input: { id: string }, context: TContext, info: GraphQLResolveInfo): GetResult<TContext> | Promise<GetResult<TContext>>
+  users(input: {}, context: TContext, info: GraphQLResolveInfo): GetResult<TContext> | Promise<GetResult<TContext>>
 }
 
-export type DeepReturnType<T> = {
-  [P in keyof T]: T[P] extends Array<infer U>
-    ? Array<DeepReturnType<U>>
-    : T[P] extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepReturnType<U>>
-      : T[P] extends (...args: any[]) => infer R
-        ? R extends Promise<infer U>
-          ? U
-          : R
-        : DeepReturnType<T[P]>
-}
-
-export interface Root<TContext = any> {
-  create(input: { input: CreateInput<TContext> }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<MutationResult<TContext>> | Promise<DeepPromisifyReturnType<MutationResult<TContext>>>
-  user(input: { id: string }, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult<TContext>> | Promise<DeepPromisifyReturnType<GetResult<TContext>>>
-  users(input: {}, context: TContext, info: GraphQLResolveInfo): DeepPromisifyReturnType<GetResult<TContext>> | Promise<DeepPromisifyReturnType<GetResult<TContext>>>
-}
-
-export interface TypeLiteral<TContext = any> {
+export interface TypeLiteral {
   typeLiteralMember1: number
   typeLiteralMember2: string
 }
 
-export interface Interface<TContext = any> {
+export interface Interface {
   interfaceMember1?: number
   interfaceMember2?: string
 }
 
-export interface TypeUnion1<TContext = any> {
+export interface TypeUnion1 {
   typeLiteralMember1?: number
   typeLiteralMember2?: string
   typeUnionMember1?: number
   typeUnionMember2?: string
 }
 
-export interface TypeUnion2<TContext = any> {
+export interface TypeUnion2 {
   kind: StringEnum
   typeUnionMember1?: string
   typeUnionMember2?: string
 }
 
-export interface TypeUnion3<TContext = any> {
+export interface TypeUnion3 {
   kind: NumberEnum
   typeUnionMember1?: string
   typeUnionMember2?: string
 }
 
-export interface TypeUnion4<TContext = any> {
+export interface TypeUnion4 {
   kind: string
   typeUnionMember1?: string
   typeUnionMember2?: string
 }
 
-export type TypeUnion5<TContext = any> = TypeLiteral<TContext> | Interface<TContext>
+export type TypeUnion5 = TypeLiteral | Interface
 
-export type TypeUnion8<TContext = any> = string | string | null | boolean
+export type TypeUnion8 = string | string | null | boolean
 
-export interface TypeUnion<TContext = any> {
-  typeUnionMember1: TypeUnion1<TContext>
-  typeUnionMember2: TypeUnion2<TContext>
-  typeUnionMember3: TypeUnion3<TContext>
-  typeUnionMember4: TypeUnion4<TContext>
-  typeUnionMember5: TypeUnion5<TContext>
+export interface TypeUnion {
+  typeUnionMember1: TypeUnion1
+  typeUnionMember2: TypeUnion2
+  typeUnionMember3: TypeUnion3
+  typeUnionMember4: TypeUnion4
+  typeUnionMember5: TypeUnion5
   typeUnionMember6: string | null | boolean
   typeUnionMember7: string
-  typeUnionMember8: TypeUnion8<TContext>
+  typeUnionMember8: TypeUnion8
   typeUnionMember9: TypeUnion9
 }
 
-export interface InterfaceExtends<TContext = any> {
+export interface InterfaceExtends {
   interfaceExtendsMember1: number
   interfaceExtendsMember2: string
   interfaceMember1?: number
   interfaceMember2?: string
 }
 
-export interface TypeIntersection1<TContext = any> {
+export interface TypeIntersection1 {
   interfaceMember1?: number
   interfaceMember2?: string
   typeIntersectionMember1: number
   typeIntersectionMember2: string
 }
 
-export interface TypeIntersection2<TContext = any> {
+export interface TypeIntersection2 {
   typeIntersectionMember1: number
   typeIntersectionMember2: string
   typeIntersectionMember3: number
   typeIntersectionMember4: string
 }
 
-export interface TypeIntersection<TContext = any> {
-  typeIntersectionMember1: TypeIntersection1<TContext>
-  typeIntersectionMember2: TypeIntersection2<TContext>
+export interface TypeIntersection {
+  typeIntersectionMember1: TypeIntersection1
+  typeIntersectionMember2: TypeIntersection2
   typeIntersectionMember3: any
 }
 
-export interface TypeUnionAndIntersection<TContext = any> {
+export interface TypeUnionAndIntersection {
   typeIntersectionMember1: number
   kind: NumberEnum
   typeUnionMember1?: string
   typeUnionMember2?: string
 }
 
-export interface TaggedField<TContext = any> {
+export interface TaggedField {
   taggedFieldMember1: number
   taggedFieldMember2: string
 }
 
-export interface Enum<TContext = any> {
+export interface Enum {
   stringEnum: StringEnum
   numberEnum: NumberEnum
   numberEnum2: NumberEnum2
   stringEnum2: string
 }
 
-export interface NumberType<TContext = any> {
+export interface NumberType {
   numberMember: number
   integerMember: number
   uint32Member: number
@@ -152,13 +130,13 @@ export interface NumberType<TContext = any> {
   titleMember: number
 }
 
-export interface StringType<TContext = any> {
+export interface StringType {
   stringMember: string
 }
 
-export interface ArrayType<TContext = any> {
+export interface ArrayType {
   arrayType1: Array<string>
-  arrayType2: Array<TypeLiteral<TContext>>
+  arrayType2: Array<TypeLiteral>
   arrayType3: Array<object>
   arrayType4: Array<number>
   arrayType5: Array<object>
@@ -169,31 +147,31 @@ export interface ArrayType<TContext = any> {
   arrayType10: Array<string>
 }
 
-export interface MapType7<TContext = any> {
+export interface MapType7 {
   foo: string
 }
 
-export interface MapType8<TContext = any> {
+export interface MapType8 {
 
 }
 
-export interface MapType<TContext = any> {
+export interface MapType {
   mapType: { [name: string]: number }
-  mapType2: { [name: string]: TypeLiteral<TContext> }
+  mapType2: { [name: string]: TypeLiteral }
   mapType3: { [name: string]: object }
   mapType4: { [name: string]: number }
   mapType5: { [name: string]: any }
   mapType6: object
-  mapType7: MapType7<TContext>
-  mapType8: MapType8<TContext>
+  mapType7: MapType7
+  mapType8: MapType8
 }
 
-export interface Parameter<TContext = any> {
+export interface Parameter<TContext> {
   member1(input: { name: string, age: number }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
   member2(input: { name?: string }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
 }
 
-export interface DefaultValue<TContext = any> {
+export interface DefaultValue {
   stringMember: string
   numberMember: number
   booleanMember: boolean
@@ -202,29 +180,29 @@ export interface DefaultValue<TContext = any> {
   arrayMember: Array<any>
   objectMember: object
   numberMember1: number
-  objectMember2: TypeLiteral<TContext>
+  objectMember2: TypeLiteral
 }
 
-export type TypeReferenceMember2<TContext = any> = TypeLiteral<TContext>
+export type TypeReferenceMember2 = TypeLiteral
 
-export interface ReferenceType<TContext = any> {
-  typeReferenceMember1: TypeLiteral<TContext>
-  typeReferenceMember2: TypeReferenceMember2<TContext>
+export interface ReferenceType {
+  typeReferenceMember1: TypeLiteral
+  typeReferenceMember2: TypeReferenceMember2
 }
 
-export interface ClassType1<TContext = any> {
+export interface ClassType1 {
   classMember1: string
   classMember2: number
 }
 
-export interface ClassType2<TContext = any> {
+export interface ClassType2 {
   classMember3: string
   classMember4: number
   classMember1: string
   classMember2: number
 }
 
-export interface ClassType3<TContext = any> {
+export interface ClassType3 {
   classMember1: string
   classMember2: number
   classMember3: boolean
@@ -233,143 +211,155 @@ export interface ClassType3<TContext = any> {
   classMember6: object
 }
 
-export interface ClassType<TContext = any> {
-  classType1: ClassType1<TContext>
-  classType2: ClassType2<TContext>
-  classType3: ClassType3<TContext>
+export interface ClassType {
+  classType1: ClassType1
+  classType2: ClassType2
+  classType3: ClassType3
 }
 
-export interface Circular<TContext = any> {
-  children: Array<Circular<TContext>>
+export interface Circular {
+  children: Array<Circular>
 }
 
-export interface TypeAlias<TContext = any> {
-  result: Result2<TContext>
+export interface TypeAlias {
+  result: Result2
 }
 
-export interface CreateInput<TContext = any> {
+export interface CreateInput {
   member1: string
   member2: number
-  member3: CreateInputMember3<TContext>
+  member3: CreateInputMember3
 }
 
-export interface EntryType<TContext = any> {
+export interface EntryType<TContext> {
   optionalMember?: string
   booleanMember: boolean
   stringMember: string
-  numberType: NumberType<TContext>
-  arrayType: ArrayType<TContext>
+  numberType: NumberType
+  arrayType: ArrayType
   typeLiteral: object
-  referenceType: ReferenceType<TContext>
-  interfaceType: Interface<TContext>
-  typeUnion: TypeUnion<TContext>
-  interfaceExtends: InterfaceExtends<TContext>
-  typeIntersection: TypeIntersection<TContext>
-  typeUnionAndIntersection: TypeUnionAndIntersection<TContext>
-  mapType: MapType<TContext>
-  taggedField: TaggedField<TContext>
-  enum: Enum<TContext>
-  stringNumber: StringType<TContext>
-  id: ID<TContext>
+  referenceType: ReferenceType
+  interfaceType: Interface
+  typeUnion: TypeUnion
+  interfaceExtends: InterfaceExtends
+  typeIntersection: TypeIntersection
+  typeUnionAndIntersection: TypeUnionAndIntersection
+  mapType: MapType
+  taggedField: TaggedField
+  enum: Enum
+  stringNumber: StringType
+  id: ID
   parameter: Parameter<TContext>
   optionalArrayMember?: Array<string>
   tupleType: Array<string>
-  defaultType: DefaultValue<TContext>
+  defaultType: DefaultValue
   anyType: any
-  classType: ClassType<TContext>
-  circular: Circular<TContext>
-  outerType: OuterType<TContext>
-  typeAlias: TypeAlias<TContext>
+  classType: ClassType
+  circular: Circular
+  outerType: OuterType
+  typeAlias: TypeAlias
   pick: object
   pick2: object
-  pick3: CreateInput2<TContext>
-  unknown: LayoutMetadataMap<TContext>
+  pick3: CreateInput2
+  unknown: LayoutMetadataMap
 }
 
-export interface MutationResult<TContext = any> {
+export interface MutationResult {
   result: boolean
 }
 
-export interface GetResult<TContext = any> {
+export interface GetResult<TContext> {
   result: Result<TContext>
 }
 
-export interface Result<TContext = any> {
+export interface Result<TContext> {
   member1: string
   member2(input: { input: string }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
 }
 
-export interface CreateInputMember3<TContext = any> {
+export interface CreateInputMember3 {
   member1: string
 }
 
-export type Result2<TContext = any> = Result3<TContext>
+export type Result2 = Result3
 
-export interface Result3<TContext = any> {
+export interface Result3 {
   result3: string
 }
 
-export interface Pet<TContext = any> {
+export interface Pet {
   id?: number
   name: string
   photoUrls: Array<string>
   status: string
 }
 
-export interface MongooseScheme<TContext = any> {
-  objectId: ObjectId<TContext>
-  date: Date<TContext>
-  decimal128: Decimal128<TContext>
+export interface MongooseScheme {
+  objectId: ObjectId
+  date: Date
+  decimal128: Decimal128
   index1: string
   index2: string
   index3: string
-  buffer: Buffer<TContext>
+  buffer: Buffer
 }
 
-export interface CreateInput2<TContext = any> {
+export interface CreateInput2 {
   member1: string
   member2: number
 }
 
-export interface LayoutMetadataMap<TContext = any> {
+export interface LayoutMetadataMap {
 
 }
 
-export interface Metadata<TContext = any> {
+export interface Metadata {
 
 }
 
-export type WsCommand<TContext = any> = CreateBlog<TContext> | UpdateBlog<TContext>
+export type WsCommand = CreateBlog | UpdateBlog
 
-export interface CreateBlog<TContext = any> {
+export interface CreateBlog {
   type: string
   content: string
 }
 
-export interface UpdateBlog<TContext = any> {
-  type: string
-  id: number
-  content: string
-}
-
-export type WsPush<TContext = any> = BlogChange<TContext>
-
-export interface BlogChange<TContext = any> {
+export interface UpdateBlog {
   type: string
   id: number
   content: string
 }
 
-export interface TestController<TContext = any> {
+export type WsPush = BlogChange
+
+export interface BlogChange {
+  type: string
+  id: number
+  content: string
+}
+
+export interface TestController<TContext> {
   get(input: { foo: number, bar: string }, context: TContext, info: GraphQLResolveInfo): any | Promise<any>
 }
 
-export interface OuterType<TContext = any> {
+export interface OuterType {
   outerType: number
 }
 
-export interface ResolveResult<TContext = any> {
-  create: DeepReturnType<MutationResult<TContext>>
+export type DeepReturnType<T> = {
+  [P in keyof T]: T[P] extends Array<infer U>
+    ? Array<DeepReturnType<U>>
+    : T[P] extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepReturnType<U>>
+      : T[P] extends (...args: any[]) => infer R
+        ? R extends Promise<infer U>
+          ? U
+          : R
+        : DeepReturnType<T[P]>
+}
+
+export interface ResolveResult<TContext> {
+  create: DeepReturnType<MutationResult>
   user: DeepReturnType<GetResult<TContext>>
   users: DeepReturnType<GetResult<TContext>>
 }

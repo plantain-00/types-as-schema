@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.37.1](https://github.com/plantain-00/types-as-schema/compare/v1.37.0...v1.37.1) (2020-10-20)
+  
+* feat: improve generated root type ([f02c3c0](https://github.com/plantain-00/types-as-schema/commit/f02c3c0c383e2553c93c9e4173a967f271ef45ba))
+
 ## [1.37.0](https://github.com/plantain-00/types-as-schema/compare/v1.36.2...v1.37.0) (2020-10-19)
   
 * feat: remove apollo graphql types ([56e6f3f](https://github.com/plantain-00/types-as-schema/commit/56e6f3fd0ad99250328329009a6f5f753b48f143))
