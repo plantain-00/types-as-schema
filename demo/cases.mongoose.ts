@@ -828,6 +828,11 @@ export const entryTypeSchema = {
     type: Schema.Types.Mixed,
     required: true
   },
+  template: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["1-left-top", "1-right-top", "1-left-bottom", "1-right-bottom"]
+  },
 }
 
 export const mutationSchema = {

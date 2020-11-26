@@ -314,6 +314,7 @@ pub struct EntryType {
   #[serde(rename = "typeAlias")] pub type_alias: TypeAlias,
   #[serde(rename = "pick3")] pub pick_3: CreateInput2,
   pub unknown: LayoutMetadataMap,
+  pub template: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

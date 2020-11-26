@@ -245,6 +245,7 @@ message EntryType {
     TypeAlias typeAlias = 26;
     CreateInput2 pick3 = 29;
     LayoutMetadataMap unknown = 30;
+    string template = 31;
 }
 
 message Mutation {
