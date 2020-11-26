@@ -7,7 +7,7 @@
 
 import { GraphQLResolveInfo } from 'graphql'
 
-import { StringEnum, NumberEnum, NumberEnum2, TypeUnion9 } from './cases'
+import { StringEnum, NumberEnum, NumberEnum2, TypeUnion9, Template } from './cases'
 
 export interface Root<TContext> {
   create(input: { input: CreateInput }, context: TContext, info: GraphQLResolveInfo): MutationResult | Promise<MutationResult>
@@ -262,6 +262,7 @@ export interface EntryType<TContext> {
   pick2: object
   pick3: CreateInput2
   unknown: LayoutMetadataMap
+  template: string
 }
 
 export interface MutationResult {

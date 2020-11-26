@@ -369,6 +369,7 @@ export type EntryType = {
   pick2: Pick<CreateInput, 'member1' | 'member2'>
   pick3: CreateInput2
   unknown: LayoutMetadataMap
+  template: \`1-\${'left' | 'right'}-\${'top' | 'bottom'}\`
 }
 
 export interface Mutation {
@@ -539,6 +540,8 @@ export class TestController {
   ) {
   }
 }
+
+type Template = \`\${'left' | 'right'}-\${'top' | 'bottom'}\`
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createBlock("div", { class: "app" }, [

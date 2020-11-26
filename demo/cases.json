@@ -126,6 +126,15 @@
         },
         "unknown": {
           "$ref": "#/definitions/LayoutMetadataMap"
+        },
+        "template": {
+          "type": "string",
+          "enum": [
+            "1-left-top",
+            "1-right-top",
+            "1-left-bottom",
+            "1-right-bottom"
+          ]
         }
       },
       "required": [
@@ -156,7 +165,8 @@
         "pick",
         "pick2",
         "pick3",
-        "unknown"
+        "unknown",
+        "template"
       ],
       "additionalProperties": true
     },

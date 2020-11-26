@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.38.0](https://github.com/plantain-00/types-as-schema/compare/v1.37.1...v1.38.0) (2020-11-26)
+  
+* feat: support template literal type ([f10c5f9](https://github.com/plantain-00/types-as-schema/commit/f10c5f9bfc073cbfff809d0bb41dd315a900cd43))
+* chore: update dependencies ([a6a0558](https://github.com/plantain-00/types-as-schema/commit/a6a0558c8dc3c62948aca6cebb1ffba302f9d849)) ([08c98f5](https://github.com/plantain-00/types-as-schema/commit/08c98f560110ff69d8af39a17dfee16efe7be27d)) ([88408bf](https://github.com/plantain-00/types-as-schema/commit/88408bffad6d24f65e5506983445472a8250dfb2)) ([6715cd2](https://github.com/plantain-00/types-as-schema/commit/6715cd2962089e332d846e0a81f45285ed66aae5)) ([aa914a3](https://github.com/plantain-00/types-as-schema/commit/aa914a3f6bd44249fe7d6deaf3dcefea3cea328f))
+
 ## [1.37.1](https://github.com/plantain-00/types-as-schema/compare/v1.37.0...v1.37.1) (2020-10-20)
   
 * feat: improve generated root type ([f02c3c0](https://github.com/plantain-00/types-as-schema/commit/f02c3c0c383e2553c93c9e4173a967f271ef45ba))

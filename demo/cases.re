@@ -270,6 +270,7 @@ type entryType = {
   typeAlias: typeAlias,
   pick3: createInput2,
   unknown: layoutMetadataMap,
+  template: string,
 };
 
 type mutation = {

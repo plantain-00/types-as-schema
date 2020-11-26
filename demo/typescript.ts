@@ -348,6 +348,7 @@ interface EntryType {
   pick2: { member1: string, member2: number }
   pick3: CreateInput2
   unknown: LayoutMetadataMap
+  template: "1-left-top" | "1-right-top" | "1-left-bottom" | "1-right-bottom"
   [name: string]: unknown
 }
 
@@ -470,6 +471,8 @@ interface BlogChange {
 interface TestController {
   get: unknown
 }
+
+type Template = "left-top" | "right-top" | "left-bottom" | "right-bottom"
 
 interface OuterType {
   outerType: number

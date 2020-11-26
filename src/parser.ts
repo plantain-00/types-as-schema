@@ -325,6 +325,13 @@ export class Parser {
         position: this.getPosition(declaration, sourceFile)
       }
       this.declarations.push(referenceDeclaration)
+    } else if (ts.isTemplateLiteralTypeNode(declaration.type)) {
+      this.declarations.push({
+        kind: 'string',
+        name: declaration.name.text,
+        enums: this.getTemplateLiteralTypeEnums(declaration.type, sourceFile),
+        position: this.getPosition(declaration.name, sourceFile)
+      })
     }
   }
 
@@ -526,6 +533,15 @@ export class Parser {
         }
       }
     }
+    if (ts.isTemplateLiteralTypeNode(type)) {
+      return {
+        kind: 'enum',
+        type: 'string',
+        name: 'string',
+        enums: this.getTemplateLiteralTypeEnums(type, sourceFile),
+        position: this.getPosition(type, sourceFile)
+      }
+    } 
     const position = this.getPosition(type, sourceFile)
     if (type.kind !== ts.SyntaxKind.AnyKeyword && !this.disableWarning) {
       warn(position, 'parser')
@@ -534,6 +550,21 @@ export class Parser {
       kind: undefined,
       position
     }
+  }
+
+  private getTemplateLiteralTypeEnums(type: ts.TemplateLiteralTypeNode, sourceFile: ts.SourceFile) {
+    let parts = [type.head.text]
+    for (const span of type.templateSpans) {
+      const t = this.getType(span.type, sourceFile)
+      if (t.kind === 'enum') {
+        const newParts: string[] = []
+        for (const e of t.enums) {
+          newParts.push(...parts.map((p) => p + e + span.literal.text))
+        }
+        parts = newParts
+      }
+    }
+    return parts
   }
 
   private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: unknown } {

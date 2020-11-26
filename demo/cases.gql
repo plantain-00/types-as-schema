@@ -248,6 +248,7 @@ type EntryType {
   typeAlias: TypeAlias!
   pick3: CreateInput2!
   unknown: JSON!
+  template: String!
 }
 
 type Mutation {
@@ -325,4 +326,11 @@ type BlogChange {
 
 type TestController {
   get(foo: Float!, bar: String!): JSON!
+}
+
+enum Template {
+  left-top
+  right-top
+  left-bottom
+  right-bottom
 }
