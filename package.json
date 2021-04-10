@@ -30,13 +30,13 @@
     "@types/minimist": "1.2.1",
     "@types/node": "14.14.37",
     "@types/webpack": "5.28.0",
-    "@typescript-eslint/eslint-plugin": "4.20.0",
-    "@typescript-eslint/parser": "4.20.0",
+    "@typescript-eslint/eslint-plugin": "4.21.0",
+    "@typescript-eslint/parser": "4.21.0",
     "autoprefixer": "10.2.5",
     "clean-css-cli": "5.2.2",
     "clean-release": "2.15.2",
     "clean-scripts": "1.20.1",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-plantain": "1.1.0",
     "file2variable-cli": "2.0.1",
@@ -54,10 +54,10 @@
     "ts-loader": "8.1.0",
     "ts-node": "9.1.1",
     "tsconfig-plantain": "0.0.1",
-    "type-coverage": "2.17.0",
+    "type-coverage": "2.17.1",
     "vue": "3.0.11",
     "watch-then-execute": "1.2.0",
-    "webpack": "5.30.0",
+    "webpack": "5.31.2",
     "webpack-cli": "4.6.0"
   },
   "dependencies": {
@@ -68,7 +68,7 @@
     "minimist": "1",
     "protobufjs": "6",
     "ts-lib-utils": "2",
-    "tslib": "2.1.0",
+    "tslib": "2.2.0",
     "typescript": "3 || 4"
   },
   "bin": {
