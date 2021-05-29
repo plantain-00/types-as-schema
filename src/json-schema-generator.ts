@@ -200,7 +200,7 @@ function getJsonSchemaPropertyOfObject(memberType: ObjectDeclaration | ObjectTyp
   let additionalProperties: Definition | boolean | undefined
   if (memberType.additionalProperties === undefined) {
     additionalProperties = context.looseMode ? undefined : false
-  } else if (memberType.additionalProperties === true || memberType.additionalProperties === false) {
+  } else if (typeof memberType.additionalProperties === 'boolean') {
     additionalProperties = memberType.additionalProperties
   } else {
     additionalProperties = getJsonSchemaProperty(memberType.additionalProperties, context)
