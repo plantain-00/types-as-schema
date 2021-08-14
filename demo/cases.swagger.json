@@ -110,6 +110,27 @@
           }
         }
       }
+    },
+    "/upload": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "file",
+            "required": true,
+            "in": "formData",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {}
+          }
+        }
+      }
     }
   },
   "definitions": {

@@ -486,6 +486,12 @@ declare function downloadFile(): File
  */
 declare function returnEmpty(): void
 
+/**
+ * @method post
+ * @path /upload
+ */
+declare function uploadFile(file: File): void
+
 interface OuterType {
   outerType: number
 }

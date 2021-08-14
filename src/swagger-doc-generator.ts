@@ -12,15 +12,19 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
         paths[typeDeclaration.path] = {}
       }
       referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.name))
+      const useFormData = typeDeclaration.parameters.some((p) => p.type.kind === 'file')
       paths[typeDeclaration.path][typeDeclaration.method] = {
+        consumes: useFormData ? ['multipart/form-data'] : undefined,
         operationId: typeDeclaration.name,
         parameters: typeDeclaration.parameters.map((parameter) => {
           referenceNames.push(...getReferencesInType(parameter.type).map((r) => r.name))
+          const schema = getJsonSchemaProperty(parameter.type, context)
           return {
             name: parameter.name,
             required: !parameter.optional,
-            in: parameter.in,
-            schema: getJsonSchemaProperty(parameter.type, context),
+            in: useFormData ? 'formData' : parameter.in,
+            schema: useFormData ? undefined : schema,
+            type: useFormData ? schema.type : undefined,
           }
         }),
         summary: typeDeclaration.summary,

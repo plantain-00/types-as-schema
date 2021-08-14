@@ -528,6 +528,16 @@ Return | Description
 --- | ---
 `void` |
 
+## `uploadFile`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`file` | `true` | `File` |
+
+Return | Description
+--- | ---
+`void` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

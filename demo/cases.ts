@@ -545,3 +545,14 @@ export declare function downloadFile(): Promise<File>
  * @path /empty
  */
 export declare function returnEmpty(): Promise<void>
+
+/**
+ * @method post
+ * @path /upload
+ */
+ export declare function uploadFile(
+  /**
+   * @in body
+   */
+   file: File,
+ ): Promise<void>
