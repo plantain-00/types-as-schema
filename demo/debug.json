@@ -4190,5 +4190,41 @@
     ],
     "method": "get",
     "path": "/empty"
+  },
+  {
+    "kind": "function",
+    "name": "uploadFile",
+    "type": {
+      "kind": "void",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 557,
+        "character": 12
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "file",
+        "type": {
+          "kind": "file",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 556,
+            "character": 9
+          }
+        },
+        "optional": false,
+        "comments": [
+          "/**\n   * @in body\n   */"
+        ],
+        "in": "body"
+      }
+    ],
+    "comments": [
+      "/**\n * @method post\n * @path /upload\n */"
+    ],
+    "method": "post",
+    "path": "/upload"
   }
 ]
