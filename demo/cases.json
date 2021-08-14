@@ -111,9 +111,7 @@
             "member1": {
               "type": "string"
             },
-            "member2": {
-              "type": "number"
-            }
+            "member2": {}
           },
           "required": [
             "member1",
@@ -1180,9 +1178,7 @@
         "member1": {
           "type": "string"
         },
-        "member2": {
-          "type": "number"
-        }
+        "member2": {}
       },
       "required": [
         "member1",

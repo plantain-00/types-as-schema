@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.39.2](https://github.com/plantain-00/types-as-schema/compare/v1.39.1...v1.39.2) (2021-08-14)
+  
+* fix: file type for json schema ([c3ac195](https://github.com/plantain-00/types-as-schema/commit/c3ac195214fc3c72147cacd4228cdbe39506909b))
+
 ## [1.39.1](https://github.com/plantain-00/types-as-schema/compare/v1.39.0...v1.39.1) (2021-08-14)
   
 * fix: post multipart file in generated swagger ([8ceb61c](https://github.com/plantain-00/types-as-schema/commit/8ceb61cb8771e8c7b3df34fbe2f3f98c6676a77a))

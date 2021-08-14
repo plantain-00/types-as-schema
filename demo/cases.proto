@@ -214,7 +214,6 @@ message TypeAlias {
 
 message CreateInput {
     string member1 = 1;
-    double member2 = 2;
     CreateInputMember3 member3 = 3;
 }
 
@@ -297,7 +296,6 @@ message MongooseScheme {
 
 message CreateInput2 {
     string member1 = 1;
-    double member2 = 2;
 }
 
 message LayoutMetadataMap {

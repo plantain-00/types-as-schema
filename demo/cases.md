@@ -316,7 +316,7 @@ Field | Required | Type | Description
 Field | Required | Type | Description
 --- | --- | --- | ---
 `member1` | `true` | `string` |
-`member2` | `true` | `number` |
+`member2` | `true` | `File` |
 `member3` | `true` | [`CreateInputMember3`](#CreateInputMember3) |
 
 ## `EntryType`
@@ -350,7 +350,7 @@ Field | Required | Type | Description
 `outerType` | `true` | [`OuterType`](#OuterType) |
 `typeAlias` | `true` | [`TypeAlias`](#TypeAlias) |
 `pick` | `true` | { result: [`Result2`](#Result2) } |
-`pick2` | `true` | `{ member1: string, member2: number }` |
+`pick2` | `true` | `{ member1: string, member2: File }` |
 `pick3` | `true` | [`CreateInput2`](#CreateInput2) |
 `unknown` | `true` | [`LayoutMetadataMap`](#LayoutMetadataMap) |
 `template` | `true` | `"1-left-top" | "1-right-top" | "1-left-bottom" | "1-right-bottom"` |
@@ -447,7 +447,7 @@ Field | Required | Type | Description
 Field | Required | Type | Description
 --- | --- | --- | ---
 `member1` | `true` | `string` |
-`member2` | `true` | `number` |
+`member2` | `true` | `File` |
 
 ## `LayoutMetadataMap`
 

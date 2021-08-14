@@ -688,7 +688,7 @@ export const createInputSchema = {
     required: true
   },
   member2: {
-    type: Number,
+    type: Schema.Types.Mixed,
     required: true
   },
   member3: {
@@ -962,7 +962,7 @@ export const createInput2Schema = {
     required: true
   },
   member2: {
-    type: Number,
+    type: Schema.Types.Mixed,
     required: true
   },
 }

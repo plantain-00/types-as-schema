@@ -282,7 +282,6 @@ pub struct TypeAlias {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateInput {
   #[serde(rename = "member1")] pub member_1: String,
-  #[serde(rename = "member2")] pub member_2: f32,
   #[serde(rename = "member3")] pub member_3: CreateInputMember3,
 }
 
@@ -378,7 +377,6 @@ pub struct MongooseScheme {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateInput2 {
   #[serde(rename = "member1")] pub member_1: String,
-  #[serde(rename = "member2")] pub member_2: f32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

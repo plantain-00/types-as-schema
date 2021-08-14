@@ -136,10 +136,15 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
     return {
       type: undefined
     }
-  } else {
-    return {
-      type: memberType.kind
+  } else if (memberType.kind === 'file') {
+    if (!context.allowFileType) {
+      return {
+        type: undefined
+      }
     }
+  }
+  return {
+    type: memberType.kind
   }
 }
 

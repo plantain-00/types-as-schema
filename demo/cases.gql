@@ -216,7 +216,6 @@ type TypeAlias {
 
 input CreateInput {
   member1: String!
-  member2: Float!
   member3: CreateInputMember3!
 }
 
@@ -300,7 +299,6 @@ type MongooseScheme {
 
 type CreateInput2 {
   member1: String!
-  member2: Float!
 }
 
 union WsCommand = CreateBlog | UpdateBlog

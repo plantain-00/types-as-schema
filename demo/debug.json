@@ -2607,8 +2607,7 @@
       {
         "name": "member2",
         "type": {
-          "kind": "number",
-          "type": "number",
+          "kind": "file",
           "position": {
             "file": "demo/cases.ts",
             "line": 371,
@@ -3027,8 +3026,7 @@
             {
               "name": "member2",
               "type": {
-                "kind": "number",
-                "type": "number",
+                "kind": "file",
                 "position": {
                   "file": "demo/cases.ts",
                   "line": 371,
@@ -3688,8 +3686,7 @@
       {
         "name": "member2",
         "type": {
-          "kind": "number",
-          "type": "number",
+          "kind": "file",
           "position": {
             "file": "demo/cases.ts",
             "line": 371,

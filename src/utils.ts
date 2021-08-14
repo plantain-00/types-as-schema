@@ -40,6 +40,7 @@ export function getReferencesInType(type: Type): ReferenceType[] {
 export interface Context {
   looseMode: boolean
   declarations: TypeDeclaration[]
+  allowFileType?: boolean
 }
 
 export type TypeDeclaration =
