@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.39.1](https://github.com/plantain-00/types-as-schema/compare/v1.39.0...v1.39.1) (2021-08-14)
+  
+* fix: post multipart file in generated swagger ([8ceb61c](https://github.com/plantain-00/types-as-schema/commit/8ceb61cb8771e8c7b3df34fbe2f3f98c6676a77a))
+
 ## [1.39.0](https://github.com/plantain-00/types-as-schema/compare/v1.38.0...v1.39.0) (2021-08-14)
   
 * feat: support return file and void, fix generated schema ([fab7e60](https://github.com/plantain-00/types-as-schema/commit/fab7e60b215f468c8437fb5ce6ab0dff317633c0))
