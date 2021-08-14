@@ -127,7 +127,7 @@ export type FunctionParameter = Parameter & {
 
 export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType
   | ObjectType | NumberType | BooleanType | AnyType | NullType
-  | UnionType
+  | UnionType | FileType | VoidType
 
 export type MapType = {
   kind: 'map';
@@ -239,6 +239,24 @@ export type NullType = {
   default?: unknown
   description?: string
 } & Position & Comments
+
+/**
+ * @public
+ */
+ export type FileType = {
+  kind: 'file'
+  default?: unknown
+  description?: string
+} & Position
+
+/**
+ * @public
+ */
+ export type VoidType = {
+  kind: 'void'
+  default?: unknown
+  description?: string
+} & Position
 
 /**
  * @public

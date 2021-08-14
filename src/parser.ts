@@ -485,6 +485,12 @@ export class Parser {
         position: this.getPosition(type, sourceFile)
       }
     }
+    if (type.kind === ts.SyntaxKind.VoidKeyword) {
+      return {
+        kind: 'void',
+        position: this.getPosition(type, sourceFile)
+      }
+    }
     if (ts.isTypeLiteralNode(type)) {
       return this.getTypeOfTypeLiteral(type, sourceFile)
     }
@@ -541,7 +547,7 @@ export class Parser {
         enums: this.getTemplateLiteralTypeEnums(type, sourceFile),
         position: this.getPosition(type, sourceFile)
       }
-    } 
+    }
     const position = this.getPosition(type, sourceFile)
     if (type.kind !== ts.SyntaxKind.AnyKeyword && !this.disableWarning) {
       warn(position, 'parser')
@@ -687,6 +693,12 @@ export class Parser {
         return {
           kind: 'number',
           type: reference.typeName.text,
+          position: this.getPosition(reference.typeName, sourceFile)
+        }
+      }
+      if (reference.typeName.text === 'File') {
+        return {
+          kind: 'file',
           position: this.getPosition(reference.typeName, sourceFile)
         }
       }

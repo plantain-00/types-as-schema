@@ -19,21 +19,25 @@
             "name": "status",
             "required": true,
             "in": "query",
-            "type": "string",
-            "enum": [
-              "health",
-              "sick"
-            ]
+            "schema": {
+              "type": "string",
+              "enum": [
+                "health",
+                "sick"
+              ]
+            }
           },
           {
             "name": "tags",
             "required": true,
             "in": "body",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "minItems": 1
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            }
           },
           {
             "name": "pet",
@@ -47,21 +51,25 @@
             "name": "id",
             "required": false,
             "in": "path",
-            "type": "integer",
-            "minimum": 1,
-            "default": 2,
-            "description": "pet id"
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 2,
+              "description": "pet id"
+            }
           },
           {
             "name": "sortType",
             "required": false,
             "in": "query",
-            "type": "string",
-            "enum": [
-              "asc",
-              "desc"
-            ],
-            "default": "asc"
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            }
           }
         ],
         "summary": "get pet by id.",
@@ -75,6 +83,30 @@
             "schema": {
               "$ref": "#/definitions/Pet"
             }
+          }
+        }
+      }
+    },
+    "/download": {
+      "get": {
+        "operationId": "downloadFile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/empty": {
+      "get": {
+        "operationId": "returnEmpty",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {}
           }
         }
       }

@@ -474,6 +474,18 @@ interface TestController {
 
 type Template = "left-top" | "right-top" | "left-bottom" | "right-bottom"
 
+/**
+ * @method get
+ * @path /download
+ */
+declare function downloadFile(): File
+
+/**
+ * @method get
+ * @path /empty
+ */
+declare function returnEmpty(): void
+
 interface OuterType {
   outerType: number
 }
