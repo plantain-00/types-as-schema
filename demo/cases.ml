@@ -207,7 +207,6 @@ type typeAlias = {
 
 type createInput = {
   member1: string;
-  member2: float;
   member3: createInputMember3;
 }
 
@@ -290,7 +289,6 @@ type mongooseScheme = {
 
 type createInput2 = {
   member1: string;
-  member2: float;
 }
 
 type layoutMetadataMap = {

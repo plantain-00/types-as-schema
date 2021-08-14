@@ -65,6 +65,7 @@ export class Generator {
   generateSwaggerDoc(swaggerBase?: Record<string, unknown>) {
     return generateSwaggerDoc({
       declarations: this.declarations,
+      allowFileType: true,
       looseMode: this.looseMode
     }, swaggerBase)
   }

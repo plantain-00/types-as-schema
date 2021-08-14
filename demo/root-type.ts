@@ -227,7 +227,7 @@ export interface TypeAlias {
 
 export interface CreateInput {
   member1: string
-  member2: number
+  member2: file
   member3: CreateInputMember3
 }
 
@@ -307,7 +307,7 @@ export interface MongooseScheme {
 
 export interface CreateInput2 {
   member1: string
-  member2: number
+  member2: file
 }
 
 export interface LayoutMetadataMap {

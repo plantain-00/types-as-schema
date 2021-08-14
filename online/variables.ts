@@ -378,7 +378,7 @@ export interface Mutation {
 
 export interface CreateInput {
   member1: string
-  member2: number
+  member2: File
   member3: CreateInputMember3
 }
 

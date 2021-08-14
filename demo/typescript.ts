@@ -309,7 +309,7 @@ interface TypeAlias {
 
 interface CreateInput {
   member1: string
-  member2: number
+  member2: File
   member3: CreateInputMember3
 }
 
@@ -345,7 +345,7 @@ interface EntryType {
   outerType: OuterType
   typeAlias: TypeAlias
   pick: { result: Result2 }
-  pick2: { member1: string, member2: number }
+  pick2: { member1: string, member2: File }
   pick3: CreateInput2
   unknown: LayoutMetadataMap
   template: "1-left-top" | "1-right-top" | "1-left-bottom" | "1-right-bottom"
@@ -427,7 +427,7 @@ interface MongooseScheme {
 
 interface CreateInput2 {
   member1: string
-  member2: number
+  member2: File
 }
 
 interface LayoutMetadataMap {
