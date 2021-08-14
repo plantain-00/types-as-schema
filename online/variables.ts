@@ -542,6 +542,18 @@ export class TestController {
 }
 
 type Template = \`\${'left' | 'right'}-\${'top' | 'bottom'}\`
+
+/**
+ * @method get
+ * @path /download
+ */
+export declare function downloadFile(): Promise<File>
+
+/**
+ * @method get
+ * @path /empty
+ */
+export declare function returnEmpty(): Promise<void>
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createBlock("div", { class: "app" }, [

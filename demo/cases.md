@@ -510,6 +510,24 @@ Enum | Description
 `left-bottom` |
 `right-bottom` |
 
+## `downloadFile`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+
+Return | Description
+--- | ---
+`File` |
+
+## `returnEmpty`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+
+Return | Description
+--- | ---
+`void` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

@@ -132,9 +132,9 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
     return getJsonSchemaPropertyOfString(memberType)
   } else if (memberType.kind === 'union') {
     return getJsonSchemaPropertyOfUnion(memberType, context)
-  } else if (memberType.kind === 'null') {
+  } else if (memberType.kind === 'void') {
     return {
-      type: 'null'
+      type: undefined
     }
   } else {
     return {
@@ -337,6 +337,7 @@ export type Definition =
   | UndefinedDefinition
   | StringDefinition
   | NullDefinition
+  | FileDefinition
 
 /**
  * @public
@@ -394,6 +395,10 @@ export type UndefinedDefinition = {
   anyOf?: Definition[]
   default?: unknown
 } & CommonDefinition
+
+type FileDefinition = {
+  type: 'file'
+}
 
 interface CommonDefinition {
   enum?: unknown[]

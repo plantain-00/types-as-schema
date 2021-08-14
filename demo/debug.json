@@ -4152,5 +4152,43 @@
       "line": 534,
       "character": 5
     }
+  },
+  {
+    "kind": "function",
+    "name": "downloadFile",
+    "type": {
+      "kind": "file",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 540,
+        "character": 48
+      }
+    },
+    "optional": false,
+    "parameters": [],
+    "comments": [
+      "/**\n * @method get\n * @path /download\n */"
+    ],
+    "method": "get",
+    "path": "/download"
+  },
+  {
+    "kind": "function",
+    "name": "returnEmpty",
+    "type": {
+      "kind": "void",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 546,
+        "character": 47
+      }
+    },
+    "optional": false,
+    "parameters": [],
+    "comments": [
+      "/**\n * @method get\n * @path /empty\n */"
+    ],
+    "method": "get",
+    "path": "/empty"
   }
 ]

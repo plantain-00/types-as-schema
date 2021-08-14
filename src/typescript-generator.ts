@@ -154,6 +154,12 @@ export function generateTypescriptOfType(type: Type, processChild?: (type: Type)
   if (type.kind === 'reference') {
     return type.name
   }
+  if (type.kind === 'file') {
+    return 'File'
+  }
+  if (type.kind === 'void') {
+    return 'void'
+  }
   if (type.kind === 'union') {
     return type.members.map((e) => generateTypescriptOfType(e, processChild)).join(' | ')
   }
