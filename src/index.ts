@@ -79,7 +79,7 @@ async function executeCommandLine() {
     const generator = new Generator(
       sourceFiles.filter((s): s is ts.SourceFile => !!s),
       looseMode,
-      !!customPath && !!configPath,
+      !!configPath,
       fileName => path.relative(process.cwd(), fileName),
     )
 
@@ -137,19 +137,28 @@ async function executeCommandLine() {
       generateJsonSchemas(generator)
     }
 
-    if (customPath && configPath) {
+    if (configPath) {
       const configFilePath = path.resolve(process.cwd(), configPath)
       if (configFilePath.endsWith('.ts')) {
         require('ts-node/register/transpile-only')
       }
-      type Action = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string
+      type Action = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string | {
+        path: string
+        content: string
+      }[]
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       let action: Action & { default?: Action } = require(configFilePath)
       if (action.default) {
         action = action.default
       }
       const customContent = action(generator.declarations, typescriptGenerator)
-      fs.writeFileSync(customPath, customContent)
+      if (typeof customContent === 'string' && customPath) {
+        fs.writeFileSync(customPath, customContent)
+      } else if (Array.isArray(customContent)) {
+        for (const r of customContent) {
+          fs.writeFileSync(r.path, r.content)
+        }
+      }
     }
 
     if (typescriptPath) {
@@ -289,7 +298,7 @@ Options:
  --debug                                            generated file with debug information in it
  --watch, -w                                        watch mode
  --loose                                            do not force additionalProperties
- --config, --custom                                 custom generated file by the config file
+ --config                                           generate file by the config file
  --markdown                                         generated markdown file
 `)
 }
