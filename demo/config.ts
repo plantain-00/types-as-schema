@@ -1,6 +1,6 @@
 import { generateTypescriptOfFunctionParameter, TypeDeclaration } from '../dist/core'
 
-export default (typeDeclarations: TypeDeclaration[]): string => {
+export default (typeDeclarations: TypeDeclaration[]): { path: string, content: string }[] => {
   const result = []
   for (const declaration of typeDeclarations) {
     if (declaration.kind === 'function') {
@@ -11,8 +11,14 @@ export default (typeDeclarations: TypeDeclaration[]): string => {
       result.push(`  (${parameters.join(', ')}): string`)
     }
   }
-  return `type TestType = {
+  const content = `type TestType = {
 ${result.join('\n')}
 }
 `
+  return [
+    {
+      path: 'demo/custom.ts',
+      content,
+    },
+  ]
 }
