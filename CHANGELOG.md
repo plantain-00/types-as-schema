@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.40.0](https://github.com/plantain-00/types-as-schema/compare/v1.39.2...v1.40.0) (2021-08-15)
+  
+* feat: support multiple config output ([4f27694](https://github.com/plantain-00/types-as-schema/commit/4f276945fe6ae65e3ee8ddcc29981d3fd8be0988))
+
 ## [1.39.2](https://github.com/plantain-00/types-as-schema/compare/v1.39.1...v1.39.2) (2021-08-14)
   
 * fix: file type for json schema ([c3ac195](https://github.com/plantain-00/types-as-schema/commit/c3ac195214fc3c72147cacd4228cdbe39506909b))
