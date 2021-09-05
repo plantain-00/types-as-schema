@@ -1,9 +1,9 @@
 export function toUpperCase(name: string) {
-  return name[0].toUpperCase() + name.substring(1)
+  return name[0]?.toUpperCase() + name.substring(1)
 }
 
 export function toLowerCase(name: string) {
-  return name[0].toLowerCase() + name.substring(1)
+  return name[0]?.toLowerCase() + name.substring(1)
 }
 
 export function warn(position: PositionValue, stage: string) {

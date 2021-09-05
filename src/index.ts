@@ -317,8 +317,9 @@ function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTyp
     if (!map[file]) {
       map[file] = []
     }
-    if (map[file].every((n) => n !== referenceType.name)) {
-      map[file].push(referenceType.name)
+    const references = map[file]
+    if (references?.every((n) => n !== referenceType.name)) {
+      references.push(referenceType.name)
     }
   }
   const dirname = path.dirname(graphqlRootTypePath)
@@ -329,7 +330,7 @@ function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTyp
       relativePath = '.' + path.sep + relativePath
     }
     relativePath = relativePath.substring(0, relativePath.length - path.extname(relativePath).length)
-    imports.push(`import { ${map[file].join(', ')} } from '${relativePath}'`)
+    imports.push(`import { ${map[file]?.join(', ')} } from '${relativePath}'`)
   }
   return imports.join('\n')
 }

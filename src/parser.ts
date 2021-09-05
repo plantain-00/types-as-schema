@@ -51,7 +51,7 @@ export class Parser {
     const members = declaration.members
     if (members.length > 0) {
       const firstMember = members[0]
-      if (firstMember.initializer) {
+      if (firstMember?.initializer) {
         this.handleEnumDeclarationInitializer(declaration, members, firstMember.initializer, sourceFile)
       } else {
         const enumType: EnumDeclaration = {
@@ -668,7 +668,7 @@ export class Parser {
 
   private getTypeOfArrayTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): ArrayType {
     if (reference.typeArguments && reference.typeArguments.length === 1) {
-      const typeArgument = reference.typeArguments[0]
+      const typeArgument = reference.typeArguments[0]!
       return {
         kind: 'array',
         type: this.getType(typeArgument, sourceFile),
@@ -710,7 +710,7 @@ export class Parser {
         if ((reference.typeName.text === 'Promise'
           || reference.typeName.text === 'ReturnType'
           || reference.typeName.text === 'DeepReturnType')) {
-          const typeArgument = reference.typeArguments[0]
+          const typeArgument = reference.typeArguments[0]!
           return this.getType(typeArgument, sourceFile)
         } else if (reference.typeName.text === 'Pick') {
           const type = this.getTypeOfPick(reference.typeName, reference.typeArguments, sourceFile)
@@ -749,13 +749,13 @@ export class Parser {
     typeArguments: ts.NodeArray<ts.TypeNode>,
     sourceFile: ts.SourceFile
   ): ObjectType | undefined {
-    const argument = typeArguments[0]
+    const argument = typeArguments[0]!
     if (ts.isTypeReferenceNode(argument) && ts.isIdentifier(argument.typeName)) {
       const declarationName = argument.typeName.escapedText.toString()
       this.preHandleType(declarationName)
       const declaration = this.declarations.find(m => m.kind === 'object' && m.name === declarationName)
       if (declaration && declaration.kind === 'object') {
-        const field = typeArguments[1]
+        const field = typeArguments[1]!
         const memberNames: string[] = []
         if (ts.isLiteralTypeNode(field)) {
           if (ts.isStringLiteral(field.literal)) {
@@ -798,10 +798,10 @@ export class Parser {
   }
 
   private getTypeOfTypeLiteral(literal: ts.TypeLiteralNode, sourceFile: ts.SourceFile): Type {
-    if (literal.members.length === 1 && ts.isIndexSignatureDeclaration(literal.members[0])) {
+    if (literal.members.length === 1 && ts.isIndexSignatureDeclaration(literal.members[0]!)) {
       const member = literal.members[0]
       if (ts.isIndexSignatureDeclaration(member) && member.parameters.length === 1) {
-        const parameterType = member.parameters[0].type
+        const parameterType = member.parameters[0]?.type
         if (parameterType && member.type) {
           return {
             kind: 'map',
