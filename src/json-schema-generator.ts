@@ -246,7 +246,7 @@ export function getReferencedDefinitions(
     if (definition.properties) {
       for (const propertyName in definition.properties) {
         if (definition.properties.hasOwnProperty(propertyName)) {
-          const propertyDefinition = definition.properties[propertyName]
+          const propertyDefinition = definition.properties[propertyName]!
           Object.assign(result, getReferencedDefinitions(propertyDefinition, definitions, dependents))
         }
       }

@@ -13,7 +13,7 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
       }
       referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.name))
       const useFormData = typeDeclaration.parameters.some((p) => p.type.kind === 'file')
-      paths[typeDeclaration.path][typeDeclaration.method] = {
+      paths[typeDeclaration.path]![typeDeclaration.method] = {
         consumes: useFormData ? ['multipart/form-data'] : undefined,
         operationId: typeDeclaration.name,
         parameters: typeDeclaration.parameters.map((parameter) => {
