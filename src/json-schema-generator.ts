@@ -296,8 +296,10 @@ function getNumberType(numberType: NumberType): NumberDefinition {
   } else if (numberType.type === 'int32' || numberType.type === 'sint32' || numberType.type === 'sfixed32') {
     definition = getIntegerType(numberType, -2147483648, 2147483647)
   } else if (numberType.type === 'uint64' || numberType.type === 'fixed64') {
+    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
     definition = getIntegerType(numberType, 0, 18446744073709551615)
   } else if (numberType.type === 'int64' || numberType.type === 'sint64' || numberType.type === 'sfixed64') {
+    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
     definition = getIntegerType(numberType, -9223372036854775808, 9223372036854775807)
   } else if (numberType.type === 'number' || numberType.type === 'integer') {
     definition = {
