@@ -36,7 +36,7 @@ export default {
   ],
   lint: {
     ts: `eslint --ext .js,.ts ${tsFiles}`,
-    less: `stylelint ${lessFiles}`,
+    less: `stylelint --custom-syntax postcss-less ${lessFiles}`,
     export: `no-unused-export "src/**/*.ts" ${lessFiles} --strict --need-module tslib`,
     markdown: `markdownlint README.md`,
     typeCoverage: 'type-coverage -p src --strict',
@@ -47,7 +47,7 @@ export default {
   ],
   fix: {
     ts: `eslint --ext .js,.ts ${tsFiles} --fix`,
-    less: `stylelint --fix ${lessFiles}`
+    less: `stylelint --custom-syntax postcss-less --fix ${lessFiles}`
   },
   watch: {
     vue: `${templateCommand} --watch`,
