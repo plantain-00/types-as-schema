@@ -207,7 +207,7 @@ export function templateLiteralToPattern(templateLiteral: TemplateLiteralPart[])
     if (t.kind === 'string') {
       pattern += '.*'
     } else if (t.kind === 'number') {
-      pattern += '\d+'
+      pattern += '\\d+'
     } else if (t.kind === 'boolean') {
       pattern += 'true|false'
     } else if (t.kind === 'enum') {
@@ -218,7 +218,7 @@ export function templateLiteralToPattern(templateLiteral: TemplateLiteralPart[])
 }
 
 function escapeRegex(s: string) {
-  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 export type BooleanType = {

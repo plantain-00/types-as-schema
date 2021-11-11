@@ -142,7 +142,7 @@
         },
         "template3": {
           "type": "string",
-          "pattern": "^\\/api\\/users\\/d+$"
+          "pattern": "^\\/api\\/users\\/\\d+$"
         },
         "template4": {
           "type": "string",
