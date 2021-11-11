@@ -135,6 +135,22 @@
             "1-left-bottom",
             "1-right-bottom"
           ]
+        },
+        "template2": {
+          "type": "string",
+          "pattern": "^https:\\/\\/.*\\.svg$"
+        },
+        "template3": {
+          "type": "string",
+          "pattern": "^\\/api\\/users\\/d+$"
+        },
+        "template4": {
+          "type": "string",
+          "pattern": "^https:\\/\\/.*\\.png|jpg$"
+        },
+        "template5": {
+          "type": "string",
+          "pattern": "^\\/api\\/users\\?isAdmin=true|false$"
         }
       },
       "required": [
@@ -166,7 +182,11 @@
         "pick2",
         "pick3",
         "unknown",
-        "template"
+        "template",
+        "template2",
+        "template3",
+        "template4",
+        "template5"
       ],
       "additionalProperties": true
     },

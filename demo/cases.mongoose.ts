@@ -833,6 +833,22 @@ export const entryTypeSchema = {
     required: true,
     enum: ["1-left-top", "1-right-top", "1-left-bottom", "1-right-bottom"]
   },
+  template2: {
+    type: String,
+    required: true
+  },
+  template3: {
+    type: String,
+    required: true
+  },
+  template4: {
+    type: String,
+    required: true
+  },
+  template5: {
+    type: String,
+    required: true
+  },
 }
 
 export const mutationSchema = {

@@ -263,6 +263,10 @@ export interface EntryType<TContext> {
   pick3: CreateInput2
   unknown: LayoutMetadataMap
   template: string
+  template2: string
+  template3: string
+  template4: string
+  template5: string
 }
 
 export interface MutationResult {

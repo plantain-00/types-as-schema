@@ -245,6 +245,10 @@ message EntryType {
     CreateInput2 pick3 = 29;
     LayoutMetadataMap unknown = 30;
     string template = 31;
+    string template2 = 32;
+    string template3 = 33;
+    string template4 = 34;
+    string template5 = 35;
 }
 
 message Mutation {

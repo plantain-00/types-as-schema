@@ -238,6 +238,10 @@ type entryType = {
   pick3: createInput2;
   unknown: layoutMetadataMap;
   template: string;
+  template2: string;
+  template3: string;
+  template4: string;
+  template5: string;
 }
 
 type mutation = {

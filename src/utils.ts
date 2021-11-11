@@ -183,7 +183,43 @@ export type StringType = {
   lowercase?: boolean;
   uppercase?: boolean;
   trim?: boolean;
+  templateLiteral?: TemplateLiteralPart[];
 } & Position & Comments
+
+export type TemplateLiteralPart =
+  | {
+    kind: 'enum'
+    enums: string[]
+  }
+  | {
+    kind: 'string'
+  }
+  | {
+    kind: 'number'
+  }
+  | {
+    kind: 'boolean'
+  }
+
+export function templateLiteralToPattern(templateLiteral: TemplateLiteralPart[]) {
+  let pattern = ''
+  for (const t of templateLiteral) {
+    if (t.kind === 'string') {
+      pattern += '.*'
+    } else if (t.kind === 'number') {
+      pattern += '\d+'
+    } else if (t.kind === 'boolean') {
+      pattern += 'true|false'
+    } else if (t.kind === 'enum') {
+      pattern += t.enums.map((e) => escapeRegex(e)).join('|')
+    }
+  }
+  return `^${pattern}$`
+}
+
+function escapeRegex(s: string) {
+  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
 
 export type BooleanType = {
   kind: 'boolean';
@@ -244,7 +280,7 @@ export type NullType = {
 /**
  * @public
  */
- export type FileType = {
+export type FileType = {
   kind: 'file'
   default?: unknown
   description?: string
@@ -253,7 +289,7 @@ export type NullType = {
 /**
  * @public
  */
- export type VoidType = {
+export type VoidType = {
   kind: 'void'
   default?: unknown
   description?: string
