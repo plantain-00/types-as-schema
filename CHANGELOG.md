@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.40.2](https://github.com/plantain-00/types-as-schema/compare/v1.40.1...v1.40.2) (2021-11-11)
+  
+* fix: ci failure ([790dbca](https://github.com/plantain-00/types-as-schema/commit/790dbca133fa75cf594db1315c22b727f24658ce))
+
 ## [1.40.1](https://github.com/plantain-00/types-as-schema/compare/v1.40.0...v1.40.1) (2021-11-11)
   
 * feat: support more template literal type ([daa1098](https://github.com/plantain-00/types-as-schema/commit/daa1098fcddba9ef069bc18afafb257745c7df5a))
