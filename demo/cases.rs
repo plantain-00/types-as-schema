@@ -314,6 +314,10 @@ pub struct EntryType {
   #[serde(rename = "pick3")] pub pick_3: CreateInput2,
   pub unknown: LayoutMetadataMap,
   pub template: String,
+  #[serde(rename = "template2")] pub template_2: String,
+  #[serde(rename = "template3")] pub template_3: String,
+  #[serde(rename = "template4")] pub template_4: String,
+  #[serde(rename = "template5")] pub template_5: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

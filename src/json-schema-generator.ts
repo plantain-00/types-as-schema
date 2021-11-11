@@ -5,7 +5,7 @@ import {
   ObjectType,
   StringType,
   isValidReference,
-  Context, UnionType
+  Context, UnionType, templateLiteralToPattern
 } from './utils'
 
 export function generateJsonSchemas(context: Context) {
@@ -182,11 +182,17 @@ function getJsonSchemaPropertyOfString(memberType: StringType): Definition {
       enum: memberType.enums
     }
   }
+  let pattern: string | undefined
+  if (memberType.templateLiteral) {
+    pattern = templateLiteralToPattern(memberType.templateLiteral)
+  } else {
+    pattern = memberType.pattern
+  }
   return {
     type: memberType.kind,
     minLength: memberType.minLength,
     maxLength: memberType.maxLength,
-    pattern: memberType.pattern,
+    pattern,
     default: memberType.default,
     title: memberType.title,
     description: memberType.description

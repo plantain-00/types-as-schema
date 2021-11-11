@@ -20,7 +20,7 @@ import {
   Expression,
   warn,
   FunctionDeclaration,
-  FunctionParameter, EnumType, Decorator
+  FunctionParameter, EnumType, Decorator, TemplateLiteralPart
 } from './utils'
 
 export class Parser {
@@ -326,12 +326,22 @@ export class Parser {
       }
       this.declarations.push(referenceDeclaration)
     } else if (ts.isTemplateLiteralTypeNode(declaration.type)) {
-      this.declarations.push({
-        kind: 'string',
-        name: declaration.name.text,
-        enums: this.getTemplateLiteralTypeEnums(declaration.type, sourceFile),
-        position: this.getPosition(declaration.name, sourceFile)
-      })
+      const spans = this.getTemplateSpans(declaration.type, sourceFile)
+      if (spans.every((s) => s.kind === 'enum')) {
+        this.declarations.push({
+          kind: 'string',
+          name: declaration.name.text,
+          enums: this.getTemplateLiteralTypeEnums(declaration.type, spans),
+          position: this.getPosition(declaration.name, sourceFile)
+        })
+      } else if (spans.every((s) => s.kind === 'enum' || s.kind === 'string' || s.kind === 'number' || s.kind === 'boolean')) {
+        this.declarations.push({
+          kind: 'string',
+          name: declaration.name.text,
+          templateLiteral: this.getTemplateLiteral(declaration.type, spans),
+          position: this.getPosition(declaration.type, sourceFile)
+        })
+      }
     }
   }
 
@@ -465,7 +475,7 @@ export class Parser {
     return { jsDocs: result, comments }
   }
 
-  private getType(type: ts.TypeNode, sourceFile: ts.SourceFile): Type {
+  private getType(type: ts.TypeNode | ts.TemplateLiteralLikeNode, sourceFile: ts.SourceFile): Type {
     if (type.kind === ts.SyntaxKind.StringKeyword) {
       return {
         kind: 'string',
@@ -540,12 +550,30 @@ export class Parser {
       }
     }
     if (ts.isTemplateLiteralTypeNode(type)) {
+      const spans = this.getTemplateSpans(type, sourceFile)
+      if (spans.every((s) => s.kind === 'enum')) {
+        return {
+          kind: 'enum',
+          type: 'string',
+          name: 'string',
+          enums: this.getTemplateLiteralTypeEnums(type, spans),
+          position: this.getPosition(type, sourceFile)
+        }
+      } else if (spans.every((s) => s.kind === 'enum' || s.kind === 'string' || s.kind === 'number' || s.kind === 'boolean')) {
+        return {
+          kind: 'string',
+          templateLiteral: this.getTemplateLiteral(type, spans),
+          position: this.getPosition(type, sourceFile)
+        }
+      }
+    }
+    if (ts.isTemplateMiddleOrTemplateTail(type)) {
       return {
         kind: 'enum',
         type: 'string',
         name: 'string',
-        enums: this.getTemplateLiteralTypeEnums(type, sourceFile),
-        position: this.getPosition(type, sourceFile)
+        enums: [type.text],
+        position: this.getPosition(type, sourceFile),
       }
     }
     const position = this.getPosition(type, sourceFile)
@@ -558,19 +586,63 @@ export class Parser {
     }
   }
 
-  private getTemplateLiteralTypeEnums(type: ts.TemplateLiteralTypeNode, sourceFile: ts.SourceFile) {
-    let parts = [type.head.text]
+  private getTemplateSpans(type: ts.TemplateLiteralTypeNode, sourceFile: ts.SourceFile) {
+    const spans: Type[] = []
     for (const span of type.templateSpans) {
-      const t = this.getType(span.type, sourceFile)
+      spans.push(
+        this.getType(span.type, sourceFile),
+        this.getType(span.literal, sourceFile),
+      )
+    }
+    return spans
+  }
+
+  private getTemplateLiteralTypeEnums(type: ts.TemplateLiteralTypeNode, spans: Type[]) {
+    let parts = [type.head.text]
+    for (const t of spans) {
       if (t.kind === 'enum') {
         const newParts: string[] = []
         for (const e of t.enums) {
-          newParts.push(...parts.map((p) => p + e + span.literal.text))
+          newParts.push(...parts.map((p) => p + e))
         }
         parts = newParts
       }
     }
     return parts
+  }
+
+  private getTemplateLiteral(type: ts.TemplateLiteralTypeNode, spans: Type[]) {
+    const templateLiteral: TemplateLiteralPart[] = []
+    if (type.head.text) {
+      templateLiteral.push({
+        kind: 'enum',
+        enums: [type.head.text],
+      })
+    }
+    for (const t of spans) {
+      if (t.kind === 'string') {
+        templateLiteral.push({
+          kind: 'string'
+        })
+      } else if (t.kind === 'number') {
+        templateLiteral.push({
+          kind: 'number'
+        })
+      } else if (t.kind === 'boolean') {
+        templateLiteral.push({
+          kind: 'boolean'
+        })
+      } else if (t.kind === 'enum') {
+        const enums = (t.enums as string[]).filter((e) => e)
+        if (enums.length > 0) {
+          templateLiteral.push({
+            kind: 'enum',
+            enums,
+          })
+        }
+      }
+    }
+    return templateLiteral
   }
 
   private getEnumOfLiteralType(literalType: ts.LiteralTypeNode): { type?: EnumValueType, value: unknown } {

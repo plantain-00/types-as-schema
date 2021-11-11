@@ -248,6 +248,10 @@ type EntryType {
   pick3: CreateInput2!
   unknown: JSON!
   template: String!
+  template2: String!
+  template3: String!
+  template4: String!
+  template5: String!
 }
 
 type Mutation {

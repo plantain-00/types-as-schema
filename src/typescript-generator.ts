@@ -9,7 +9,8 @@ import {
   UnionDeclaration,
   StringDeclaration,
   ReferenceDeclaration,
-  NumberDeclaration
+  NumberDeclaration,
+  TemplateLiteralPart
 } from './utils'
 
 /**
@@ -125,6 +126,26 @@ export function generateTypescriptOfFunctionParameter(parameter: FunctionParamet
   return `${parameter.name}${optional}: ${generateTypescriptOfType(parameter.type, processChild)}`
 }
 
+function generateTypescriptTemplateLiteral(templateLiteral: TemplateLiteralPart[]) {
+  let result = ''
+  for (const part of templateLiteral) {
+    if (part.kind === 'string') {
+      result += '${string}'
+    } else if (part.kind === 'number') {
+      result += '${number}'
+    } else if (part.kind === 'boolean') {
+      result += '${boolean}'
+    } else if (part.kind === 'enum') {
+      if (part.enums.length === 1) {
+        result += part.enums[0]
+      } else {
+        result += `\${${part.enums.map((e) => JSON.stringify(e)).join(' | ')}}`
+      }
+    }
+  }
+  return `\`${result}\``
+}
+
 /**
  * @public
  */
@@ -137,6 +158,9 @@ export function generateTypescriptOfType(type: Type, processChild?: (type: Type)
   }
   if (type.kind === 'enum') {
     return type.enums.map((e) => JSON.stringify(e)).join(' | ')
+  }
+  if (type.kind === 'string' && type.templateLiteral) {
+    return generateTypescriptTemplateLiteral(type.templateLiteral)
   }
   if (type.kind === 'boolean' || type.kind === 'number' || type.kind === 'string' || type.kind === 'null') {
     return type.kind

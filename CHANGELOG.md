@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.40.2](https://github.com/plantain-00/types-as-schema/compare/v1.40.1...v1.40.2) (2021-11-11)
+  
+* fix: ci failure ([790dbca](https://github.com/plantain-00/types-as-schema/commit/790dbca133fa75cf594db1315c22b727f24658ce))
+
+## [1.40.1](https://github.com/plantain-00/types-as-schema/compare/v1.40.0...v1.40.1) (2021-11-11)
+  
+* feat: support more template literal type ([daa1098](https://github.com/plantain-00/types-as-schema/commit/daa1098fcddba9ef069bc18afafb257745c7df5a))
+* chore: update dependencies ([b5f536e](https://github.com/plantain-00/types-as-schema/commit/b5f536eb467ab757d8dc38e5769743ede4f2c6ad)) ([fb4e0bc](https://github.com/plantain-00/types-as-schema/commit/fb4e0bc34e6a15fe1382485fad6859fab96186b8)) ([d8c0254](https://github.com/plantain-00/types-as-schema/commit/d8c025461ffcbf1eaea02e67c1d22f9e30ea6dfc)) ([c31f039](https://github.com/plantain-00/types-as-schema/commit/c31f039d76dd96e5477a78e68ebbf61c1fafa6ce)) ([4616e47](https://github.com/plantain-00/types-as-schema/commit/4616e47bf85ede232b80a15d73dbbd5a27925920)) ([cf2efd2](https://github.com/plantain-00/types-as-schema/commit/cf2efd28cf574349af80602276014c8a299669ba)) ([35f7c18](https://github.com/plantain-00/types-as-schema/commit/35f7c181fd387357fd55243093a8ee371490c670)) ([8f7a217](https://github.com/plantain-00/types-as-schema/commit/8f7a2174a9efeb566c7de6268ac8ae3a80684d26))
+
 ## [1.40.0](https://github.com/plantain-00/types-as-schema/compare/v1.39.2...v1.40.0) (2021-08-15)
   
 * feat: support multiple config output ([4f27694](https://github.com/plantain-00/types-as-schema/commit/4f276945fe6ae65e3ee8ddcc29981d3fd8be0988))

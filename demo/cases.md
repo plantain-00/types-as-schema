@@ -354,6 +354,10 @@ Field | Required | Type | Description
 `pick3` | `true` | [`CreateInput2`](#CreateInput2) |
 `unknown` | `true` | [`LayoutMetadataMap`](#LayoutMetadataMap) |
 `template` | `true` | `"1-left-top" | "1-right-top" | "1-left-bottom" | "1-right-bottom"` |
+`template2` | `true` | ``https://${string}.svg`` |
+`template3` | `true` | ``/api/users/${number}`` |
+`template4` | `true` | ``https://${string}.${"png" | "jpg"}`` |
+`template5` | `true` | ``/api/users?isAdmin=${boolean}`` |
 
 ## `Mutation`
 

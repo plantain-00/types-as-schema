@@ -370,6 +370,10 @@ export type EntryType = {
   pick3: CreateInput2
   unknown: LayoutMetadataMap
   template: \`1-\${'left' | 'right'}-\${'top' | 'bottom'}\`
+  template2: \`https://\${string}.svg\`
+  template3: \`/api/users/\${number}\`
+  template4: \`https://\${string}.\${'png' | 'jpg'}\`
+  template5: \`/api/users?isAdmin=\${boolean}\`
 }
 
 export interface Mutation {
@@ -565,6 +569,7 @@ export declare function returnEmpty(): Promise<void>
    */
    file: File,
  ): Promise<void>
+ 
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [

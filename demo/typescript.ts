@@ -349,6 +349,10 @@ interface EntryType {
   pick3: CreateInput2
   unknown: LayoutMetadataMap
   template: "1-left-top" | "1-right-top" | "1-left-bottom" | "1-right-bottom"
+  template2: `https://${string}.svg`
+  template3: `/api/users/${number}`
+  template4: `https://${string}.${"png" | "jpg"}`
+  template5: `/api/users?isAdmin=${boolean}`
   [name: string]: unknown
 }
 
