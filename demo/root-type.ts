@@ -221,16 +221,6 @@ export interface Circular {
   children: Array<Circular>
 }
 
-export interface TypeAlias {
-  result: Result2
-}
-
-export interface CreateInput {
-  member1: string
-  member2: file
-  member3: CreateInputMember3
-}
-
 export interface EntryType<TContext> {
   optionalMember?: string
   booleanMember: boolean
@@ -269,6 +259,12 @@ export interface EntryType<TContext> {
   template5: string
 }
 
+export interface CreateInput {
+  member1: string
+  member2: file
+  member3: CreateInputMember3
+}
+
 export interface MutationResult {
   result: boolean
 }
@@ -284,6 +280,10 @@ export interface Result<TContext> {
 
 export interface CreateInputMember3 {
   member1: string
+}
+
+export interface TypeAlias {
+  result: Result2
 }
 
 export type Result2 = Result3

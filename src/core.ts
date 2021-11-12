@@ -21,8 +21,9 @@ export class Generator {
     private looseMode: boolean,
     disableWarning = false,
     getRelativePath: (fileName: string) => string,
+    checker?: ts.TypeChecker,
   ) {
-    const parser = new Parser(sourceFiles, getRelativePath)
+    const parser = new Parser(sourceFiles, getRelativePath, checker)
     parser.disableWarning = disableWarning
     this.declarations = parser.parse()
   }

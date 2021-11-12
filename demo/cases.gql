@@ -210,15 +210,6 @@ type Circular {
   children: [Circular]!
 }
 
-type TypeAlias {
-  result: Result2!
-}
-
-input CreateInput {
-  member1: String!
-  member3: CreateInputMember3!
-}
-
 type EntryType {
   optionalMember: String
   booleanMember: Boolean!
@@ -258,6 +249,11 @@ type Mutation {
   create(input: CreateInput!): MutationResult!
 }
 
+input CreateInput {
+  member1: String!
+  member3: CreateInputMember3!
+}
+
 type MutationResult {
   result: Boolean!
 }
@@ -278,6 +274,10 @@ type Result {
 
 input CreateInputMember3 {
   member1: String!
+}
+
+type TypeAlias {
+  result: Result2!
 }
 
 type Result3 {

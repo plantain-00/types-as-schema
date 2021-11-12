@@ -675,28 +675,6 @@ export const circularSchema = {
   },
 }
 
-export const typeAliasSchema = {
-  result: {
-    type: Schema.Types.Mixed,
-    required: true
-  },
-}
-
-export const createInputSchema = {
-  member1: {
-    type: String,
-    required: true
-  },
-  member2: {
-    type: Schema.Types.Mixed,
-    required: true
-  },
-  member3: {
-    type: Schema.Types.Mixed,
-    required: true
-  },
-}
-
 export const entryTypeSchema = {
   optionalMember: {
     type: String,
@@ -858,6 +836,21 @@ export const mutationSchema = {
   },
 }
 
+export const createInputSchema = {
+  member1: {
+    type: String,
+    required: true
+  },
+  member2: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+  member3: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+}
+
 export const mutationResultSchema = {
   result: {
     type: Boolean,
@@ -897,6 +890,13 @@ export const resultSchema = {
 export const createInputMember3Schema = {
   member1: {
     type: String,
+    required: true
+  },
+}
+
+export const typeAliasSchema = {
+  result: {
+    type: Schema.Types.Mixed,
     required: true
   },
 }

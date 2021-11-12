@@ -81,6 +81,7 @@ async function executeCommandLine() {
       looseMode,
       !!configPath,
       fileName => path.relative(process.cwd(), fileName),
+      program.getTypeChecker(),
     )
 
     if (debugPath) {

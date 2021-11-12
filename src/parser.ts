@@ -27,7 +27,7 @@ export class Parser {
   private declarations: TypeDeclaration[] = []
   disableWarning = false
 
-  constructor(private sourceFiles: ts.SourceFile[], private getRelativePath: (fileName: string) => string) { }
+  constructor(private sourceFiles: ts.SourceFile[], private getRelativePath: (fileName: string) => string, private checker?: ts.TypeChecker) { }
 
   parse() {
     for (const sourceFile of this.sourceFiles) {
@@ -305,7 +305,18 @@ export class Parser {
       )
     } else if (ts.isTypeReferenceNode(declaration.type) && ts.isIdentifier(declaration.type.typeName)) {
       if (declaration.type.typeArguments && declaration.type.typeArguments.length > 0) {
-        if (declaration.type.typeName.text === 'Pick') {
+        if (this.checker) {
+          const type = this.getTypeOfComplexType(declaration.type, sourceFile)
+          if (type) {
+            this.declarations.push({
+              name: declaration.name.text,
+              ...type
+            })
+            return
+          } else if (!this.disableWarning) {
+            warn(this.getPosition(declaration, sourceFile), 'parse')
+          }
+        } else if (declaration.type.typeName.text === 'Pick') {
           const type = this.getTypeOfPick(declaration.type.typeName, declaration.type.typeArguments, sourceFile)
           if (type) {
             this.declarations.push({
@@ -784,6 +795,11 @@ export class Parser {
           || reference.typeName.text === 'DeepReturnType')) {
           const typeArgument = reference.typeArguments[0]!
           return this.getType(typeArgument, sourceFile)
+        } else if (this.checker) {
+          const type = this.getTypeOfComplexType(reference, sourceFile)
+          if (type) {
+            return type
+          }
         } else if (reference.typeName.text === 'Pick') {
           const type = this.getTypeOfPick(reference.typeName, reference.typeArguments, sourceFile)
           if (type) {
@@ -813,6 +829,57 @@ export class Parser {
     return {
       kind: undefined,
       position: this.getPosition(reference.typeName, sourceFile)
+    }
+  }
+
+  private getTypeOfTsType(
+    type: ts.Type,
+    typeNode: ts.Node,
+    sourceFile: ts.SourceFile,
+    checker: ts.TypeChecker,
+  ): Type {
+    if (type.flags & ts.TypeFlags.String) {
+      return {
+        kind: 'string',
+        position: this.getPosition(typeNode, sourceFile),
+      }
+    }
+    if (type.flags & ts.TypeFlags.Number) {
+      return {
+        kind: 'number',
+        type: 'number',
+        position: this.getPosition(typeNode, sourceFile),
+      }
+    }
+    if (type.flags & ts.TypeFlags.Boolean) {
+      return {
+        kind: 'boolean',
+        position: this.getPosition(typeNode, sourceFile),
+      }
+    }
+    if (type.flags & ts.TypeFlags.Void) {
+      return {
+        kind: 'void',
+        position: this.getPosition(typeNode, sourceFile),
+      }
+    }
+    if (type.flags & ts.TypeFlags.Null) {
+      return {
+        kind: 'null',
+        position: this.getPosition(typeNode, sourceFile),
+      }
+    }
+    const name = checker.typeToString(type)
+    if (name === 'File') {
+      return {
+        kind: 'file',
+        position: this.getPosition(typeNode, sourceFile)
+      }
+    }
+    return {
+      kind: 'reference',
+      name,
+      position: this.getPosition(typeNode, sourceFile),
     }
   }
 
@@ -864,6 +931,40 @@ export class Parser {
           maxProperties,
           position: this.getPosition(typeName, sourceFile)
         }
+      }
+    }
+    return undefined
+  }
+
+  private getTypeOfComplexType(
+    referenceNode: ts.TypeReferenceNode,
+    sourceFile: ts.SourceFile
+  ): ObjectType | undefined {
+    if (!this.checker) {
+      return undefined
+    }
+    const type = this.checker.getTypeAtLocation(referenceNode)
+    if (type.flags & ts.TypeFlags.Object) {
+      const members: Member[] = []
+      let minProperties = 0
+      let maxProperties = 0
+      for (const property of type.getProperties()) {
+        const memberType = this.checker.getTypeOfSymbolAtLocation(property, referenceNode)
+        maxProperties++
+        if (!(property.flags & ts.SymbolFlags.Optional)) {
+          minProperties++
+        }
+        members.push({
+          name: property.getName(),
+          type: this.getTypeOfTsType(memberType, referenceNode.typeName, sourceFile, this.checker),
+        })
+      }
+      return {
+        kind: 'object',
+        members,
+        minProperties,
+        maxProperties,
+        position: this.getPosition(referenceNode.typeName, sourceFile)
       }
     }
     return undefined

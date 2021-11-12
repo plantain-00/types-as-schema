@@ -303,16 +303,6 @@ interface Circular {
   children: Circular[]
 }
 
-interface TypeAlias {
-  result: Result2
-}
-
-interface CreateInput {
-  member1: string
-  member2: File
-  member3: CreateInputMember3
-}
-
 /**
  * @entry cases.json
  * @additionalProperties
@@ -344,7 +334,7 @@ interface EntryType {
   circular: Circular
   outerType: OuterType
   typeAlias: TypeAlias
-  pick: { result: Result2 }
+  pick: { result: Result3 }
   pick2: { member1: string, member2: File }
   pick3: CreateInput2
   unknown: LayoutMetadataMap
@@ -358,6 +348,12 @@ interface EntryType {
 
 interface Mutation {
   create: MutationResult
+}
+
+interface CreateInput {
+  member1: string
+  member2: File
+  member3: CreateInputMember3
 }
 
 interface MutationResult {
@@ -380,6 +376,10 @@ interface Result {
 
 interface CreateInputMember3 {
   member1: string
+}
+
+interface TypeAlias {
+  result: Result2
 }
 
 type Result2 = Result3
