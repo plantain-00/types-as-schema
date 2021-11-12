@@ -275,17 +275,6 @@ pub struct Circular {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct TypeAlias {
-  pub result: Result2,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct CreateInput {
-  #[serde(rename = "member1")] pub member_1: String,
-  #[serde(rename = "member3")] pub member_3: CreateInputMember3,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 pub struct EntryType {
   #[serde(rename = "optionalMember")] pub optional_member: Option<String>,
   #[serde(rename = "booleanMember")] pub boolean_member: bool,
@@ -326,6 +315,12 @@ pub struct Mutation {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct CreateInput {
+  #[serde(rename = "member1")] pub member_1: String,
+  #[serde(rename = "member3")] pub member_3: CreateInputMember3,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct MutationResult {
   pub result: bool,
 }
@@ -350,6 +345,11 @@ pub struct Result {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateInputMember3 {
   #[serde(rename = "member1")] pub member_1: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TypeAlias {
+  pub result: Result2,
 }
 
 type Result2 = Result3;

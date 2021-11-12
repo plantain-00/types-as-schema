@@ -2566,78 +2566,6 @@
   },
   {
     "kind": "object",
-    "name": "TypeAlias",
-    "members": [
-      {
-        "name": "result",
-        "type": {
-          "kind": "reference",
-          "name": "Result2",
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 403,
-            "character": 10
-          }
-        }
-      }
-    ],
-    "minProperties": 1,
-    "maxProperties": 1,
-    "position": {
-      "file": "demo/cases.ts",
-      "line": 402,
-      "character": 0
-    }
-  },
-  {
-    "kind": "object",
-    "name": "CreateInput",
-    "members": [
-      {
-        "name": "member1",
-        "type": {
-          "kind": "string",
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 374,
-            "character": 11
-          }
-        }
-      },
-      {
-        "name": "member2",
-        "type": {
-          "kind": "file",
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 375,
-            "character": 11
-          }
-        }
-      },
-      {
-        "name": "member3",
-        "type": {
-          "kind": "reference",
-          "name": "CreateInputMember3",
-          "position": {
-            "file": "demo/cases.ts",
-            "line": 376,
-            "character": 11
-          }
-        }
-      }
-    ],
-    "minProperties": 3,
-    "maxProperties": 3,
-    "position": {
-      "file": "demo/cases.ts",
-      "line": 373,
-      "character": 0
-    }
-  },
-  {
-    "kind": "object",
     "name": "EntryType",
     "members": [
       {
@@ -2989,11 +2917,11 @@
               "name": "result",
               "type": {
                 "kind": "reference",
-                "name": "Result2",
+                "name": "Result3",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 403,
-                  "character": 10
+                  "line": 358,
+                  "character": 8
                 }
               }
             }
@@ -3018,8 +2946,8 @@
                 "kind": "string",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 374,
-                  "character": 11
+                  "line": 359,
+                  "character": 9
                 }
               }
             },
@@ -3029,8 +2957,8 @@
                 "kind": "file",
                 "position": {
                   "file": "demo/cases.ts",
-                  "line": 375,
-                  "character": 11
+                  "line": 359,
+                  "character": 9
                 }
               }
             }
@@ -3250,6 +3178,53 @@
   },
   {
     "kind": "object",
+    "name": "CreateInput",
+    "members": [
+      {
+        "name": "member1",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 374,
+            "character": 11
+          }
+        }
+      },
+      {
+        "name": "member2",
+        "type": {
+          "kind": "file",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 375,
+            "character": 11
+          }
+        }
+      },
+      {
+        "name": "member3",
+        "type": {
+          "kind": "reference",
+          "name": "CreateInputMember3",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 376,
+            "character": 11
+          }
+        }
+      }
+    ],
+    "minProperties": 3,
+    "maxProperties": 3,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 373,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
     "name": "MutationResult",
     "members": [
       {
@@ -3419,6 +3394,31 @@
     "position": {
       "file": "demo/cases.ts",
       "line": 398,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "TypeAlias",
+    "members": [
+      {
+        "name": "result",
+        "type": {
+          "kind": "reference",
+          "name": "Result2",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 403,
+            "character": 10
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 402,
       "character": 0
     }
   },
@@ -3785,8 +3785,8 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 374,
-            "character": 11
+            "line": 484,
+            "character": 20
           }
         }
       },
@@ -3796,8 +3796,8 @@
           "kind": "file",
           "position": {
             "file": "demo/cases.ts",
-            "line": 375,
-            "character": 11
+            "line": 484,
+            "character": 20
           }
         }
       }

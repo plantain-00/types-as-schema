@@ -201,15 +201,6 @@ type circular = {
   children: circular list;
 }
 
-type typeAlias = {
-  result: result2;
-}
-
-type createInput = {
-  member1: string;
-  member3: createInputMember3;
-}
-
 type entryType = {
   optionalMember: string option;
   booleanMember: bool;
@@ -248,6 +239,11 @@ type mutation = {
   create: mutationResult;
 }
 
+type createInput = {
+  member1: string;
+  member3: createInputMember3;
+}
+
 type mutationResult = {
   result: bool;
 }
@@ -268,6 +264,10 @@ type result = {
 
 type createInputMember3 = {
   member1: string;
+}
+
+type typeAlias = {
+  result: result2;
 }
 
 type result3 = {

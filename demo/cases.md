@@ -305,20 +305,6 @@ Field | Required | Type | Description
 --- | --- | --- | ---
 `children` | `true` | [`Circular`](#Circular)[] |
 
-## `TypeAlias`
-
-Field | Required | Type | Description
---- | --- | --- | ---
-`result` | `true` | [`Result2`](#Result2) |
-
-## `CreateInput`
-
-Field | Required | Type | Description
---- | --- | --- | ---
-`member1` | `true` | `string` |
-`member2` | `true` | `File` |
-`member3` | `true` | [`CreateInputMember3`](#CreateInputMember3) |
-
 ## `EntryType`
 
 Field | Required | Type | Description
@@ -349,7 +335,7 @@ Field | Required | Type | Description
 `circular` | `true` | [`Circular`](#Circular) |
 `outerType` | `true` | [`OuterType`](#OuterType) |
 `typeAlias` | `true` | [`TypeAlias`](#TypeAlias) |
-`pick` | `true` | { result: [`Result2`](#Result2) } |
+`pick` | `true` | { result: [`Result3`](#Result3) } |
 `pick2` | `true` | `{ member1: string, member2: File }` |
 `pick3` | `true` | [`CreateInput2`](#CreateInput2) |
 `unknown` | `true` | [`LayoutMetadataMap`](#LayoutMetadataMap) |
@@ -364,6 +350,14 @@ Field | Required | Type | Description
 Field | Required | Type | Description
 --- | --- | --- | ---
 `create` | `true` | [`MutationResult`](#MutationResult) |
+
+## `CreateInput`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`member1` | `true` | `string` |
+`member2` | `true` | `File` |
+`member3` | `true` | [`CreateInputMember3`](#CreateInputMember3) |
 
 ## `MutationResult`
 
@@ -396,6 +390,12 @@ Field | Required | Type | Description
 Field | Required | Type | Description
 --- | --- | --- | ---
 `member1` | `true` | `string` |
+
+## `TypeAlias`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`result` | `true` | [`Result2`](#Result2) |
 
 ## `Result2`
 

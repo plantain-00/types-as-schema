@@ -208,15 +208,6 @@ message Circular {
     repeated Circular children = 1;
 }
 
-message TypeAlias {
-    Result2 result = 1;
-}
-
-message CreateInput {
-    string member1 = 1;
-    CreateInputMember3 member3 = 3;
-}
-
 message EntryType {
     string optionalMember = 1;
     bool booleanMember = 2;
@@ -255,6 +246,11 @@ message Mutation {
     MutationResult create = 1;
 }
 
+message CreateInput {
+    string member1 = 1;
+    CreateInputMember3 member3 = 3;
+}
+
 message MutationResult {
     bool result = 1;
 }
@@ -275,6 +271,10 @@ message Result {
 
 message CreateInputMember3 {
     string member1 = 1;
+}
+
+message TypeAlias {
+    Result2 result = 1;
 }
 
 message Result3 {

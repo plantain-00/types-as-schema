@@ -99,7 +99,7 @@
           "type": "object",
           "properties": {
             "result": {
-              "$ref": "#/definitions/Result2"
+              "$ref": "#/definitions/Result3"
             }
           },
           "required": [
