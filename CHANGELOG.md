@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.41.1](https://github.com/plantain-00/types-as-schema/compare/v1.41.0...v1.41.1) (2022-01-03)
+  
+* fix: support in cookie ([f5e175f](https://github.com/plantain-00/types-as-schema/commit/f5e175f230f1391588a29762e589a2e924cb58a1))
+
 ## [1.41.0](https://github.com/plantain-00/types-as-schema/compare/v1.40.2...v1.41.0) (2022-01-03)
   
 * feat: improve function parameter reusage ([9799a83](https://github.com/plantain-00/types-as-schema/commit/9799a8393867b83f9ec1b26c21b17700f46cfedb))
