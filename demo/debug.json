@@ -905,6 +905,27 @@
       {
         "name": "typeIntersectionMember3",
         "type": {
+          "kind": "union",
+          "members": [
+            {
+              "kind": "reference",
+              "name": "TypeLiteral",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 80,
+                "character": 27
+              }
+            },
+            {
+              "kind": "reference",
+              "name": "Interface",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 80,
+                "character": 41
+              }
+            }
+          ],
           "position": {
             "file": "demo/cases.ts",
             "line": 80,

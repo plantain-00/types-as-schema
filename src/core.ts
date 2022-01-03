@@ -83,3 +83,4 @@ export class Generator {
 export * from './utils'
 export * from './typescript-generator'
 export * from './json-schema-generator'
+export * from './swagger-doc-generator'
