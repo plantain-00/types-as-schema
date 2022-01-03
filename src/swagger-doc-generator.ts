@@ -57,7 +57,7 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
   return JSON.stringify(result, null, 2)
 }
 
-const allTypes = ['path', 'query', 'body']
+const allTypes = ['path', 'query', 'body', 'cookie']
 
 /**
  * @public
