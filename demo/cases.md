@@ -138,7 +138,7 @@ Field | Required | Type | Description
 --- | --- | --- | ---
 `typeIntersectionMember1` | `true` | [`TypeIntersection1`](#TypeIntersection1) |
 `typeIntersectionMember2` | `true` | [`TypeIntersection2`](#TypeIntersection2) |
-`typeIntersectionMember3` | `true` | `unknown` |
+`typeIntersectionMember3` | `true` | [`TypeLiteral`](#TypeLiteral) | [`Interface`](#Interface) |
 
 ## `TypeUnionAndIntersection`
 

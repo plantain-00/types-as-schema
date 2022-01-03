@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.41.0](https://github.com/plantain-00/types-as-schema/compare/v1.40.2...v1.41.0) (2022-01-03)
+  
+* feat: improve function parameter reusage ([9799a83](https://github.com/plantain-00/types-as-schema/commit/9799a8393867b83f9ec1b26c21b17700f46cfedb))
+* chore: update dependencies ([1217ff0](https://github.com/plantain-00/types-as-schema/commit/1217ff042e1839cbc4acb3d5cc97a481a7174ede)) ([5b91073](https://github.com/plantain-00/types-as-schema/commit/5b91073a1ce1edc281bca5c18e38957d2ebf47ac)) ([678a072](https://github.com/plantain-00/types-as-schema/commit/678a07289807b0d89e7c6614eac71b8c202bf9f2))
+* feat: get info by type checker ([11e39fa](https://github.com/plantain-00/types-as-schema/commit/11e39fa525c204381fda5a587146c0722624888f))
+
 ## [1.40.2](https://github.com/plantain-00/types-as-schema/compare/v1.40.1...v1.40.2) (2021-11-11)
   
 * fix: ci failure ([790dbca](https://github.com/plantain-00/types-as-schema/commit/790dbca133fa75cf594db1315c22b727f24658ce))

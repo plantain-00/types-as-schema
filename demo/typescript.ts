@@ -98,7 +98,7 @@ interface TypeIntersection2 {
 interface TypeIntersection {
   typeIntersectionMember1: TypeIntersection1
   typeIntersectionMember2: TypeIntersection2
-  typeIntersectionMember3: unknown
+  typeIntersectionMember3: TypeLiteral | Interface
 }
 
 interface TypeUnionAndIntersection {

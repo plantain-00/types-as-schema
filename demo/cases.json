@@ -700,7 +700,16 @@
         "typeIntersectionMember2": {
           "$ref": "#/definitions/TypeIntersection2"
         },
-        "typeIntersectionMember3": {}
+        "typeIntersectionMember3": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/TypeLiteral"
+            },
+            {
+              "$ref": "#/definitions/Interface"
+            }
+          ]
+        }
       },
       "required": [
         "typeIntersectionMember1",

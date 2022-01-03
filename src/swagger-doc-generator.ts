@@ -1,4 +1,4 @@
-import { Context, getReferencesInType } from './utils'
+import { Context, FunctionDeclaration, FunctionParameter, getReferencesInType, TypeDeclaration } from './utils'
 import { getAllDefinitions, getReferencedDefinitions, Definition, getJsonSchemaProperty } from './json-schema-generator'
 
 export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string, unknown>) {
@@ -12,11 +12,12 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
         paths[typeDeclaration.path] = {}
       }
       referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.name))
-      const useFormData = typeDeclaration.parameters.some((p) => p.type.kind === 'file')
+      const declarationParameters = getDeclarationParameters(typeDeclaration, context.declarations)
+      const useFormData = declarationParameters.some((p) => p.type.kind === 'file')
       paths[typeDeclaration.path]![typeDeclaration.method] = {
         consumes: useFormData ? ['multipart/form-data'] : undefined,
         operationId: typeDeclaration.name,
-        parameters: typeDeclaration.parameters.map((parameter) => {
+        parameters: declarationParameters.map((parameter) => {
           referenceNames.push(...getReferencesInType(parameter.type).map((r) => r.name))
           const schema = getJsonSchemaProperty(parameter.type, context)
           return {
@@ -54,4 +55,55 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
     result = { ...swaggerBase, ...result }
   }
   return JSON.stringify(result, null, 2)
+}
+
+const allTypes = ['path', 'query', 'body']
+
+/**
+ * @public
+ */
+export function getDeclarationParameters(
+  declaration: FunctionDeclaration,
+  typeDeclarations: TypeDeclaration[],
+) {
+  const result: FunctionParameter[] = []
+  for (const parameter of declaration.parameters) {
+    if (!parameter.in && allTypes.includes(parameter.name)) {
+      const parameterType = parameter.type
+      if (parameterType.kind === 'reference') {
+        const typeDeclaration = typeDeclarations.find((d) => d.name === parameterType.name)
+        if (typeDeclaration && typeDeclaration.kind === 'object') {
+          result.push(...typeDeclaration.members.map((m) => ({
+            ...m,
+            in: parameter.name,
+          })))
+        }
+      } else if (parameterType.kind === 'union') {
+        for (const member of parameterType.members) {
+          if (member.kind === 'reference') {
+            const typeDeclaration = typeDeclarations.find((d) => d.name === member.name)
+            if (typeDeclaration && typeDeclaration.kind === 'object') {
+              result.push(...typeDeclaration.members.map((m) => ({
+                ...m,
+                in: parameter.name,
+              })))
+            }
+          } else if (member.kind === 'object') {
+            result.push(...member.members.map((m) => ({
+              ...m,
+              in: parameter.name,
+            })))
+          }
+        }
+      } else if (parameterType.kind === 'object') {
+        result.push(...parameterType.members.map((m) => ({
+          ...m,
+          in: parameter.name,
+        })))
+      }
+    } else {
+      result.push(parameter)
+    }
+  }
+  return result
 }

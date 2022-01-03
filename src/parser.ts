@@ -526,8 +526,8 @@ export class Parser {
     if (ts.isTypeReferenceNode(type)) {
       return this.getTypeOfTypeReference(type, sourceFile)
     }
-    if (ts.isUnionTypeNode(type)) {
-      return this.getTypeOfUnionType(type, sourceFile)
+    if (ts.isUnionTypeNode(type) || ts.isIntersectionTypeNode(type)) {
+      return this.getTypeOfUnionTypeOrIntersectionType(type, sourceFile)
     }
     if (ts.isLiteralTypeNode(type)) {
       if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
@@ -712,7 +712,7 @@ export class Parser {
     }
   }
 
-  private getTypeOfUnionType(unionType: ts.UnionTypeNode, sourceFile: ts.SourceFile): Type {
+  private getTypeOfUnionTypeOrIntersectionType(unionType: ts.UnionTypeNode | ts.IntersectionTypeNode, sourceFile: ts.SourceFile): Type {
     if (unionType.types.every(u => ts.isLiteralTypeNode(u))) {
       let enumType: EnumValueType | undefined
       const enums: unknown[] = []

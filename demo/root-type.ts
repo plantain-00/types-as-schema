@@ -90,7 +90,7 @@ export interface TypeIntersection2 {
 export interface TypeIntersection {
   typeIntersectionMember1: TypeIntersection1
   typeIntersectionMember2: TypeIntersection2
-  typeIntersectionMember3: any
+  typeIntersectionMember3: TypeLiteral | Interface
 }
 
 export interface TypeUnionAndIntersection {
