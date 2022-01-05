@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.42.0](https://github.com/plantain-00/types-as-schema/compare/v1.41.1...v1.42.0) (2022-01-05)
+  
+* feat: support keyof type ([7ef7a0d](https://github.com/plantain-00/types-as-schema/commit/7ef7a0d270ab4cbb330bb1f9313bedbc47156181))
+
 ## [1.41.1](https://github.com/plantain-00/types-as-schema/compare/v1.41.0...v1.41.1) (2022-01-03)
   
 * fix: support in cookie ([f5e175f](https://github.com/plantain-00/types-as-schema/commit/f5e175f230f1391588a29762e589a2e924cb58a1))
