@@ -242,6 +242,7 @@ type EntryType {
   template3: String!
   template4: String!
   template5: String!
+  keyof: String!
 }
 
 type Mutation {

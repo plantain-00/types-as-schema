@@ -233,6 +233,7 @@ type entryType = {
   template3: string;
   template4: string;
   template5: string;
+  keyof: string;
 }
 
 type mutation = {

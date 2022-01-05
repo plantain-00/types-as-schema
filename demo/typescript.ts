@@ -343,6 +343,7 @@ interface EntryType {
   template3: `/api/users/${number}`
   template4: `https://${string}.${"png" | "jpg"}`
   template5: `/api/users?isAdmin=${boolean}`
+  keyof: "member1" | "member2"
   [name: string]: unknown
 }
 

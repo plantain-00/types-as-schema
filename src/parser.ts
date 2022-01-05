@@ -587,6 +587,23 @@ export class Parser {
         position: this.getPosition(type, sourceFile),
       }
     }
+    if (ts.isParenthesizedTypeNode(type)) {
+      return this.getType(type.type, sourceFile)
+    }
+    if (ts.isTypeOperatorNode(type)) {
+      if (type.operator === ts.SyntaxKind.KeyOfKeyword && ts.isTypeReferenceNode(type.type)) {
+        const objectType = this.getTypeOfComplexType(type.type, sourceFile)
+        if (objectType) {
+          return {
+            kind: 'enum',
+            type: 'string',
+            name: 'string',
+            enums: objectType.members.map((m) => m.name),
+            position: this.getPosition(type, sourceFile),
+          }
+        }
+      }
+    }
     const position = this.getPosition(type, sourceFile)
     if (type.kind !== ts.SyntaxKind.AnyKeyword && !this.disableWarning) {
       warn(position, 'parser')

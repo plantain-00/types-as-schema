@@ -344,6 +344,7 @@ Field | Required | Type | Description
 `template3` | `true` | ``/api/users/${number}`` |
 `template4` | `true` | ``https://${string}.${"png" | "jpg"}`` |
 `template5` | `true` | ``/api/users?isAdmin=${boolean}`` |
+`keyof` | `true` | `"member1" | "member2"` |
 
 ## `Mutation`
 

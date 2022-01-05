@@ -149,6 +149,13 @@
         "template5": {
           "type": "string",
           "pattern": "^\\/api\\/users\\?isAdmin=true|false$"
+        },
+        "keyof": {
+          "type": "string",
+          "enum": [
+            "member1",
+            "member2"
+          ]
         }
       },
       "required": [
@@ -184,7 +191,8 @@
         "template2",
         "template3",
         "template4",
-        "template5"
+        "template5",
+        "keyof"
       ],
       "additionalProperties": true
     },
