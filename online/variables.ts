@@ -374,6 +374,7 @@ export type EntryType = {
   template3: \`/api/users/\${number}\`
   template4: \`https://\${string}.\${'png' | 'jpg'}\`
   template5: \`/api/users?isAdmin=\${boolean}\`
+  keyof: keyof CreateInput2
 }
 
 export interface Mutation {

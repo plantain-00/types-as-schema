@@ -240,6 +240,7 @@ message EntryType {
     string template3 = 33;
     string template4 = 34;
     string template5 = 35;
+    string keyof = 36;
 }
 
 message Mutation {

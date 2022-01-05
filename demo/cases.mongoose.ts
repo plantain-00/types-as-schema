@@ -827,6 +827,11 @@ export const entryTypeSchema = {
     type: String,
     required: true
   },
+  keyof: {
+    type: Schema.Types.Mixed,
+    required: true,
+    enum: ["member1", "member2"]
+  },
 }
 
 export const mutationSchema = {

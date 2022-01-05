@@ -307,6 +307,7 @@ pub struct EntryType {
   #[serde(rename = "template3")] pub template_3: String,
   #[serde(rename = "template4")] pub template_4: String,
   #[serde(rename = "template5")] pub template_5: String,
+  pub keyof: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
