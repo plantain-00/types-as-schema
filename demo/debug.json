@@ -141,6 +141,16 @@
     },
     "comments": [
       "/**\n * @minProperties 1\n * @maxProperties 1\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "minProperties",
+        "comment": "1"
+      },
+      {
+        "name": "maxProperties",
+        "comment": "1"
+      }
     ]
   },
   {
@@ -1026,6 +1036,12 @@
         "comments": [
           "/**\n   * @tag 2\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "tag",
+            "comment": "2"
+          }
+        ],
         "tag": 2
       },
       {
@@ -1040,6 +1056,12 @@
         },
         "comments": [
           "/**\n   * @tag 3\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "tag",
+            "comment": "3"
+          }
         ],
         "tag": 3
       }
@@ -1139,6 +1161,28 @@
         },
         "comments": [
           "/**\n   * @multipleOf 10\n   * @minimum 70\n   * @maximum 90\n   * @exclusiveMinimum 70\n   * @exclusiveMaximum 90\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "multipleOf",
+            "comment": "10"
+          },
+          {
+            "name": "minimum",
+            "comment": "70"
+          },
+          {
+            "name": "maximum",
+            "comment": "90"
+          },
+          {
+            "name": "exclusiveMinimum",
+            "comment": "70"
+          },
+          {
+            "name": "exclusiveMaximum",
+            "comment": "90"
+          }
         ]
       },
       {
@@ -1312,6 +1356,16 @@
         },
         "comments": [
           "/**\n   * @title foo\n   * @description bar\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "title",
+            "comment": "foo"
+          },
+          {
+            "name": "description",
+            "comment": "bar"
+          }
         ]
       }
     ],
@@ -1342,6 +1396,20 @@
         },
         "comments": [
           "/**\n   * @minLength 10\n   * @maxLength 20\n   * @pattern ^[A-z]{3}$\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "minLength",
+            "comment": "10"
+          },
+          {
+            "name": "maxLength",
+            "comment": "20"
+          },
+          {
+            "name": "pattern",
+            "comment": "^[A-z]{3}$"
+          }
         ]
       }
     ],
@@ -1380,6 +1448,20 @@
         },
         "comments": [
           "/**\n   * @itemMinLength 10\n   * @itemMaxLength 20\n   * @itemPattern ^[A-z]{3}$\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "itemMinLength",
+            "comment": "10"
+          },
+          {
+            "name": "itemMaxLength",
+            "comment": "20"
+          },
+          {
+            "name": "itemPattern",
+            "comment": "^[A-z]{3}$"
+          }
         ]
       },
       {
@@ -1406,6 +1488,19 @@
         },
         "comments": [
           "/**\n   * @uniqueItems\n   * @minItems 1\n   * @maxItems 10\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "uniqueItems"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          },
+          {
+            "name": "maxItems",
+            "comment": "10"
+          }
         ]
       },
       {
@@ -1469,6 +1564,28 @@
         },
         "comments": [
           "/**\n   * @itemMultipleOf 100\n   * @itemMinimum 100\n   * @itemMaximum 200\n   * @itemExclusiveMinimum 300\n   * @itemExclusiveMaximum 400\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "itemMultipleOf",
+            "comment": "100"
+          },
+          {
+            "name": "itemMinimum",
+            "comment": "100"
+          },
+          {
+            "name": "itemMaximum",
+            "comment": "200"
+          },
+          {
+            "name": "itemExclusiveMinimum",
+            "comment": "300"
+          },
+          {
+            "name": "itemExclusiveMaximum",
+            "comment": "400"
+          }
         ]
       },
       {
@@ -2010,6 +2127,35 @@
         "comments": [
           "/**\n   * @param {string} name\n   * @param {number} age\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "param",
+            "type": {
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 240,
+                "character": 13
+              }
+            },
+            "paramName": "name",
+            "optional": false
+          },
+          {
+            "name": "param",
+            "type": {
+              "kind": "number",
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 241,
+                "character": 13
+              }
+            },
+            "paramName": "age",
+            "optional": false
+          }
+        ],
         "parameters": [
           {
             "name": "name",
@@ -2050,6 +2196,21 @@
         },
         "comments": [
           "/**\n   * @param {string} [name]\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "param",
+            "type": {
+              "kind": "string",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 245,
+                "character": 13
+              }
+            },
+            "paramName": "name",
+            "optional": true
+          }
         ],
         "parameters": [
           {
@@ -2092,6 +2253,12 @@
         },
         "comments": [
           "/**\n   * @default foo\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "foo"
+          }
         ]
       },
       {
@@ -2108,6 +2275,12 @@
         },
         "comments": [
           "/**\n   * @default 123\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "123"
+          }
         ]
       },
       {
@@ -2123,6 +2296,12 @@
         },
         "comments": [
           "/**\n   * @default true\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "true"
+          }
         ]
       },
       {
@@ -2138,6 +2317,12 @@
         },
         "comments": [
           "/**\n   * @default 'foo bar'\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "'foo bar'"
+          }
         ]
       },
       {
@@ -2153,6 +2338,12 @@
         },
         "comments": [
           "/**\n   * @default ''\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "''"
+          }
         ]
       },
       {
@@ -2175,6 +2366,12 @@
         },
         "comments": [
           "/**\n   * @default []\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "[]"
+          }
         ]
       },
       {
@@ -2205,6 +2402,12 @@
         },
         "comments": [
           "/**\n   * @default {}\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "{}"
+          }
         ]
       },
       {
@@ -2221,6 +2424,12 @@
         },
         "comments": [
           "/**\n   * @default 123\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "123"
+          }
         ]
       },
       {
@@ -2237,6 +2446,12 @@
         },
         "comments": [
           "/**\n   * @default {}\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "default",
+            "comment": "{}"
+          }
         ]
       }
     ],
@@ -3172,6 +3387,15 @@
     },
     "comments": [
       "/**\n * @entry cases.json\n * @additionalProperties\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "cases.json"
+      },
+      {
+        "name": "additionalProperties"
+      }
     ]
   },
   {
@@ -3602,6 +3826,12 @@
         "comments": [
           "/**\n   * @in query\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "query"
+          }
+        ],
         "in": "query"
       },
       {
@@ -3627,6 +3857,16 @@
         "comments": [
           "/**\n   * @in body\n   * @minItems 1\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "body"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          }
+        ],
         "in": "body"
       },
       {
@@ -3643,6 +3883,12 @@
         "optional": false,
         "comments": [
           "/**\n   * @in body\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "body"
+          }
         ],
         "in": "body"
       },
@@ -3663,6 +3909,24 @@
         "optional": true,
         "comments": [
           "/**\n   * @in path\n   * @description pet id\n   * @minimum 1\n   * @default 2\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "path"
+          },
+          {
+            "name": "description",
+            "comment": "pet id"
+          },
+          {
+            "name": "minimum",
+            "comment": "1"
+          },
+          {
+            "name": "default",
+            "comment": "2"
+          }
         ],
         "in": "path"
       },
@@ -3687,11 +3951,46 @@
         "comments": [
           "/**\n   * @in query\n   * @default asc\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "query"
+          },
+          {
+            "name": "default",
+            "comment": "asc"
+          }
+        ],
         "in": "query"
       }
     ],
     "comments": [
       "/**\n * @method get\n * @path /pet/{id}\n * @summary get pet by id.\n * @description get pet by id\n * @deprecated\n * @tags pet\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "method",
+        "comment": "get"
+      },
+      {
+        "name": "path",
+        "comment": "/pet/{id}"
+      },
+      {
+        "name": "summary",
+        "comment": "get pet by id."
+      },
+      {
+        "name": "description",
+        "comment": "get pet by id"
+      },
+      {
+        "name": "deprecated"
+      },
+      {
+        "name": "tags",
+        "comment": "pet"
+      }
     ],
     "method": "get",
     "path": "/pet/{id}",
@@ -3748,12 +4047,20 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 465,
+            "line": 466,
             "character": 10
           }
         },
         "comments": [
-          "/**\n   * @index\n   */"
+          "/**\n   * @index\n   * @autoincrement\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "index"
+          },
+          {
+            "name": "autoincrement"
+          }
         ],
         "index": true
       },
@@ -3763,12 +4070,17 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 469,
+            "line": 470,
             "character": 10
           }
         },
         "comments": [
           "/**\n   * @unique\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "unique"
+          }
         ],
         "unique": true
       },
@@ -3778,7 +4090,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 478,
+            "line": 479,
             "character": 10
           },
           "lowercase": true,
@@ -3787,6 +4099,27 @@
         },
         "comments": [
           "/**\n   * @sparse\n   * @select\n   * @alias index4\n   * @lowercase\n   * @uppercase\n   * @trim\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "sparse"
+          },
+          {
+            "name": "select"
+          },
+          {
+            "name": "alias",
+            "comment": "index4"
+          },
+          {
+            "name": "lowercase"
+          },
+          {
+            "name": "uppercase"
+          },
+          {
+            "name": "trim"
+          }
         ],
         "sparse": true,
         "select": true,
@@ -3799,7 +4132,7 @@
           "name": "Buffer",
           "position": {
             "file": "demo/cases.ts",
-            "line": 479,
+            "line": 480,
             "character": 10
           }
         }
@@ -3823,7 +4156,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 485,
+            "line": 486,
             "character": 20
           }
         }
@@ -3834,7 +4167,7 @@
           "kind": "file",
           "position": {
             "file": "demo/cases.ts",
-            "line": 485,
+            "line": 486,
             "character": 20
           }
         }
@@ -3844,7 +4177,7 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 485,
+      "line": 486,
       "character": 20
     }
   },
@@ -3858,13 +4191,13 @@
       "name": "Metadata",
       "position": {
         "file": "demo/cases.ts",
-        "line": 488,
+        "line": 489,
         "character": 22
       }
     },
     "position": {
       "file": "demo/cases.ts",
-      "line": 487,
+      "line": 488,
       "character": 0
     }
   },
@@ -3876,13 +4209,13 @@
     "additionalProperties": {
       "position": {
         "file": "demo/cases.ts",
-        "line": 492,
+        "line": 493,
         "character": 17
       }
     },
     "position": {
       "file": "demo/cases.ts",
-      "line": 491,
+      "line": 492,
       "character": 0
     }
   },
@@ -3895,7 +4228,7 @@
         "name": "CreateBlog",
         "position": {
           "file": "demo/cases.ts",
-          "line": 496,
+          "line": 497,
           "character": 4
         }
       },
@@ -3904,14 +4237,14 @@
         "name": "UpdateBlog",
         "position": {
           "file": "demo/cases.ts",
-          "line": 497,
+          "line": 498,
           "character": 4
         }
       }
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 495,
+      "line": 496,
       "character": 12
     },
     "objectType": {
@@ -3930,7 +4263,7 @@
             ],
             "position": {
               "file": "demo/cases.ts",
-              "line": 506,
+              "line": 507,
               "character": 8
             }
           }
@@ -3941,7 +4274,7 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 507,
+              "line": 508,
               "character": 11
             }
           }
@@ -3953,7 +4286,7 @@
             "type": "number",
             "position": {
               "file": "demo/cases.ts",
-              "line": 515,
+              "line": 516,
               "character": 6
             }
           },
@@ -3964,7 +4297,7 @@
       "maxProperties": 3,
       "position": {
         "file": "demo/cases.ts",
-        "line": 495,
+        "line": 496,
         "character": 12
       }
     }
@@ -3984,7 +4317,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 506,
+            "line": 507,
             "character": 8
           }
         }
@@ -3995,7 +4328,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 507,
+            "line": 508,
             "character": 11
           }
         }
@@ -4005,11 +4338,16 @@
     "maxProperties": 2,
     "position": {
       "file": "demo/cases.ts",
-      "line": 505,
+      "line": 506,
       "character": 0
     },
     "comments": [
       "/**\n * @public\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "public"
+      }
     ]
   },
   {
@@ -4027,7 +4365,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 514,
+            "line": 515,
             "character": 8
           }
         }
@@ -4039,7 +4377,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 515,
+            "line": 516,
             "character": 6
           }
         }
@@ -4050,7 +4388,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 516,
+            "line": 517,
             "character": 11
           }
         }
@@ -4060,11 +4398,16 @@
     "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
-      "line": 513,
+      "line": 514,
       "character": 0
     },
     "comments": [
       "/**\n * @public\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "public"
+      }
     ]
   },
   {
@@ -4076,14 +4419,14 @@
         "name": "BlogChange",
         "position": {
           "file": "demo/cases.ts",
-          "line": 500,
+          "line": 501,
           "character": 4
         }
       }
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 499,
+      "line": 500,
       "character": 12
     },
     "objectType": {
@@ -4101,7 +4444,7 @@
             ],
             "position": {
               "file": "demo/cases.ts",
-              "line": 523,
+              "line": 524,
               "character": 8
             }
           }
@@ -4113,7 +4456,7 @@
             "type": "number",
             "position": {
               "file": "demo/cases.ts",
-              "line": 524,
+              "line": 525,
               "character": 6
             }
           }
@@ -4124,7 +4467,7 @@
             "kind": "string",
             "position": {
               "file": "demo/cases.ts",
-              "line": 525,
+              "line": 526,
               "character": 11
             }
           }
@@ -4134,7 +4477,7 @@
       "maxProperties": 3,
       "position": {
         "file": "demo/cases.ts",
-        "line": 499,
+        "line": 500,
         "character": 12
       }
     }
@@ -4154,7 +4497,7 @@
           ],
           "position": {
             "file": "demo/cases.ts",
-            "line": 523,
+            "line": 524,
             "character": 8
           }
         }
@@ -4166,7 +4509,7 @@
           "type": "number",
           "position": {
             "file": "demo/cases.ts",
-            "line": 524,
+            "line": 525,
             "character": 6
           }
         }
@@ -4177,7 +4520,7 @@
           "kind": "string",
           "position": {
             "file": "demo/cases.ts",
-            "line": 525,
+            "line": 526,
             "character": 11
           }
         }
@@ -4187,11 +4530,16 @@
     "maxProperties": 3,
     "position": {
       "file": "demo/cases.ts",
-      "line": 522,
+      "line": 523,
       "character": 0
     },
     "comments": [
       "/**\n * @public\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "public"
+      }
     ]
   },
   {
@@ -4203,7 +4551,7 @@
         "type": {
           "position": {
             "file": "demo/cases.ts",
-            "line": 530,
+            "line": 531,
             "character": 2
           }
         },
@@ -4227,7 +4575,7 @@
               "type": "number",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 533,
+                "line": 534,
                 "character": 23
               }
             },
@@ -4247,7 +4595,7 @@
               "kind": "string",
               "position": {
                 "file": "demo/cases.ts",
-                "line": 534,
+                "line": 535,
                 "character": 23
               }
             },
@@ -4268,7 +4616,7 @@
     "maxProperties": 0,
     "position": {
       "file": "demo/cases.ts",
-      "line": 528,
+      "line": 529,
       "character": 0
     },
     "decorators": [
@@ -4291,7 +4639,7 @@
     ],
     "position": {
       "file": "demo/cases.ts",
-      "line": 539,
+      "line": 540,
       "character": 5
     }
   },
@@ -4302,7 +4650,7 @@
       "kind": "file",
       "position": {
         "file": "demo/cases.ts",
-        "line": 545,
+        "line": 546,
         "character": 48
       }
     },
@@ -4310,6 +4658,16 @@
     "parameters": [],
     "comments": [
       "/**\n * @method get\n * @path /download\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "method",
+        "comment": "get"
+      },
+      {
+        "name": "path",
+        "comment": "/download"
+      }
     ],
     "method": "get",
     "path": "/download"
@@ -4321,7 +4679,7 @@
       "kind": "void",
       "position": {
         "file": "demo/cases.ts",
-        "line": 551,
+        "line": 552,
         "character": 47
       }
     },
@@ -4329,6 +4687,16 @@
     "parameters": [],
     "comments": [
       "/**\n * @method get\n * @path /empty\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "method",
+        "comment": "get"
+      },
+      {
+        "name": "path",
+        "comment": "/empty"
+      }
     ],
     "method": "get",
     "path": "/empty"
@@ -4340,7 +4708,7 @@
       "kind": "void",
       "position": {
         "file": "demo/cases.ts",
-        "line": 562,
+        "line": 563,
         "character": 12
       }
     },
@@ -4352,7 +4720,7 @@
           "kind": "file",
           "position": {
             "file": "demo/cases.ts",
-            "line": 561,
+            "line": 562,
             "character": 9
           }
         },
@@ -4360,11 +4728,27 @@
         "comments": [
           "/**\n   * @in body\n   */"
         ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "body"
+          }
+        ],
         "in": "body"
       }
     ],
     "comments": [
       "/**\n * @method post\n * @path /upload\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "method",
+        "comment": "post"
+      },
+      {
+        "name": "path",
+        "comment": "/upload"
+      }
     ],
     "method": "post",
     "path": "/upload"

@@ -59,7 +59,7 @@ export type EnumDeclaration = {
   type: string;
   members: EnumMember[];
   description?: string;
-} & Position & Comments
+} & Position & JsDocAndComment
 
 interface Position {
   position: PositionValue
@@ -108,7 +108,7 @@ export type ReferenceDeclaration = ReferenceType & {
   newName: string;
 }
 
-export interface FunctionDeclaration extends Comments {
+export interface FunctionDeclaration extends JsDocAndComment {
   kind: 'function';
   name: string;
   type: Type;
@@ -136,7 +136,7 @@ export type MapType = {
   value: Type;
   default?: unknown
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
 /**
  * @public
@@ -148,14 +148,14 @@ export type EnumType = {
   enums: unknown[];
   default?: unknown
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
 export type ReferenceType = {
   kind: 'reference';
   name: string;
   default?: unknown;
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
 export type NumberType = {
   kind: 'number';
@@ -169,7 +169,7 @@ export type NumberType = {
   enums?: string[];
   title?: string;
   description?: string;
-} & Position & Comments
+} & Position & JsDocAndComment
 
 export type StringType = {
   kind: 'string';
@@ -184,7 +184,7 @@ export type StringType = {
   uppercase?: boolean;
   trim?: boolean;
   templateLiteral?: TemplateLiteralPart[];
-} & Position & Comments
+} & Position & JsDocAndComment
 
 export type TemplateLiteralPart =
   | {
@@ -226,7 +226,7 @@ export type BooleanType = {
   default?: boolean;
   title?: string;
   description?: string;
-} & Position & Comments
+} & Position & JsDocAndComment
 
 /**
  * @public
@@ -235,7 +235,7 @@ export type AnyType = {
   kind: undefined;
   default?: unknown
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
 export type ObjectType = {
   kind: 'object';
@@ -246,7 +246,7 @@ export type ObjectType = {
   default?: unknown;
   title?: string;
   description?: string;
-} & Position & Comments & Decorators
+} & Position & JsDocAndComment & Decorators
 
 export type Decorator = {
   name: string
@@ -266,7 +266,7 @@ export type ArrayType = {
   default?: unknown[]
   title?: string;
   description?: string;
-} & Position & Comments
+} & Position & JsDocAndComment
 
 /**
  * @public
@@ -275,7 +275,7 @@ export type NullType = {
   kind: 'null'
   default?: unknown
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
 /**
  * @public
@@ -303,9 +303,9 @@ export type UnionType = {
   members: Type[];
   default?: unknown
   description?: string
-} & Position & Comments
+} & Position & JsDocAndComment
 
-export interface Member extends Comments, Decorators {
+export interface Member extends JsDocAndComment, Decorators {
   name: string;
   type: Type;
   optional?: boolean;
@@ -318,11 +318,20 @@ export interface Member extends Comments, Decorators {
   parameters?: Parameter[];
 }
 
-interface Comments {
+export interface JsDocAndComment {
   comments?: string[]
+  jsDocs?: JsDoc[]
 }
 
-export interface Parameter extends Comments, Decorators {
+export interface JsDoc {
+  name: string;
+  type?: Type;
+  paramName?: string;
+  comment?: string;
+  optional?: boolean;
+}
+
+export interface Parameter extends JsDocAndComment, Decorators {
   name: string;
   type: Type;
   optional?: boolean;

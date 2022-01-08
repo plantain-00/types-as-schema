@@ -471,6 +471,7 @@ export interface MongooseScheme {
   decimal128: Decimal128
   /**
    * @index
+   * @autoincrement
    */
   index1: string
   /**

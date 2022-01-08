@@ -166,6 +166,12 @@
     },
     "comments": [
       "/**\n * @entry request-protocol.json\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "request-protocol.json"
+      }
     ]
   },
   {
@@ -381,6 +387,12 @@
     },
     "comments": [
       "/**\n * @entry response-protocol.json\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "response-protocol.json"
+      }
     ]
   },
   {
@@ -750,6 +762,12 @@
     },
     "comments": [
       "/**\n * @entry flow-protocol.json\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "flow-protocol.json"
+      }
     ]
   },
   {
