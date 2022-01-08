@@ -20,7 +20,7 @@ import {
   Expression,
   warn,
   FunctionDeclaration,
-  FunctionParameter, EnumType, Decorator, TemplateLiteralPart
+  FunctionParameter, EnumType, Decorator, TemplateLiteralPart, JsDoc, JsDocAndComment
 } from './utils'
 
 export class Parser {
@@ -110,11 +110,10 @@ export class Parser {
 
   private handleSourceFile(node: ts.Node, sourceFile: ts.SourceFile) {
     const jsDocs = this.getJsDocs(node, sourceFile)
-    const entry = jsDocs.jsDocs.find(jsDoc => jsDoc.name === 'entry')
     if (ts.isTypeAliasDeclaration(node)) {
-      this.handleTypeAliasDeclaration(node, jsDocs, entry, sourceFile)
+      this.handleTypeAliasDeclaration(node, jsDocs, sourceFile)
     } else if (ts.isInterfaceDeclaration(node) || ts.isClassDeclaration(node)) {
-      this.handleInterfaceOrClassDeclaration(node, jsDocs, entry, sourceFile)
+      this.handleInterfaceOrClassDeclaration(node, jsDocs, sourceFile)
     } else if (ts.isFunctionDeclaration(node)) {
       this.handleFunctionDeclaration(node, jsDocs, sourceFile)
     }
@@ -138,8 +137,9 @@ export class Parser {
       optional: !!declaration.questionToken,
       parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
       comments,
+      jsDocs,
     }
-    for (const jsDoc of jsDocs) {
+    for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
         if (jsDoc.name === 'method') {
           functionDeclaration.method = jsDoc.comment
@@ -163,7 +163,8 @@ export class Parser {
     const parameterDoc = this.getParameter(parameter, sourceFile)
     const { jsDocs, comments } = this.getJsDocs(parameter, sourceFile)
     parameterDoc.comments = comments
-    for (const jsDoc of jsDocs) {
+    parameterDoc.jsDocs = jsDocs
+    for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment && jsDoc.name === 'in') {
         parameterDoc.in = jsDoc.comment
       } else {
@@ -179,7 +180,6 @@ export class Parser {
   private handleInterfaceOrClassDeclaration(
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
     { jsDocs, comments }: JsDocAndComment,
-    entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
     if (declaration.name) {
@@ -215,13 +215,14 @@ export class Parser {
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
-      entry: entry ? entry.comment : undefined,
+      entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
       position: this.getPosition(declaration, sourceFile),
       comments,
+      jsDocs,
       decorators: ts.isClassDeclaration(declaration) ? this.getDecorators(sourceFile, declaration.decorators) : undefined,
     }
 
-    for (const jsDoc of jsDocs) {
+    for (const jsDoc of jsDocs || []) {
       this.setJsDocObject(jsDoc, objectDeclaration)
     }
 
@@ -282,7 +283,6 @@ export class Parser {
   private handleTypeAliasDeclaration(
     declaration: ts.TypeAliasDeclaration,
     jsDocs: JsDocAndComment,
-    entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
     if (ts.isArrayTypeNode(declaration.type)) {
@@ -290,7 +290,6 @@ export class Parser {
         declaration.type,
         declaration.name,
         jsDocs,
-        entry,
         sourceFile
       )
     } else if (ts.isTypeLiteralNode(declaration.type)
@@ -300,7 +299,6 @@ export class Parser {
         declaration.type,
         declaration.name,
         jsDocs,
-        entry,
         sourceFile
       )
     } else if (ts.isTypeReferenceNode(declaration.type) && ts.isIdentifier(declaration.type.typeName)) {
@@ -360,7 +358,6 @@ export class Parser {
     declarationType: ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode,
     declarationName: ts.Identifier,
     { jsDocs, comments }: JsDocAndComment,
-    entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
     let unionDeclaration: UnionDeclaration | undefined
@@ -374,9 +371,10 @@ export class Parser {
           kind: 'union',
           name: declarationName.text,
           members: declarationType.types.map(u => this.getType(u, sourceFile)),
-          entry: entry ? entry.comment : undefined,
+          entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
           position: this.getPosition(declarationName, sourceFile),
           comments,
+          jsDocs,
         }
         this.declarations.push(unionDeclaration)
       }
@@ -389,11 +387,12 @@ export class Parser {
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
       additionalProperties,
-      entry: entry ? entry.comment : undefined,
+      entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
       position: this.getPosition(declarationName, sourceFile),
       comments,
+      jsDocs,
     }
-    for (const jsDoc of jsDocs) {
+    for (const jsDoc of jsDocs || []) {
       this.setJsDocObject(jsDoc, objectDeclaration)
     }
     if (unionDeclaration) {
@@ -454,7 +453,6 @@ export class Parser {
     arrayType: ts.ArrayTypeNode,
     declarationName: ts.Identifier,
     { jsDocs, comments }: JsDocAndComment,
-    entry: JsDoc | undefined,
     sourceFile: ts.SourceFile
   ) {
     const type = this.getType(arrayType.elementType, sourceFile)
@@ -462,11 +460,12 @@ export class Parser {
       kind: 'array',
       name: declarationName.text,
       type,
-      entry: entry ? entry.comment : undefined,
+      entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
       position: this.getPosition(declarationName, sourceFile),
       comments,
+      jsDocs,
     }
-    for (const jsDoc of jsDocs) {
+    for (const jsDoc of jsDocs || []) {
       this.setJsDocArray(jsDoc, arrayDeclaration)
     }
     this.declarations.push(arrayDeclaration)
@@ -483,7 +482,7 @@ export class Parser {
         type: jsDoc.type ? this.getType(jsDoc.type, sourceFile) : undefined
       })
     }
-    return { jsDocs: result, comments }
+    return { jsDocs: result.length === 0 ? undefined : result, comments }
   }
 
   private getType(type: ts.TypeNode | ts.TemplateLiteralLikeNode, sourceFile: ts.SourceFile): Type {
@@ -1419,7 +1418,8 @@ export class Parser {
   ) {
     const { jsDocs, comments } = this.getJsDocs(property, sourceFile)
     member.comments = comments
-    for (const propertyJsDoc of jsDocs) {
+    member.jsDocs = jsDocs
+    for (const propertyJsDoc of jsDocs || []) {
       if (propertyJsDoc.name === 'tag') {
         this.setJsDocTag(propertyJsDoc, member)
       } else if (propertyJsDoc.name === 'param') {
@@ -1660,19 +1660,6 @@ export class Parser {
 }
 
 const numberTypes = ['double', 'float', 'uint32', 'fixed32', 'integer', 'int32', 'sint32', 'sfixed32', 'uint64', 'fixed64', 'int64', 'sint64', 'sfixed64']
-
-interface JsDoc {
-  name: string;
-  type?: Type;
-  paramName?: string;
-  comment?: string;
-  optional?: boolean;
-}
-
-interface JsDocAndComment {
-  jsDocs: JsDoc[]
-  comments?: string[]
-}
 
 interface MembersInfo {
   members: Member[];

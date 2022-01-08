@@ -20,6 +20,19 @@
     "comments": [
       "/**\n * @entry groups-schema.json\n * @uniqueItems\n * @minItems 1\n */"
     ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "groups-schema.json"
+      },
+      {
+        "name": "uniqueItems"
+      },
+      {
+        "name": "minItems",
+        "comment": "1"
+      }
+    ],
     "uniqueItems": true,
     "minItems": 1
   },
@@ -50,6 +63,15 @@
         },
         "comments": [
           "/**\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "uniqueItems"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          }
         ]
       },
       {
@@ -88,6 +110,19 @@
         },
         "comments": [
           "/**\n   * @itemMinimum 1\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "itemMinimum",
+            "comment": "1"
+          },
+          {
+            "name": "uniqueItems"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          }
         ]
       }
     ],
@@ -175,6 +210,15 @@
         },
         "comments": [
           "/**\n   * @uniqueItems\n   * @minItems 1\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "uniqueItems"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          }
         ]
       }
     ],
@@ -205,6 +249,19 @@
     },
     "comments": [
       "/**\n * @entry teams-schema.json\n * @uniqueItems\n * @minItems 1\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "teams-schema.json"
+      },
+      {
+        "name": "uniqueItems"
+      },
+      {
+        "name": "minItems",
+        "comment": "1"
+      }
     ],
     "uniqueItems": true,
     "minItems": 1
