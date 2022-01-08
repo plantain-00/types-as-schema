@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.43.0](https://github.com/plantain-00/types-as-schema/compare/v1.42.0...v1.43.0) (2022-01-08)
+  
+* feat: record jsdocs ([d6ab4fa](https://github.com/plantain-00/types-as-schema/commit/d6ab4faa29af42f08219dd2e0053b9b0754ce5e7))
+
 ## [1.42.0](https://github.com/plantain-00/types-as-schema/compare/v1.41.1...v1.42.0) (2022-01-05)
   
 * feat: support keyof type ([7ef7a0d](https://github.com/plantain-00/types-as-schema/commit/7ef7a0d270ab4cbb330bb1f9313bedbc47156181))
