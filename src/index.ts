@@ -139,7 +139,18 @@ async function executeCommandLine() {
     }
 
     if (configPath) {
-      const configFilePath = path.resolve(process.cwd(), configPath)
+      let configFilePath: string
+      if (path.isAbsolute(configPath)) {
+        configFilePath = configPath
+      } else if (configPath.startsWith(`.${path.sep}`)
+        || configPath.startsWith(`..${path.sep}`)
+        || configPath.startsWith('./')
+        || configPath.startsWith('../')
+      ) {
+        configFilePath = path.resolve(process.cwd(), configPath)
+      } else {
+        configFilePath = configPath
+      }
       if (configFilePath.endsWith('.ts')) {
         require('ts-node/register/transpile-only')
       }
