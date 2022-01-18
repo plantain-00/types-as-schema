@@ -45,7 +45,7 @@ async function executeCommandLine() {
     watchMode,
     looseMode,
     customPath,
-    configPath,
+    configPaths,
     typescriptPath,
     markdownPath,
   } = parseParameters(argv)
@@ -79,7 +79,7 @@ async function executeCommandLine() {
     const generator = new Generator(
       sourceFiles.filter((s): s is ts.SourceFile => !!s),
       looseMode,
-      !!configPath,
+      !!configPaths,
       fileName => path.relative(process.cwd(), fileName),
       program.getTypeChecker(),
     )
@@ -138,7 +138,8 @@ async function executeCommandLine() {
       generateJsonSchemas(generator)
     }
 
-    if (configPath) {
+    if (configPaths) {
+      for (const configPath of configPaths) {
       let configFilePath: string
       if (path.isAbsolute(configPath)) {
         configFilePath = configPath
@@ -171,6 +172,7 @@ async function executeCommandLine() {
           fs.writeFileSync(r.path, r.content)
         }
       }
+      }
     }
 
     if (typescriptPath) {
@@ -196,12 +198,26 @@ async function executeCommandLine() {
   }
 }
 
-function parseParameter(argv: PathArgs, name: keyof PathArgs): string | undefined {
+function parseParameter(argv: PathArgs, name: keyof PathArgs) {
   const result = argv[name]
   if (result && typeof result !== 'string') {
     throw new Error(`expect the path of generated ${name} file`)
   }
   return result
+}
+
+function parseConfigPaths(argv: PathArgs) {
+  const result = argv.config
+  if (!result) {
+    return undefined
+  }
+  if (typeof result === 'string') {
+    return [result]
+  }
+  if (Array.isArray(result) && result.length > 0) {
+    return result
+  }
+  throw new Error(`expect the path of generated config file`)
 }
 
 function parseParameters(argv: Args) {
@@ -217,7 +233,7 @@ function parseParameters(argv: Args) {
   const swaggerBasePath = parseParameter(argv, 'swagger-base')
   const debugPath = parseParameter(argv, 'debug')
   const customPath = parseParameter(argv, 'custom')
-  const configPath = parseParameter(argv, 'config')
+  const configPaths = parseConfigPaths(argv)
   const typescriptPath = parseParameter(argv, 'typescript')
   const markdownPath = parseParameter(argv, 'markdown')
 
@@ -246,7 +262,7 @@ function parseParameters(argv: Args) {
     watchMode,
     looseMode,
     customPath,
-    configPath,
+    configPaths,
     typescriptPath,
     markdownPath,
   }
@@ -276,7 +292,7 @@ interface PathArgs {
   ['swagger-base']: string
   debug: string
   custom: string
-  config: string
+  config: string[] | string
   typescript: string
   markdown: string
 }
@@ -310,7 +326,7 @@ Options:
  --debug                                            generated file with debug information in it
  --watch, -w                                        watch mode
  --loose                                            do not force additionalProperties
- --config                                           generate file by the config file
+ --config                                           generate file by the config file, can be multiple
  --markdown                                         generated markdown file
 `)
 }

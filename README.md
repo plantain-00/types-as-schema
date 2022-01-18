@@ -57,7 +57,7 @@ parameters | description
 `--debug` | generated file with debug information in it
 `--watch` or `-w` | watch mode
 `--loose` | do not force `additionalProperties`
-`--config` | generate file by the config file
+`--config` | generate file by the config file, can be multiple
 `--markdown` | generated markdown file
 `-h` or `--help` | Print this message.
 `-v` or `--version` | Print the version

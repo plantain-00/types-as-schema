@@ -61,11 +61,17 @@ export type EnumDeclaration = {
   description?: string;
 } & Position & JsDocAndComment
 
-interface Position {
+/**
+ * @public
+ */
+export interface Position {
   position: PositionValue
 }
 
-interface PositionValue {
+/**
+ * @public
+ */
+export interface PositionValue {
   file: string
   line: number
   character: number

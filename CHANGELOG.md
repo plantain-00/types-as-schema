@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.44.0](https://github.com/plantain-00/types-as-schema/compare/v1.43.1...v1.44.0) (2022-01-18)
+  
+* feat: support multiple --config ([1d80bcc](https://github.com/plantain-00/types-as-schema/commit/1d80bcc69fa3a3a0120ef06c24320eeec56e34b6))
+
 ## [1.43.1](https://github.com/plantain-00/types-as-schema/compare/v1.43.0...v1.43.1) (2022-01-11)
   
 * fix: --config with file in node_modules ([5e58edf](https://github.com/plantain-00/types-as-schema/commit/5e58edfca88528d5b4e91e73513d4aea64647fd7))
