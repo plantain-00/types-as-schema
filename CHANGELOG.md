@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.45.0](https://github.com/plantain-00/types-as-schema/compare/v1.44.0...v1.45.0) (2022-01-22)
+  
+* feat: function declaration expose position ([214adad](https://github.com/plantain-00/types-as-schema/commit/214adad0cd531919ad64e1abaf3cd4e10377cc84))
+
 ## [1.44.0](https://github.com/plantain-00/types-as-schema/compare/v1.43.1...v1.44.0) (2022-01-18)
   
 * feat: support multiple --config ([1d80bcc](https://github.com/plantain-00/types-as-schema/commit/1d80bcc69fa3a3a0120ef06c24320eeec56e34b6))

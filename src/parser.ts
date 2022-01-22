@@ -138,6 +138,7 @@ export class Parser {
       parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
       comments,
       jsDocs,
+      position: this.getPosition(declaration, sourceFile),
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {

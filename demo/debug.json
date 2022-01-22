@@ -3992,6 +3992,11 @@
         "comment": "pet"
       }
     ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 428,
+      "character": 0
+    },
     "method": "get",
     "path": "/pet/{id}",
     "summary": "get pet by id.",
@@ -4669,6 +4674,11 @@
         "comment": "/download"
       }
     ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 546,
+      "character": 0
+    },
     "method": "get",
     "path": "/download"
   },
@@ -4698,6 +4708,11 @@
         "comment": "/empty"
       }
     ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 552,
+      "character": 0
+    },
     "method": "get",
     "path": "/empty"
   },
@@ -4750,6 +4765,11 @@
         "comment": "/upload"
       }
     ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 558,
+      "character": 1
+    },
     "method": "post",
     "path": "/upload"
   }

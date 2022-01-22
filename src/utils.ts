@@ -114,7 +114,7 @@ export type ReferenceDeclaration = ReferenceType & {
   newName: string;
 }
 
-export interface FunctionDeclaration extends JsDocAndComment {
+export interface FunctionDeclaration extends Position, JsDocAndComment {
   kind: 'function';
   name: string;
   type: Type;
