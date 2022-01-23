@@ -20,7 +20,9 @@ export function generateTypescript(declarations: TypeDeclaration[]) {
   const messages: string[] = []
   for (const declaration of declarations) {
     if (declaration.kind === 'function') {
-      messages.push(generateTypescriptOfFunctionDeclaration(declaration))
+      if (declaration.name) {
+        messages.push(generateTypescriptOfFunctionDeclaration(declaration))
+      }
     } else if (declaration.kind === 'enum') {
       messages.push(generateTypescriptOfEnumDeclaration(declaration))
     } else if (declaration.kind === 'object') {

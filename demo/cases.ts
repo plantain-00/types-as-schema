@@ -563,3 +563,6 @@ export declare function returnEmpty(): Promise<void>
    file: File,
  ): Promise<void>
  
+ export default () => {
+   return 1
+ }

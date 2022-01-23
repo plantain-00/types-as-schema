@@ -4772,5 +4772,24 @@
     },
     "method": "post",
     "path": "/upload"
+  },
+  {
+    "kind": "function",
+    "name": "",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 565,
+        "character": 16
+      }
+    },
+    "optional": false,
+    "parameters": [],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 565,
+      "character": 16
+    },
+    "body": "{\n    return 1;\n}"
   }
 ]

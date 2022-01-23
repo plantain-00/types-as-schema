@@ -26,6 +26,13 @@ import {
 export class Parser {
   private declarations: TypeDeclaration[] = []
   disableWarning = false
+  private _printer: ts.Printer | undefined
+  private get printer() {
+    if (!this._printer) {
+      this._printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
+    }
+    return this._printer
+  }
 
   constructor(private sourceFiles: ts.SourceFile[], private getRelativePath: (fileName: string) => string, private checker?: ts.TypeChecker) { }
 
@@ -116,11 +123,13 @@ export class Parser {
       this.handleInterfaceOrClassDeclaration(node, jsDocs, sourceFile)
     } else if (ts.isFunctionDeclaration(node)) {
       this.handleFunctionDeclaration(node, jsDocs, sourceFile)
+    } else if (ts.isExportAssignment(node) && ts.isArrowFunction(node.expression)) {
+      this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile)
     }
   }
 
   private handleFunctionDeclaration(
-    declaration: ts.FunctionDeclaration,
+    declaration: ts.FunctionDeclaration | ts.ArrowFunction,
     { jsDocs, comments }: JsDocAndComment,
     sourceFile: ts.SourceFile
   ) {
@@ -139,6 +148,7 @@ export class Parser {
       comments,
       jsDocs,
       position: this.getPosition(declaration, sourceFile),
+      body: declaration.body ? this.printer.printNode(ts.EmitHint.Unspecified, declaration.body, sourceFile) : undefined,
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {

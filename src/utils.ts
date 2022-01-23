@@ -126,6 +126,7 @@ export interface FunctionDeclaration extends Position, JsDocAndComment {
   summary?: string
   deprecated?: boolean
   tags?: string[]
+  body?: string
 }
 
 export type FunctionParameter = Parameter & {

@@ -572,6 +572,9 @@ export declare function returnEmpty(): Promise<void>
    file: File,
  ): Promise<void>
  
+ export default () => {
+   return 1
+ }
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [
