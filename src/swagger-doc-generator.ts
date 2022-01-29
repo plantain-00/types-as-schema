@@ -26,6 +26,7 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
             in: useFormData ? 'formData' : parameter.in,
             schema: useFormData ? undefined : schema,
             type: useFormData ? schema.type : undefined,
+            description: useFormData ? undefined : parameter.type.description,
           }
         }),
         summary: typeDeclaration.summary,

@@ -56,7 +56,8 @@
               "minimum": 1,
               "default": 2,
               "description": "pet id"
-            }
+            },
+            "description": "pet id"
           },
           {
             "name": "sortType",
