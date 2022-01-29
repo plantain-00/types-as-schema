@@ -4780,7 +4780,7 @@
       "position": {
         "file": "demo/cases.ts",
         "line": 565,
-        "character": 16
+        "character": 15
       }
     },
     "optional": false,
@@ -4788,7 +4788,45 @@
     "position": {
       "file": "demo/cases.ts",
       "line": 565,
-      "character": 16
+      "character": 15
+    },
+    "body": "{\n    return 1;\n}"
+  },
+  {
+    "kind": "function",
+    "name": "Test1",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 569,
+        "character": 0
+      }
+    },
+    "optional": false,
+    "parameters": [],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 569,
+      "character": 0
+    },
+    "body": "{\n    return 1;\n}"
+  },
+  {
+    "kind": "function",
+    "name": "Test2",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 573,
+        "character": 21
+      }
+    },
+    "optional": false,
+    "parameters": [],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 573,
+      "character": 21
     },
     "body": "{\n    return 1;\n}"
   }

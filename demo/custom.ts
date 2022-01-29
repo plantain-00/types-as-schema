@@ -4,4 +4,6 @@ type TestType = {
   (functionName: 'returnEmpty'): string
   (functionName: 'uploadFile', file: File): string
   (functionName: ''): string
+  (functionName: 'Test1'): string
+  (functionName: 'Test2'): string
 }

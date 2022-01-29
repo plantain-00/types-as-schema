@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.47.0](https://github.com/plantain-00/types-as-schema/compare/v1.46.0...v1.47.0) (2022-01-29)
+  
+* feat: support more function declaration ([465fc0e](https://github.com/plantain-00/types-as-schema/commit/465fc0ec9b44cd25e0f61df42d0954b9cc26fc1c))
+* chore: update dependencies ([c5d8dcf](https://github.com/plantain-00/types-as-schema/commit/c5d8dcf74254695a310da48fa2fdc03b46ecc550))
+
 ## [1.46.0](https://github.com/plantain-00/types-as-schema/compare/v1.45.0...v1.46.0) (2022-01-23)
   
 * feat: support function body and export arrow function ([352d2ba](https://github.com/plantain-00/types-as-schema/commit/352d2ba8bfc54e704944579da5919f446affbb4b))

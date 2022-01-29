@@ -123,15 +123,23 @@ export class Parser {
       this.handleInterfaceOrClassDeclaration(node, jsDocs, sourceFile)
     } else if (ts.isFunctionDeclaration(node)) {
       this.handleFunctionDeclaration(node, jsDocs, sourceFile)
-    } else if (ts.isExportAssignment(node) && ts.isArrowFunction(node.expression)) {
-      this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile)
+    } else if (ts.isExportAssignment(node)) {
+      if (ts.isArrowFunction(node.expression)) {
+        this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile)
+      }
+    } else if (ts.isVariableStatement(node)) {
+      const declaration = node.declarationList.declarations[0]
+      if (declaration?.initializer && ts.isArrowFunction(declaration.initializer)) {
+        this.handleFunctionDeclaration(declaration.initializer, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined)
+      }
     }
   }
 
   private handleFunctionDeclaration(
     declaration: ts.FunctionDeclaration | ts.ArrowFunction,
     { jsDocs, comments }: JsDocAndComment,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    functionName?: string,
   ) {
     const type = declaration.type
       ? this.getType(declaration.type, sourceFile)
@@ -141,7 +149,7 @@ export class Parser {
       }
     const functionDeclaration: FunctionDeclaration = {
       kind: 'function',
-      name: declaration.name ? declaration.name.text : '',
+      name: functionName ?? (declaration.name ? declaration.name.text : ''),
       type,
       optional: !!declaration.questionToken,
       parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
