@@ -1608,13 +1608,13 @@ export class Parser {
         }
       } else if (jsDoc.name === 'default') {
         type.default = JSON.parse(this.getJsDocComment(jsDoc.comment))
+      } else if (jsDoc.name === 'title') {
+        type.title = jsDoc.comment
+      } else if (jsDoc.name === 'description') {
+        type.description = jsDoc.comment
       }
     } else if (jsDoc.name === 'uniqueItems') {
       type.uniqueItems = true
-    } else if (jsDoc.name === 'title') {
-      type.title = jsDoc.comment
-    } else if (jsDoc.name === 'description') {
-      type.description = jsDoc.comment
     }
   }
 

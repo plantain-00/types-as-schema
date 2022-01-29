@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.47.1](https://github.com/plantain-00/types-as-schema/compare/v1.47.0...v1.47.1) (2022-01-29)
+  
+* fix: missing description ([6113ddd](https://github.com/plantain-00/types-as-schema/commit/6113ddd26a2877d8d7f0f3cc4301d8dea8d2182b))
+
 ## [1.47.0](https://github.com/plantain-00/types-as-schema/compare/v1.46.0...v1.47.0) (2022-01-29)
   
 * feat: support more function declaration ([465fc0e](https://github.com/plantain-00/types-as-schema/commit/465fc0ec9b44cd25e0f61df42d0954b9cc26fc1c))
