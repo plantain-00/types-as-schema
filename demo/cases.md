@@ -552,6 +552,24 @@ Return | Description
 --- | ---
 `unknown` |
 
+## `Test1`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+
+Return | Description
+--- | ---
+`unknown` |
+
+## `Test2`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+
+Return | Description
+--- | ---
+`unknown` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

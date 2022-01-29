@@ -563,6 +563,14 @@ export declare function returnEmpty(): Promise<void>
    file: File,
  ): Promise<void>
  
- export default () => {
-   return 1
- }
+export default () => {
+  return 1
+}
+
+export function Test1() {
+  return 1
+}
+
+export const Test2 = () => {
+  return 1
+}

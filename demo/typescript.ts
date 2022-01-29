@@ -498,6 +498,10 @@ declare function returnEmpty(): void
  */
 declare function uploadFile(file: File): void
 
+declare function Test1(): unknown
+
+declare function Test2(): unknown
+
 interface OuterType {
   outerType: number
 }
