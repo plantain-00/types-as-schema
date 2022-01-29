@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as chokidar from 'chokidar'
 import fse from 'fs-extra'
+import fg from 'fast-glob'
 import { Generator } from './core'
 import * as typescriptGenerator from './typescript-generator'
 import * as packageJson from '../package.json'
@@ -70,11 +71,12 @@ async function executeCommandLine() {
 
   let program: ts.Program | undefined
 
-  function run() {
-    const newProgram = ts.createProgram(filePaths, { target: ts.ScriptTarget.ESNext }, undefined, program)
+  async function run() {
+    const files = await fg(filePaths);
+    const newProgram = ts.createProgram(files, { target: ts.ScriptTarget.ESNext }, undefined, program)
     program = newProgram
 
-    const sourceFiles = filePaths.map(filePath => newProgram.getSourceFile(filePath))
+    const sourceFiles = files.map(filePath => newProgram.getSourceFile(filePath))
 
     const generator = new Generator(
       sourceFiles.filter((s): s is ts.SourceFile => !!s),
@@ -187,14 +189,18 @@ async function executeCommandLine() {
   }
 
   if (watchMode) {
-    chokidar.watch(filePaths).on('all', (type: string, file: string) => {
+    let ready = false
+    chokidar.watch(filePaths).on('ready', () => {
+      ready = true
+      run()
+    }).on('all', (type: string, file: string) => {
       printInConsole(`Detecting ${type}: ${file}`)
-      if (type === 'add' || type === 'change') {
+      if (ready) {
         run()
       }
     })
   } else {
-    run()
+    await run()
   }
 }
 

@@ -3430,7 +3430,7 @@ tsconfig-plantain@0.0.2:
   resolved "https://registry.yarnpkg.com/tsconfig-plantain/-/tsconfig-plantain-0.0.2.tgz#6934e0596873a448cfe673767f14b8f8c6f0d0e2"
   integrity sha512-flRn+rNie8A4ORR5gThnaiculQ7wkNf0/opnOgb8pJM7SmJgupg+LQsDw/+YYQU3TlFGzI4Bn7CCqxs+HgbYsQ==
 
-"tslib@1 || 2", tslib@2.3.1, tslib@^2.1.0:
+"tslib@1 || 2", tslib@2, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

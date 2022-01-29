@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.47.2](https://github.com/plantain-00/types-as-schema/compare/v1.47.1...v1.47.2) (2022-01-29)
+  
+* fix: watch mode ([c9c20c6](https://github.com/plantain-00/types-as-schema/commit/c9c20c6defdad43e002b8399a0b4528db9f8ac5f))
+
 ## [1.47.1](https://github.com/plantain-00/types-as-schema/compare/v1.47.0...v1.47.1) (2022-01-29)
   
 * fix: missing description ([6113ddd](https://github.com/plantain-00/types-as-schema/commit/6113ddd26a2877d8d7f0f3cc4301d8dea8d2182b))
