@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.47.3](https://github.com/plantain-00/types-as-schema/compare/v1.47.2...v1.47.3) (2022-01-30)
+  
+* fix: use getText rather than printer ([1ec1e09](https://github.com/plantain-00/types-as-schema/commit/1ec1e099a6d5bfb16d3e4b53a2051251c27abbe3))
+
 ## [1.47.2](https://github.com/plantain-00/types-as-schema/compare/v1.47.1...v1.47.2) (2022-01-29)
   
 * fix: watch mode ([c9c20c6](https://github.com/plantain-00/types-as-schema/commit/c9c20c6defdad43e002b8399a0b4528db9f8ac5f))
