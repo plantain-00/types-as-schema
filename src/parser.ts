@@ -26,14 +26,6 @@ import {
 export class Parser {
   private declarations: TypeDeclaration[] = []
   disableWarning = false
-  private _printer: ts.Printer | undefined
-  private get printer() {
-    if (!this._printer) {
-      this._printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
-    }
-    return this._printer
-  }
-
   constructor(private sourceFiles: ts.SourceFile[], private getRelativePath: (fileName: string) => string, private checker?: ts.TypeChecker) { }
 
   parse() {
@@ -156,7 +148,7 @@ export class Parser {
       comments,
       jsDocs,
       position: this.getPosition(declaration, sourceFile),
-      body: declaration.body ? this.printer.printNode(ts.EmitHint.Unspecified, declaration.body, sourceFile) : undefined,
+      body: declaration.body?.getText(sourceFile),
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
