@@ -126,6 +126,32 @@ interface Enum {
   stringEnum2: "foo"
 }
 
+type integer = number
+
+type uint32 = number
+
+type int32 = number
+
+type sint32 = number
+
+type fixed32 = number
+
+type sfixed32 = number
+
+type uint64 = number
+
+type int64 = number
+
+type sint64 = number
+
+type fixed64 = number
+
+type sfixed64 = number
+
+type float = number
+
+type double = number
+
 interface NumberType {
   /**
    * @multipleOf 10
@@ -431,6 +457,8 @@ interface MongooseScheme {
   buffer: Buffer
 }
 
+type Decimal128 = number
+
 interface CreateInput2 {
   member1: string
   member2: File
@@ -501,6 +529,16 @@ declare function uploadFile(file: File): void
 declare function Test1(): unknown
 
 declare function Test2(): unknown
+
+/**
+ * @method get
+ * @path /pet/{id}
+ * @summary get pet by id.
+ * @description get pet by id
+ * @deprecated
+ * @tags pet
+ */
+declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number, sortType?: "asc" | "desc"): Pet
 
 interface OuterType {
   outerType: number

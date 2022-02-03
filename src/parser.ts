@@ -128,7 +128,7 @@ export class Parser {
   }
 
   private handleFunctionDeclaration(
-    declaration: ts.FunctionDeclaration | ts.ArrowFunction,
+    declaration: ts.FunctionDeclaration | ts.ArrowFunction | ts.FunctionTypeNode,
     { jsDocs, comments }: JsDocAndComment,
     sourceFile: ts.SourceFile,
     functionName?: string,
@@ -141,14 +141,14 @@ export class Parser {
       }
     const functionDeclaration: FunctionDeclaration = {
       kind: 'function',
-      name: functionName ?? (declaration.name ? declaration.name.text : ''),
+      name: functionName ?? (declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''),
       type,
-      optional: !!declaration.questionToken,
+      optional: ts.isFunctionTypeNode(declaration) ? false : !!declaration.questionToken,
       parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
       comments,
       jsDocs,
       position: this.getPosition(declaration, sourceFile),
-      body: declaration.body?.getText(sourceFile),
+      body: ts.isFunctionTypeNode(declaration) ? undefined : declaration.body?.getText(sourceFile),
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
@@ -360,6 +360,38 @@ export class Parser {
           name: declaration.name.text,
           templateLiteral: this.getTemplateLiteral(declaration.type, spans),
           position: this.getPosition(declaration.type, sourceFile)
+        })
+      }
+    } else if (ts.isFunctionTypeNode(declaration.type)) {
+      this.handleFunctionDeclaration(declaration.type, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined)
+    } else {
+      const type = this.getType(declaration.type, sourceFile)
+      const declarationName = declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''
+      if (type.kind === 'reference') {
+        this.declarations.push({
+          newName: declarationName,
+          ...type,
+          ...jsDocs,
+        })
+      } else if (type.kind === 'enum') {
+        this.declarations.push({
+          members: type.enums.map((e) => ({
+            name: e as string,
+            value: e as string | number,
+          })),
+          ...type,
+          ...jsDocs,
+          name: declarationName,
+        })
+      } else if (
+        type.kind !== undefined &&
+        type.kind !== 'file' &&
+        type.kind !== 'void'
+      ) {
+        this.declarations.push({
+          ...type,
+          ...jsDocs,
+          name: declarationName,
         })
       }
     }

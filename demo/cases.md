@@ -165,6 +165,45 @@ Field | Required | Type | Description
 `numberEnum2` | `true` | [`NumberEnum2`](#NumberEnum2) |
 `stringEnum2` | `true` | `"foo"` |
 
+## `integer`
+
+
+## `uint32`
+
+
+## `int32`
+
+
+## `sint32`
+
+
+## `fixed32`
+
+
+## `sfixed32`
+
+
+## `uint64`
+
+
+## `int64`
+
+
+## `sint64`
+
+
+## `fixed64`
+
+
+## `sfixed64`
+
+
+## `float`
+
+
+## `double`
+
+
 ## `NumberType`
 
 Field | Required | Type | Description
@@ -447,6 +486,9 @@ Field | Required | Type | Description
 `index3` | `true` | `string` |
 `buffer` | `true` | [`Buffer`](#Buffer) |
 
+## `Decimal128`
+
+
 ## `CreateInput2`
 
 Field | Required | Type | Description
@@ -569,6 +611,25 @@ Field | Required | Type | Description
 Return | Description
 --- | ---
 `unknown` |
+
+## `getPetById`
+
+get pet by id
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`status` | `true` | `"health" | "sick"` |
+`tags` | `true` | `string[]` |
+`pet` | `true` | [`Pet`](#Pet) |
+`id` | `false` | `number` | pet id
+`sortType` | `false` | `"asc" | "desc"` |
+
+Return | Description
+--- | ---
+[`Pet`](#Pet) |
+
+## `Boolean`
+
 
 ## `OuterType`
 

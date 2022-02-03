@@ -175,6 +175,16 @@
     ]
   },
   {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/log-tool/types.ts",
+      "line": 17,
+      "character": 14
+    },
+    "name": "uint32"
+  },
+  {
     "kind": "object",
     "name": "SearchLogs",
     "members": [
