@@ -1140,6 +1140,136 @@
     }
   },
   {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 126,
+      "character": 15
+    },
+    "name": "integer"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 127,
+      "character": 14
+    },
+    "name": "uint32"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 128,
+      "character": 13
+    },
+    "name": "int32"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 129,
+      "character": 14
+    },
+    "name": "sint32"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 130,
+      "character": 15
+    },
+    "name": "fixed32"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 131,
+      "character": 16
+    },
+    "name": "sfixed32"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 132,
+      "character": 14
+    },
+    "name": "uint64"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 133,
+      "character": 13
+    },
+    "name": "int64"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 134,
+      "character": 14
+    },
+    "name": "sint64"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 135,
+      "character": 15
+    },
+    "name": "fixed64"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 136,
+      "character": 16
+    },
+    "name": "sfixed64"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 137,
+      "character": 13
+    },
+    "name": "float"
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 138,
+      "character": 14
+    },
+    "name": "double"
+  },
+  {
     "kind": "object",
     "name": "NumberType",
     "members": [
@@ -4152,6 +4282,16 @@
     }
   },
   {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 483,
+      "character": 18
+    },
+    "name": "Decimal128"
+  },
+  {
     "name": "CreateInput2",
     "kind": "object",
     "members": [
@@ -4724,7 +4864,7 @@
       "position": {
         "file": "demo/cases.ts",
         "line": 563,
-        "character": 12
+        "character": 11
       }
     },
     "optional": false,
@@ -4736,7 +4876,7 @@
           "position": {
             "file": "demo/cases.ts",
             "line": 562,
-            "character": 9
+            "character": 8
           }
         },
         "optional": false,
@@ -4768,7 +4908,7 @@
     "position": {
       "file": "demo/cases.ts",
       "line": 558,
-      "character": 1
+      "character": 0
     },
     "method": "post",
     "path": "/upload"
@@ -4829,5 +4969,228 @@
       "character": 21
     },
     "body": "{\n  return 1\n}"
+  },
+  {
+    "kind": "function",
+    "name": "getPetById",
+    "type": {
+      "kind": "reference",
+      "name": "Pet",
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 611,
+        "character": 13
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "status",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "health",
+            "sick"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 589,
+            "character": 10
+          }
+        },
+        "optional": false,
+        "comments": [
+          "/**\n   * @in query\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "query"
+          }
+        ],
+        "in": "query"
+      },
+      {
+        "name": "tags",
+        "type": {
+          "kind": "array",
+          "type": {
+            "kind": "string",
+            "position": {
+              "file": "demo/cases.ts",
+              "line": 594,
+              "character": 8
+            }
+          },
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 594,
+            "character": 8
+          },
+          "minItems": 1
+        },
+        "optional": false,
+        "comments": [
+          "/**\n   * @in body\n   * @minItems 1\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "body"
+          },
+          {
+            "name": "minItems",
+            "comment": "1"
+          }
+        ],
+        "in": "body"
+      },
+      {
+        "name": "pet",
+        "type": {
+          "kind": "reference",
+          "name": "Pet",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 598,
+            "character": 7
+          }
+        },
+        "optional": false,
+        "comments": [
+          "/**\n   * @in body\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "body"
+          }
+        ],
+        "in": "body"
+      },
+      {
+        "name": "id",
+        "type": {
+          "kind": "number",
+          "type": "integer",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 605,
+            "character": 6
+          },
+          "default": 2,
+          "description": "pet id",
+          "minimum": 1
+        },
+        "optional": true,
+        "comments": [
+          "/**\n   * @in path\n   * @description pet id\n   * @minimum 1\n   * @default 2\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "path"
+          },
+          {
+            "name": "description",
+            "comment": "pet id"
+          },
+          {
+            "name": "minimum",
+            "comment": "1"
+          },
+          {
+            "name": "default",
+            "comment": "2"
+          }
+        ],
+        "in": "path"
+      },
+      {
+        "name": "sortType",
+        "type": {
+          "kind": "enum",
+          "type": "string",
+          "name": "string",
+          "enums": [
+            "asc",
+            "desc"
+          ],
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 610,
+            "character": 12
+          },
+          "default": "asc"
+        },
+        "optional": true,
+        "comments": [
+          "/**\n   * @in query\n   * @default asc\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "in",
+            "comment": "query"
+          },
+          {
+            "name": "default",
+            "comment": "asc"
+          }
+        ],
+        "in": "query"
+      }
+    ],
+    "comments": [
+      "/**\n * @method get\n * @path /pet/{id}\n * @summary get pet by id.\n * @description get pet by id\n * @deprecated\n * @tags pet\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "method",
+        "comment": "get"
+      },
+      {
+        "name": "path",
+        "comment": "/pet/{id}"
+      },
+      {
+        "name": "summary",
+        "comment": "get pet by id."
+      },
+      {
+        "name": "description",
+        "comment": "get pet by id"
+      },
+      {
+        "name": "deprecated"
+      },
+      {
+        "name": "tags",
+        "comment": "pet"
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 585,
+      "character": 18
+    },
+    "method": "get",
+    "path": "/pet/{id}",
+    "summary": "get pet by id.",
+    "description": "get pet by id",
+    "deprecated": true,
+    "tags": [
+      "pet"
+    ]
+  },
+  {
+    "kind": "boolean",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 613,
+      "character": 15
+    },
+    "name": "Boolean"
   }
 ]

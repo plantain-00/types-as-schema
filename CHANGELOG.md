@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.48.0](https://github.com/plantain-00/types-as-schema/compare/v1.47.3...v1.48.0) (2022-02-03)
+  
+* feat: support more declarations ([3589bff](https://github.com/plantain-00/types-as-schema/commit/3589bffa726f1af058de0be2061181014e5db80d))
+
 ## [1.47.3](https://github.com/plantain-00/types-as-schema/compare/v1.47.2...v1.47.3) (2022-01-30)
   
 * fix: use getText rather than printer ([1ec1e09](https://github.com/plantain-00/types-as-schema/commit/1ec1e099a6d5bfb16d3e4b53a2051251c27abbe3))

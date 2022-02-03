@@ -132,6 +132,16 @@
     }
   },
   {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 24,
+      "character": 14
+    },
+    "name": "uint32"
+  },
+  {
     "kind": "object",
     "name": "Item",
     "members": [
@@ -287,6 +297,16 @@
       "line": 39,
       "character": 12
     }
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 45,
+      "character": 13
+    },
+    "name": "int32"
   },
   {
     "kind": "object",
@@ -1249,6 +1269,16 @@
       "line": 144,
       "character": 12
     }
+  },
+  {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/baogame/common.ts",
+      "line": 191,
+      "character": 13
+    },
+    "name": "float"
   },
   {
     "kind": "object",

@@ -135,6 +135,16 @@
     }
   },
   {
+    "kind": "number",
+    "type": "number",
+    "position": {
+      "file": "demo/match-calculator/types.ts",
+      "line": 22,
+      "character": 15
+    },
+    "name": "integer"
+  },
+  {
     "kind": "object",
     "name": "Match",
     "members": [

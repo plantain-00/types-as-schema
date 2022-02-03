@@ -50,8 +50,11 @@ export type TypeDeclaration =
   | UnionDeclaration
   | StringDeclaration
   | NumberDeclaration
+  | BooleanDeclaration
+  | MapDeclaration
   | ReferenceDeclaration
   | FunctionDeclaration
+  | NullDeclaration
 
 export type EnumDeclaration = {
   kind: 'enum';
@@ -107,6 +110,27 @@ export type StringDeclaration = StringType & {
 }
 
 export type NumberDeclaration = NumberType & {
+  name: string;
+}
+
+/**
+ * @public
+ */
+export type BooleanDeclaration = BooleanType & {
+  name: string;
+}
+
+/**
+ * @public
+ */
+export type NullDeclaration = NullType & {
+  name: string;
+}
+
+/**
+ * @public
+ */
+export type MapDeclaration = MapType & {
   name: string;
 }
 

@@ -565,13 +565,13 @@ export declare function returnEmpty(): Promise<void>
  * @method post
  * @path /upload
  */
- export declare function uploadFile(
+export declare function uploadFile(
   /**
    * @in body
    */
-   file: File,
- ): Promise<void>
- 
+  file: File,
+): Promise<void>
+
 export default () => {
   return 1
 }
@@ -583,6 +583,44 @@ export function Test1() {
 export const Test2 = () => {
   return 1
 }
+
+/**
+ * @method get
+ * @path /pet/{id}
+ * @summary get pet by id.
+ * @description get pet by id
+ * @deprecated
+ * @tags pet
+ */
+type getPetById = (
+  /**
+   * @in query
+   */
+  status: 'health' | 'sick',
+  /**
+   * @in body
+   * @minItems 1
+   */
+  tags: string[],
+  /**
+   * @in body
+   */
+  pet: Pet,
+  /**
+   * @in path
+   * @description pet id
+   * @minimum 1
+   * @default 2
+   */
+  id: integer,
+  /**
+   * @in query
+   * @default asc
+   */
+  sortType: 'asc' | 'desc',
+) => Promise<Pet>
+
+type Boolean = boolean
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [
