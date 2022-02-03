@@ -631,6 +631,12 @@ Return | Description
 ## `Boolean`
 
 
+## `Pet1`
+
+Reference | Description
+--- | ---
+[`Pet`](#Pet) |
+
 ## `OuterType`
 
 Field | Required | Type | Description

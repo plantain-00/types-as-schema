@@ -2594,13 +2594,13 @@
     }
   },
   {
-    "kind": "reference",
     "newName": "TypeReferenceMember2",
+    "kind": "reference",
     "name": "TypeLiteral",
     "position": {
       "file": "demo/cases.ts",
       "line": 289,
-      "character": 0
+      "character": 28
     }
   },
   {
@@ -3815,13 +3815,13 @@
     }
   },
   {
-    "kind": "reference",
     "newName": "Result2",
+    "kind": "reference",
     "name": "Result3",
     "position": {
       "file": "demo/cases.ts",
       "line": 407,
-      "character": 0
+      "character": 15
     }
   },
   {
@@ -5192,6 +5192,24 @@
       "character": 15
     },
     "name": "Boolean"
+  },
+  {
+    "newName": "Pet1",
+    "kind": "reference",
+    "name": "Pet",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 618,
+      "character": 12
+    },
+    "jsDocs": [
+      {
+        "name": "localStorage"
+      }
+    ],
+    "comments": [
+      "/**\n * @localStorage\n */"
+    ]
   },
   {
     "kind": "object",

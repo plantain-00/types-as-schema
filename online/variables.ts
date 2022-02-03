@@ -621,6 +621,11 @@ type getPetById = (
 ) => Promise<Pet>
 
 type Boolean = boolean
+
+/**
+ * @localStorage
+ */
+type Pet1 = Pet
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [

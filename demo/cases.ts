@@ -612,3 +612,8 @@ type getPetById = (
 ) => Promise<Pet>
 
 type Boolean = boolean
+
+/**
+ * @localStorage
+ */
+type Pet1 = Pet
