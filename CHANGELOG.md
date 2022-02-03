@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.48.1](https://github.com/plantain-00/types-as-schema/compare/v1.48.0...v1.48.1) (2022-02-03)
+  
+* fix: reference missing jsdoc ([e255ff5](https://github.com/plantain-00/types-as-schema/commit/e255ff545c6d4314688dbc942dec4a842d773f1a))
+
 ## [1.48.0](https://github.com/plantain-00/types-as-schema/compare/v1.47.3...v1.48.0) (2022-02-03)
   
 * feat: support more declarations ([3589bff](https://github.com/plantain-00/types-as-schema/commit/3589bffa726f1af058de0be2061181014e5db80d))

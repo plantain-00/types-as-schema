@@ -13,7 +13,6 @@ import {
   ReferenceType,
   NumberDeclaration,
   StringDeclaration,
-  ReferenceDeclaration,
   UnionDeclaration,
   ObjectDeclaration,
   ArrayDeclaration,
@@ -312,8 +311,12 @@ export class Parser {
         jsDocs,
         sourceFile
       )
-    } else if (ts.isTypeReferenceNode(declaration.type) && ts.isIdentifier(declaration.type.typeName)) {
-      if (declaration.type.typeArguments && declaration.type.typeArguments.length > 0) {
+    } else if (
+      ts.isTypeReferenceNode(declaration.type) &&
+      ts.isIdentifier(declaration.type.typeName) &&
+      declaration.type.typeArguments &&
+      declaration.type.typeArguments.length > 0
+    ) {
         if (this.checker) {
           const type = this.getTypeOfComplexType(declaration.type, sourceFile)
           if (type) {
@@ -337,14 +340,6 @@ export class Parser {
         } else if (!this.disableWarning) {
           warn(this.getPosition(declaration, sourceFile), 'parse')
         }
-      }
-      const referenceDeclaration: ReferenceDeclaration = {
-        kind: 'reference',
-        newName: declaration.name.text,
-        name: declaration.type.typeName.text,
-        position: this.getPosition(declaration, sourceFile)
-      }
-      this.declarations.push(referenceDeclaration)
     } else if (ts.isTemplateLiteralTypeNode(declaration.type)) {
       const spans = this.getTemplateSpans(declaration.type, sourceFile)
       if (spans.every((s) => s.kind === 'enum')) {

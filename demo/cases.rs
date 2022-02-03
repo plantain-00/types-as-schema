@@ -429,3 +429,5 @@ pub struct BlogChange {
 pub struct TestController {
 
 }
+
+type Pet1 = Pet;

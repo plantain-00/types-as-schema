@@ -540,6 +540,11 @@ declare function Test2(): unknown
  */
 declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet, id?: number, sortType?: "asc" | "desc"): Pet
 
+/**
+ * @localStorage
+ */
+type Pet1 = Pet
+
 interface OuterType {
   outerType: number
 }
