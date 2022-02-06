@@ -30,7 +30,7 @@ function generateProtobufOfObject(typeDeclarations: TypeDeclaration[], objectDec
       lastTag++
     }
     const { modifier, propertyType } = getProtobufProperty(typeDeclarations, member.type)
-    if (propertyType) {
+    if (propertyType && member.name) {
       members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`)
     } else {
       warn(member.type.position, 'protobuf generator')

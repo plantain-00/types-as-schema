@@ -626,6 +626,17 @@ type Boolean = boolean
  * @localStorage
  */
 type Pet1 = Pet
+
+type a = {
+  /**
+   * @path b1
+   */
+  s(b: number): number
+  /**
+   * @path b2
+   */
+  (b: boolean): string
+}
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [

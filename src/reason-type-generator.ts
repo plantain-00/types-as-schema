@@ -18,7 +18,7 @@ export function generateReasonTypes(typeDeclarations: TypeDeclaration[]) {
 function getReasonTypeOfObjectDeclaration(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration) {
   const members = objectDeclaration.members.map(m => {
     const propertyType = getReasonTypesProperty(typeDeclarations, m.type)
-    if (propertyType) {
+    if (propertyType && m.name) {
       const type = m.optional ? `option(${toLowerCase(propertyType)})` : toLowerCase(propertyType)
       return `  ${m.name}: ${type}`
     }

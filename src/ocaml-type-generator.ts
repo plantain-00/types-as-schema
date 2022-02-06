@@ -18,7 +18,7 @@ export function generateOcamlTypes(typeDeclarations: TypeDeclaration[]) {
 function getOcamlTypeOfObjectDeclaration(typeDeclarations: TypeDeclaration[], objectDeclaration: ObjectDeclaration): string {
   const members = objectDeclaration.members.map(m => {
     const propertyType = getOcamlTypesProperty(typeDeclarations, m.type)
-    if (propertyType) {
+    if (propertyType && m.name) {
       return `  ${m.name}: ${m.optional ? toLowerCase(propertyType) + ' option' : toLowerCase(propertyType)}`
     }
     return undefined

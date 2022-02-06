@@ -10,7 +10,8 @@ import {
   StringDeclaration,
   ReferenceDeclaration,
   NumberDeclaration,
-  TemplateLiteralPart
+  TemplateLiteralPart,
+  Member
 } from './utils'
 
 /**
@@ -73,7 +74,7 @@ export function generateTypescriptOfUnionDeclaration(declaration: UnionDeclarati
 export function generateTypescriptOfObjectDeclaration(declaration: ObjectDeclaration) {
   const members = declaration.members.map((m) => {
     const comments = m.comments ? m.comments.join('\n') + '\n  ' : ''
-    return '  ' + comments + generateTypescriptOfFunctionParameter(m)}
+    return '  ' + comments + generateTypescriptOfMember(m)}
   )
   if (declaration.additionalProperties) {
     members.push('  ' + generateTypescriptOfObjectAdditionalProperties(declaration.additionalProperties))
@@ -82,6 +83,14 @@ export function generateTypescriptOfObjectDeclaration(declaration: ObjectDeclara
   return `${comments}interface ${declaration.name} {
 ${members.join('\n')}
 }`
+}
+
+function generateTypescriptOfMember(member: Member, processChild?: (type: Type) => string | undefined) {
+  if (member.parameters) {
+    const parameters = member.parameters.map((m) => generateTypescriptOfFunctionParameter(m))
+    return `${member.name}(${parameters.join(', ')}): ${generateTypescriptOfType(member.type, processChild)}`
+  }
+  return generateTypescriptOfFunctionParameter(member, processChild)
 }
 
 /**
@@ -190,7 +199,7 @@ export function generateTypescriptOfType(type: Type, processChild?: (type: Type)
     return type.members.map((e) => generateTypescriptOfType(e, processChild)).join(' | ')
   }
   if (type.kind === 'object') {
-    const members = type.members.map((m) => generateTypescriptOfFunctionParameter(m, processChild))
+    const members = type.members.map((m) => generateTypescriptOfMember(m, processChild))
     if (type.additionalProperties) {
       members.push(generateTypescriptOfObjectAdditionalProperties(type.additionalProperties))
     }

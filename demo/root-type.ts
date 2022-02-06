@@ -350,6 +350,11 @@ export interface TestController<TContext> {
 
 export type Pet1 = Pet
 
+export interface a<TContext> {
+  s(input: { b: number }, context: TContext, info: GraphQLResolveInfo): number | Promise<number>
+  (input: { b: boolean }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
+}
+
 export interface OuterType {
   outerType: number
 }

@@ -34,7 +34,7 @@ pub use self::serde::de::{Deserialize, Deserializer, Error};`)
 function getObjectDeclaration(objectDeclaration: ObjectDeclaration, typeDeclarations: TypeDeclaration[]) {
   const members = objectDeclaration.members.map(m => {
     const propertyType = getRustTypesProperty(typeDeclarations, m.type, m.optional)
-    if (propertyType) {
+    if (propertyType && m.name) {
       const snakeName = snakeCase(m.name)
       if (m.name === snakeName) {
         return `  pub ${snakeCase(m.name)}: ${propertyType}`

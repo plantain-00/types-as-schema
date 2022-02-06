@@ -337,6 +337,11 @@ enum Template {
   right-bottom
 }
 
+type a {
+  s(b: Float!): Float!
+  (b: Boolean!): String!
+}
+
 type OuterType {
   outerType: Float!
 }

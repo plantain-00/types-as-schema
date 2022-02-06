@@ -15,7 +15,7 @@ export function generateMarkdownDoc(declarations: TypeDeclaration[]) {
     if (declaration.kind === 'object') {
       result.push(`Field | Required | Type | Description`)
       result.push(`--- | --- | --- | ---`)
-      result.push(...declaration.members.map((m) => {
+      result.push(...declaration.members.filter((m) => m.name).map((m) => {
         const description = m.type.description ? ' ' + m.type.description : ''
         return `\`${m.name}\` | \`${m.optional ? 'false' : 'true'}\` | ${getType(m.type)} |${description}`
       }))

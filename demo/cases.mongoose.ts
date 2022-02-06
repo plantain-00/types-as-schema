@@ -1079,6 +1079,13 @@ export const testControllerSchema = {
   },
 }
 
+export const aSchema = {
+  s: {
+    type: Number,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Number,

@@ -387,6 +387,11 @@ type testController = {
 
 };
 
+type a = {
+  .
+  s: float,
+};
+
 type outerType = {
   .
   outerType: float,

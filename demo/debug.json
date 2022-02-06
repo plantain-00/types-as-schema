@@ -5213,6 +5213,89 @@
   },
   {
     "kind": "object",
+    "name": "a",
+    "members": [
+      {
+        "name": "s",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 624,
+            "character": 16
+          }
+        },
+        "comments": [
+          "/**\n   * @path b1\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "path",
+            "comment": "b1"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "b",
+            "type": {
+              "kind": "number",
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 624,
+                "character": 7
+              }
+            },
+            "optional": false
+          }
+        ]
+      },
+      {
+        "name": "",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 628,
+            "character": 16
+          }
+        },
+        "comments": [
+          "/**\n   * @path b2\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "path",
+            "comment": "b2"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "b",
+            "type": {
+              "kind": "boolean",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 628,
+                "character": 6
+              }
+            },
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 0,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 620,
+      "character": 5
+    }
+  },
+  {
+    "kind": "object",
     "name": "OuterType",
     "members": [
       {

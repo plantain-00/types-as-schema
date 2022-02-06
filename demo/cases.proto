@@ -344,6 +344,10 @@ message TestController {
 
 }
 
+message a {
+    double s = 1;
+}
+
 message OuterType {
     double outerType = 1;
 }
