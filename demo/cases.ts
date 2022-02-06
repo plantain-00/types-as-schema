@@ -617,3 +617,14 @@ type Boolean = boolean
  * @localStorage
  */
 type Pet1 = Pet
+
+type a = {
+  /**
+   * @path b1
+   */
+  s(b: number): number
+  /**
+   * @path b2
+   */
+  (b: boolean): string
+}

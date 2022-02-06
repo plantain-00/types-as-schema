@@ -1227,7 +1227,7 @@ export class Parser {
     let additionalProperties: Type | undefined | boolean
     for (const element of elements) {
       if (ts.isPropertySignature(element) || ts.isPropertyDeclaration(element)) {
-        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(element, sourceFile)
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameterOrCallSignature(element, sourceFile)
         members.push(member)
         if (!element.questionToken) {
           minProperties++
@@ -1237,8 +1237,8 @@ export class Parser {
         if (element.type) {
           additionalProperties = this.getType(element.type, sourceFile)
         }
-      } else if (ts.isMethodSignature(element) || ts.isMethodDeclaration(element)) {
-        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(element, sourceFile)
+      } else if (ts.isMethodSignature(element) || ts.isMethodDeclaration(element) || ts.isCallSignatureDeclaration(element)) {
+        const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameterOrCallSignature(element, sourceFile)
         members.push(member)
       } else if (ts.isConstructorDeclaration(element)) {
         for (const parameter of element.parameters) {
@@ -1246,7 +1246,7 @@ export class Parser {
             && parameter.modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.PublicKeyword
               || modifier.kind === ts.SyntaxKind.PrivateKeyword
               || modifier.kind === ts.SyntaxKind.ProtectedKeyword)) {
-            const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameter(parameter, sourceFile)
+            const member = this.getObjectMemberOfPropertyOrMethodOrConstructorParameterOrCallSignature(parameter, sourceFile)
             members.push(member)
             if (!parameter.questionToken) {
               minProperties++
@@ -1356,12 +1356,12 @@ export class Parser {
     }
   }
 
-  private getObjectMemberOfPropertyOrMethodOrConstructorParameter(
-    property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration | ts.ParameterDeclaration,
+  private getObjectMemberOfPropertyOrMethodOrConstructorParameterOrCallSignature(
+    property: ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration | ts.ParameterDeclaration | ts.CallSignatureDeclaration,
     sourceFile: ts.SourceFile
   ) {
     const member: Member = {
-      name: ts.isIdentifier(property.name) ? property.name.text : '',
+      name: !ts.isCallSignatureDeclaration(property) && ts.isIdentifier(property.name) ? property.name.text : '',
       type: {
         kind: undefined,
         position: this.getPosition(property, sourceFile)
@@ -1393,7 +1393,10 @@ export class Parser {
       this.setPropertyJsDoc(property, member, sourceFile)
     }
 
-    if (ts.isMethodSignature(property) || ts.isMethodDeclaration(property)) {
+    if (ts.isMethodSignature(property) || ts.isMethodDeclaration(property) || ts.isCallSignatureDeclaration(property)) {
+      const { jsDocs, comments } = this.getJsDocs(property, sourceFile)
+      member.comments = comments
+      member.jsDocs = jsDocs
       member.parameters = property.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile))
     }
 

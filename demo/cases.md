@@ -637,6 +637,12 @@ Reference | Description
 --- | ---
 [`Pet`](#Pet) |
 
+## `a`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`s` | `true` | `number` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

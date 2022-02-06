@@ -18,7 +18,7 @@ import { Schema } from 'mongoose'
 }
 
 function generateMongooseSchemaOfObject(objectDeclaration: ObjectDeclaration) {
-  const members = objectDeclaration.members.map(m => generateMongooseSchemaOfObjectMember(m))
+  const members = objectDeclaration.members.filter((m) => m.name).map(m => generateMongooseSchemaOfObjectMember(m))
   return `export const ${toLowerCase(objectDeclaration.name)}Schema = {
 ${members.join('\n')}
 }`

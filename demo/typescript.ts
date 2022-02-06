@@ -245,11 +245,11 @@ interface Parameter {
    * @param {string} name
    * @param {number} age
    */
-  member1: string
+  member1(name: string, age: number): string
   /**
    * @param {string} [name]
    */
-  member2: string
+  member2(name?: string): string
 }
 
 interface DefaultValue {
@@ -374,7 +374,7 @@ interface EntryType {
 }
 
 interface Mutation {
-  create: MutationResult
+  create(input: CreateInput): MutationResult
 }
 
 interface CreateInput {
@@ -388,8 +388,8 @@ interface MutationResult {
 }
 
 interface Query {
-  user: GetResult
-  users: GetResult
+  user(id: string): GetResult
+  users(): GetResult
 }
 
 interface GetResult {
@@ -398,7 +398,7 @@ interface GetResult {
 
 interface Result {
   member1: string
-  member2: string
+  member2(input: string): string
 }
 
 interface CreateInputMember3 {
@@ -503,7 +503,7 @@ interface BlogChange {
 }
 
 interface TestController {
-  get: unknown
+  get(foo: number, bar: string): unknown
 }
 
 type Template = "left-top" | "right-top" | "left-bottom" | "right-bottom"
@@ -544,6 +544,17 @@ declare function getPetById(status: "health" | "sick", tags: string[], pet: Pet,
  * @localStorage
  */
 type Pet1 = Pet
+
+interface a {
+  /**
+   * @path b1
+   */
+  s(b: number): number
+  /**
+   * @path b2
+   */
+  (b: boolean): string
+}
 
 interface OuterType {
   outerType: number

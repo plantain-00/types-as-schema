@@ -336,3 +336,7 @@ type blogChange = {
 type testController = {
 
 }
+
+type a = {
+  s: float;
+}

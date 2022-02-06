@@ -431,3 +431,8 @@ pub struct TestController {
 }
 
 type Pet1 = Pet;
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct a {
+  pub s: f32,
+}

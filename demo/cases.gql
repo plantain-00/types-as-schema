@@ -336,3 +336,8 @@ enum Template {
   left-bottom
   right-bottom
 }
+
+type a {
+  s(b: Float!): Float!
+  (b: Boolean!): String!
+}

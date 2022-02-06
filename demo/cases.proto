@@ -343,3 +343,7 @@ message BlogChange {
 message TestController {
 
 }
+
+message a {
+    double s = 1;
+}
