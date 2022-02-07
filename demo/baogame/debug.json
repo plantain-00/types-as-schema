@@ -45,7 +45,11 @@
       "file": "demo/baogame/common.ts",
       "line": 10,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -85,7 +89,11 @@
       "file": "demo/baogame/common.ts",
       "line": 77,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -129,7 +137,11 @@
       "file": "demo/baogame/common.ts",
       "line": 180,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "number",

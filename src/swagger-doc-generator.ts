@@ -64,7 +64,7 @@ const allTypes = ['path', 'query', 'body', 'cookie']
  * @public
  */
 export function getDeclarationParameters(
-  declaration: FunctionDeclaration,
+  declaration: Pick<FunctionDeclaration, 'parameters'>,
   typeDeclarations: TypeDeclaration[],
 ) {
   const result: FunctionParameter[] = []
