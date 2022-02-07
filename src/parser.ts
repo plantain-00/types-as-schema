@@ -118,12 +118,12 @@ export class Parser {
       this.handleFunctionDeclaration(node, jsDocs, sourceFile)
     } else if (ts.isExportAssignment(node)) {
       if (ts.isArrowFunction(node.expression)) {
-        this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile)
+        this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile, undefined, node)
       }
     } else if (ts.isVariableStatement(node)) {
       const declaration = node.declarationList.declarations[0]
       if (declaration?.initializer && ts.isArrowFunction(declaration.initializer)) {
-        this.handleFunctionDeclaration(declaration.initializer, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined)
+        this.handleFunctionDeclaration(declaration.initializer, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, node)
       }
     }
   }
@@ -133,6 +133,7 @@ export class Parser {
     { jsDocs, comments }: JsDocAndComment,
     sourceFile: ts.SourceFile,
     functionName?: string,
+    parent?: ts.Node,
   ) {
     const type = declaration.type
       ? this.getType(declaration.type, sourceFile)
@@ -150,7 +151,7 @@ export class Parser {
       jsDocs,
       position: this.getPosition(declaration, sourceFile),
       body: ts.isFunctionTypeNode(declaration) ? undefined : declaration.body?.getText(sourceFile),
-      modifiers: this.getModifiers(declaration),
+      modifiers: this.getModifiers(parent ?? declaration),
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
@@ -366,7 +367,7 @@ export class Parser {
         })
       }
     } else if (ts.isFunctionTypeNode(declaration.type)) {
-      this.handleFunctionDeclaration(declaration.type, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined)
+      this.handleFunctionDeclaration(declaration.type, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, declaration)
     } else {
       const type = this.getType(declaration.type, sourceFile)
       const declarationName = declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''

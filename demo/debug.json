@@ -5033,7 +5033,10 @@
       "line": 573,
       "character": 21
     },
-    "body": "{\n  return 1\n}"
+    "body": "{\n  return 1\n}",
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "function",
