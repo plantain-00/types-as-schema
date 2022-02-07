@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.50.1](https://github.com/plantain-00/types-as-schema/compare/v1.50.0...v1.50.1) (2022-02-07)
+  
+* fix: export default modifier ([13461bc](https://github.com/plantain-00/types-as-schema/commit/13461bc1736a8b4afa9972d601f7ad3623d2a177))
+
 ## [1.50.0](https://github.com/plantain-00/types-as-schema/compare/v1.49.0...v1.50.0) (2022-02-07)
   
 * feat: add modifier ([96815f2](https://github.com/plantain-00/types-as-schema/commit/96815f244f677d783fb3d40ae68abfbd3a84d869))
