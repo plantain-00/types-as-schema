@@ -17,7 +17,11 @@
       "file": "demo/cases.ts",
       "line": 107,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -37,7 +41,11 @@
       "file": "demo/cases.ts",
       "line": 111,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -57,7 +65,11 @@
       "file": "demo/cases.ts",
       "line": 115,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "object",
@@ -3566,7 +3578,10 @@
       "file": "demo/cases.ts",
       "line": 370,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "object",
@@ -3613,7 +3628,10 @@
       "file": "demo/cases.ts",
       "line": 374,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "object",
@@ -3637,7 +3655,10 @@
       "file": "demo/cases.ts",
       "line": 380,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "object",
@@ -3689,7 +3710,11 @@
       "file": "demo/cases.ts",
       "line": 384,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "abstract"
+    ]
   },
   {
     "kind": "object",
@@ -3714,7 +3739,10 @@
       "file": "demo/cases.ts",
       "line": 389,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "object",
@@ -3812,7 +3840,10 @@
       "file": "demo/cases.ts",
       "line": 403,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "newName": "Result2",
@@ -4127,6 +4158,10 @@
       "line": 428,
       "character": 0
     },
+    "modifiers": [
+      "export",
+      "declare"
+    ],
     "method": "get",
     "path": "/pet/{id}",
     "summary": "get pet by id.",
@@ -4279,7 +4314,10 @@
       "file": "demo/cases.ts",
       "line": 458,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "number",
@@ -4493,6 +4531,9 @@
       {
         "name": "public"
       }
+    ],
+    "modifiers": [
+      "export"
     ]
   },
   {
@@ -4553,6 +4594,9 @@
       {
         "name": "public"
       }
+    ],
+    "modifiers": [
+      "export"
     ]
   },
   {
@@ -4685,6 +4729,9 @@
       {
         "name": "public"
       }
+    ],
+    "modifiers": [
+      "export"
     ]
   },
   {
@@ -4771,6 +4818,9 @@
           "/api/v1/tests"
         ]
       }
+    ],
+    "modifiers": [
+      "export"
     ]
   },
   {
@@ -4819,6 +4869,10 @@
       "line": 546,
       "character": 0
     },
+    "modifiers": [
+      "export",
+      "declare"
+    ],
     "method": "get",
     "path": "/download"
   },
@@ -4853,6 +4907,10 @@
       "line": 552,
       "character": 0
     },
+    "modifiers": [
+      "export",
+      "declare"
+    ],
     "method": "get",
     "path": "/empty"
   },
@@ -4910,6 +4968,10 @@
       "line": 558,
       "character": 0
     },
+    "modifiers": [
+      "export",
+      "declare"
+    ],
     "method": "post",
     "path": "/upload"
   },
@@ -4949,7 +5011,10 @@
       "line": 569,
       "character": 0
     },
-    "body": "{\n  return 1\n}"
+    "body": "{\n  return 1\n}",
+    "modifiers": [
+      "export"
+    ]
   },
   {
     "kind": "function",
@@ -5317,6 +5382,9 @@
       "file": "demo/case2.ts",
       "line": 0,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export"
+    ]
   }
 ]

@@ -62,7 +62,7 @@ export type EnumDeclaration = {
   type: string;
   members: EnumMember[];
   description?: string;
-} & Position & JsDocAndComment
+} & Position & JsDocAndComment & Modifiers
 
 /**
  * @public
@@ -83,62 +83,86 @@ export interface PositionValue {
 /**
  * @public
  */
+export interface Modifiers {
+  modifiers?: Modifier[]
+}
+
+/**
+ * @public
+ */
+export type Modifier =
+  | 'abstract'
+  | 'async'
+  | 'const'
+  | 'declare'
+  | 'default'
+  | 'export'
+  | 'private'
+  | 'protected'
+  | 'public'
+  | 'override'
+  | 'readonly'
+  | 'static'
+
+/**
+ * @public
+ */
 export interface EnumMember {
   name: string;
   value: string | number;
   description?: string;
 }
 
-export type ObjectDeclaration = ObjectType & {
+export type ObjectDeclaration = ObjectType & Modifiers & {
   name: string;
   entry?: string;
 }
 
-export type ArrayDeclaration = ArrayType & {
+export type ArrayDeclaration = ArrayType & Modifiers & {
   name: string;
   entry?: string;
 }
 
-export type UnionDeclaration = UnionType & {
+export type UnionDeclaration = UnionType & Modifiers & {
   name: string;
   entry?: string;
   objectType?: ObjectType;
 }
 
-export type StringDeclaration = StringType & {
+export type StringDeclaration = StringType & Modifiers & {
   name: string;
 }
 
-export type NumberDeclaration = NumberType & {
-  name: string;
-}
-
-/**
- * @public
- */
-export type BooleanDeclaration = BooleanType & {
+export type NumberDeclaration = NumberType & Modifiers & {
   name: string;
 }
 
 /**
  * @public
  */
-export type NullDeclaration = NullType & {
+export type BooleanDeclaration = BooleanType & Modifiers & {
   name: string;
 }
 
 /**
  * @public
  */
-export type MapDeclaration = MapType & {
+export type NullDeclaration = NullType & Modifiers & {
   name: string;
 }
 
-export type ReferenceDeclaration = ReferenceType & {
+/**
+ * @public
+ */
+export type MapDeclaration = MapType & Modifiers & {
+  name: string;
+}
+
+export type ReferenceDeclaration = ReferenceType & Modifiers & {
   newName: string;
 }
 
-export interface FunctionDeclaration extends Position, JsDocAndComment {
+export interface FunctionDeclaration extends Position, JsDocAndComment, Modifiers {
   kind: 'function';
   name: string;
   type: Type;

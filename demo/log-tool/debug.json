@@ -21,7 +21,11 @@
       "file": "demo/log-tool/types.ts",
       "line": 19,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -53,7 +57,11 @@
       "file": "demo/log-tool/types.ts",
       "line": 59,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -73,7 +81,11 @@
       "file": "demo/log-tool/types.ts",
       "line": 110,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "enum",
@@ -93,7 +105,11 @@
       "file": "demo/log-tool/types.ts",
       "line": 136,
       "character": 0
-    }
+    },
+    "modifiers": [
+      "export",
+      "const"
+    ]
   },
   {
     "kind": "object",

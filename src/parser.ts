@@ -19,7 +19,7 @@ import {
   Expression,
   warn,
   FunctionDeclaration,
-  FunctionParameter, EnumType, Decorator, TemplateLiteralPart, JsDoc, JsDocAndComment
+  FunctionParameter, EnumType, Decorator, TemplateLiteralPart, JsDoc, JsDocAndComment, Modifier
 } from './utils'
 
 export class Parser {
@@ -57,7 +57,8 @@ export class Parser {
           name: declaration.name.text,
           type: 'uint32',
           members: [],
-          position: this.getPosition(declaration, sourceFile)
+          position: this.getPosition(declaration, sourceFile),
+          modifiers: this.getModifiers(declaration),
         }
         let lastIndex = 0
         for (const member of members) {
@@ -92,7 +93,8 @@ export class Parser {
       name: declaration.name.text,
       type: ts.isStringLiteral(initializer) ? 'string' : 'uint32',
       members: [],
-      position: this.getPosition(declaration, sourceFile)
+      position: this.getPosition(declaration, sourceFile),
+      modifiers: this.getModifiers(declaration),
     }
     for (const member of members) {
       if (member.initializer && ts.isIdentifier(member.name)) {
@@ -148,6 +150,7 @@ export class Parser {
       jsDocs,
       position: this.getPosition(declaration, sourceFile),
       body: ts.isFunctionTypeNode(declaration) ? undefined : declaration.body?.getText(sourceFile),
+      modifiers: this.getModifiers(declaration),
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
@@ -230,6 +233,7 @@ export class Parser {
       comments,
       jsDocs,
       decorators: ts.isClassDeclaration(declaration) ? this.getDecorators(sourceFile, declaration.decorators) : undefined,
+      modifiers: this.getModifiers(declaration),
     }
 
     for (const jsDoc of jsDocs || []) {
@@ -322,7 +326,8 @@ export class Parser {
           if (type) {
             this.declarations.push({
               name: declaration.name.text,
-              ...type
+              ...type,
+              modifiers: this.getModifiers(declaration),
             })
             return
           } else if (!this.disableWarning) {
@@ -333,7 +338,8 @@ export class Parser {
           if (type) {
             this.declarations.push({
               name: declaration.name.text,
-              ...type
+              ...type,
+              modifiers: this.getModifiers(declaration),
             })
             return
           }
@@ -347,14 +353,16 @@ export class Parser {
           kind: 'string',
           name: declaration.name.text,
           enums: this.getTemplateLiteralTypeEnums(declaration.type, spans),
-          position: this.getPosition(declaration.name, sourceFile)
+          position: this.getPosition(declaration.name, sourceFile),
+          modifiers: this.getModifiers(declaration),
         })
       } else if (spans.every((s) => s.kind === 'enum' || s.kind === 'string' || s.kind === 'number' || s.kind === 'boolean')) {
         this.declarations.push({
           kind: 'string',
           name: declaration.name.text,
           templateLiteral: this.getTemplateLiteral(declaration.type, spans),
-          position: this.getPosition(declaration.type, sourceFile)
+          position: this.getPosition(declaration.type, sourceFile),
+          modifiers: this.getModifiers(declaration),
         })
       }
     } else if (ts.isFunctionTypeNode(declaration.type)) {
@@ -367,6 +375,7 @@ export class Parser {
           newName: declarationName,
           ...type,
           ...jsDocs,
+          modifiers: this.getModifiers(declaration),
         })
       } else if (type.kind === 'enum') {
         this.declarations.push({
@@ -377,6 +386,7 @@ export class Parser {
           ...type,
           ...jsDocs,
           name: declarationName,
+          modifiers: this.getModifiers(declaration),
         })
       } else if (
         type.kind !== undefined &&
@@ -387,6 +397,7 @@ export class Parser {
           ...type,
           ...jsDocs,
           name: declarationName,
+          modifiers: this.getModifiers(declaration),
         })
       }
     }
@@ -413,6 +424,7 @@ export class Parser {
           position: this.getPosition(declarationName, sourceFile),
           comments,
           jsDocs,
+          modifiers: this.getModifiers(declarationType),
         }
         this.declarations.push(unionDeclaration)
       }
@@ -429,6 +441,7 @@ export class Parser {
       position: this.getPosition(declarationName, sourceFile),
       comments,
       jsDocs,
+      modifiers: this.getModifiers(declarationType),
     }
     for (const jsDoc of jsDocs || []) {
       this.setJsDocObject(jsDoc, objectDeclaration)
@@ -462,7 +475,8 @@ export class Parser {
           kind: 'string',
           name: declarationName.text,
           enums: enums as string[],
-          position: this.getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile),
+          modifiers: this.getModifiers(unionType),
         }
         this.declarations.push(stringDeclaration)
       } else if (enumType === 'number') {
@@ -471,7 +485,8 @@ export class Parser {
           type: enumType,
           name: declarationName.text,
           enums: enums as string[],
-          position: this.getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile),
+          modifiers: this.getModifiers(unionType),
         }
         this.declarations.push(numberDeclaration)
       } else if (enumType === 'boolean') {
@@ -480,7 +495,8 @@ export class Parser {
           name: declarationName.text,
           members: unionType.types.map(e => this.getType(e, sourceFile)),
           entry: undefined,
-          position: this.getPosition(declarationName, sourceFile)
+          position: this.getPosition(declarationName, sourceFile),
+          modifiers: this.getModifiers(unionType),
         }
         this.declarations.push(unionDeclaration)
       }
@@ -502,6 +518,7 @@ export class Parser {
       position: this.getPosition(declarationName, sourceFile),
       comments,
       jsDocs,
+      modifiers: this.getModifiers(arrayType),
     }
     for (const jsDoc of jsDocs || []) {
       this.setJsDocArray(jsDoc, arrayDeclaration)
@@ -1697,6 +1714,51 @@ export class Parser {
       file: this.getRelativePath(sourceFile.fileName),
       ...ts.getLineAndCharacterOfPosition(sourceFile, typeNode.getStart(sourceFile))
     }
+  }
+
+  private getModifiers(typeNode: ts.Node): Modifier[] | undefined {
+    const modifiers: Modifier[] = []
+    if (typeNode.modifiers) {
+      for (const modifier of typeNode.modifiers) {
+        if (modifier.kind === ts.SyntaxKind.AbstractKeyword) {
+          modifiers.push('abstract')
+        }
+        if (modifier.kind === ts.SyntaxKind.AsyncKeyword) {
+          modifiers.push('async')
+        }
+        if (modifier.kind === ts.SyntaxKind.ConstKeyword) {
+          modifiers.push('const')
+        }
+        if (modifier.kind === ts.SyntaxKind.DeclareKeyword) {
+          modifiers.push('declare')
+        }
+        if (modifier.kind === ts.SyntaxKind.DefaultKeyword) {
+          modifiers.push('default')
+        }
+        if (modifier.kind === ts.SyntaxKind.ExportKeyword) {
+          modifiers.push('export')
+        }
+        if (modifier.kind === ts.SyntaxKind.PrivateKeyword) {
+          modifiers.push('private')
+        }
+        if (modifier.kind === ts.SyntaxKind.ProtectedKeyword) {
+          modifiers.push('protected')
+        }
+        if (modifier.kind === ts.SyntaxKind.PublicKeyword) {
+          modifiers.push('public')
+        }
+        if (modifier.kind === ts.SyntaxKind.OverrideKeyword) {
+          modifiers.push('override')
+        }
+        if (modifier.kind === ts.SyntaxKind.ReadonlyKeyword) {
+          modifiers.push('readonly')
+        }
+        if (modifier.kind === ts.SyntaxKind.StaticKeyword) {
+          modifiers.push('static')
+        }
+      }
+    }
+    return modifiers.length > 0 ? modifiers : undefined
   }
 }
 
