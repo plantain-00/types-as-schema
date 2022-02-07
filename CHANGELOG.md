@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.50.0](https://github.com/plantain-00/types-as-schema/compare/v1.49.0...v1.50.0) (2022-02-07)
+  
+* feat: add modifier ([96815f2](https://github.com/plantain-00/types-as-schema/commit/96815f244f677d783fb3d40ae68abfbd3a84d869))
+
 ## [1.49.0](https://github.com/plantain-00/types-as-schema/compare/v1.48.1...v1.49.0) (2022-02-06)
   
 * feat: support call signature member ([e10b72b](https://github.com/plantain-00/types-as-schema/commit/e10b72ba87269b949f9c31e84cd6d02dbf55fec0))
