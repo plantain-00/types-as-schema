@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.51.0](https://github.com/plantain-00/types-as-schema/compare/v1.50.1...v1.51.0) (2022-02-11)
+  
+* feat: support namespace function type parameters and arguments ([72cb2ea](https://github.com/plantain-00/types-as-schema/commit/72cb2ea76437048de0357c8db67488d6707d5f1f))
+
 ## [1.50.1](https://github.com/plantain-00/types-as-schema/compare/v1.50.0...v1.50.1) (2022-02-07)
   
 * fix: export default modifier ([13461bc](https://github.com/plantain-00/types-as-schema/commit/13461bc1736a8b4afa9972d601f7ad3623d2a177))

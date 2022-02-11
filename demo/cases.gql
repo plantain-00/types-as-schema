@@ -341,3 +341,7 @@ type a {
   s(b: Float!): Float!
   (b: Boolean!): String!
 }
+
+type C.D {
+  d: Float!
+}

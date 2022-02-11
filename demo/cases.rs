@@ -436,3 +436,8 @@ type Pet1 = Pet;
 pub struct a {
   pub s: f32,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct C.D {
+  pub d: f32,
+}

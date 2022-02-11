@@ -355,6 +355,10 @@ export interface a<TContext> {
   (input: { b: boolean }, context: TContext, info: GraphQLResolveInfo): string | Promise<string>
 }
 
+export interface C.D {
+  d: number
+}
+
 export interface OuterType {
   outerType: number
 }

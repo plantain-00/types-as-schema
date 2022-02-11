@@ -1086,6 +1086,13 @@ export const aSchema = {
   },
 }
 
+export const c.DSchema = {
+  d: {
+    type: Number,
+    required: true
+  },
+}
+
 export const outerTypeSchema = {
   outerType: {
     type: Number,

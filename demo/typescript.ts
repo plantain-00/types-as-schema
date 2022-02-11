@@ -556,6 +556,23 @@ interface a {
   (b: boolean): string
 }
 
+/**
+ * functionType comment
+ */
+declare function functionType(props: { a: (b: string) => number, b: React.ReactNode, c: C.D }): unknown
+
+namespace C {
+  export interface D {
+    d: number
+  }
+}
+
+declare function FancyButton(props: unknown, ref: unknown): unknown
+
+declare function FancyButton2(props: unknown): unknown
+
+declare function FancyButton4<T extends string>(props: { a: T }): unknown
+
 interface OuterType {
   outerType: number
 }

@@ -47,6 +47,12 @@ ${messages.join('\n\n')}
  */
 export function generateTypescriptOfReferenceDeclaration(declaration: ReferenceDeclaration) {
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  if (declaration.newName.includes('.')) {
+    const [namespace, typeName] = declaration.newName.split('.')
+    return `namespace ${namespace} {
+${comments}  export type ${typeName} = ${declaration.name}}
+}`
+  }
   return `${comments}type ${declaration.newName} = ${declaration.name}`
 }
 
@@ -56,6 +62,12 @@ export function generateTypescriptOfReferenceDeclaration(declaration: ReferenceD
 export function generateTypescriptOfStringOrNumberDeclaration(declaration: StringDeclaration | NumberDeclaration) {
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
   const members = declaration.enums ? declaration.enums.map((e) => JSON.stringify(e)).join(' | ') : declaration.kind
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
+    return `namespace ${namespace} {
+${comments}  export type ${typeName} = ${members}}
+}`
+  }
   return `${comments}type ${declaration.name} = ${members}`
 }
 
@@ -65,6 +77,12 @@ export function generateTypescriptOfStringOrNumberDeclaration(declaration: Strin
 export function generateTypescriptOfUnionDeclaration(declaration: UnionDeclaration) {
   const members = declaration.members.map((m) => generateTypescriptOfType(m))
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
+    return `namespace ${namespace} {
+${comments}  export type ${typeName} = ${members.join(' | ')}
+}`
+  }
   return `${comments}type ${declaration.name} = ${members.join(' | ')}`
 }
 
@@ -74,18 +92,26 @@ export function generateTypescriptOfUnionDeclaration(declaration: UnionDeclarati
 export function generateTypescriptOfObjectDeclaration(declaration: ObjectDeclaration) {
   const members = declaration.members.map((m) => {
     const comments = m.comments ? m.comments.join('\n') + '\n  ' : ''
-    return '  ' + comments + generateTypescriptOfMember(m)}
+    return (declaration.name.includes('.') ? '    ' : '  ') + comments + generateTypescriptOfMember(m)}
   )
   if (declaration.additionalProperties) {
     members.push('  ' + generateTypescriptOfObjectAdditionalProperties(declaration.additionalProperties))
   }
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
+    return `namespace ${namespace} {
+${comments}  export interface ${typeName} {
+${members.join('\n')}
+  }
+}`
+  }
   return `${comments}interface ${declaration.name} {
 ${members.join('\n')}
 }`
 }
 
-function generateTypescriptOfMember(member: Member, processChild?: (type: Type) => string | undefined) {
+function generateTypescriptOfMember(member: Member, processChild?: (type: Type) => string | void | undefined) {
   if (member.parameters) {
     const parameters = member.parameters.map((m) => generateTypescriptOfFunctionParameter(m))
     return `${member.name}(${parameters.join(', ')}): ${generateTypescriptOfType(member.type, processChild)}`
@@ -105,7 +131,16 @@ export function generateTypescriptOfObjectAdditionalProperties(additionalPropert
  * @public
  */
 export function generateTypescriptOfEnumDeclaration(declaration: EnumDeclaration) {
-  const members = declaration.members.map(generateTypescriptOfEnumMember)
+  const indent = declaration.name.includes('.') ? '    ' : '  '
+  const members = declaration.members.map((m) => generateTypescriptOfEnumMember(m, indent))
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
+    return `namespace ${namespace} {
+  export const enum ${typeName} {
+${members.join('\n')}
+  }
+}`
+  }
   return `const enum ${declaration.name} {
 ${members.join('\n')}
 }`
@@ -114,9 +149,9 @@ ${members.join('\n')}
 /**
  * @public
  */
-export function generateTypescriptOfEnumMember(member: EnumMember) {
+export function generateTypescriptOfEnumMember(member: EnumMember, indent = '  ') {
   const value = JSON.stringify(member.value)
-  return `  ${member.name} = ${value},`
+  return `${indent}${member.name} = ${value},`
 }
 
 /**
@@ -126,13 +161,22 @@ export function generateTypescriptOfFunctionDeclaration(declaration: FunctionDec
   const parameters = declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m))
   const type = generateTypescriptOfType(declaration.type)
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
-  return `${comments}declare function ${declaration.name}(${parameters.join(', ')}): ${type}`
+  const typeParameters = declaration.typeParameters && declaration.typeParameters.length > 0
+    ? '<' + declaration.typeParameters.map((t) => t.constraint ? `${t.name} extends ${generateTypescriptOfType(t.constraint)}` : t.name).join(', ') + '>'
+    : ''
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
+    return `namespace ${namespace} {
+${comments}  export declare function ${typeName}${typeParameters}(${parameters.join(', ')}): ${type}
+}`
+  }
+  return `${comments}declare function ${declaration.name}${typeParameters}(${parameters.join(', ')}): ${type}`
 }
 
 /**
  * @public
  */
-export function generateTypescriptOfFunctionParameter(parameter: FunctionParameter, processChild?: (type: Type) => string | undefined) {
+export function generateTypescriptOfFunctionParameter(parameter: FunctionParameter, processChild?: (type: Type) => string | void | undefined) {
   const optional = parameter.optional ? '?' : ''
   return `${parameter.name}${optional}: ${generateTypescriptOfType(parameter.type, processChild)}`
 }
@@ -160,7 +204,7 @@ function generateTypescriptTemplateLiteral(templateLiteral: TemplateLiteralPart[
 /**
  * @public
  */
-export function generateTypescriptOfType(type: Type, processChild?: (type: Type) => string | undefined): string {
+export function generateTypescriptOfType(type: Type, processChild?: (type: Type) => string | void | undefined): string {
   if (processChild) {
     const childResult = processChild(type)
     if (childResult !== undefined) {
@@ -210,6 +254,9 @@ export function generateTypescriptOfType(type: Type, processChild?: (type: Type)
     const valueType = generateTypescriptOfType(type.value, processChild)
     return `{ [name: ${keyType}]: ${valueType} }`
   }
+  if (type.kind === 'function') {
+    const parameters = type.parameters.map((m) => generateTypescriptOfFunctionParameter(m, processChild))
+    return `(${parameters.join(', ')}) => ${generateTypescriptOfType(type.type)}`
+  }
   return 'unknown'
 }
-

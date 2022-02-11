@@ -643,6 +643,56 @@ Field | Required | Type | Description
 --- | --- | --- | ---
 `s` | `true` | `number` |
 
+## `functionType`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`props` | `true` | { a: (b: string) => number, b: [`React.ReactNode`](#React.ReactNode), c: [`C.D`](#C.D) } |
+
+Return | Description
+--- | ---
+`unknown` |
+
+## `C.D`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`d` | `true` | `number` |
+
+## `FancyButton`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`props` | `true` | `unknown` |
+`ref` | `true` | `unknown` |
+
+Return | Description
+--- | ---
+`unknown` |
+
+## `FancyButton2`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`props` | `true` | `unknown` |
+
+Return | Description
+--- | ---
+`unknown` |
+
+## `FancyButton3`
+
+
+## `FancyButton4`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`props` | `true` | { a: [`T`](#T) } |
+
+Return | Description
+--- | ---
+`unknown` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

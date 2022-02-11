@@ -391,3 +391,8 @@ type a = {
   .
   s: float,
 };
+
+type c.D = {
+  .
+  d: float,
+};
