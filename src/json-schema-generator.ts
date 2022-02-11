@@ -142,6 +142,10 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
         type: undefined
       }
     }
+  } else if (memberType.kind === 'function') {
+    return {
+      type: undefined
+    }
   }
   return {
     type: memberType.kind

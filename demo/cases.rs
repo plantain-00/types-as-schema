@@ -438,6 +438,11 @@ pub struct a {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct C.D {
+  pub d: f32,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OuterType {
   #[serde(rename = "outerType")] pub outer_type: f32,
 }

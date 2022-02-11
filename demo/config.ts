@@ -1,4 +1,4 @@
-import { generateTypescriptOfFunctionParameter, TypeDeclaration } from '../dist/core'
+import { generateTypescriptOfFunctionParameter, TypeDeclaration, generateTypescriptOfType } from '../dist/core'
 
 export default (typeDeclarations: TypeDeclaration[]): { path: string, content: string }[] => {
   const result = []
@@ -6,7 +6,15 @@ export default (typeDeclarations: TypeDeclaration[]): { path: string, content: s
     if (declaration.kind === 'function') {
       const parameters = [
         `functionName: '${declaration.name}'`,
-        ...declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m)),
+        ...declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m, (t) => {
+          if (declaration.typeParameters && t.kind === 'reference') {
+            const typeParameter = declaration.typeParameters.find((p) => p.name === t.name)
+            if (typeParameter?.constraint) {
+              return generateTypescriptOfType(typeParameter.constraint)
+            }
+          }
+          return
+        })),
       ]
       result.push(`  (${parameters.join(', ')}): string`)
     }

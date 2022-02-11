@@ -342,6 +342,10 @@ type a {
   (b: Boolean!): String!
 }
 
+type C.D {
+  d: Float!
+}
+
 type OuterType {
   outerType: Float!
 }

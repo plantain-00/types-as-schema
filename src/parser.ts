@@ -1,5 +1,5 @@
 import ts from 'typescript'
-import { getJsDocs as utilGetJsDocs } from 'ts-lib-utils/dist/js-doc'
+import { getJsDocs as utilGetJsDocs } from './js-doc'
 import {
   Member,
   TypeDeclaration,
@@ -31,30 +31,36 @@ export class Parser {
     for (const sourceFile of this.sourceFiles) {
       ts.forEachChild(sourceFile, node => {
         if (ts.isEnumDeclaration(node)) {
-          this.preHandleEnumDeclaration(node, sourceFile)
+          this.preHandleEnumDeclaration(node, sourceFile, '')
+        } else if (ts.isModuleDeclaration(node) && node.body && ts.isModuleBlock(node.body)) {
+          for (const statement of node.body.statements) {
+            if (ts.isEnumDeclaration(statement)) {
+              this.preHandleEnumDeclaration(statement, sourceFile, node.name.text + '.')
+            }
+          }
         }
       })
     }
 
     for (const sourceFile of this.sourceFiles) {
       ts.forEachChild(sourceFile, node => {
-        this.handleSourceFile(node, sourceFile)
+        this.handleSourceFile(node, sourceFile, '')
       })
     }
 
     return this.declarations
   }
 
-  private preHandleEnumDeclaration(declaration: ts.EnumDeclaration, sourceFile: ts.SourceFile) {
+  private preHandleEnumDeclaration(declaration: ts.EnumDeclaration, sourceFile: ts.SourceFile, namespace: string) {
     const members = declaration.members
     if (members.length > 0) {
       const firstMember = members[0]
       if (firstMember?.initializer) {
-        this.handleEnumDeclarationInitializer(declaration, members, firstMember.initializer, sourceFile)
+        this.handleEnumDeclarationInitializer(declaration, members, firstMember.initializer, sourceFile, namespace)
       } else {
         const enumType: EnumDeclaration = {
           kind: 'enum',
-          name: declaration.name.text,
+          name: namespace + declaration.name.text,
           type: 'uint32',
           members: [],
           position: this.getPosition(declaration, sourceFile),
@@ -86,11 +92,12 @@ export class Parser {
     declaration: ts.EnumDeclaration,
     members: ts.NodeArray<ts.EnumMember>,
     initializer: ts.Expression,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    namespace: string,
   ) {
     const enumType: EnumDeclaration = {
       kind: 'enum',
-      name: declaration.name.text,
+      name: namespace + declaration.name.text,
       type: ts.isStringLiteral(initializer) ? 'string' : 'uint32',
       members: [],
       position: this.getPosition(declaration, sourceFile),
@@ -108,22 +115,47 @@ export class Parser {
     this.declarations.push(enumType)
   }
 
-  private handleSourceFile(node: ts.Node, sourceFile: ts.SourceFile) {
+  private handleSourceFile(node: ts.Node, sourceFile: ts.SourceFile, namespace: string) {
     const jsDocs = this.getJsDocs(node, sourceFile)
     if (ts.isTypeAliasDeclaration(node)) {
-      this.handleTypeAliasDeclaration(node, jsDocs, sourceFile)
+      this.handleTypeAliasDeclaration(node, jsDocs, sourceFile, namespace)
     } else if (ts.isInterfaceDeclaration(node) || ts.isClassDeclaration(node)) {
-      this.handleInterfaceOrClassDeclaration(node, jsDocs, sourceFile)
+      this.handleInterfaceOrClassDeclaration(node, jsDocs, sourceFile, namespace)
     } else if (ts.isFunctionDeclaration(node)) {
-      this.handleFunctionDeclaration(node, jsDocs, sourceFile)
+      this.handleFunctionDeclaration(node, jsDocs, sourceFile, namespace)
     } else if (ts.isExportAssignment(node)) {
       if (ts.isArrowFunction(node.expression)) {
-        this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile, undefined, node)
+        this.handleFunctionDeclaration(node.expression, jsDocs, sourceFile, namespace, node)
       }
     } else if (ts.isVariableStatement(node)) {
       const declaration = node.declarationList.declarations[0]
-      if (declaration?.initializer && ts.isArrowFunction(declaration.initializer)) {
-        this.handleFunctionDeclaration(declaration.initializer, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, node)
+      if (declaration?.initializer) {
+        const typeArguments = declaration.type && ts.isTypeReferenceNode(declaration.type) && declaration.type.typeArguments
+          ? declaration.type.typeArguments.map((t) => this.getType(t, sourceFile))
+          : undefined
+        if (ts.isArrowFunction(declaration.initializer)) {
+          this.handleFunctionDeclaration(declaration.initializer, jsDocs, sourceFile, namespace, node, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, typeArguments)
+        } else if (ts.isCallExpression(declaration.initializer)) {
+          const argument = declaration.initializer.arguments[0]
+          if (argument && ts.isArrowFunction(argument)) {
+            this.handleFunctionDeclaration(argument, jsDocs, sourceFile, namespace, node, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, typeArguments)
+          }
+        } else if (ts.isTaggedTemplateExpression(declaration.initializer)) {
+          if (declaration.initializer.typeArguments) {
+            this.declarations.push({
+              kind: 'unknown',
+              name: namespace + (ts.isIdentifier(declaration.name) ? declaration.name.text : ''),
+              position: this.getPosition(declaration, sourceFile),
+              modifiers: this.getModifiers(declaration),
+              ...jsDocs,
+              typeArguments: declaration.initializer.typeArguments.map((t) => this.getType(t, sourceFile)),
+            })
+          }
+        }
+      }
+    } else if (ts.isModuleDeclaration(node) && node.body && ts.isModuleBlock(node.body)) {
+      for (const statement of node.body.statements) {
+        this.handleSourceFile(statement, sourceFile, namespace + node.name.text + '.')
       }
     }
   }
@@ -132,8 +164,10 @@ export class Parser {
     declaration: ts.FunctionDeclaration | ts.ArrowFunction | ts.FunctionTypeNode,
     { jsDocs, comments }: JsDocAndComment,
     sourceFile: ts.SourceFile,
-    functionName?: string,
+    namespace: string,
     parent?: ts.Node,
+    functionName?: string,
+    typeArguments?: Type[],
   ) {
     const type = declaration.type
       ? this.getType(declaration.type, sourceFile)
@@ -141,9 +175,15 @@ export class Parser {
         kind: undefined,
         position: this.getPosition(declaration, sourceFile)
       }
+    const typeParameters = declaration.typeParameters
+      ? declaration.typeParameters.map((t) => ({
+        name: t.name.text,
+        constraint: t.constraint ? this.getType(t.constraint, sourceFile) : undefined,
+      }))
+      : undefined
     const functionDeclaration: FunctionDeclaration = {
       kind: 'function',
-      name: functionName ?? (declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''),
+      name: namespace + (functionName ?? (declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : '')),
       type,
       optional: ts.isFunctionTypeNode(declaration) ? false : !!declaration.questionToken,
       parameters: declaration.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
@@ -152,6 +192,8 @@ export class Parser {
       position: this.getPosition(declaration, sourceFile),
       body: ts.isFunctionTypeNode(declaration) ? undefined : declaration.body?.getText(sourceFile),
       modifiers: this.getModifiers(parent ?? declaration),
+      typeArguments,
+      typeParameters,
     }
     for (const jsDoc of jsDocs || []) {
       if (jsDoc.comment) {
@@ -194,7 +236,8 @@ export class Parser {
   private handleInterfaceOrClassDeclaration(
     declaration: ts.InterfaceDeclaration | ts.ClassDeclaration,
     { jsDocs, comments }: JsDocAndComment,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    namespace: string,
   ) {
     if (declaration.name) {
       const declarationName = declaration.name.text
@@ -224,7 +267,7 @@ export class Parser {
 
     const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
-      name: declaration.name ? declaration.name.text : '',
+      name: namespace + (declaration.name ? declaration.name.text : ''),
       members,
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
@@ -298,14 +341,16 @@ export class Parser {
   private handleTypeAliasDeclaration(
     declaration: ts.TypeAliasDeclaration,
     jsDocs: JsDocAndComment,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    namespace: string,
   ) {
     if (ts.isArrayTypeNode(declaration.type)) {
       this.handleArrayTypeInTypeAliasDeclaration(
         declaration.type,
         declaration.name,
         jsDocs,
-        sourceFile
+        sourceFile,
+        namespace,
       )
     } else if (ts.isTypeLiteralNode(declaration.type)
       || ts.isUnionTypeNode(declaration.type)
@@ -314,7 +359,8 @@ export class Parser {
         declaration.type,
         declaration.name,
         jsDocs,
-        sourceFile
+        sourceFile,
+        namespace,
       )
     } else if (
       ts.isTypeReferenceNode(declaration.type) &&
@@ -326,7 +372,7 @@ export class Parser {
           const type = this.getTypeOfComplexType(declaration.type, sourceFile)
           if (type) {
             this.declarations.push({
-              name: declaration.name.text,
+              name: namespace + declaration.name.text,
               ...type,
               modifiers: this.getModifiers(declaration),
             })
@@ -338,7 +384,7 @@ export class Parser {
           const type = this.getTypeOfPick(declaration.type.typeName, declaration.type.typeArguments, sourceFile)
           if (type) {
             this.declarations.push({
-              name: declaration.name.text,
+              name: namespace + declaration.name.text,
               ...type,
               modifiers: this.getModifiers(declaration),
             })
@@ -352,7 +398,7 @@ export class Parser {
       if (spans.every((s) => s.kind === 'enum')) {
         this.declarations.push({
           kind: 'string',
-          name: declaration.name.text,
+          name: namespace + declaration.name.text,
           enums: this.getTemplateLiteralTypeEnums(declaration.type, spans),
           position: this.getPosition(declaration.name, sourceFile),
           modifiers: this.getModifiers(declaration),
@@ -360,20 +406,20 @@ export class Parser {
       } else if (spans.every((s) => s.kind === 'enum' || s.kind === 'string' || s.kind === 'number' || s.kind === 'boolean')) {
         this.declarations.push({
           kind: 'string',
-          name: declaration.name.text,
+          name: namespace + declaration.name.text,
           templateLiteral: this.getTemplateLiteral(declaration.type, spans),
           position: this.getPosition(declaration.type, sourceFile),
           modifiers: this.getModifiers(declaration),
         })
       }
     } else if (ts.isFunctionTypeNode(declaration.type)) {
-      this.handleFunctionDeclaration(declaration.type, jsDocs, sourceFile, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined, declaration)
+      this.handleFunctionDeclaration(declaration.type, jsDocs, sourceFile, namespace, declaration, ts.isIdentifier(declaration.name) ? declaration.name.text : undefined)
     } else {
       const type = this.getType(declaration.type, sourceFile)
       const declarationName = declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''
       if (type.kind === 'reference') {
         this.declarations.push({
-          newName: declarationName,
+          newName: namespace + declarationName,
           ...type,
           ...jsDocs,
           modifiers: this.getModifiers(declaration),
@@ -386,7 +432,7 @@ export class Parser {
           })),
           ...type,
           ...jsDocs,
-          name: declarationName,
+          name: namespace + declarationName,
           modifiers: this.getModifiers(declaration),
         })
       } else if (
@@ -397,7 +443,7 @@ export class Parser {
         this.declarations.push({
           ...type,
           ...jsDocs,
-          name: declarationName,
+          name: namespace + declarationName,
           modifiers: this.getModifiers(declaration),
         })
       }
@@ -408,18 +454,19 @@ export class Parser {
     declarationType: ts.TypeLiteralNode | ts.UnionOrIntersectionTypeNode,
     declarationName: ts.Identifier,
     { jsDocs, comments }: JsDocAndComment,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    namespace: string,
   ) {
     let unionDeclaration: UnionDeclaration | undefined
     if (ts.isUnionTypeNode(declarationType)) {
       if (declarationType.types.every(u => ts.isLiteralTypeNode(u) || u.kind === ts.SyntaxKind.NullKeyword)) {
-        this.handleUnionTypeOfLiteralType(declarationType, declarationName, sourceFile)
+        this.handleUnionTypeOfLiteralType(declarationType, declarationName, sourceFile, namespace)
         return
       }
       if (declarationType.types.every(u => ts.isTypeReferenceNode(u))) {
         unionDeclaration = {
           kind: 'union',
-          name: declarationName.text,
+          name: namespace + declarationName.text,
           members: declarationType.types.map(u => this.getType(u, sourceFile)),
           entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
           position: this.getPosition(declarationName, sourceFile),
@@ -433,7 +480,7 @@ export class Parser {
     const { members, minProperties, maxProperties, additionalProperties } = this.getMembersInfo(declarationType, sourceFile)
     const objectDeclaration: ObjectDeclaration = {
       kind: 'object',
-      name: declarationName.text,
+      name: namespace + declarationName.text,
       members,
       minProperties,
       maxProperties: additionalProperties === undefined ? maxProperties : undefined,
@@ -454,7 +501,7 @@ export class Parser {
     }
   }
 
-  private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier, sourceFile: ts.SourceFile) {
+  private handleUnionTypeOfLiteralType(unionType: ts.UnionTypeNode, declarationName: ts.Identifier, sourceFile: ts.SourceFile, namespace: string) {
     let enumType: EnumValueType | undefined
     const enums: unknown[] = []
     for (const childType of unionType.types) {
@@ -474,7 +521,7 @@ export class Parser {
       if (enumType === 'string') {
         const stringDeclaration: StringDeclaration = {
           kind: 'string',
-          name: declarationName.text,
+          name: namespace + declarationName.text,
           enums: enums as string[],
           position: this.getPosition(declarationName, sourceFile),
           modifiers: this.getModifiers(unionType),
@@ -484,7 +531,7 @@ export class Parser {
         const numberDeclaration: NumberDeclaration = {
           kind: 'number',
           type: enumType,
-          name: declarationName.text,
+          name: namespace + declarationName.text,
           enums: enums as string[],
           position: this.getPosition(declarationName, sourceFile),
           modifiers: this.getModifiers(unionType),
@@ -493,7 +540,7 @@ export class Parser {
       } else if (enumType === 'boolean') {
         const unionDeclaration: UnionDeclaration = {
           kind: 'union',
-          name: declarationName.text,
+          name: namespace + declarationName.text,
           members: unionType.types.map(e => this.getType(e, sourceFile)),
           entry: undefined,
           position: this.getPosition(declarationName, sourceFile),
@@ -508,12 +555,13 @@ export class Parser {
     arrayType: ts.ArrayTypeNode,
     declarationName: ts.Identifier,
     { jsDocs, comments }: JsDocAndComment,
-    sourceFile: ts.SourceFile
+    sourceFile: ts.SourceFile,
+    namespace: string,
   ) {
     const type = this.getType(arrayType.elementType, sourceFile)
     const arrayDeclaration: ArrayDeclaration = {
       kind: 'array',
-      name: declarationName.text,
+      name: namespace + declarationName.text,
       type,
       entry: jsDocs?.find((f) => f.name === 'entry')?.comment,
       position: this.getPosition(declarationName, sourceFile),
@@ -657,6 +705,14 @@ export class Parser {
             position: this.getPosition(type, sourceFile),
           }
         }
+      }
+    }
+    if (ts.isFunctionTypeNode(type)) {
+      return {
+        kind: 'function',
+        type: this.getType(type.type, sourceFile),
+        parameters: type.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile)),
+        position: this.getPosition(type, sourceFile),
       }
     }
     const position = this.getPosition(type, sourceFile)
@@ -899,7 +955,8 @@ export class Parser {
       }
     }
     return {
-      kind: undefined,
+      kind: 'reference',
+      name: reference.typeName.getText(),
       position: this.getPosition(reference.typeName, sourceFile)
     }
   }
@@ -960,13 +1017,13 @@ export class Parser {
     typeArguments: ts.NodeArray<ts.TypeNode>,
     sourceFile: ts.SourceFile
   ): ObjectType | undefined {
-    const argument = typeArguments[0]!
-    if (ts.isTypeReferenceNode(argument) && ts.isIdentifier(argument.typeName)) {
+    const argument = typeArguments[0]
+    if (argument && ts.isTypeReferenceNode(argument) && ts.isIdentifier(argument.typeName)) {
       const declarationName = argument.typeName.escapedText.toString()
       this.preHandleType(declarationName)
       const declaration = this.declarations.find(m => m.kind === 'object' && m.name === declarationName)
-      if (declaration && declaration.kind === 'object') {
-        const field = typeArguments[1]!
+      const field = typeArguments[1]
+      if (declaration && declaration.kind === 'object' && field) {
         const memberNames: string[] = []
         if (ts.isLiteralTypeNode(field)) {
           if (ts.isStringLiteral(field.literal)) {
@@ -1228,11 +1285,11 @@ export class Parser {
         if (ts.isInterfaceDeclaration(node)) {
           if (node.name.text === typeName) {
             findIt = true
-            this.handleSourceFile(node, sourceFile)
+            this.handleSourceFile(node, sourceFile, '')
           }
         } else if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
           findIt = true
-          this.handleSourceFile(node, sourceFile)
+          this.handleSourceFile(node, sourceFile, '')
         }
       })
     }

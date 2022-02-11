@@ -55,6 +55,16 @@ export type TypeDeclaration =
   | ReferenceDeclaration
   | FunctionDeclaration
   | NullDeclaration
+  | UnknownDeclaration
+
+/**
+ * @public
+ */
+export type UnknownDeclaration = {
+  kind: 'unknown';
+  name: string;
+  description?: string;
+} & Position & JsDocAndComment & Modifiers & TypeArguments
 
 export type EnumDeclaration = {
   kind: 'enum';
@@ -162,19 +172,27 @@ export type ReferenceDeclaration = ReferenceType & Modifiers & {
   newName: string;
 }
 
-export interface FunctionDeclaration extends Position, JsDocAndComment, Modifiers {
-  kind: 'function';
+export type FunctionDeclaration = FunctionType & Modifiers & JsDocAndComment & TypeArguments & TypeParameters & {
   name: string;
-  type: Type;
   optional?: boolean;
-  parameters: FunctionParameter[];
   method?: string;
   path?: string;
-  description?: string
   summary?: string
   deprecated?: boolean
   tags?: string[]
   body?: string
+}
+
+/**
+ * @public
+ */
+export interface FunctionType extends Position {
+  kind: 'function';
+  type: Type;
+  parameters: FunctionParameter[];
+  default?: unknown;
+  description?: string
+
 }
 
 export type FunctionParameter = Parameter & {
@@ -183,7 +201,7 @@ export type FunctionParameter = Parameter & {
 
 export type Type = StringType | MapType | ArrayType | EnumType | ReferenceType
   | ObjectType | NumberType | BooleanType | AnyType | NullType
-  | UnionType | FileType | VoidType
+  | UnionType | FileType | VoidType | FunctionType
 
 export type MapType = {
   kind: 'map';
@@ -396,4 +414,26 @@ export interface Expression {
   name: string;
   type: Type;
   value: unknown;
+}
+
+/**
+ * @public
+ */
+export interface TypeArguments {
+  typeArguments?: Type[]
+}
+
+/**
+ * @public
+ */
+export interface TypeParameters {
+  typeParameters?: TypeParameter[]
+}
+
+/**
+ * @public
+ */
+export interface TypeParameter {
+  name: string
+  constraint?: Type
 }

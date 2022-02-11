@@ -341,6 +341,10 @@ type a = {
   s: float;
 }
 
+type c.D = {
+  d: float;
+}
+
 type outerType = {
   outerType: float;
 }

@@ -637,6 +637,31 @@ type a = {
    */
   (b: boolean): string
 }
+
+/**
+ * functionType comment
+ */
+function functionType(props: {
+  a: (b: string) => number
+  b: React.ReactNode
+  c: C.D
+}) {
+  //
+}
+
+namespace C {
+  export interface D {
+    d: number
+  }
+}
+
+const FancyButton = React.forwardRef((props, ref) => null);
+
+const FancyButton2: React.FC<Props> = (props) => null
+
+const FancyButton3 = styled.div<{ a: number }>\`\`
+
+function FancyButton4<T extends string>(props: { a: T }) {}
 `
 export function indexTemplateHtml(_ctx, _cache) {
   return (_openBlock(), _createElementBlock("div", { class: "app" }, [

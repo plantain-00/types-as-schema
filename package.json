@@ -68,7 +68,6 @@
     "lodash": "4",
     "minimist": "1",
     "protobufjs": "6",
-    "ts-lib-utils": "2",
     "tslib": "2",
     "typescript": "3 || 4"
   },

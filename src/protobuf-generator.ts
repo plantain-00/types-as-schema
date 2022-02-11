@@ -3,7 +3,7 @@ import { TypeDeclaration, Type, ReferenceType, MapType, ObjectDeclaration, EnumD
 export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
   const messages: string[] = []
   for (const typeDeclaration of typeDeclarations) {
-    if (typeDeclaration.kind === 'object') {
+    if (typeDeclaration.kind === 'object' && !typeDeclaration.name.includes('.')) {
       const message = generateProtobufOfObject(typeDeclarations, typeDeclaration)
       messages.push(message)
     } else if (typeDeclaration.kind === 'enum') {
@@ -11,7 +11,7 @@ export function generateProtobuf(typeDeclarations: TypeDeclaration[]) {
       if (message) {
         messages.push(message)
       }
-    } else if (typeDeclaration.kind === 'union' && typeDeclaration.objectType) {
+    } else if (typeDeclaration.kind === 'union' && typeDeclaration.objectType && !typeDeclaration.name.includes('.')) {
       const message = generateProtobufOfObject(typeDeclarations, { ...typeDeclaration, ...typeDeclaration.objectType })
       messages.push(message)
     }
@@ -30,7 +30,7 @@ function generateProtobufOfObject(typeDeclarations: TypeDeclaration[], objectDec
       lastTag++
     }
     const { modifier, propertyType } = getProtobufProperty(typeDeclarations, member.type)
-    if (propertyType && member.name) {
+    if (propertyType && member.name ) {
       members.push(`    ${modifier}${propertyType} ${member.name} = ${member.tag ? member.tag : lastTag};`)
     } else {
       warn(member.type.position, 'protobuf generator')

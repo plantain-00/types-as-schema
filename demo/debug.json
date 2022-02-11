@@ -5363,6 +5363,317 @@
     }
   },
   {
+    "kind": "function",
+    "name": "functionType",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 634,
+        "character": 0
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "props",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "a",
+              "type": {
+                "kind": "function",
+                "type": {
+                  "kind": "number",
+                  "type": "number",
+                  "position": {
+                    "file": "demo/cases.ts",
+                    "line": 635,
+                    "character": 20
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "b",
+                    "type": {
+                      "kind": "string",
+                      "position": {
+                        "file": "demo/cases.ts",
+                        "line": 635,
+                        "character": 9
+                      }
+                    },
+                    "optional": false
+                  }
+                ],
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 635,
+                  "character": 5
+                }
+              }
+            },
+            {
+              "name": "b",
+              "type": {
+                "kind": "reference",
+                "name": "React.ReactNode",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 636,
+                  "character": 5
+                }
+              }
+            },
+            {
+              "name": "c",
+              "type": {
+                "kind": "reference",
+                "name": "C.D",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 637,
+                  "character": 5
+                }
+              }
+            }
+          ],
+          "minProperties": 3,
+          "maxProperties": 3,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 634,
+            "character": 29
+          }
+        },
+        "optional": false
+      }
+    ],
+    "comments": [
+      "/**\n * functionType comment\n */"
+    ],
+    "jsDocs": [
+      {
+        "name": "",
+        "comment": "functionType comment"
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 634,
+      "character": 0
+    },
+    "body": "{\n  //\n}"
+  },
+  {
+    "kind": "object",
+    "name": "C.D",
+    "members": [
+      {
+        "name": "d",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 644,
+            "character": 7
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 643,
+      "character": 2
+    },
+    "modifiers": [
+      "export"
+    ]
+  },
+  {
+    "kind": "function",
+    "name": "FancyButton",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 648,
+        "character": 37
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "props",
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 648,
+            "character": 38
+          }
+        },
+        "optional": false
+      },
+      {
+        "name": "ref",
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 648,
+            "character": 45
+          }
+        },
+        "optional": false
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 648,
+      "character": 37
+    },
+    "body": "null"
+  },
+  {
+    "kind": "function",
+    "name": "FancyButton2",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 650,
+        "character": 38
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "props",
+        "type": {
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 650,
+            "character": 39
+          }
+        },
+        "optional": false
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 650,
+      "character": 38
+    },
+    "body": "null",
+    "typeArguments": [
+      {
+        "kind": "reference",
+        "name": "Props",
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 650,
+          "character": 29
+        }
+      }
+    ]
+  },
+  {
+    "kind": "unknown",
+    "name": "FancyButton3",
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 652,
+      "character": 6
+    },
+    "typeArguments": [
+      {
+        "kind": "object",
+        "members": [
+          {
+            "name": "a",
+            "type": {
+              "kind": "number",
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 652,
+                "character": 37
+              }
+            }
+          }
+        ],
+        "minProperties": 1,
+        "maxProperties": 1,
+        "position": {
+          "file": "demo/cases.ts",
+          "line": 652,
+          "character": 32
+        }
+      }
+    ]
+  },
+  {
+    "kind": "function",
+    "name": "FancyButton4",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 654,
+        "character": 0
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "props",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "a",
+              "type": {
+                "kind": "reference",
+                "name": "T",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 654,
+                  "character": 52
+                }
+              }
+            }
+          ],
+          "minProperties": 1,
+          "maxProperties": 1,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 654,
+            "character": 47
+          }
+        },
+        "optional": false
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 654,
+      "character": 0
+    },
+    "body": "{}",
+    "typeParameters": [
+      {
+        "name": "T",
+        "constraint": {
+          "kind": "string",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 654,
+            "character": 32
+          }
+        }
+      }
+    ]
+  },
+  {
     "kind": "object",
     "name": "OuterType",
     "members": [
