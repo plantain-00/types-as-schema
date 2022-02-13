@@ -185,7 +185,7 @@
         "name": "type",
         "type": {
           "kind": "reference",
-          "name": "ItemType",
+          "referenceName": "ItemType",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 29,
@@ -328,7 +328,7 @@
         "name": "itemType",
         "type": {
           "kind": "reference",
-          "name": "ItemType",
+          "referenceName": "ItemType",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 48,
@@ -353,7 +353,7 @@
         "name": "nearLadder",
         "type": {
           "kind": "reference",
-          "name": "Ladder",
+          "referenceName": "Ladder",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 50,
@@ -414,7 +414,7 @@
         "name": "status",
         "type": {
           "kind": "reference",
-          "name": "UserStatus",
+          "referenceName": "UserStatus",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 55,
@@ -620,7 +620,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "User",
+            "referenceName": "User",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 88,
@@ -640,7 +640,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Item",
+            "referenceName": "Item",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 89,
@@ -660,7 +660,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Mine",
+            "referenceName": "Mine",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 90,
@@ -680,7 +680,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Grenade",
+            "referenceName": "Grenade",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 91,
@@ -757,7 +757,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Ladder",
+            "referenceName": "Ladder",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 98,
@@ -777,7 +777,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Door",
+            "referenceName": "Door",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 99,
@@ -797,7 +797,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "ItemGate",
+            "referenceName": "ItemGate",
             "position": {
               "file": "demo/baogame/common.ts",
               "line": 100,
@@ -828,7 +828,7 @@
         "name": "map",
         "type": {
           "kind": "reference",
-          "name": "MapData",
+          "referenceName": "MapData",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 104,
@@ -1052,7 +1052,7 @@
         "name": "control",
         "type": {
           "kind": "reference",
-          "name": "Control",
+          "referenceName": "Control",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 130,
@@ -1126,7 +1126,7 @@
         "name": "user",
         "type": {
           "kind": "reference",
-          "name": "User",
+          "referenceName": "User",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 140,
@@ -1138,7 +1138,7 @@
         "name": "killer",
         "type": {
           "kind": "reference",
-          "name": "User",
+          "referenceName": "User",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 141,
@@ -1186,7 +1186,7 @@
         "name": "initSuccess",
         "type": {
           "kind": "reference",
-          "name": "InitSuccess",
+          "referenceName": "InitSuccess",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 147,
@@ -1199,7 +1199,7 @@
         "name": "join",
         "type": {
           "kind": "reference",
-          "name": "Join",
+          "referenceName": "Join",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 152,
@@ -1212,7 +1212,7 @@
         "name": "joinSuccess",
         "type": {
           "kind": "reference",
-          "name": "JoinSuccess",
+          "referenceName": "JoinSuccess",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 157,
@@ -1225,7 +1225,7 @@
         "name": "control",
         "type": {
           "kind": "reference",
-          "name": "Control",
+          "referenceName": "Control",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 162,
@@ -1238,7 +1238,7 @@
         "name": "tick",
         "type": {
           "kind": "reference",
-          "name": "Tick",
+          "referenceName": "Tick",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 167,
@@ -1251,7 +1251,7 @@
         "name": "explode",
         "type": {
           "kind": "reference",
-          "name": "Explode",
+          "referenceName": "Explode",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 172,
@@ -1264,7 +1264,7 @@
         "name": "userDead",
         "type": {
           "kind": "reference",
-          "name": "UserDead",
+          "referenceName": "UserDead",
           "position": {
             "file": "demo/baogame/common.ts",
             "line": 177,

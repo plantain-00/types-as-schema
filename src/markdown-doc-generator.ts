@@ -4,11 +4,7 @@ import { Type, TypeDeclaration } from './utils'
 export function generateMarkdownDoc(declarations: TypeDeclaration[]) {
   const result: string[] = []
   for (const declaration of declarations) {
-    if (declaration.kind === 'reference') {
-      result.push(`\n## \`${declaration.newName}\`\n`)
-    } else {
-      result.push(`\n## \`${declaration.name}\`\n`)
-    }
+    result.push(`\n## \`${declaration.name}\`\n`)
     if (declaration.description) {
       result.push(declaration.description + '\n')
     }
@@ -67,7 +63,7 @@ function getType(type: Type) {
   const result = generateTypescriptOfType(type, (t) => {
     if (t.kind === 'reference') {
       hasReference = true
-      return `[\`${t.name}\`](#${t.name})`
+      return `[\`${t.referenceName}\`](#${t.referenceName})`
     }
     return undefined
   })

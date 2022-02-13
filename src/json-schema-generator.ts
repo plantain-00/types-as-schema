@@ -46,9 +46,9 @@ export function getAllDefinitions(context: Context) {
       || typeDeclaration.kind === 'number') {
       definitions[typeDeclaration.name] = getJsonSchemaProperty(typeDeclaration, context)
     } else if (typeDeclaration.kind === 'reference') {
-      definitions[typeDeclaration.newName] = {
+      definitions[typeDeclaration.name] = {
         type: undefined,
-        $ref: `#/definitions/${typeDeclaration.name}`
+        $ref: `#/definitions/${typeDeclaration.referenceName}`
       }
     } else if (typeDeclaration.kind === 'enum') {
       if (typeDeclaration.members.length === 1) {
@@ -116,10 +116,10 @@ export function getJsonSchemaProperty(memberType: Type, context: Context): Defin
       default: memberType.default as string,
     } as Definition
   } else if (memberType.kind === 'reference') {
-    if (isValidReference(context.declarations, memberType.name)) {
+    if (isValidReference(context.declarations, memberType.referenceName)) {
       return {
         type: undefined,
-        $ref: `#/definitions/${memberType.name}`,
+        $ref: `#/definitions/${memberType.referenceName}`,
         default: memberType.default
       }
     }

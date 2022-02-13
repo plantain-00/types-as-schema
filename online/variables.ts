@@ -701,69 +701,33 @@ export function indexTemplateHtml(_ctx, _cache) {
             class: "json-schema"
           }, _toDisplayString(_ctx.jsonSchema), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'graphql schema')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 2,
-            class: "graphql-schema"
-          }, _toDisplayString(_ctx.graphqlSchema), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'reason types')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 3,
-            class: "reason-types"
-          }, _toDisplayString(_ctx.reasonTypes), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'ocaml types')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 4,
-            class: "ocaml-types"
-          }, _toDisplayString(_ctx.ocamlTypes), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'rust types')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 5,
-            class: "rust-types"
-          }, _toDisplayString(_ctx.rustTypes), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'mongoose schema')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 6,
-            class: "mongoose-schema"
-          }, _toDisplayString(_ctx.mongooseSchema), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
-      (_ctx.selectedOption === 'graphql root type')
-        ? (_openBlock(), _createElementBlock("pre", {
-            key: 7,
-            class: "graphql-root-type"
-          }, _toDisplayString(_ctx.graphqlRootType), 1 /* TEXT */))
-        : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'swagger doc')
         ? (_openBlock(), _createElementBlock("pre", {
-            key: 8,
+            key: 2,
             class: "swagger-doc"
           }, _toDisplayString(_ctx.swaggerDoc), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'custom')
         ? (_openBlock(), _createElementBlock("pre", {
-            key: 9,
+            key: 3,
             class: "custom"
           }, _toDisplayString(_ctx.custom), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'typescript')
         ? (_openBlock(), _createElementBlock("pre", {
-            key: 10,
+            key: 4,
             class: "typescript"
           }, _toDisplayString(_ctx.typescript), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'markdown')
         ? (_openBlock(), _createElementBlock("pre", {
-            key: 11,
+            key: 5,
             class: "markdown"
           }, _toDisplayString(_ctx.markdown), 1 /* TEXT */))
         : _createCommentVNode("v-if", true),
       (_ctx.selectedOption === 'debug')
         ? (_openBlock(), _createElementBlock("pre", {
-            key: 12,
+            key: 6,
             class: "debug"
           }, _toDisplayString(_ctx.debug), 1 /* TEXT */))
         : _createCommentVNode("v-if", true)

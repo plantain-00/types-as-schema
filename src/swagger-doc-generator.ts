@@ -11,14 +11,14 @@ export function generateSwaggerDoc(context: Context, swaggerBase?: Record<string
       if (!paths[typeDeclaration.path]) {
         paths[typeDeclaration.path] = {}
       }
-      referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.name))
+      referenceNames.push(...getReferencesInType(typeDeclaration.type).map((r) => r.referenceName))
       const declarationParameters = getDeclarationParameters(typeDeclaration, context.declarations)
       const useFormData = declarationParameters.some((p) => p.type.kind === 'file')
       paths[typeDeclaration.path]![typeDeclaration.method] = {
         consumes: useFormData ? ['multipart/form-data'] : undefined,
         operationId: typeDeclaration.name,
         parameters: declarationParameters.map((parameter) => {
-          referenceNames.push(...getReferencesInType(parameter.type).map((r) => r.name))
+          referenceNames.push(...getReferencesInType(parameter.type).map((r) => r.referenceName))
           const schema = getJsonSchemaProperty(parameter.type, context)
           return {
             name: parameter.name,
@@ -72,7 +72,7 @@ export function getDeclarationParameters(
     if (!parameter.in && allTypes.includes(parameter.name)) {
       const parameterType = parameter.type
       if (parameterType.kind === 'reference') {
-        const typeDeclaration = typeDeclarations.find((d) => d.name === parameterType.name)
+        const typeDeclaration = typeDeclarations.find((d) => d.name === parameterType.referenceName)
         if (typeDeclaration && typeDeclaration.kind === 'object') {
           result.push(...typeDeclaration.members.map((m) => ({
             ...m,
@@ -82,7 +82,7 @@ export function getDeclarationParameters(
       } else if (parameterType.kind === 'union') {
         for (const member of parameterType.members) {
           if (member.kind === 'reference') {
-            const typeDeclaration = typeDeclarations.find((d) => d.name === member.name)
+            const typeDeclaration = typeDeclarations.find((d) => d.name === member.referenceName)
             if (typeDeclaration && typeDeclaration.kind === 'object') {
               result.push(...typeDeclaration.members.map((m) => ({
                 ...m,

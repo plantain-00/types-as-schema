@@ -149,7 +149,7 @@
         "name": "searchLogs",
         "type": {
           "kind": "reference",
-          "name": "SearchLogs",
+          "referenceName": "SearchLogs",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 8,
@@ -162,7 +162,7 @@
         "name": "searchSamples",
         "type": {
           "kind": "reference",
-          "name": "SearchSamples",
+          "referenceName": "SearchSamples",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 11,
@@ -333,7 +333,7 @@
         "name": "flows",
         "type": {
           "kind": "reference",
-          "name": "Flows",
+          "referenceName": "Flows",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 44,
@@ -348,7 +348,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "SampleFrame",
+            "referenceName": "SampleFrame",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 47,
@@ -367,7 +367,7 @@
         "name": "searchLogsResult",
         "type": {
           "kind": "reference",
-          "name": "SearchLogsResult",
+          "referenceName": "SearchLogsResult",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 50,
@@ -380,7 +380,7 @@
         "name": "searchSamplesResult",
         "type": {
           "kind": "reference",
-          "name": "SearchSamplesResult",
+          "referenceName": "SearchSamplesResult",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 53,
@@ -393,7 +393,7 @@
         "name": "resaveFailedLogsResult",
         "type": {
           "kind": "reference",
-          "name": "ResaveFailedLogsResult",
+          "referenceName": "ResaveFailedLogsResult",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 56,
@@ -442,7 +442,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Flow",
+            "referenceName": "Flow",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 69,
@@ -517,7 +517,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Log",
+            "referenceName": "Log",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 78,
@@ -592,7 +592,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "SampleFrame",
+            "referenceName": "SampleFrame",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 90,
@@ -729,7 +729,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Sample",
+            "referenceName": "Sample",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 117,
@@ -763,7 +763,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Flow",
+            "referenceName": "Flow",
             "position": {
               "file": "demo/log-tool/types.ts",
               "line": 124,
@@ -821,7 +821,7 @@
         "name": "log",
         "type": {
           "kind": "reference",
-          "name": "Log",
+          "referenceName": "Log",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 130,
@@ -834,7 +834,7 @@
         "name": "sample",
         "type": {
           "kind": "reference",
-          "name": "Sample",
+          "referenceName": "Sample",
           "position": {
             "file": "demo/log-tool/types.ts",
             "line": 133,

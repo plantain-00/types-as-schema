@@ -77,7 +77,7 @@ export class Parser {
             lastIndex = value as number + 1
           } else {
             enumType.members.push({
-              name: (member.name as ts.Identifier).text,
+              name: ts.isIdentifier(member.name) ? member.name.text : '',
               value: lastIndex
             })
             lastIndex++
@@ -106,10 +106,12 @@ export class Parser {
     for (const member of members) {
       if (member.initializer && ts.isIdentifier(member.name)) {
         const { name, value } = this.getExpression(member.initializer, member.name, sourceFile)
-        enumType.members.push({
-          name,
-          value: value as string | number
-        })
+        if (typeof value === 'number' || typeof value === 'string') {
+          enumType.members.push({
+            name,
+            value: value as string | number
+          })
+        }
       }
     }
     this.declarations.push(enumType)
@@ -242,7 +244,7 @@ export class Parser {
     if (declaration.name) {
       const declarationName = declaration.name.text
       // if the node is pre-handled, then it should be in `declarations` already, so don't continue
-      if (this.declarations.some(m => m.kind === 'reference' ? m.newName === declarationName : m.name === declarationName)) {
+      if (this.declarations.some(m => m.name === declarationName)) {
         return
       }
     }
@@ -419,7 +421,7 @@ export class Parser {
       const declarationName = declaration.name && !ts.isFunctionTypeNode(declaration) ? declaration.name.text : ''
       if (type.kind === 'reference') {
         this.declarations.push({
-          newName: namespace + declarationName,
+          name: namespace + declarationName,
           ...type,
           ...jsDocs,
           modifiers: this.getModifiers(declaration),
@@ -878,8 +880,8 @@ export class Parser {
   }
 
   private getTypeOfArrayTypeReference(reference: ts.TypeReferenceNode, sourceFile: ts.SourceFile): ArrayType {
-    if (reference.typeArguments && reference.typeArguments.length === 1) {
-      const typeArgument = reference.typeArguments[0]!
+    const typeArgument = reference.typeArguments?.[0]
+    if (typeArgument) {
       return {
         kind: 'array',
         type: this.getType(typeArgument, sourceFile),
@@ -916,12 +918,11 @@ export class Parser {
       if (reference.typeName.text === 'Array' || reference.typeName.text === 'ReadonlyArray') {
         return this.getTypeOfArrayTypeReference(reference, sourceFile)
       }
-      if (reference.typeArguments
-        && reference.typeArguments.length > 0) {
+      const typeArgument = reference.typeArguments?.[0]
+      if (typeArgument) {
         if ((reference.typeName.text === 'Promise'
           || reference.typeName.text === 'ReturnType'
           || reference.typeName.text === 'DeepReturnType')) {
-          const typeArgument = reference.typeArguments[0]!
           return this.getType(typeArgument, sourceFile)
         } else if (this.checker) {
           const type = this.getTypeOfComplexType(reference, sourceFile)
@@ -937,7 +938,7 @@ export class Parser {
       }
       return {
         kind: 'reference',
-        name: reference.typeName.text,
+        referenceName: reference.typeName.text,
         position: this.getPosition(reference.typeName, sourceFile)
       }
     }
@@ -956,7 +957,7 @@ export class Parser {
     }
     return {
       kind: 'reference',
-      name: reference.typeName.getText(),
+      referenceName: reference.typeName.getText(sourceFile),
       position: this.getPosition(reference.typeName, sourceFile)
     }
   }
@@ -1007,7 +1008,7 @@ export class Parser {
     }
     return {
       kind: 'reference',
-      name,
+      referenceName: name,
       position: this.getPosition(typeNode, sourceFile),
     }
   }
@@ -1100,8 +1101,8 @@ export class Parser {
   }
 
   private getTypeOfTypeLiteral(literal: ts.TypeLiteralNode, sourceFile: ts.SourceFile): Type {
-    if (literal.members.length === 1 && ts.isIndexSignatureDeclaration(literal.members[0]!)) {
-      const member = literal.members[0]
+    const member = literal.members[0]
+    if (member && ts.isIndexSignatureDeclaration(member)) {
       if (ts.isIndexSignatureDeclaration(member) && member.parameters.length === 1) {
         const parameterType = member.parameters[0]?.type
         if (parameterType && member.type) {
@@ -1250,7 +1251,7 @@ export class Parser {
     const members: Member[] = []
     let minProperties = 0
     let maxProperties = 0
-    const referenceName = (node.typeName as ts.Identifier).text
+    const referenceName = ts.isIdentifier(node.typeName) ? node.typeName.text : ''
     this.preHandleType(referenceName)
     const objectDeclaration = this.declarations.find(m => m.kind === 'object' && m.name === referenceName)
     if (objectDeclaration && objectDeclaration.kind === 'object') {
@@ -1416,7 +1417,7 @@ export class Parser {
       return {
         type: {
           kind: 'reference',
-          name: expression.escapedText.toString(),
+          referenceName: expression.escapedText.toString(),
           position: this.getPosition(expression, sourceFile)
         },
         value: expression.escapedText.toString(),
@@ -1498,7 +1499,7 @@ export class Parser {
     type.default = value
 
     return {
-      name: (parameter.name as ts.Identifier).text,
+      name: ts.isIdentifier(parameter.name) ? parameter.name.text : '',
       type,
       optional: !!parameter.questionToken || type.default !== undefined,
       decorators: this.getDecorators(sourceFile, parameter.decorators),

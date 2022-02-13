@@ -8,28 +8,7 @@
 [![Downloads](https://img.shields.io/npm/dm/types-as-schema.svg)](https://www.npmjs.com/package/types-as-schema)
 [![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fplantain-00%2Ftypes-as-schema%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/types-as-schema)
 
-Genetate json schema, protobuf file, graphQL/mongoose(alpha) schema, reasonml(alpha)/ocaml(alpha)/rust(alpha) types and swagger doc from typescript types.
-
-## supported types features
-
-+ type literal
-+ interface
-+ type union
-+ interface extends
-+ type intersection
-+ type array
-+ tagged field
-+ marked as more precise type
-+ enum
-+ class
-+ class extends
-+ muitiple files
-+ function / method
-+ Pick
-
-## unsupported types features
-
-+ variable statement
+Genetate json schema, protobuf file and swagger doc from typescript types.
 
 ## install
 
@@ -37,7 +16,169 @@ Genetate json schema, protobuf file, graphQL/mongoose(alpha) schema, reasonml(al
 
 ## usage
 
-`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --graphql demo/types.gql --graphql-root-type demo/root-type.ts --reason demo/types.re --ocaml demo/types.ml --rust demo/types.rs --debug demo/debug.json`
+`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json --config demo/config.ts`
+
+`demo/types.ts`
+
+```ts
+/**
+ * @entry a.json
+ **/
+interface A extends B {
+  a: string
+}
+
+interface B {
+  b: number
+}
+```
+
+`demo/a.json`
+
+```json
+{
+  "$ref": "#/definitions/A",
+  "definitions": {
+    "A": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
+```
+
+`demo/types.proto`
+
+```proto
+syntax = "proto3";
+
+message B {
+    double b = 1;
+}
+
+message A {
+    string a = 1;
+    double b = 2;
+}
+```
+
+`demo/debug.json`
+
+```json
+[
+  {
+    "kind": "object",
+    "name": "B",
+    "members": [
+      {
+        "name": "b",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "",
+            "line": 8,
+            "character": 5
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "",
+      "line": 7,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
+    "name": "A",
+    "members": [
+      {
+        "name": "a",
+        "type": {
+          "kind": "string",
+          "position": {
+            "file": "",
+            "line": 4,
+            "character": 5
+          }
+        }
+      },
+      {
+        "name": "b",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "",
+            "line": 8,
+            "character": 5
+          }
+        }
+      }
+    ],
+    "minProperties": 2,
+    "maxProperties": 2,
+    "entry": "a.json",
+    "position": {
+      "file": "",
+      "line": 3,
+      "character": 0
+    },
+    "comments": [
+      "/**\n * @entry a.json\n **/"
+    ],
+    "jsDocs": [
+      {
+        "name": "entry",
+        "comment": "a.json"
+      }
+    ]
+  }
+]
+```
+
+`demo/config.ts`
+
+```ts
+import { TypeDeclaration } from 'types-as-schema'
+
+export default (typeDeclarations: TypeDeclaration[]): { path: string, content: string }[] => {
+  const content = `export const typeNames = [
+${typeDeclarations.map(d => `'${d.name}',`).join('\n')}
+]
+`
+  return [
+    {
+      path: 'demo/custom.ts',
+      content,
+    },
+  ]
+}
+```
+
+`demo/custom.ts`
+
+```ts
+export const typeNames = [
+  'B',
+  'A',
+]
+```
 
 ## options
 
@@ -45,12 +186,6 @@ parameters | description
 --- | ---
 `--json` | directory for generated json files
 `--protobuf` | generated protobuf file
-`--graphql` | generated graphql schema file
-`--graphql-root-type` | generated graphql root type
-`--reason` | generated reason types file
-`--ocaml` | generated ocaml types file
-`--rust` | generated rust types file
-`--mongoose` | generated mongoose schema file
 `--swagger` | generated swagger json file
 `--swagger-base` | swagger json file that generation based on
 `--typescript` | generated typescript file
@@ -61,109 +196,3 @@ parameters | description
 `--markdown` | generated markdown file
 `-h` or `--help` | Print this message.
 `-v` or `--version` | Print the version
-
-## protobuf and json schema
-
-+ `@type uint32`: set `type = "uint32"`
-+ `@mapValueType uint32`: more detailed type of a map type value
-
-## protobuf only
-
-+ `@tag 1`: tag or id
-
-## json schema only
-
-entry:
-
-+ `@entry request-protocol.json`: the entry file name
-
-common:
-
-+ `@title foo`: set `title = 'foo'`
-+ `@description bar`: set `description = 'bar'`
-
-number:
-
-+ `@multipleOf 10`: set `multipleOf = 10`
-+ `@minimum 70`: set `minimum = 70`
-+ `@maximum 90`: set `maximum = 90`
-+ `@exclusiveMinimum 70`: set `exclusiveMinimum = 70`
-+ `@exclusiveMaximum 90`: set `exclusiveMaximum = 90`
-+ `@default 10`: set `default = 10`
-
-string:
-
-+ `@minLength 10`: set `minLength = 10`
-+ `@maxLength 20`: set `maxLength = 20`
-+ `@pattern ^[A-z]{3}$`: set `pattern = ^[A-z]{3}$`
-+ `@default foo`: set `default = 'foo'`
-
-boolean:
-
-+ `@default true`: set `default = true`
-
-object:
-
-+ `@minProperties 1`: set `minProperties = 1`
-+ `@maxProperties 3`: set `maxProperties = 3`
-+ `@additionalProperties`: set `additionalProperties = true`
-
-array:
-
-+ `@uniqueItems`: set `uniqueItems = true`
-+ `@minItems 1`: set `minItems = 1`
-+ `@maxItems 10`: set `maxItems = 10`
-+ `@itemType integer`: set item `type = "integer"`
-
-number[]:
-
-+ `@itemMultipleOf 10`: set item `multipleOf = 10`
-+ `@itemMinimum 70`: set item `minimum = 70`
-+ `@itemMaximum 90`: set item `maximum = 90`
-+ `@itemExclusiveMinimum 70`: set item `exclusiveMinimum = 70`
-+ `@itemExclusiveMaximum 90`: set item `exclusiveMaximum = 90`
-+ `@itemDefault 10`: set item `default = 10`
-
-string[]:
-
-+ `@itemMinLength 10`: set item `minLength = 10`
-+ `@itemMaxLength 20`: set item `maxLength = 20`
-+ `@itemPattern ^[A-z]{3}$`: set item `pattern = ^[A-z]{3}$`
-+ `@itemDefault foo`: set item `default = 'foo'`
-
-boolean[]:
-
-+ `@itemDefault true`: set item `default = true`
-
-## graphql schema only
-
-+ `@param {string} name`: set argument `name: String!`
-+ `@param {string} [name]`: set argument `name: String`
-
-## swagger doc only
-
-+ `@method get`: set api method
-+ `@path /pet/{id}`: set api url
-+ `@in query`: a parameter in a `query`, `body`, `header`, `formData` or `path`
-+ `@deprecated`: set api as deprecated api
-+ `@tags pet`: set api tags, can be seperated by `,`
-
-## mongoose schema only
-
-+ `@index`: set index
-+ `@unique`: set unique index
-+ `@sparse`: set sparse index
-+ `@select`: set select
-+ `@alias index4`: set alias
-
-## number type alias
-
-```ts
-type uint32 = number;
-type integer = number;
-
-type Foo = {
-    bar: uint32;
-    foo: integer;
-}
-```

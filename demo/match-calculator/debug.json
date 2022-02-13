@@ -4,7 +4,7 @@
     "name": "Groups",
     "type": {
       "kind": "reference",
-      "name": "Group",
+      "referenceName": "Group",
       "position": {
         "file": "demo/match-calculator/types.ts",
         "line": 5,
@@ -46,7 +46,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Match",
+            "referenceName": "Match",
             "position": {
               "file": "demo/match-calculator/types.ts",
               "line": 12,
@@ -78,7 +78,7 @@
         "name": "teams",
         "type": {
           "kind": "reference",
-          "name": "Teams",
+          "referenceName": "Teams",
           "position": {
             "file": "demo/match-calculator/types.ts",
             "line": 13,

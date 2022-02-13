@@ -1,11 +1,3 @@
-export function toUpperCase(name: string) {
-  return name[0]?.toUpperCase() + name.substring(1)
-}
-
-export function toLowerCase(name: string) {
-  return name[0]?.toLowerCase() + name.substring(1)
-}
-
 export function warn(position: PositionValue, stage: string) {
   console.warn(`Warning for ${stage}: ${position.file}:${position.line + 1}:${position.character + 1}`)
 }
@@ -13,7 +5,7 @@ export function warn(position: PositionValue, stage: string) {
 export function isValidReference(declarations: TypeDeclaration[], referenceName: string) {
   for (const declaration of declarations) {
     if (declaration.kind === 'reference') {
-      if (declaration.newName === referenceName) {
+      if (declaration.name === referenceName) {
         return true
       }
     } else if (declaration.name === referenceName) {
@@ -62,13 +54,11 @@ export type TypeDeclaration =
  */
 export type UnknownDeclaration = {
   kind: 'unknown';
-  name: string;
   description?: string;
-} & Position & JsDocAndComment & Modifiers & TypeArguments
+} & Position & JsDocAndComment & Modifiers & TypeArguments & DeclarationCommon
 
-export type EnumDeclaration = {
+export type EnumDeclaration = DeclarationCommon & {
   kind: 'enum';
-  name: string;
   type: string;
   members: EnumMember[];
   description?: string;
@@ -123,57 +113,41 @@ export interface EnumMember {
   description?: string;
 }
 
-export type ObjectDeclaration = ObjectType & Modifiers & {
-  name: string;
-  entry?: string;
-}
+export type ObjectDeclaration = ObjectType & Modifiers & DeclarationCommon
 
-export type ArrayDeclaration = ArrayType & Modifiers & {
-  name: string;
-  entry?: string;
-}
+export type ArrayDeclaration = ArrayType & Modifiers & DeclarationCommon
 
-export type UnionDeclaration = UnionType & Modifiers & {
-  name: string;
-  entry?: string;
+export type UnionDeclaration = UnionType & Modifiers & DeclarationCommon & {
   objectType?: ObjectType;
 }
 
-export type StringDeclaration = StringType & Modifiers & {
-  name: string;
-}
+export type StringDeclaration = StringType & Modifiers & DeclarationCommon
 
-export type NumberDeclaration = NumberType & Modifiers & {
-  name: string;
-}
+export type NumberDeclaration = NumberType & Modifiers & DeclarationCommon
 
 /**
  * @public
  */
-export type BooleanDeclaration = BooleanType & Modifiers & {
-  name: string;
-}
+export type BooleanDeclaration = BooleanType & Modifiers & DeclarationCommon
 
 /**
  * @public
  */
-export type NullDeclaration = NullType & Modifiers & {
-  name: string;
-}
+export type NullDeclaration = NullType & Modifiers & DeclarationCommon
 
 /**
  * @public
  */
-export type MapDeclaration = MapType & Modifiers & {
-  name: string;
+export type MapDeclaration = MapType & Modifiers & DeclarationCommon
+
+export type ReferenceDeclaration = ReferenceType & Modifiers & DeclarationCommon
+
+interface DeclarationCommon {
+  name: string
+  entry?: string;
 }
 
-export type ReferenceDeclaration = ReferenceType & Modifiers & {
-  newName: string;
-}
-
-export type FunctionDeclaration = FunctionType & Modifiers & JsDocAndComment & TypeArguments & TypeParameters & {
-  name: string;
+export type FunctionDeclaration = FunctionType & Modifiers & JsDocAndComment & TypeArguments & TypeParameters & DeclarationCommon & {
   optional?: boolean;
   method?: string;
   path?: string;
@@ -225,7 +199,7 @@ export type EnumType = {
 
 export type ReferenceType = {
   kind: 'reference';
-  name: string;
+  referenceName: string;
   default?: unknown;
   description?: string
 } & Position & JsDocAndComment
@@ -404,6 +378,9 @@ export interface JsDoc {
   optional?: boolean;
 }
 
+/**
+ * @public
+ */
 export interface Parameter extends JsDocAndComment, Decorators {
   name: string;
   type: Type;
