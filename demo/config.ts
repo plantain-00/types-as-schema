@@ -8,7 +8,7 @@ export default (typeDeclarations: TypeDeclaration[]): { path: string, content: s
         `functionName: '${declaration.name}'`,
         ...declaration.parameters.map((m) => generateTypescriptOfFunctionParameter(m, (t) => {
           if (declaration.typeParameters && t.kind === 'reference') {
-            const typeParameter = declaration.typeParameters.find((p) => p.name === t.name)
+            const typeParameter = declaration.typeParameters.find((p) => p.name === t.referenceName)
             if (typeParameter?.constraint) {
               return generateTypescriptOfType(typeParameter.constraint)
             }

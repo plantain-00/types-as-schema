@@ -47,13 +47,13 @@ ${messages.join('\n\n')}
  */
 export function generateTypescriptOfReferenceDeclaration(declaration: ReferenceDeclaration) {
   const comments = declaration.comments ? declaration.comments.join('\n') + '\n' : ''
-  if (declaration.newName.includes('.')) {
-    const [namespace, typeName] = declaration.newName.split('.')
+  if (declaration.name.includes('.')) {
+    const [namespace, typeName] = declaration.name.split('.')
     return `namespace ${namespace} {
-${comments}  export type ${typeName} = ${declaration.name}}
+${comments}  export type ${typeName} = ${declaration.referenceName}}
 }`
   }
-  return `${comments}type ${declaration.newName} = ${declaration.name}`
+  return `${comments}type ${declaration.name} = ${declaration.referenceName}`
 }
 
 /**
@@ -231,7 +231,7 @@ export function generateTypescriptOfType(type: Type, processChild?: (type: Type)
     return `${item}[]`
   }
   if (type.kind === 'reference') {
-    return type.name
+    return type.referenceName
   }
   if (type.kind === 'file') {
     return 'File'

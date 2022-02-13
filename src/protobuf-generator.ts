@@ -85,11 +85,11 @@ function getProtobufProperty(typeDeclarations: TypeDeclaration[], memberType: Ty
 }
 
 function getProtobufPropertyOfReference(typeDeclarations: TypeDeclaration[], memberType: ReferenceType) {
-  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.name)
+  const typeDeclaration = typeDeclarations.find(m => m.kind === 'enum' && m.name === memberType.referenceName)
   if (typeDeclaration && typeDeclaration.kind === 'enum' && typeDeclaration.type === 'string') {
     return 'string'
   }
-  return memberType.name
+  return memberType.referenceName
 }
 
 function getProtobufPropertyOfMap(typeDeclarations: TypeDeclaration[], memberType: MapType) {
@@ -97,7 +97,7 @@ function getProtobufPropertyOfMap(typeDeclarations: TypeDeclaration[], memberTyp
   if (memberType.value.kind === 'number') {
     ({ propertyType: valueType } = getProtobufProperty(typeDeclarations, memberType.value))
   } else if (memberType.value.kind === 'reference') {
-    valueType = memberType.value.name
+    valueType = memberType.value.referenceName
   }
   if (valueType) {
     return `map<${memberType.key.kind}, ${valueType}>`

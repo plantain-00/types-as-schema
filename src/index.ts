@@ -9,12 +9,7 @@ import { Generator } from './core'
 import * as typescriptGenerator from './typescript-generator'
 import * as packageJson from '../package.json'
 
-import * as protobuf from 'protobufjs'
-import Ajv from 'ajv'
 import type { TypeDeclaration } from './utils'
-import { ReferenceType } from './graphql-root-type-generator'
-
-const ajv = new Ajv()
 
 async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as Args
@@ -32,13 +27,7 @@ async function executeCommandLine() {
 
   const {
     protobufPath,
-    graphqlPath,
-    graphqlRootTypePath,
-    reasonPath,
-    ocamlPath,
-    rustPath,
     jsonPath,
-    mongoosePath,
     swaggerPath,
     swaggerBasePath,
     debugPath,
@@ -58,7 +47,7 @@ async function executeCommandLine() {
     fse.ensureDirSync(jsonPath)
     const schemas = generator.generateJsonSchemas()
     for (const { entry, schema } of schemas) {
-      if ((debugPath || ajv.validateSchema(schema)) && entry) {
+      if (entry) {
         fs.writeFileSync(path.resolve(jsonPath, entry), JSON.stringify(schema, null, '  '))
       } else {
         printInConsole(`json schema verified fail for entry: ${entry}`)
@@ -96,38 +85,7 @@ async function executeCommandLine() {
  * It is not mean to be edited by hand
  */
 ` + generator.generateProtobuf()
-      protobuf.parse(protobufContent)
       fs.writeFileSync(protobufPath, protobufContent)
-    }
-
-    if (graphqlPath) {
-      const graphqlContent = generator.generateGraphqlSchema()
-      fs.writeFileSync(graphqlPath, graphqlContent)
-    }
-
-    if (graphqlRootTypePath) {
-      const graphqlRootPathContent = generator.generateGraphqlRootType((referenceTypes) => getReferenceTypeImports(referenceTypes, graphqlRootTypePath))
-      fs.writeFileSync(graphqlRootTypePath, graphqlRootPathContent)
-    }
-
-    if (reasonPath) {
-      const reasonContent = generator.generateReasonTypes()
-      fs.writeFileSync(reasonPath, reasonContent)
-    }
-
-    if (ocamlPath) {
-      const ocamlContent = generator.generateOcamlTypes()
-      fs.writeFileSync(ocamlPath, ocamlContent)
-    }
-
-    if (rustPath) {
-      const rustContent = generator.generateRustTypes()
-      fs.writeFileSync(rustPath, rustContent)
-    }
-
-    if (mongoosePath) {
-      const mongooseContent = generator.generateMongooseSchema()
-      fs.writeFileSync(mongoosePath, mongooseContent)
     }
 
     if (swaggerPath) {
@@ -228,13 +186,7 @@ function parseConfigPaths(argv: PathArgs) {
 
 function parseParameters(argv: Args) {
   const protobufPath = parseParameter(argv, 'protobuf')
-  const graphqlPath = parseParameter(argv, 'graphql')
-  const graphqlRootTypePath = parseParameter(argv, 'graphql-root-type')
-  const reasonPath = parseParameter(argv, 'reason')
-  const ocamlPath = parseParameter(argv, 'ocaml')
-  const rustPath = parseParameter(argv, 'rust')
   const jsonPath = parseParameter(argv, 'json')
-  const mongoosePath = parseParameter(argv, 'mongoose')
   const swaggerPath = parseParameter(argv, 'swagger')
   const swaggerBasePath = parseParameter(argv, 'swagger-base')
   const debugPath = parseParameter(argv, 'debug')
@@ -254,13 +206,7 @@ function parseParameters(argv: Args) {
 
   return {
     protobufPath,
-    graphqlPath,
-    graphqlRootTypePath,
-    reasonPath,
-    ocamlPath,
-    rustPath,
     jsonPath,
-    mongoosePath,
     swaggerPath,
     swaggerBasePath,
     debugPath,
@@ -287,13 +233,7 @@ interface Args extends PathArgs {
 
 interface PathArgs {
   protobuf: string
-  graphql: string
-  ['graphql-root-type']: string
-  reason: string
-  ocaml: string
-  rust: string
   json: string
-  mongoose: string
   swagger: string
   ['swagger-base']: string
   debug: string
@@ -320,12 +260,6 @@ Options:
  -v, --version                                      Print the version
  --json                                             directory for generated json files
  --protobuf                                         generated protobuf file
- --graphql                                          generated graphql schema file
- --graphql-root-type                                generated graphql root type
- --reason                                           generated reason types file
- --ocaml                                            generated ocaml types file
- --rust                                             generated rust types file
- --mongoose                                         generated mongoose schema file
  --swagger                                          generated swagger json file
  --swagger-base                                     swagger json file that generation based on
  --typescript                                       generated typescript file
@@ -343,28 +277,3 @@ executeCommandLine().then(() => {
   printInConsole(error)
   process.exit(1)
 })
-
-function getReferenceTypeImports(referenceTypes: ReferenceType[], graphqlRootTypePath: string) {
-  const map: { [name: string]: string[] } = {}
-  for (const referenceType of referenceTypes) {
-    const file = referenceType.position.file
-    if (!map[file]) {
-      map[file] = []
-    }
-    const references = map[file]
-    if (references?.every((n) => n !== referenceType.name)) {
-      references.push(referenceType.name)
-    }
-  }
-  const dirname = path.dirname(graphqlRootTypePath)
-  const imports: string[] = []
-  for (const file in map) {
-    let relativePath = path.relative(dirname, file)
-    if (!relativePath.startsWith('.' + path.sep) && !relativePath.startsWith('..' + path.sep)) {
-      relativePath = '.' + path.sep + relativePath
-    }
-    relativePath = relativePath.substring(0, relativePath.length - path.extname(relativePath).length)
-    imports.push(`import { ${map[file]?.join(', ')} } from '${relativePath}'`)
-  }
-  return imports.join('\n')
-}

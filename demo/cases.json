@@ -89,7 +89,9 @@
         "circular": {
           "$ref": "#/definitions/Circular"
         },
-        "outerType": {},
+        "outerType": {
+          "$ref": "#/definitions/OuterType"
+        },
         "typeAlias": {
           "$ref": "#/definitions/TypeAlias"
         },
@@ -1179,6 +1181,18 @@
       },
       "required": [
         "children"
+      ],
+      "additionalProperties": false
+    },
+    "OuterType": {
+      "type": "object",
+      "properties": {
+        "outerType": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "outerType"
       ],
       "additionalProperties": false
     },

@@ -8,7 +8,7 @@ export default {
   exclude: [
   ],
   postScript: ({ dir }) => [
-    `cd "${dir}" && yarn --production`,
-    `node ${dir}/dist/index.js demo/cases.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto --graphql demo/cases.gql --reason demo/cases.re --ocaml demo/cases.ml --rust demo/cases.rs`
+    `cd "${dir}" && yarn --production && yarn add typescript -D`,
+    `node ${dir}/dist/index.js demo/cases.ts demo/case2.ts --json demo/ --debug demo/debug.json --protobuf demo/cases.proto`
   ]
 }

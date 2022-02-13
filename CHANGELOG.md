@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.0.0](https://github.com/plantain-00/types-as-schema/compare/v1.51.0...v2.0.0) (2022-02-13)
+  
+* feat: remove useless features ([32e8438](https://github.com/plantain-00/types-as-schema/commit/32e84389c50af17f53291f95f1b305038eca2278))
+* chore: update dependencies ([1820466](https://github.com/plantain-00/types-as-schema/commit/1820466c753a77299650f18ab3ee0b9ccb8150da))
+
 ## [1.51.0](https://github.com/plantain-00/types-as-schema/compare/v1.50.1...v1.51.0) (2022-02-11)
   
 * feat: support namespace function type parameters and arguments ([72cb2ea](https://github.com/plantain-00/types-as-schema/commit/72cb2ea76437048de0357c8db67488d6707d5f1f))

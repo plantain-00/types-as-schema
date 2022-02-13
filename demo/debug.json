@@ -396,7 +396,7 @@
     "members": [
       {
         "kind": "reference",
-        "name": "TypeLiteral",
+        "referenceName": "TypeLiteral",
         "position": {
           "file": "demo/cases.ts",
           "line": 44,
@@ -405,7 +405,7 @@
       },
       {
         "kind": "reference",
-        "name": "Interface",
+        "referenceName": "Interface",
         "position": {
           "file": "demo/cases.ts",
           "line": 44,
@@ -561,7 +561,7 @@
         "name": "typeUnionMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion1",
+          "referenceName": "TypeUnion1",
           "position": {
             "file": "demo/cases.ts",
             "line": 48,
@@ -573,7 +573,7 @@
         "name": "typeUnionMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion2",
+          "referenceName": "TypeUnion2",
           "position": {
             "file": "demo/cases.ts",
             "line": 49,
@@ -585,7 +585,7 @@
         "name": "typeUnionMember3",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion3",
+          "referenceName": "TypeUnion3",
           "position": {
             "file": "demo/cases.ts",
             "line": 50,
@@ -597,7 +597,7 @@
         "name": "typeUnionMember4",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion4",
+          "referenceName": "TypeUnion4",
           "position": {
             "file": "demo/cases.ts",
             "line": 51,
@@ -609,7 +609,7 @@
         "name": "typeUnionMember5",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion5",
+          "referenceName": "TypeUnion5",
           "position": {
             "file": "demo/cases.ts",
             "line": 52,
@@ -680,7 +680,7 @@
         "name": "typeUnionMember8",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion8",
+          "referenceName": "TypeUnion8",
           "position": {
             "file": "demo/cases.ts",
             "line": 55,
@@ -692,7 +692,7 @@
         "name": "typeUnionMember9",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion9",
+          "referenceName": "TypeUnion9",
           "position": {
             "file": "demo/cases.ts",
             "line": 56,
@@ -904,7 +904,7 @@
         "name": "typeIntersectionMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection1",
+          "referenceName": "TypeIntersection1",
           "position": {
             "file": "demo/cases.ts",
             "line": 78,
@@ -916,7 +916,7 @@
         "name": "typeIntersectionMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection2",
+          "referenceName": "TypeIntersection2",
           "position": {
             "file": "demo/cases.ts",
             "line": 79,
@@ -931,7 +931,7 @@
           "members": [
             {
               "kind": "reference",
-              "name": "TypeLiteral",
+              "referenceName": "TypeLiteral",
               "position": {
                 "file": "demo/cases.ts",
                 "line": 80,
@@ -940,7 +940,7 @@
             },
             {
               "kind": "reference",
-              "name": "Interface",
+              "referenceName": "Interface",
               "position": {
                 "file": "demo/cases.ts",
                 "line": 80,
@@ -1094,7 +1094,7 @@
         "name": "stringEnum",
         "type": {
           "kind": "reference",
-          "name": "StringEnum",
+          "referenceName": "StringEnum",
           "position": {
             "file": "demo/cases.ts",
             "line": 120,
@@ -1106,7 +1106,7 @@
         "name": "numberEnum",
         "type": {
           "kind": "reference",
-          "name": "NumberEnum",
+          "referenceName": "NumberEnum",
           "position": {
             "file": "demo/cases.ts",
             "line": 121,
@@ -1118,7 +1118,7 @@
         "name": "numberEnum2",
         "type": {
           "kind": "reference",
-          "name": "NumberEnum2",
+          "referenceName": "NumberEnum2",
           "position": {
             "file": "demo/cases.ts",
             "line": 122,
@@ -1612,7 +1612,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "TypeLiteral",
+            "referenceName": "TypeLiteral",
             "position": {
               "file": "demo/cases.ts",
               "line": 195,
@@ -1850,7 +1850,7 @@
                   "members": [
                     {
                       "kind": "reference",
-                      "name": "TypeLiteral",
+                      "referenceName": "TypeLiteral",
                       "position": {
                         "file": "demo/cases.ts",
                         "line": 207,
@@ -2073,7 +2073,7 @@
           },
           "value": {
             "kind": "reference",
-            "name": "TypeLiteral",
+            "referenceName": "TypeLiteral",
             "position": {
               "file": "demo/cases.ts",
               "line": 224,
@@ -2223,7 +2223,7 @@
         "name": "mapType7",
         "type": {
           "kind": "reference",
-          "name": "MapType7",
+          "referenceName": "MapType7",
           "position": {
             "file": "demo/cases.ts",
             "line": 232,
@@ -2235,7 +2235,7 @@
         "name": "mapType8",
         "type": {
           "kind": "reference",
-          "name": "MapType8",
+          "referenceName": "MapType8",
           "position": {
             "file": "demo/cases.ts",
             "line": 233,
@@ -2578,7 +2578,7 @@
         "name": "objectMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeLiteral",
+          "referenceName": "TypeLiteral",
           "position": {
             "file": "demo/cases.ts",
             "line": 286,
@@ -2606,9 +2606,9 @@
     }
   },
   {
-    "newName": "TypeReferenceMember2",
+    "name": "TypeReferenceMember2",
     "kind": "reference",
-    "name": "TypeLiteral",
+    "referenceName": "TypeLiteral",
     "position": {
       "file": "demo/cases.ts",
       "line": 289,
@@ -2623,7 +2623,7 @@
         "name": "typeReferenceMember1",
         "type": {
           "kind": "reference",
-          "name": "TypeLiteral",
+          "referenceName": "TypeLiteral",
           "position": {
             "file": "demo/cases.ts",
             "line": 292,
@@ -2635,7 +2635,7 @@
         "name": "typeReferenceMember2",
         "type": {
           "kind": "reference",
-          "name": "TypeReferenceMember2",
+          "referenceName": "TypeReferenceMember2",
           "position": {
             "file": "demo/cases.ts",
             "line": 293,
@@ -2868,7 +2868,7 @@
         "name": "classType1",
         "type": {
           "kind": "reference",
-          "name": "ClassType1",
+          "referenceName": "ClassType1",
           "position": {
             "file": "demo/cases.ts",
             "line": 316,
@@ -2880,7 +2880,7 @@
         "name": "classType2",
         "type": {
           "kind": "reference",
-          "name": "ClassType2",
+          "referenceName": "ClassType2",
           "position": {
             "file": "demo/cases.ts",
             "line": 317,
@@ -2892,7 +2892,7 @@
         "name": "classType3",
         "type": {
           "kind": "reference",
-          "name": "ClassType3",
+          "referenceName": "ClassType3",
           "position": {
             "file": "demo/cases.ts",
             "line": 318,
@@ -2919,7 +2919,7 @@
           "kind": "array",
           "type": {
             "kind": "reference",
-            "name": "Circular",
+            "referenceName": "Circular",
             "position": {
               "file": "demo/cases.ts",
               "line": 322,
@@ -2984,7 +2984,7 @@
         "name": "numberType",
         "type": {
           "kind": "reference",
-          "name": "NumberType",
+          "referenceName": "NumberType",
           "position": {
             "file": "demo/cases.ts",
             "line": 335,
@@ -2996,7 +2996,7 @@
         "name": "arrayType",
         "type": {
           "kind": "reference",
-          "name": "ArrayType",
+          "referenceName": "ArrayType",
           "position": {
             "file": "demo/cases.ts",
             "line": 336,
@@ -3035,7 +3035,7 @@
         "name": "referenceType",
         "type": {
           "kind": "reference",
-          "name": "ReferenceType",
+          "referenceName": "ReferenceType",
           "position": {
             "file": "demo/cases.ts",
             "line": 338,
@@ -3047,7 +3047,7 @@
         "name": "interfaceType",
         "type": {
           "kind": "reference",
-          "name": "Interface",
+          "referenceName": "Interface",
           "position": {
             "file": "demo/cases.ts",
             "line": 339,
@@ -3059,7 +3059,7 @@
         "name": "typeUnion",
         "type": {
           "kind": "reference",
-          "name": "TypeUnion",
+          "referenceName": "TypeUnion",
           "position": {
             "file": "demo/cases.ts",
             "line": 340,
@@ -3071,7 +3071,7 @@
         "name": "interfaceExtends",
         "type": {
           "kind": "reference",
-          "name": "InterfaceExtends",
+          "referenceName": "InterfaceExtends",
           "position": {
             "file": "demo/cases.ts",
             "line": 341,
@@ -3083,7 +3083,7 @@
         "name": "typeIntersection",
         "type": {
           "kind": "reference",
-          "name": "TypeIntersection",
+          "referenceName": "TypeIntersection",
           "position": {
             "file": "demo/cases.ts",
             "line": 342,
@@ -3095,7 +3095,7 @@
         "name": "typeUnionAndIntersection",
         "type": {
           "kind": "reference",
-          "name": "TypeUnionAndIntersection",
+          "referenceName": "TypeUnionAndIntersection",
           "position": {
             "file": "demo/cases.ts",
             "line": 343,
@@ -3107,7 +3107,7 @@
         "name": "mapType",
         "type": {
           "kind": "reference",
-          "name": "MapType",
+          "referenceName": "MapType",
           "position": {
             "file": "demo/cases.ts",
             "line": 344,
@@ -3119,7 +3119,7 @@
         "name": "taggedField",
         "type": {
           "kind": "reference",
-          "name": "TaggedField",
+          "referenceName": "TaggedField",
           "position": {
             "file": "demo/cases.ts",
             "line": 345,
@@ -3131,7 +3131,7 @@
         "name": "enum",
         "type": {
           "kind": "reference",
-          "name": "Enum",
+          "referenceName": "Enum",
           "position": {
             "file": "demo/cases.ts",
             "line": 346,
@@ -3143,7 +3143,7 @@
         "name": "stringNumber",
         "type": {
           "kind": "reference",
-          "name": "StringType",
+          "referenceName": "StringType",
           "position": {
             "file": "demo/cases.ts",
             "line": 347,
@@ -3155,7 +3155,7 @@
         "name": "id",
         "type": {
           "kind": "reference",
-          "name": "ID",
+          "referenceName": "ID",
           "position": {
             "file": "demo/cases.ts",
             "line": 348,
@@ -3167,7 +3167,7 @@
         "name": "parameter",
         "type": {
           "kind": "reference",
-          "name": "Parameter",
+          "referenceName": "Parameter",
           "position": {
             "file": "demo/cases.ts",
             "line": 349,
@@ -3220,7 +3220,7 @@
         "name": "defaultType",
         "type": {
           "kind": "reference",
-          "name": "DefaultValue",
+          "referenceName": "DefaultValue",
           "position": {
             "file": "demo/cases.ts",
             "line": 352,
@@ -3242,7 +3242,7 @@
         "name": "classType",
         "type": {
           "kind": "reference",
-          "name": "ClassType",
+          "referenceName": "ClassType",
           "position": {
             "file": "demo/cases.ts",
             "line": 354,
@@ -3254,7 +3254,7 @@
         "name": "circular",
         "type": {
           "kind": "reference",
-          "name": "Circular",
+          "referenceName": "Circular",
           "position": {
             "file": "demo/cases.ts",
             "line": 355,
@@ -3266,7 +3266,7 @@
         "name": "outerType",
         "type": {
           "kind": "reference",
-          "name": "OuterType",
+          "referenceName": "OuterType",
           "position": {
             "file": "demo/cases.ts",
             "line": 356,
@@ -3278,7 +3278,7 @@
         "name": "typeAlias",
         "type": {
           "kind": "reference",
-          "name": "TypeAlias",
+          "referenceName": "TypeAlias",
           "position": {
             "file": "demo/cases.ts",
             "line": 357,
@@ -3295,7 +3295,7 @@
               "name": "result",
               "type": {
                 "kind": "reference",
-                "name": "Result3",
+                "referenceName": "Result3",
                 "position": {
                   "file": "demo/cases.ts",
                   "line": 358,
@@ -3354,7 +3354,7 @@
         "name": "pick3",
         "type": {
           "kind": "reference",
-          "name": "CreateInput2",
+          "referenceName": "CreateInput2",
           "position": {
             "file": "demo/cases.ts",
             "line": 360,
@@ -3366,7 +3366,7 @@
         "name": "unknown",
         "type": {
           "kind": "reference",
-          "name": "LayoutMetadataMap",
+          "referenceName": "LayoutMetadataMap",
           "position": {
             "file": "demo/cases.ts",
             "line": 361,
@@ -3548,7 +3548,7 @@
         "name": "create",
         "type": {
           "kind": "reference",
-          "name": "MutationResult",
+          "referenceName": "MutationResult",
           "position": {
             "file": "demo/cases.ts",
             "line": 371,
@@ -3560,7 +3560,7 @@
             "name": "input",
             "type": {
               "kind": "reference",
-              "name": "CreateInput",
+              "referenceName": "CreateInput",
               "position": {
                 "file": "demo/cases.ts",
                 "line": 371,
@@ -3613,7 +3613,7 @@
         "name": "member3",
         "type": {
           "kind": "reference",
-          "name": "CreateInputMember3",
+          "referenceName": "CreateInputMember3",
           "position": {
             "file": "demo/cases.ts",
             "line": 377,
@@ -3668,7 +3668,7 @@
         "name": "user",
         "type": {
           "kind": "reference",
-          "name": "GetResult",
+          "referenceName": "GetResult",
           "position": {
             "file": "demo/cases.ts",
             "line": 385,
@@ -3694,7 +3694,7 @@
         "name": "users",
         "type": {
           "kind": "reference",
-          "name": "GetResult",
+          "referenceName": "GetResult",
           "position": {
             "file": "demo/cases.ts",
             "line": 386,
@@ -3724,7 +3724,7 @@
         "name": "result",
         "type": {
           "kind": "reference",
-          "name": "Result",
+          "referenceName": "Result",
           "position": {
             "file": "demo/cases.ts",
             "line": 390,
@@ -3825,7 +3825,7 @@
         "name": "result",
         "type": {
           "kind": "reference",
-          "name": "Result2",
+          "referenceName": "Result2",
           "position": {
             "file": "demo/cases.ts",
             "line": 404,
@@ -3846,9 +3846,9 @@
     ]
   },
   {
-    "newName": "Result2",
+    "name": "Result2",
     "kind": "reference",
-    "name": "Result3",
+    "referenceName": "Result3",
     "position": {
       "file": "demo/cases.ts",
       "line": 407,
@@ -3958,7 +3958,7 @@
     "name": "getPetById",
     "type": {
       "kind": "reference",
-      "name": "Pet",
+      "referenceName": "Pet",
       "position": {
         "file": "demo/cases.ts",
         "line": 454,
@@ -4034,7 +4034,7 @@
         "name": "pet",
         "type": {
           "kind": "reference",
-          "name": "Pet",
+          "referenceName": "Pet",
           "position": {
             "file": "demo/cases.ts",
             "line": 441,
@@ -4179,7 +4179,7 @@
         "name": "objectId",
         "type": {
           "kind": "reference",
-          "name": "ObjectId",
+          "referenceName": "ObjectId",
           "position": {
             "file": "demo/cases.ts",
             "line": 459,
@@ -4191,7 +4191,7 @@
         "name": "date",
         "type": {
           "kind": "reference",
-          "name": "Date",
+          "referenceName": "Date",
           "position": {
             "file": "demo/cases.ts",
             "line": 460,
@@ -4203,7 +4203,7 @@
         "name": "decimal128",
         "type": {
           "kind": "reference",
-          "name": "Decimal128",
+          "referenceName": "Decimal128",
           "position": {
             "file": "demo/cases.ts",
             "line": 461,
@@ -4299,7 +4299,7 @@
         "name": "buffer",
         "type": {
           "kind": "reference",
-          "name": "Buffer",
+          "referenceName": "Buffer",
           "position": {
             "file": "demo/cases.ts",
             "line": 480,
@@ -4371,7 +4371,7 @@
     "minProperties": 0,
     "additionalProperties": {
       "kind": "reference",
-      "name": "Metadata",
+      "referenceName": "Metadata",
       "position": {
         "file": "demo/cases.ts",
         "line": 489,
@@ -4408,7 +4408,7 @@
     "members": [
       {
         "kind": "reference",
-        "name": "CreateBlog",
+        "referenceName": "CreateBlog",
         "position": {
           "file": "demo/cases.ts",
           "line": 497,
@@ -4417,7 +4417,7 @@
       },
       {
         "kind": "reference",
-        "name": "UpdateBlog",
+        "referenceName": "UpdateBlog",
         "position": {
           "file": "demo/cases.ts",
           "line": 498,
@@ -4605,7 +4605,7 @@
     "members": [
       {
         "kind": "reference",
-        "name": "BlogChange",
+        "referenceName": "BlogChange",
         "position": {
           "file": "demo/cases.ts",
           "line": 501,
@@ -5043,7 +5043,7 @@
     "name": "getPetById",
     "type": {
       "kind": "reference",
-      "name": "Pet",
+      "referenceName": "Pet",
       "position": {
         "file": "demo/cases.ts",
         "line": 611,
@@ -5119,7 +5119,7 @@
         "name": "pet",
         "type": {
           "kind": "reference",
-          "name": "Pet",
+          "referenceName": "Pet",
           "position": {
             "file": "demo/cases.ts",
             "line": 598,
@@ -5262,9 +5262,9 @@
     "name": "Boolean"
   },
   {
-    "newName": "Pet1",
+    "name": "Pet1",
     "kind": "reference",
-    "name": "Pet",
+    "referenceName": "Pet",
     "position": {
       "file": "demo/cases.ts",
       "line": 618,
@@ -5417,7 +5417,7 @@
               "name": "b",
               "type": {
                 "kind": "reference",
-                "name": "React.ReactNode",
+                "referenceName": "React.ReactNode",
                 "position": {
                   "file": "demo/cases.ts",
                   "line": 636,
@@ -5429,7 +5429,7 @@
               "name": "c",
               "type": {
                 "kind": "reference",
-                "name": "C.D",
+                "referenceName": "C.D",
                 "position": {
                   "file": "demo/cases.ts",
                   "line": 637,
@@ -5568,7 +5568,7 @@
     "typeArguments": [
       {
         "kind": "reference",
-        "name": "Props",
+        "referenceName": "Props",
         "position": {
           "file": "demo/cases.ts",
           "line": 650,
@@ -5633,7 +5633,7 @@
               "name": "a",
               "type": {
                 "kind": "reference",
-                "name": "T",
+                "referenceName": "T",
                 "position": {
                   "file": "demo/cases.ts",
                   "line": 654,
@@ -5671,6 +5671,34 @@
           }
         }
       }
+    ]
+  },
+  {
+    "kind": "object",
+    "name": "OuterType",
+    "members": [
+      {
+        "name": "outerType",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/case2.ts",
+            "line": 1,
+            "character": 13
+          }
+        }
+      }
+    ],
+    "minProperties": 1,
+    "maxProperties": 1,
+    "position": {
+      "file": "demo/case2.ts",
+      "line": 0,
+      "character": 0
+    },
+    "modifiers": [
+      "export"
     ]
   }
 ]

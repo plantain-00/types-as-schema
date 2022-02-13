@@ -14,12 +14,6 @@ const App = defineComponent({
       protobuf: '',
       options: ['protobuf'],
       selectedOption: 'protobuf',
-      graphqlSchema: '',
-      reasonTypes: '',
-      ocamlTypes: '',
-      rustTypes: '',
-      mongooseSchema: '',
-      graphqlRootType: '',
       swaggerDoc: '',
       custom: '',
       typescript: '',
@@ -74,24 +68,6 @@ const App = defineComponent({
         for (const schema of this.jsonSchemas) {
           this.options.push(schema.entry)
         }
-
-        this.graphqlSchema = generator.generateGraphqlSchema()
-        this.options.push('graphql schema')
-
-        this.reasonTypes = generator.generateReasonTypes()
-        this.options.push('reason types')
-
-        this.ocamlTypes = generator.generateOcamlTypes()
-        this.options.push('ocaml types')
-
-        this.rustTypes = generator.generateRustTypes()
-        this.options.push('rust types')
-
-        this.mongooseSchema = generator.generateMongooseSchema()
-        this.options.push('mongoose schema')
-
-        this.graphqlRootType = generator.generateGraphqlRootType(() => '')
-        this.options.push('graphql root type')
 
         this.swaggerDoc = generator.generateSwaggerDoc()
         this.options.push('swagger doc')
