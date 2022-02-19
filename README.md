@@ -16,7 +16,36 @@ Genetate json schema, protobuf file and swagger doc from typescript types.
 
 ## usage
 
-`types-as-schema demo/types.ts --json demo/ --protobuf demo/types.proto --debug demo/debug.json --config demo/config.ts`
+`types-as-schema -p ./types-as-schema.config.ts`
+
+`types-as-schema.config.ts`
+
+```ts
+import type { Configuration } from "types-as-schema"
+
+const config: Configuration = {
+  files: ['demo/types.ts'],
+  jsonSchemaOutputDirectory: 'demo/',
+  debugOutputPath: 'demo/debug.json',
+  protobufOutputPath: 'demo/cases.proto',
+  plugins: [
+    (typeDeclarations) => {
+      const content = `export const typeNames = [
+${typeDeclarations.map(d => `'${d.name}',`).join('\n')}
+]
+    `
+      return [
+        {
+          path: 'demo/custom.ts',
+          content,
+        },
+      ]
+    },
+  ],
+}
+
+export default config
+```
 
 `demo/types.ts`
 
@@ -152,25 +181,6 @@ message A {
 ]
 ```
 
-`demo/config.ts`
-
-```ts
-import { TypeDeclaration } from 'types-as-schema'
-
-export default (typeDeclarations: TypeDeclaration[]): { path: string, content: string }[] => {
-  const content = `export const typeNames = [
-${typeDeclarations.map(d => `'${d.name}',`).join('\n')}
-]
-`
-  return [
-    {
-      path: 'demo/custom.ts',
-      content,
-    },
-  ]
-}
-```
-
 `demo/custom.ts`
 
 ```ts
@@ -184,6 +194,7 @@ export const typeNames = [
 
 parameters | description
 --- | ---
+`-p` | configuration file
 `--json` | directory for generated json files
 `--protobuf` | generated protobuf file
 `--swagger` | generated swagger json file
@@ -196,3 +207,13 @@ parameters | description
 `--markdown` | generated markdown file
 `-h` or `--help` | Print this message.
 `-v` or `--version` | Print the version
+
+## API
+
+```ts
+import { generate } from 'types-as-schema'
+
+await generate({
+  files: ['demo/types.ts'],
+})
+```
