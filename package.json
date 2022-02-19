@@ -2,8 +2,8 @@
   "name": "types-as-schema",
   "version": "2.0.0",
   "description": "Genetate json schema, protobuf file from typescript types.",
-  "main": "dist/core.js",
-  "types": "dist/core.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "clean-scripts build",
     "lint": "clean-scripts lint",

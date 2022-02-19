@@ -4,7 +4,7 @@ import { generateProtobuf } from './protobuf-generator'
 import { generateJsonSchemas } from './json-schema-generator'
 import { TypeDeclaration } from './utils'
 import { generateSwaggerDoc } from './swagger-doc-generator'
-import { generateTypescript } from './typescript-generator'
+import * as typescriptGenerator from './typescript-generator'
 import { generateMarkdownDoc } from './markdown-doc-generator'
 
 export class Generator {
@@ -42,7 +42,7 @@ export class Generator {
   }
 
   generateTypescript() {
-    return generateTypescript(this.declarations)
+    return typescriptGenerator.generateTypescript(this.declarations)
   }
 
   generateMarkdownDoc() {
@@ -54,3 +54,28 @@ export * from './utils'
 export * from './typescript-generator'
 export * from './json-schema-generator'
 export * from './swagger-doc-generator'
+
+export interface Configuration {
+  files: string[]
+  jsonSchemaOutputDirectory?: string
+  protobufOutputPath?: string
+  swagger?: {
+    outputPath: string
+    base?: string | Record<string, unknown>
+  }
+  typescriptOutputPath?: string
+  debugOutputPath?: string
+  watch?: boolean
+  loose?: boolean
+  plugins?: (string | ConfigInterface)[]
+  markdownOutputPath?: string
+  /**
+   * @deprecated
+   */
+  customPath?: string
+}
+
+export type ConfigInterface = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string | {
+  path: string
+  content: string
+}[]
