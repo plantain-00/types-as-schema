@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.0](https://github.com/plantain-00/types-as-schema/compare/v2.0.0...v2.1.0) (2022-02-19)
+  
+* feat: support -p, expose generate api ([deb0464](https://github.com/plantain-00/types-as-schema/commit/deb046420c9fbadd5f3d00eaf68f97daa86b9bed))
+* fix: ci failure ([8601614](https://github.com/plantain-00/types-as-schema/commit/860161432924577e0f1a3a45765040f8a196793d))
+
 ## [2.0.0](https://github.com/plantain-00/types-as-schema/compare/v1.51.0...v2.0.0) (2022-02-13)
   
 * feat: remove useless features ([32e8438](https://github.com/plantain-00/types-as-schema/commit/32e84389c50af17f53291f95f1b305038eca2278))
