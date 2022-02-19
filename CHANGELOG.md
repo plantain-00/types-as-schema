@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.1](https://github.com/plantain-00/types-as-schema/compare/v2.1.0...v2.1.1) (2022-02-19)
+  
+* fix: require path error ([44be398](https://github.com/plantain-00/types-as-schema/commit/44be398d7c4ac84fd7ecd27df1759c938d7b0c67))
+
 ## [2.1.0](https://github.com/plantain-00/types-as-schema/compare/v2.0.0...v2.1.0) (2022-02-19)
   
 * feat: support -p, expose generate api ([deb0464](https://github.com/plantain-00/types-as-schema/commit/deb046420c9fbadd5f3d00eaf68f97daa86b9bed))
