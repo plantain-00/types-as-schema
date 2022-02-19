@@ -1,4 +1,5 @@
 import minimist from 'minimist'
+import * as path from 'path'
 import { Configuration } from './core'
 import * as packageJson from '../package.json'
 import { generate } from '.'
@@ -45,13 +46,16 @@ function parseConfigPaths(argv: PathArgs) {
 }
 
 function parseParameters(argv: Args) {
-  const configurationPath = parseParameter(argv, 'p')
+  let configurationPath = parseParameter(argv, 'p')
   let configuration: Configuration = {
     files: [],
   }
   if (configurationPath) {
     if (configurationPath.endsWith('.ts')) {
       require('ts-node/register/transpile-only')
+    }
+    if (!path.isAbsolute(configurationPath)) {
+      configurationPath = path.resolve(process.cwd(), configurationPath)
     }
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const configurationFromFile: Configuration & { default?: Configuration } = require(configurationPath)
