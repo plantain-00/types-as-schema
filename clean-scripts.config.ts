@@ -28,7 +28,7 @@ export default {
     },
     revStaticCommand,
     {
-      default: 'node ./dist/cli.js  -p ../types-as-schema.config.ts',
+      default: 'node ./dist/cli.js  -p ./types-as-schema.config.ts',
       logTool: 'node ./dist/cli.js demo/log-tool/types.ts --json demo/log-tool/ --debug demo/log-tool/debug.json --protobuf demo/log-tool/protocol.proto',
       matchCalculator: 'node ./dist/cli.js demo/match-calculator/types.ts --json demo/match-calculator/ --debug demo/match-calculator/debug.json',
       baogame: 'node ./dist/cli.js demo/baogame/common.ts --protobuf demo/baogame/protocol.proto --debug demo/baogame/debug.json'
