@@ -11,4 +11,5 @@ type TestType = {
   (functionName: 'FancyButton', props: unknown, ref: unknown): string
   (functionName: 'FancyButton2', props: unknown): string
   (functionName: 'FancyButton4', props: { a: string }): string
+  (functionName: 'FancyButton5', props: { a: Map<string, number> }): string
 }

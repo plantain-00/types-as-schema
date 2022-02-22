@@ -924,7 +924,7 @@ export class Parser {
           || reference.typeName.text === 'ReturnType'
           || reference.typeName.text === 'DeepReturnType')) {
           return this.getType(typeArgument, sourceFile)
-        } else if (this.checker) {
+        } else if (this.checker && !['Map', 'Set', 'WeakMap', 'WeakSet'].includes(reference.typeName.text)) {
           const type = this.getTypeOfComplexType(reference, sourceFile)
           if (type) {
             return type
@@ -938,8 +938,8 @@ export class Parser {
       }
       return {
         kind: 'reference',
-        referenceName: reference.typeName.text,
-        position: this.getPosition(reference.typeName, sourceFile)
+        referenceName: reference.getText(sourceFile),
+        position: this.getPosition(reference, sourceFile)
       }
     }
     if (ts.isQualifiedName(reference.typeName) && ts.isIdentifier(reference.typeName.left)) {

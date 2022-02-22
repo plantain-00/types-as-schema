@@ -573,6 +573,8 @@ declare function FancyButton2(props: unknown): unknown
 
 declare function FancyButton4<T extends string>(props: { a: T }): unknown
 
+declare function FancyButton5(props: { a: Map<string, number> }): unknown
+
 interface OuterType {
   outerType: number
 }
