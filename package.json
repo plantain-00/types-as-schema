@@ -1,6 +1,6 @@
 {
   "name": "types-as-schema",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Genetate json schema, protobuf file from typescript types.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
