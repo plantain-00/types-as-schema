@@ -693,6 +693,16 @@ Return | Description
 --- | ---
 `unknown` |
 
+## `FancyButton5`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`props` | `true` | { a: [`Map<string, number>`](#Map<string, number>) } |
+
+Return | Description
+--- | ---
+`unknown` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

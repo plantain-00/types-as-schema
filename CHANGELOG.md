@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.2](https://github.com/plantain-00/types-as-schema/compare/v2.1.1...v2.1.2) (2022-02-22)
+  
+* fix: improve type data of global object like Map ([7bb17a8](https://github.com/plantain-00/types-as-schema/commit/7bb17a8e1b99dff3a1f5e7df4976c6ab959fdf82))
+* fix: ci failure ([4afc7d3](https://github.com/plantain-00/types-as-schema/commit/4afc7d3328a86a740ed238d6adcd7a8df65c7f66))
+
 ## [2.1.1](https://github.com/plantain-00/types-as-schema/compare/v2.1.0...v2.1.1) (2022-02-19)
   
 * fix: require path error ([44be398](https://github.com/plantain-00/types-as-schema/commit/44be398d7c4ac84fd7ecd27df1759c938d7b0c67))

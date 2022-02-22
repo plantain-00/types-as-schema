@@ -5674,6 +5674,54 @@
     ]
   },
   {
+    "kind": "function",
+    "name": "FancyButton5",
+    "type": {
+      "position": {
+        "file": "demo/cases.ts",
+        "line": 656,
+        "character": 0
+      }
+    },
+    "optional": false,
+    "parameters": [
+      {
+        "name": "props",
+        "type": {
+          "kind": "object",
+          "members": [
+            {
+              "name": "a",
+              "type": {
+                "kind": "reference",
+                "referenceName": "Map<string, number>",
+                "position": {
+                  "file": "demo/cases.ts",
+                  "line": 656,
+                  "character": 34
+                }
+              }
+            }
+          ],
+          "minProperties": 1,
+          "maxProperties": 1,
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 656,
+            "character": 29
+          }
+        },
+        "optional": false
+      }
+    ],
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 656,
+      "character": 0
+    },
+    "body": "{}"
+  },
+  {
     "kind": "object",
     "name": "OuterType",
     "members": [
