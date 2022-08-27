@@ -4747,18 +4747,6 @@
             "character": 2
           }
         },
-        "decorators": [
-          {
-            "name": "Get",
-            "parameters": []
-          },
-          {
-            "name": "Bar",
-            "parameters": [
-              "TypeLiteral"
-            ]
-          }
-        ],
         "parameters": [
           {
             "name": "foo",
@@ -4771,15 +4759,7 @@
                 "character": 23
               }
             },
-            "optional": false,
-            "decorators": [
-              {
-                "name": "Query",
-                "parameters": [
-                  "foo"
-                ]
-              }
-            ]
+            "optional": false
           },
           {
             "name": "bar",
@@ -4791,15 +4771,7 @@
                 "character": 23
               }
             },
-            "optional": false,
-            "decorators": [
-              {
-                "name": "Query",
-                "parameters": [
-                  "foo"
-                ]
-              }
-            ]
+            "optional": false
           }
         ]
       }
@@ -4811,14 +4783,6 @@
       "line": 529,
       "character": 0
     },
-    "decorators": [
-      {
-        "name": "Controller",
-        "parameters": [
-          "/api/v1/tests"
-        ]
-      }
-    ],
     "modifiers": [
       "export"
     ]
