@@ -103,7 +103,7 @@ export async function generate(configuration: Configuration) {
           action = plugin
         }
 
-        const customContent = action(generator.declarations, typescriptGenerator)
+        const customContent = action(generator.declarations, typescriptGenerator, generator.sourceFiles)
         if (typeof customContent === 'string' && configuration.customPath) {
           fs.writeFileSync(configuration.customPath, customContent)
         } else if (Array.isArray(customContent)) {
