@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.3](https://github.com/plantain-00/types-as-schema/compare/v2.1.2...v2.1.3) (2022-10-09)
+  
+* feat: expose sourceFiles in config ([fa40b09](https://github.com/plantain-00/types-as-schema/commit/fa40b09a9a94b9d261cfd5c02a149aa2a75b94fa))
+* chore: update dependencies ([ce19b31](https://github.com/plantain-00/types-as-schema/commit/ce19b313fdab11b4607899c224a56262f941e4c9)) ([162869b](https://github.com/plantain-00/types-as-schema/commit/162869b8e7641049e8057fec6f274a81b9bb024e)) ([5975ceb](https://github.com/plantain-00/types-as-schema/commit/5975ceb028bbb7f744a02c342b202f41ce911daa)) ([45ed136](https://github.com/plantain-00/types-as-schema/commit/45ed13677765ecffddf719acc208ffdf4a370d87)) ([4785ecd](https://github.com/plantain-00/types-as-schema/commit/4785ecd99eaab3c54bd87f3c37bb44a8bcaa7fac)) ([b7774b9](https://github.com/plantain-00/types-as-schema/commit/b7774b9e71084d13929cd72278ce2b72cc0bb979)) ([f9dc6e8](https://github.com/plantain-00/types-as-schema/commit/f9dc6e8117191733fbf8894e3101a9b092b6f94c)) ([f5faf83](https://github.com/plantain-00/types-as-schema/commit/f5faf83dfa1ca0b39f18f2dd41ebd597763503b3)) ([96163ca](https://github.com/plantain-00/types-as-schema/commit/96163ca566a7ab604d671f0c5e547935466f252c)) ([7559e08](https://github.com/plantain-00/types-as-schema/commit/7559e0832994f1b2dffd80ef7c11334a05d6dafe)) ([d8860ee](https://github.com/plantain-00/types-as-schema/commit/d8860ee09af1216ec9743f4f80e1425e087ca643)) ([34a534b](https://github.com/plantain-00/types-as-schema/commit/34a534b40fce602f4d323b2caed8b41b96509327)) ([d439b1a](https://github.com/plantain-00/types-as-schema/commit/d439b1a1bd816e8a988571c583f0ecc344647ef6)) ([1d63c0d](https://github.com/plantain-00/types-as-schema/commit/1d63c0d142fbdc8239e18479fd340d17b73dc9c1)) ([5256be2](https://github.com/plantain-00/types-as-schema/commit/5256be2af4910775b09fb7a4741520290405a13b))
+
 ## [2.1.2](https://github.com/plantain-00/types-as-schema/compare/v2.1.1...v2.1.2) (2022-02-22)
   
 * fix: improve type data of global object like Map ([7bb17a8](https://github.com/plantain-00/types-as-schema/commit/7bb17a8e1b99dff3a1f5e7df4976c6ab959fdf82))
