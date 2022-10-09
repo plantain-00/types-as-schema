@@ -75,7 +75,7 @@ export interface Configuration {
   customPath?: string
 }
 
-export type ConfigInterface = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator) => string | {
+export type ConfigInterface = (typeDeclarations: TypeDeclaration[], modules: typeof typescriptGenerator, sourceFiles: ts.SourceFile[]) => string | {
   path: string
   content: string
 }[]
