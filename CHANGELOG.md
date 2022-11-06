@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.4](https://github.com/plantain-00/types-as-schema/compare/v2.1.3...v2.1.4) (2022-11-06)
+  
+* feat: declaration merge ([6472c3e](https://github.com/plantain-00/types-as-schema/commit/6472c3e83e5098c2e54ae8915b75a240facd65c3))
+* chore: update dependencies ([cc4b530](https://github.com/plantain-00/types-as-schema/commit/cc4b530efc68598a9481fd72b542554ed86b64dc)) ([30d3400](https://github.com/plantain-00/types-as-schema/commit/30d340050d5cacb28d8920d33ec37d482cbb9d0f))
+
 ## [2.1.3](https://github.com/plantain-00/types-as-schema/compare/v2.1.2...v2.1.3) (2022-10-09)
   
 * feat: expose sourceFiles in config ([fa40b09](https://github.com/plantain-00/types-as-schema/commit/fa40b09a9a94b9d261cfd5c02a149aa2a75b94fa))
