@@ -703,6 +703,12 @@ Return | Description
 --- | ---
 `unknown` |
 
+## `Math`
+
+Field | Required | Type | Description
+--- | --- | --- | ---
+`sin` | `true` | `number` |
+
 ## `OuterType`
 
 Field | Required | Type | Description

@@ -243,9 +243,22 @@ export class Parser {
   ) {
     if (declaration.name) {
       const declarationName = declaration.name.text
-      // if the node is pre-handled, then it should be in `declarations` already, so don't continue
-      if (this.declarations.some(m => m.name === declarationName)) {
-        return
+      const d = this.declarations.find(m => m.name === declarationName)
+      if (d) {
+        const p = this.getPosition(declaration, sourceFile)
+        if (p.file === d.position.file && p.line === d.position.line && p.character === d.position.character) {
+          // if the node is pre-handled, then it should be in `declarations` already, so don't continue
+          return
+        }
+        // if the node is declared multiple times, merge them
+        if (d.kind === 'object') {
+          if (declarationName === 'CreateBlog') {
+            console.info(d.position, )
+          }
+          const objectMembers = this.getObjectMembers(declaration.members, sourceFile)
+          d.members.push(...objectMembers.members)
+          return
+        }
       }
     }
 
@@ -1474,6 +1487,16 @@ export class Parser {
       member.comments = comments
       member.jsDocs = jsDocs
       member.parameters = property.parameters.map((parameter) => this.handleFunctionParameter(parameter, sourceFile))
+      if (jsDocs) {
+        for (const jsDoc of jsDocs) {
+          if (jsDoc.paramName && jsDoc.comment) {
+            const parameter = member.parameters.find(p => p.name === jsDoc.paramName)
+            if (parameter) {
+              parameter.comments = [jsDoc.comment]
+            }
+          }
+        }
+      }
     }
 
     return member

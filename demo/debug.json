@@ -5687,6 +5687,64 @@
   },
   {
     "kind": "object",
+    "name": "Math",
+    "members": [
+      {
+        "name": "sin",
+        "type": {
+          "kind": "number",
+          "type": "number",
+          "position": {
+            "file": "demo/cases.ts",
+            "line": 663,
+            "character": 18
+          }
+        },
+        "comments": [
+          "/**\n   * Returns the sine of a number.\n   * @param x A numeric expression that contains an angle measured in radians.\n   */"
+        ],
+        "jsDocs": [
+          {
+            "name": "param",
+            "paramName": "x",
+            "comment": "A numeric expression that contains an angle measured in radians.",
+            "optional": false
+          },
+          {
+            "name": "",
+            "comment": "Returns the sine of a number."
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x",
+            "type": {
+              "kind": "number",
+              "type": "number",
+              "position": {
+                "file": "demo/cases.ts",
+                "line": 663,
+                "character": 9
+              }
+            },
+            "optional": false,
+            "comments": [
+              "A numeric expression that contains an angle measured in radians."
+            ]
+          }
+        ]
+      }
+    ],
+    "minProperties": 0,
+    "maxProperties": 0,
+    "position": {
+      "file": "demo/cases.ts",
+      "line": 658,
+      "character": 0
+    }
+  },
+  {
+    "kind": "object",
     "name": "OuterType",
     "members": [
       {

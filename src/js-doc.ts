@@ -9,7 +9,8 @@ export function getJsDocs(node: ts.Node) {
         for (const tag of jsDoc.tags) {
           result.push(getJsDocFromTag(tag))
         }
-      } else if (typeof jsDoc.comment === 'string') {
+      }
+      if (typeof jsDoc.comment === 'string') {
         result.push({
           name: '',
           comment: jsDoc.comment,
@@ -31,13 +32,10 @@ function getJsDocFromTag(tag: ts.JSDocTag) {
   let type: ts.TypeNode | undefined
   let paramName: string | undefined
   let optional: boolean | undefined
-  if (tag.tagName.text === 'param') {
-    const typeExpression = (tag as unknown as { typeExpression?: ts.JSDocTypeExpression }).typeExpression
-    if (typeExpression) {
-      type = typeExpression.type
-      paramName = (tag as unknown as { name: ts.Identifier }).name.text
-      optional = (tag as unknown as { isBracketed?: boolean }).isBracketed
-    }
+  if (tag.tagName.text === 'param' && ts.isJSDocParameterTag(tag)) {
+    type = tag.typeExpression?.type
+    paramName = tag.name.getText()
+    optional = tag.isBracketed
   }
   return {
     name: tag.tagName.text,

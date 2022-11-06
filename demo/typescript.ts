@@ -575,6 +575,14 @@ declare function FancyButton4<T extends string>(props: { a: T }): unknown
 
 declare function FancyButton5(props: { a: Map<string, number> }): unknown
 
+interface Math {
+  /**
+   * Returns the sine of a number.
+   * @param x A numeric expression that contains an angle measured in radians.
+   */
+  sin(x: number): number
+}
+
 interface OuterType {
   outerType: number
 }

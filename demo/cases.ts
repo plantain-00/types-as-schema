@@ -655,3 +655,11 @@ const FancyButton3 = styled.div<{ a: number }>``
 function FancyButton4<T extends string>(props: { a: T }) {}
 
 function FancyButton5(props: { a: Map<string, number> }) {}
+
+interface Math {
+  /**
+   * Returns the sine of a number.
+   * @param x A numeric expression that contains an angle measured in radians.
+   */
+  sin(x: number): number;
+}
