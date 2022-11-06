@@ -348,6 +348,10 @@ message a {
     double s = 1;
 }
 
+message Math {
+    double sin = 1;
+}
+
 message OuterType {
     double outerType = 1;
 }
