@@ -52,7 +52,7 @@ const App = defineComponent({
           '',
           this.source,
           ts.ScriptTarget.ESNext,
-          false,
+          true,
           ts.ScriptKind.TS
         )
 
