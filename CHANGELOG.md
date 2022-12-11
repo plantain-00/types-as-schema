@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.2.0](https://github.com/plantain-00/types-as-schema/compare/v2.1.4...v2.2.0) (2022-12-11)
+  
+* feat: can use @esbuild-kit/cjs-loader ([f86a96a](https://github.com/plantain-00/types-as-schema/commit/f86a96aec4ef3c6487384a8a2ea18e6c19bc462f))
+* fix: online ([7b99804](https://github.com/plantain-00/types-as-schema/commit/7b9980488c0c5f5cdb1429b424d90cdc74b40893))
+* chore: update dependencies ([2a09690](https://github.com/plantain-00/types-as-schema/commit/2a096902b9894308c1a8c13f71469ae7018d8081)) ([dd12769](https://github.com/plantain-00/types-as-schema/commit/dd127692159446f426d6b0e8140830d986547ce8))
+
 ## [2.1.4](https://github.com/plantain-00/types-as-schema/compare/v2.1.3...v2.1.4) (2022-11-06)
   
 * feat: declaration merge ([6472c3e](https://github.com/plantain-00/types-as-schema/commit/6472c3e83e5098c2e54ae8915b75a240facd65c3))
