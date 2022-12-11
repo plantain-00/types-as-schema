@@ -52,7 +52,11 @@ function parseParameters(argv: Args) {
   }
   if (configurationPath) {
     if (configurationPath.endsWith('.ts')) {
-      require('ts-node/register/transpile-only')
+      try {
+        require('ts-node/register/transpile-only');
+      } catch {
+        require('@esbuild-kit/cjs-loader')
+      }
     }
     if (!path.isAbsolute(configurationPath)) {
       configurationPath = path.resolve(process.cwd(), configurationPath)
